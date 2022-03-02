@@ -51,19 +51,19 @@ const LogoWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16px;
+  margin: 1.6rem;
 `;
 
 const Logo = styled.img`
-  width: 28px;
-  height: 28px;
+  width: 2.8rem;
+  height: 2.8rem;
   border-radius: 50%;
 `;
 
 const Name = styled.div`
-  margin-left: 10px;
+  margin-left: 1rem;
   color: #fff;
-  font-size: 14px;
+  font-size: 1.4rem;
   white-space: nowrap;
 `;
 
@@ -77,9 +77,9 @@ const Trigger = styled.div`
 `;
 
 const Unfold = styled(MenuUnfoldOutlined)`
-  padding: 0 24px;
-  font-size: 18px;
-  line-height: 64px;
+  padding: 0 2.4rem;
+  font-size: 1.8rem;
+  line-height: 6.4rem;
   cursor: pointer;
   transition: color 0.3s;
   &:hover {
@@ -89,7 +89,7 @@ const Unfold = styled(MenuUnfoldOutlined)`
 const Fold = Unfold.withComponent(MenuFoldOutlined);
 
 const ContentWrap = styled(Content)`
-  margin: 24px 16px;
-  padding: 24px;
+  margin: 2.4rem 1.6rem;
+  padding: 2.4rem;
   background: #fff;
 `;

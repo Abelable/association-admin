@@ -75,34 +75,34 @@ const Main = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 970px;
-  height: 516px;
-  border-radius: 20px;
+  width: 97rem;
+  height: 51.6rem;
+  border-radius: 2rem;
   background: url("https://img.ubo.vip/mp/association/admin/illus.png")
-    left/535px 100% no-repeat;
+    left/53.5rem 100% no-repeat;
   overflow: hidden;
 `;
 
 const Login = styled.div`
   position: absolute;
   right: 0;
-  padding: 90px 65px 25px;
-  width: 435px;
+  padding: 9rem 6.5rem 2.5rem;
+  width: 43.5rem;
   height: 100%;
   background: #fff;
 `;
 
 const Title = styled.h2`
-  margin-bottom: 50px;
+  margin-bottom: 5rem;
   color: #327efe;
-  font-size: 30px;
+  font-size: 3rem;
 `;
 
 const Copyright = styled.div`
   position: absolute;
   left: 50%;
-  bottom: 25px;
+  bottom: 2.5rem;
   transform: translateX(-50%);
   color: #999;
-  font-size: 12px;
+  font-size: 1.2rem;
 `;
