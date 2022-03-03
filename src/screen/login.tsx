@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useAuth } from "context/auth-context";
 import { useAsync } from "utils/use-async";
 
-export const UnauthenticatedApp = () => {
+export const LoginScreen = () => {
   const [error, setError] = useState<Error | null>(null);
   const { login } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
