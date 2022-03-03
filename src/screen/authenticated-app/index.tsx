@@ -2,50 +2,80 @@ import { Button, Dropdown, Layout, Menu } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
+  TeamOutlined,
+  ReadOutlined,
+  PartitionOutlined,
+  BarsOutlined,
+  PictureOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
 import logoImg from "assets/logo.jpeg";
 import { useAuth } from "context/auth-context";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Routes, Route } from "react-router";
+import { Users } from "./users";
+import { ArticleCategory } from "./article/category";
+import { ArticleList } from "./article/list";
+import { ArticleBanner } from "./article/banner";
+import { Applications } from "./applications";
 
 const { Header, Sider, Content } = Layout;
+const { SubMenu } = Menu;
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <LogoWrap>
-          <Logo src={logoImg} />
-          {collapsed ? null : <Name>浙江省网商协会</Name>}
-        </LogoWrap>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            nav 1
-          </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            nav 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            nav 3
-          </Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout className="site-layout">
-        <ContentHeader>
-          <div onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? <Unfold /> : <Fold />}
-          </div>
-          <User />
-        </ContentHeader>
-        <ContentWrap>Content</ContentWrap>
+    <Router>
+      <Layout style={{ minHeight: "100vh" }}>
+        <Sider trigger={null} collapsible collapsed={collapsed}>
+          <LogoWrap>
+            <Logo src={logoImg} />
+            {collapsed ? null : <Name>浙江省网商协会</Name>}
+          </LogoWrap>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["users"]}>
+            <Menu.Item key="users" icon={<TeamOutlined />}>
+              <Link to={"users"}>用户数据</Link>
+            </Menu.Item>
+            <SubMenu key={"article"} icon={<ReadOutlined />} title={"文章管理"}>
+              <Menu.Item key="article_category" icon={<PartitionOutlined />}>
+                <Link to={"article_category"}>分类管理</Link>
+              </Menu.Item>
+              <Menu.Item key="article_list" icon={<BarsOutlined />}>
+                <Link to={"article_list"}>文章列表</Link>
+              </Menu.Item>
+              <Menu.Item key="article_banner" icon={<PictureOutlined />}>
+                <Link to={"article_banner"}>头图管理</Link>
+              </Menu.Item>
+            </SubMenu>
+            <Menu.Item key="applications" icon={<UsergroupAddOutlined />}>
+              <Link to={"applications"}>入会申请</Link>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout>
+          <ContentHeader>
+            <div onClick={() => setCollapsed(!collapsed)}>
+              {collapsed ? <Unfold /> : <Fold />}
+            </div>
+            <User />
+          </ContentHeader>
+          <ContentWrap>
+            <Routes>
+              <Route path="users" element={<Users />} />
+              <Route path="article_category" element={<ArticleCategory />} />
+              <Route path="article_list" element={<ArticleList />} />
+              <Route path="article_banner" element={<ArticleBanner />} />
+              <Route path="applications" element={<Applications />} />
+            </Routes>
+          </ContentWrap>
+        </Layout>
       </Layout>
-    </Layout>
+    </Router>
   );
 };
 
