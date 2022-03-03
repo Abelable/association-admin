@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { Routes, Route, Navigate } from "react-router";
-import styled from "@emotion/styled";
 import { resetRoute } from "utils";
 import { useRouteType } from "utils/url";
 import { useAuth } from "context/auth-context";
+import styled from "@emotion/styled";
 
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { ArticleCategory } from "./article/category";
@@ -23,7 +23,7 @@ import {
   PictureOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import logoImg from "assets/logo.jpeg";
+import logo from "assets/logo.jpeg";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -61,10 +61,10 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
 
   return (
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
-      <LogoWrap onClick={resetRoute}>
-        <Logo src={logoImg} />
-        {collapsed ? null : <Name>浙江省网商协会</Name>}
-      </LogoWrap>
+      <Logo collapsed={collapsed} onClick={resetRoute}>
+        <LogoImg src={logo} />
+        <div>浙江省网商协会</div>
+      </Logo>
       <Menu theme="dark" mode="inline" selectedKeys={[routeType]}>
         <Menu.Item key="users" icon={<TeamOutlined />}>
           <Link to={"users"}>用户数据</Link>
@@ -119,38 +119,42 @@ const User = () => {
         </Menu>
       }
     >
-      <Logo size={3.6} src={logoImg} />
+      <LogoImg size={3.6} src={logo} />
     </Dropdown>
   );
 };
 
-const LogoWrap = styled.div`
+const Logo = styled.div<{ collapsed: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1.6rem;
+  padding: 1.6rem;
+  padding-left: ${(props) => (props.collapsed ? "2.6rem" : "1.6rem")};
+  transition: padding-left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   cursor: pointer;
+  > div {
+    margin-left: 1rem;
+    flex: 1;
+    height: 2.2rem;
+    color: #fff;
+    overflow: hidden;
+    opacity: ${(props) => (props.collapsed ? 0 : 1)};
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
 `;
 
-const Logo = styled.img<{ size?: number }>`
+const LogoImg = styled.img<{ size?: number }>`
   width: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
   height: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
   border-radius: 50%;
   cursor: pointer;
 `;
 
-const Name = styled.div`
-  margin-left: 1rem;
-  color: #fff;
-  font-size: 1.4rem;
-  white-space: nowrap;
-`;
-
 const Header = styled(Layout.Header)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
+  padding-left: 0;
   padding-right: 2.4rem;
   background: #fff;
 `;
