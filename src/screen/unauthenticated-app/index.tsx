@@ -8,10 +8,13 @@ import {
   EyeTwoTone,
   EyeInvisibleOutlined,
 } from "@ant-design/icons";
+import { http } from "service/base/http";
 
 export const UnauthenticatedApp = () => {
   const [isLoading] = useState(false);
-  const handleSubmit = () => {};
+  const handleSubmit = (data: { username: string; password: string }) => {
+    http("/api/admin/site/admin-login", { method: "POST", data });
+  };
 
   return (
     <Container>
