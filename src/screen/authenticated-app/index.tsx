@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import styled from "@emotion/styled";
+import { resetRoute } from "utils";
 import { useRouteType } from "utils/url";
 import { useAuth } from "context/auth-context";
 
@@ -60,7 +61,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
 
   return (
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
-      <LogoWrap>
+      <LogoWrap onClick={resetRoute}>
         <Logo src={logoImg} />
         {collapsed ? null : <Name>浙江省网商协会</Name>}
       </LogoWrap>
