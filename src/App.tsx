@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useAuth } from "context/auth-context";
 import { UnauthenticatedApp } from "screen/unauthenticated-app";
 import { AuthenticatedApp } from "./screen/authenticated-app/index";
-
 import "./App.css";
 
 const App = () => {
-  const [auth] = useState(false);
-
+  const { token } = useAuth();
   return (
     <div className="App">
-      {auth ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      {token ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </div>
   );
 };

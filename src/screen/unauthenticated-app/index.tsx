@@ -1,19 +1,22 @@
 import styled from "@emotion/styled";
 import { Form, Input } from "antd";
 import { LongButton } from "components/lib";
-import { useState } from "react";
 import {
   UserOutlined,
   LockOutlined,
   EyeTwoTone,
   EyeInvisibleOutlined,
 } from "@ant-design/icons";
-import { http } from "service/base/http";
+import { AuthForm } from "types/authForm";
+import { useState } from "react";
+import { useAuth } from "context/auth-context";
 
 export const UnauthenticatedApp = () => {
   const [isLoading] = useState(false);
-  const handleSubmit = (data: { username: string; password: string }) => {
-    http("/api/admin/site/admin-login", { method: "POST", data });
+  const { login } = useAuth();
+
+  const handleSubmit = (form: AuthForm) => {
+    login(form);
   };
 
   return (
