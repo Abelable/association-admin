@@ -26,9 +26,11 @@ export const http = async (
   } else {
     config.body = JSON.stringify(data || {});
   }
-  return window.fetch(`${apiUrl}${endpoint}`, config).then(async (res) => {
-    const { data } = await res.json();
-    if (res.ok) return data;
-    else return Promise.reject(data);
+  return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
+    if (response.ok) {
+      const result = await response.json();
+      if (["200", "201", "204"].includes(result.code)) return result.data;
+      else return Promise.reject(result);
+    } else return Promise.reject({ message: response.statusText });
   });
 };

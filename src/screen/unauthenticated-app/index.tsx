@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Form, Input } from "antd";
-import { LongButton } from "components/lib";
+import { ErrorBox, LongButton } from "components/lib";
 import {
   UserOutlined,
   LockOutlined,
@@ -10,13 +10,19 @@ import {
 import { AuthForm } from "types/authForm";
 import { useState } from "react";
 import { useAuth } from "context/auth-context";
+import { useAsync } from "utils/use-async";
 
 export const UnauthenticatedApp = () => {
-  const [isLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const { login } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
-  const handleSubmit = (form: AuthForm) => {
-    login(form);
+  const handleSubmit = async (form: AuthForm) => {
+    try {
+      await run(login(form));
+    } catch (error: any) {
+      setError(error);
+    }
   };
 
   return (
@@ -24,6 +30,7 @@ export const UnauthenticatedApp = () => {
       <Main>
         <Login>
           <Title>欢迎登录～</Title>
+          <ErrorBox error={error} />
           <Form onFinish={handleSubmit}>
             <Form.Item
               name="username"
