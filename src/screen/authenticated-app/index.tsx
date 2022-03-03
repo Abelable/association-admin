@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Button, Dropdown, Layout, Menu } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -10,6 +10,7 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 
 import logoImg from "assets/logo.jpeg";
+import { useAuth } from "context/auth-context";
 
 const { Header, Sider, Content } = Layout;
 
@@ -37,13 +38,34 @@ export const AuthenticatedApp = () => {
       </Sider>
       <Layout className="site-layout">
         <ContentHeader>
-          <Trigger onClick={() => setCollapsed(!collapsed)}>
+          <div onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? <Unfold /> : <Fold />}
-          </Trigger>
+          </div>
+          <User />
         </ContentHeader>
         <ContentWrap>Content</ContentWrap>
       </Layout>
     </Layout>
+  );
+};
+
+const User = () => {
+  const { logout } = useAuth();
+
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key={"logout"}>
+            <Button type={"link"} onClick={logout}>
+              登出
+            </Button>
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <Logo size={3.6} src={logoImg} />
+    </Dropdown>
   );
 };
 
@@ -52,12 +74,14 @@ const LogoWrap = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1.6rem;
+  cursor: pointer;
 `;
 
-const Logo = styled.img`
-  width: 2.8rem;
-  height: 2.8rem;
+const Logo = styled.img<{ size?: number }>`
+  width: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
+  height: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
   border-radius: 50%;
+  cursor: pointer;
 `;
 
 const Name = styled.div`
@@ -68,12 +92,12 @@ const Name = styled.div`
 `;
 
 const ContentHeader = styled(Header)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0;
+  padding-right: 2.4rem;
   background: #fff;
-`;
-
-const Trigger = styled.div`
-  width: fit-content;
 `;
 
 const Unfold = styled(MenuUnfoldOutlined)`
