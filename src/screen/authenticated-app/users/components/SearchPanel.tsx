@@ -51,7 +51,7 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   };
 
   return (
-    <Container marginBottom={2} between={true}>
+    <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
           <div>注册时间：</div>
