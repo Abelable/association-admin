@@ -30,14 +30,14 @@ export const AuthenticatedApp = () => {
 
   return (
     <Router>
-      <Layout style={{ minHeight: "100vh" }}>
+      <Layout style={{ height: "100vh", overflow: "hidden" }}>
         <MenuSider collapsed={collapsed} />
         <Layout>
           <Header>
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
             <User />
           </Header>
-          <Content>
+          <Content style={{ overflow: "scroll" }}>
             <Routes>
               <Route path="users" element={<Users />} />
               <Route path="article_category" element={<ArticleCategory />} />
@@ -157,6 +157,8 @@ const Header = styled(Layout.Header)`
   padding-left: 0;
   padding-right: 2.4rem;
   background: #fff;
+  box-shadow: 0 2px 4px rgb(0 21 41 / 8%);
+  z-index: 1;
 `;
 
 const Unfold = styled(MenuUnfoldOutlined)`
@@ -172,7 +174,7 @@ const Unfold = styled(MenuUnfoldOutlined)`
 const Fold = Unfold.withComponent(MenuFoldOutlined);
 
 const Content = styled(Layout.Content)`
-  margin: 2.4rem 1.6rem;
+  /* margin: 2.4rem 1.6rem; */
   padding: 2.4rem;
   background: #fff;
 `;
