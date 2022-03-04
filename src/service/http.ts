@@ -1,4 +1,7 @@
+import { useAuth } from "context/auth-context";
+import * as auth from "./auth";
 import qs from "qs";
+import { useCallback } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -29,8 +32,22 @@ export const http = async (
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
       const result = await response.json();
+      if (result.code === "422") {
+        await auth.logout();
+        window.location.reload();
+        return Promise.reject({ message: "请重新登录" });
+      }
       if (["200", "201", "204"].includes(result.code)) return result.data;
       else return Promise.reject(result);
     } else return Promise.reject({ message: response.statusText });
   });
+};
+
+export const useHttp = () => {
+  const { token } = useAuth();
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, { ...config, token }),
+    [token]
+  );
 };

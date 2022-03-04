@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+export const toNumber = (value: unknown) =>
+  isNaN(Number(value)) ? 0 : Number(value);
+
 export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === "";
 
