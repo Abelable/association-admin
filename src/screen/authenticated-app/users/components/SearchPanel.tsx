@@ -3,9 +3,9 @@ import locale from "antd/lib/date-picker/locale/zh_CN";
 import { useState } from "react";
 import { Button, DatePicker, Input } from "antd";
 import { Row } from "components/lib";
-import { SearchOutlined } from "@ant-design/icons";
 import { UsersSearchParams } from "types/user";
 import moment from "moment";
+import styled from "@emotion/styled";
 
 export interface SearchPanelProps {
   params: Partial<UsersSearchParams>;
@@ -13,16 +13,21 @@ export interface SearchPanelProps {
 }
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+  const defaultParams = {
+    s_time: "",
+    e_time: "",
+    nickname: "",
+  } as Partial<UsersSearchParams>;
+
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<UsersSearchParams>>(params);
 
-  const setDates = (dates: any, formatString: [string, string]) => {
+  const setDates = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
       ...temporaryParams,
       s_time: formatString[0],
       e_time: formatString[1],
     });
-  };
 
   const setNickname = (evt: any) => {
     // onInputClear
@@ -40,37 +45,54 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
+  const clear = () => {
+    setParams({ ...params, ...defaultParams });
+    setTemporaryParams({ ...temporaryParams, ...defaultParams });
+  };
+
   return (
-    <Row marginBottom={2} gap={true}>
-      <Row>
-        <div>注册时间：</div>
-        <DatePicker.RangePicker
-          value={
-            temporaryParams.s_time
-              ? [moment(temporaryParams.s_time), moment(temporaryParams.e_time)]
-              : undefined
-          }
-          locale={locale}
-          onChange={setDates}
-        />
+    <Container marginBottom={2} between={true}>
+      <Row gap={true}>
+        <Row>
+          <div>注册时间：</div>
+          <DatePicker.RangePicker
+            value={
+              temporaryParams.s_time
+                ? [
+                    moment(temporaryParams.s_time),
+                    moment(temporaryParams.e_time),
+                  ]
+                : undefined
+            }
+            locale={locale}
+            onChange={setDates}
+          />
+        </Row>
+        <Row>
+          <div>微信昵称：</div>
+          <Input
+            style={{ width: "20rem" }}
+            value={temporaryParams.nickname}
+            onChange={setNickname}
+            placeholder="请输入微信昵称"
+            allowClear={true}
+          />
+        </Row>
       </Row>
-      <Row>
-        <div>微信昵称：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.nickname}
-          onChange={setNickname}
-          placeholder="请输入微信昵称"
-          allowClear={true}
-        />
+      <Row gap={true}>
+        <Button onClick={clear}>重置</Button>
+        <Button
+          type={"primary"}
+          onClick={() => setParams({ ...params, ...temporaryParams })}
+        >
+          查询
+        </Button>
       </Row>
-      <Button
-        type={"primary"}
-        icon={<SearchOutlined />}
-        onClick={() => setParams({ ...params, ...temporaryParams })}
-      >
-        查询
-      </Button>
-    </Row>
+    </Container>
   );
 };
+
+const Container = styled(Row)`
+  padding: 2.4rem;
+  background: #fff;
+`;

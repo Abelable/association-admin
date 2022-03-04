@@ -174,7 +174,5 @@ const Unfold = styled(MenuUnfoldOutlined)`
 const Fold = Unfold.withComponent(MenuFoldOutlined);
 
 const Content = styled(Layout.Content)`
-  /* margin: 2.4rem 1.6rem; */
   padding: 2.4rem;
-  background: #fff;
 `;
