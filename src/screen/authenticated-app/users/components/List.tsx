@@ -49,7 +49,7 @@ export const List = ({ params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "地区",
-            render: (value, user) => <span>{user.province || "无"}</span>,
+            render: (value, user) => <span>{user.province || "暂无"}</span>,
           },
           {
             title: "注册时间",
