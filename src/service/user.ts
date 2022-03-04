@@ -1,9 +1,8 @@
 import { useQuery } from "react-query";
 import { useHttp } from "./http";
-
-import { UsersResult, UsersSearchParams } from "types/user";
 import dayjs from "dayjs";
 import { cleanObject } from "utils";
+import { UsersResult, UsersSearchParams } from "types/user";
 
 export const useUsers = (params: Partial<UsersSearchParams>) => {
   const client = useHttp();
