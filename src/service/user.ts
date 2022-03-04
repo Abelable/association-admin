@@ -2,13 +2,18 @@ import { useQuery } from "react-query";
 import { useHttp } from "./http";
 
 import { UsersResult, UsersSearchParams } from "types/user";
+import dayjs from "dayjs";
+import { cleanObject } from "utils";
 
-export const useUsers = ({
-  page_size = 10,
-  ...params
-}: Partial<UsersSearchParams>) => {
+export const useUsers = (params: Partial<UsersSearchParams>) => {
   const client = useHttp();
-  return useQuery<UsersResult>(["users", { page_size, ...params }], () =>
-    client("/api/admin/user/list", { data: { page_size, ...params } })
+  return useQuery<UsersResult>(["users", params], () =>
+    client("/api/admin/user/list", {
+      data: cleanObject({
+        s_time: params.s_time ? dayjs(params.s_time).valueOf() : "",
+        e_time: params.e_time ? dayjs(params.e_time).valueOf() : "",
+        ...params,
+      }),
+    })
   );
 };

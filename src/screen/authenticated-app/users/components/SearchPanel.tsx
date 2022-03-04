@@ -1,11 +1,11 @@
 import "moment/locale/zh-cn";
 import locale from "antd/lib/date-picker/locale/zh_CN";
 import { useState } from "react";
-import dayjs from "dayjs";
 import { Button, DatePicker, Input } from "antd";
 import { Row } from "components/lib";
 import { SearchOutlined } from "@ant-design/icons";
 import { UsersSearchParams } from "types/user";
+import moment from "moment";
 
 export interface SearchPanelProps {
   params: Partial<UsersSearchParams>;
@@ -13,17 +13,27 @@ export interface SearchPanelProps {
 }
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
-  const [temporaryParams, setTemporaryParams] = useState<
-    Partial<UsersSearchParams>
-  >({});
-  const setDates = (dates: any) => {
+  const [temporaryParams, setTemporaryParams] =
+    useState<Partial<UsersSearchParams>>(params);
+
+  const setDates = (dates: any, formatString: [string, string]) => {
     setTemporaryParams({
       ...temporaryParams,
-      s_time: dates ? `${dayjs(dates[0]).valueOf()}` : "",
-      e_time: dates ? `${dayjs(dates[1]).valueOf()}` : "",
+      s_time: formatString[0],
+      e_time: formatString[1],
     });
   };
-  const setNicename = (evt: any) => {
+
+  const setNickname = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        nickname: "",
+      });
+      return;
+    }
+
     setTemporaryParams({
       ...temporaryParams,
       nickname: evt.target.value,
@@ -34,13 +44,22 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Row marginBottom={2} gap={true}>
       <Row>
         <div>注册时间：</div>
-        <DatePicker.RangePicker locale={locale} onChange={setDates} />
+        <DatePicker.RangePicker
+          value={
+            temporaryParams.s_time
+              ? [moment(temporaryParams.s_time), moment(temporaryParams.e_time)]
+              : undefined
+          }
+          locale={locale}
+          onChange={setDates}
+        />
       </Row>
       <Row>
         <div>微信昵称：</div>
         <Input
           style={{ width: "20rem" }}
-          onChange={setNicename}
+          value={temporaryParams.nickname}
+          onChange={setNickname}
           placeholder="请输入微信昵称"
           allowClear={true}
         />
