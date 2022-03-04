@@ -110,14 +110,12 @@ const List = ({ params, setParams, ...restProps }: ListProps) => {
         {
           title: "编号",
           render: (value, user, index) =>
-            params
-              ? `${
-                  index +
-                  1 +
-                  ((params.page ? params.page : 1) - 1) *
-                    (params.page_size ? params.page_size : 10)
-                }`
-              : 1,
+            `${
+              index +
+              1 +
+              ((params.page ? params.page : 1) - 1) *
+                (params.page_size ? params.page_size : 10)
+            }`,
         },
         {
           title: "微信头像",
