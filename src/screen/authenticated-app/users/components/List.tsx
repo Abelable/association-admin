@@ -24,10 +24,7 @@ export const List = ({ params, setParams, ...restProps }: ListProps) => {
           title: "编号",
           render: (value, user, index) =>
             `${
-              index +
-              1 +
-              ((params.page ? params.page : 1) - 1) *
-                (params.page_size ? params.page_size : 10)
+              index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
             }`,
         },
         {
