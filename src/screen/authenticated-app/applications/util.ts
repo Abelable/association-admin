@@ -9,6 +9,7 @@ export const useApplicationsSearchParams = () => {
     "mobile",
     "email",
     "member_level",
+    "is_deal",
     "page",
     "page_size",
   ]);

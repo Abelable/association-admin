@@ -5,6 +5,12 @@ import { SearchPanel } from "./components/search-panel";
 import { useApplicationsSearchParams } from "./util";
 
 export const Applications = () => {
+  const statusOptions = [
+    { id: 1, name: "未处理", value: "0" },
+    { id: 2, name: "已处理", value: "1" },
+    { id: 3, name: "已驳回", value: "2" },
+  ];
+
   const [params, setParams] = useApplicationsSearchParams();
   const { data, isLoading, error } = useApplications(params);
   const { data: levelOptions } = useLevelOptions();
@@ -12,12 +18,14 @@ export const Applications = () => {
   return (
     <div>
       <SearchPanel
+        statusOptions={statusOptions}
         levelOptions={levelOptions || []}
         params={params}
         setParams={setParams}
       />
       <List
         error={error}
+        statusOptions={statusOptions}
         levelOptions={levelOptions || []}
         params={params}
         setParams={setParams}

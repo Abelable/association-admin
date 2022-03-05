@@ -3,6 +3,13 @@ export interface LevelOption {
   level: number;
   name: string;
 }
+
+export interface StatusOption {
+  id: number;
+  value: string;
+  name: string;
+}
+
 export interface ApplicationsSearchParams {
   page: number;
   page_size: number;
@@ -10,6 +17,7 @@ export interface ApplicationsSearchParams {
   mobile: string;
   email: string;
   member_level: number;
+  is_deal: string;
   s_time: string;
   e_time: string;
 }
