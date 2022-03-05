@@ -1,7 +1,15 @@
 import styled from "@emotion/styled";
-import { Button, Dropdown, Menu, Modal, Table, TableProps } from "antd";
+import {
+  Button,
+  Dropdown,
+  Menu,
+  Modal,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+} from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, DownOutlined } from "@ant-design/icons";
 import { ApplicationsItem } from "types/application";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
@@ -12,7 +20,20 @@ export interface ListProps
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  error,
+  levelOptions,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
+  const setPagination = (pagination: TablePaginationConfig) =>
+    setParams({
+      ...params,
+      page: pagination.current,
+      page_size: pagination.pageSize,
+    });
+
   return (
     <Container>
       <Header between={true}>
@@ -25,6 +46,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <Table
         rowSelection={{ type: "checkbox" }}
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -32,22 +54,54 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
+            fixed: "left",
+            width: "8rem",
           },
           {
             title: "公司",
             dataIndex: "company_name",
           },
           {
+            title: "等级名称",
+            render: (value, application) => (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    {levelOptions.map((option) => (
+                      <Menu.Item>{option.name}</Menu.Item>
+                    ))}
+                  </Menu>
+                }
+              >
+                <ButtonNoPadding
+                  type={"link"}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {
+                    levelOptions.find(
+                      (option) => option.level === Number(application.level_id)
+                    )?.name
+                  }{" "}
+                  <DownOutlined />
+                </ButtonNoPadding>
+              </Dropdown>
+            ),
+            width: "16rem",
+          },
+          {
             title: "姓名",
             dataIndex: "name",
+            width: "12rem",
           },
           {
             title: "手机号",
             dataIndex: "mobile",
+            width: "18rem",
           },
           {
             title: "邮箱",
             dataIndex: "email",
+            width: "24rem",
           },
           {
             title: "状态",
@@ -60,6 +114,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                   : "已驳回"}
               </span>
             ),
+            width: "10rem",
           },
           {
             title: "报名时间",
@@ -72,13 +127,18 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                   : "无"}
               </span>
             ),
+            width: "20rem",
           },
           {
+            title: "操作",
             render(value, application) {
               return <More id={application.id} />;
             },
+            fixed: "right",
+            width: "8rem",
           },
         ]}
+        onChange={setPagination}
         {...restProps}
       />
     </Container>
