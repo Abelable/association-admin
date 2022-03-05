@@ -17,6 +17,7 @@ export const List = ({ params, setParams, ...restProps }: ListProps) => {
 
   return (
     <Container>
+      <Title>用户列表</Title>
       <Table
         rowKey={"id"}
         columns={[
@@ -74,6 +75,10 @@ export const List = ({ params, setParams, ...restProps }: ListProps) => {
 const Container = styled.div`
   padding: 2.4rem;
   background: #fff;
+`;
+
+const Title = styled.h3`
+  margin-bottom: 2.4rem;
 `;
 
 const Avatar = styled.img`
