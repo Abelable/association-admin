@@ -37,7 +37,7 @@ export const AuthenticatedApp = () => {
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
             <User />
           </Header>
-          <Content style={{ overflow: "scroll" }}>
+          <Content>
             <Routes>
               <Route path="users" element={<Users />} />
               <Route path="article_category" element={<ArticleCategory />} />
@@ -174,5 +174,5 @@ const Unfold = styled(MenuUnfoldOutlined)`
 const Fold = Unfold.withComponent(MenuFoldOutlined);
 
 const Content = styled(Layout.Content)`
-  padding: 2.4rem;
+  overflow: scroll;
 `;

@@ -4,13 +4,14 @@ import { useUsersSearchParams } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
+import styled from "@emotion/styled";
 
 export const Users = () => {
   const [params, setParams] = useUsersSearchParams();
   const { data, isLoading, error } = useUsers(params);
 
   return (
-    <div>
+    <Container>
       <SearchPanel params={params} setParams={setParams} />
       <List
         error={error}
@@ -24,6 +25,10 @@ export const Users = () => {
           total: toNumber(data?.total),
         }}
       />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 2.4rem;
+`;

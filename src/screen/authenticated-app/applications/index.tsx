@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { useApplications, useLevelOptions } from "service/application";
 import { toNumber } from "utils";
 import { List } from "./components/list";
@@ -16,7 +17,7 @@ export const Applications = () => {
   const { data: levelOptions } = useLevelOptions();
 
   return (
-    <div>
+    <Container>
       <SearchPanel
         statusOptions={statusOptions}
         levelOptions={levelOptions || []}
@@ -37,6 +38,10 @@ export const Applications = () => {
           total: toNumber(data?.total),
         }}
       />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 2.4rem;
+`;
