@@ -1,10 +1,9 @@
-import { Avatar, Table, TablePaginationConfig } from "antd";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import { User } from "types/user";
-import { TableProps } from "antd";
+import { Avatar, Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { UserOutlined } from "@ant-design/icons";
+import { User } from "types/user";
 
 export interface ListProps extends TableProps<User>, SearchPanelProps {}
 
