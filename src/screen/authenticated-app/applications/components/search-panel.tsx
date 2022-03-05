@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
 import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
+import { ApplicationsSearchParams } from "types/application";
+export interface SearchPanelProps {
+  params: Partial<ApplicationsSearchParams>;
+  setParams: (params: Partial<ApplicationsSearchParams>) => void;
+}
 
 export const SearchPanel = () => {
   return (

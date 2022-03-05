@@ -2,7 +2,6 @@ import { toNumber } from "utils";
 import { useUsers } from "service/user";
 import { useUsersSearchParams } from "./util";
 
-import { ErrorBox } from "components/lib";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 
@@ -13,8 +12,8 @@ export const Users = () => {
   return (
     <div>
       <SearchPanel params={params} setParams={setParams} />
-      <ErrorBox error={error} />
       <List
+        error={error}
         params={params}
         setParams={setParams}
         dataSource={data?.list}

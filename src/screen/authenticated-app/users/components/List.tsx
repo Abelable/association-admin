@@ -4,10 +4,13 @@ import { Avatar, Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { UserOutlined } from "@ant-design/icons";
 import { User } from "types/user";
+import { ErrorBox } from "components/lib";
 
-export interface ListProps extends TableProps<User>, SearchPanelProps {}
+export interface ListProps extends TableProps<User>, SearchPanelProps {
+  error: Error | unknown;
+}
 
-export const List = ({ params, setParams, ...restProps }: ListProps) => {
+export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -18,6 +21,7 @@ export const List = ({ params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Title>用户列表</Title>
+      <ErrorBox error={error} />
       <Table
         rowKey={"id"}
         columns={[
