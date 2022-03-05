@@ -174,5 +174,5 @@ const Unfold = styled(MenuUnfoldOutlined)`
 const Fold = Unfold.withComponent(MenuFoldOutlined);
 
 const Content = styled(Layout.Content)`
-  overflow: scroll;
+  height: 100%;
 `;

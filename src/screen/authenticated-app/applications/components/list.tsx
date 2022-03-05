@@ -19,6 +19,7 @@ export interface ListProps
   extends TableProps<ApplicationsItem>,
     SearchPanelProps {
   error: Error | unknown;
+  setSelectedRowKeys: (selectedRowKeys: []) => void;
 }
 
 export const List = ({
@@ -26,6 +27,7 @@ export const List = ({
   levelOptions,
   params,
   setParams,
+  setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -45,7 +47,11 @@ export const List = ({
       </Header>
       <ErrorBox error={error} />
       <Table
-        rowSelection={{ type: "checkbox" }}
+        rowSelection={{
+          type: "checkbox",
+          onChange: (selectedRowKeys) =>
+            setSelectedRowKeys(selectedRowKeys as []),
+        }}
         rowKey={"id"}
         scroll={{ x: 1500 }}
         columns={[
@@ -69,7 +75,7 @@ export const List = ({
                 overlay={
                   <Menu>
                     {levelOptions.map((option) => (
-                      <Menu.Item>{option.name}</Menu.Item>
+                      <Menu.Item key={option.id}>{option.name}</Menu.Item>
                     ))}
                   </Menu>
                 }
