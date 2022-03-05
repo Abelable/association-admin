@@ -55,6 +55,7 @@ export interface ApplicationsItem {
   mobile: string;
   email: string;
   is_deal: string;
+  reject_mark: string;
   created_at: string;
   apply_content_json: string;
 }

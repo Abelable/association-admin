@@ -158,7 +158,7 @@ const Header = styled(Layout.Header)`
   padding-right: 2.4rem;
   background: #fff;
   box-shadow: 0 2px 4px rgb(0 21 41 / 8%);
-  z-index: 1;
+  z-index: 10;
 `;
 
 const Unfold = styled(MenuUnfoldOutlined)`

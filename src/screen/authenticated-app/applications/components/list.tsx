@@ -7,6 +7,7 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
+  Tooltip,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownOutlined } from "@ant-design/icons";
@@ -106,11 +107,17 @@ export const List = ({
             title: "状态",
             render: (value, application) => (
               <span>
-                {application.is_deal === "0"
-                  ? "未处理"
-                  : application.is_deal === "1"
-                  ? "已处理"
-                  : "已驳回"}
+                {application.is_deal === "0" ? (
+                  <span style={{ color: "#52c41a" }}>待处理</span>
+                ) : application.is_deal === "1" ? (
+                  <span style={{ color: "#d9d9d9" }}>已处理</span>
+                ) : (
+                  <Tooltip title={`驳回理由：${application.reject_mark}`}>
+                    <ButtonNoPadding type={"link"} danger>
+                      已驳回
+                    </ButtonNoPadding>
+                  </Tooltip>
+                )}
               </span>
             ),
             width: "9rem",
