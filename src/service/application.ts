@@ -5,7 +5,15 @@ import { cleanObject } from "utils";
 import {
   ApplicationsResult,
   ApplicationsSearchParams,
+  LevelOption,
 } from "types/application";
+
+export const useLevelOptions = () => {
+  const client = useHttp();
+  return useQuery<LevelOption[]>(["levelOptions"], () =>
+    client("/api/admin/enter-apply/level-info")
+  );
+};
 
 export const useApplications = (params: Partial<ApplicationsSearchParams>) => {
   const client = useHttp();

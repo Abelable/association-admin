@@ -1,13 +1,28 @@
 import styled from "@emotion/styled";
 import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { ApplicationsSearchParams } from "types/application";
+import { ApplicationsSearchParams, LevelOption } from "types/application";
+import { useState } from "react";
 export interface SearchPanelProps {
+  levelOptions: LevelOption[];
   params: Partial<ApplicationsSearchParams>;
   setParams: (params: Partial<ApplicationsSearchParams>) => void;
 }
 
-export const SearchPanel = () => {
+export const SearchPanel = ({
+  levelOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
+  const [temporaryParams, setTemporaryParams] = useState<
+    Partial<ApplicationsSearchParams>
+  >({});
+
+  const setLevel = (member_level: any) =>
+    setTemporaryParams({ ...temporaryParams, member_level });
+  const clearLevel = () =>
+    setTemporaryParams({ ...temporaryParams, member_level: 0 });
+
   return (
     <Container>
       <Item>
@@ -31,11 +46,24 @@ export const SearchPanel = () => {
         <Select
           style={{ width: "20rem" }}
           placeholder="请选择等级名称"
-        ></Select>
+          allowClear={true}
+          onSelect={setLevel}
+          onClear={clearLevel}
+        >
+          {levelOptions?.map((option) => (
+            <Select.Option key={option.id} value={option.level}>
+              {option.name}
+            </Select.Option>
+          ))}
+        </Select>
       </Item>
       <Item>
         <div>状态：</div>
-        <Select style={{ width: "20rem" }} placeholder="请选择状态"></Select>
+        <Select
+          style={{ width: "20rem" }}
+          placeholder="请选择状态"
+          allowClear={true}
+        ></Select>
       </Item>
       <ButtonWrap gap={true}>
         <Button>重置</Button>

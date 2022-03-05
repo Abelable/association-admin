@@ -1,3 +1,8 @@
+export interface LevelOption {
+  id: number;
+  level: number;
+  name: string;
+}
 export interface ApplicationsSearchParams {
   page: number;
   page_size: number;
