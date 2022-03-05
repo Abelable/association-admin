@@ -1,9 +1,10 @@
-import { Table, TablePaginationConfig } from "antd";
+import { Avatar, Table, TablePaginationConfig } from "antd";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { User } from "types/user";
 import { TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
+import { UserOutlined } from "@ant-design/icons";
 
 export interface ListProps extends TableProps<User>, SearchPanelProps {}
 
@@ -30,7 +31,9 @@ export const List = ({ params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "微信头像",
-            render: (value, user) => <Avatar src={user.avatar_url} />,
+            render: (value, user) => (
+              <Avatar src={user.avatar_url} icon={<UserOutlined />} />
+            ),
           },
           {
             title: "微信昵称",
@@ -79,10 +82,4 @@ const Container = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 2.4rem;
-`;
-
-const Avatar = styled.img`
-  width: 3.6rem;
-  height: 3.6rem;
-  border-radius: 50%;
 `;

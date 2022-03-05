@@ -42,9 +42,11 @@ export const SearchPanel = () => {
 
 const Container = styled(Row)`
   position: relative;
+  margin-bottom: 1.6rem;
   padding: 2.4rem 16.8rem 0 2.4rem;
   background: #fff;
 `;
+
 const Item = styled(Row)`
   padding-bottom: 2.4rem;
 `;

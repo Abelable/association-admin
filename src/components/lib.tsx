@@ -1,10 +1,6 @@
 import styled from "@emotion/styled";
 import { Button, Spin, Typography } from "antd";
 
-export const LongButton = styled(Button)`
-  width: 100%;
-`;
-
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;

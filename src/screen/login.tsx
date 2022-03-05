@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Form, Input } from "antd";
-import { ErrorBox, LongButton } from "components/lib";
+import { Button, Form, Input } from "antd";
+import { ErrorBox } from "components/lib";
 import {
   UserOutlined,
   LockOutlined,
@@ -60,14 +60,15 @@ export const LoginScreen = () => {
               />
             </Form.Item>
             <Form.Item>
-              <LongButton
+              <Button
                 loading={isLoading}
                 size="large"
                 htmlType="submit"
                 type="primary"
+                block
               >
                 登录
-              </LongButton>
+              </Button>
             </Form.Item>
           </Form>
           <Copyright>Copyright©️2020浙江有播提供支持</Copyright>
