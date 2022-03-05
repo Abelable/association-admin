@@ -9,7 +9,7 @@ export interface SearchPanelProps {
 
 export const SearchPanel = () => {
   return (
-    <Container gap={true} flexWrap={true}>
+    <Container>
       <Item>
         <div>报名时间：</div>
         <DatePicker.RangePicker />
@@ -39,25 +39,30 @@ export const SearchPanel = () => {
       </Item>
       <ButtonWrap gap={true}>
         <Button>重置</Button>
-        <Button type={"primary"}>查询</Button>
+        <Button type={"primary"} style={{ marginRight: 0 }}>
+          查询
+        </Button>
       </ButtonWrap>
     </Container>
   );
 };
 
-const Container = styled(Row)`
+const Container = styled.div`
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 1.6rem;
   padding: 2.4rem 16.8rem 0 2.4rem;
   background: #fff;
 `;
 
 const Item = styled(Row)`
+  margin-right: 2rem;
   padding-bottom: 2.4rem;
 `;
 
 const ButtonWrap = styled(Row)`
   position: absolute;
-  right: 0;
+  right: 2.4rem;
   bottom: 2.4rem;
 `;
