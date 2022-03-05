@@ -138,7 +138,7 @@ export const List = ({
           {
             title: "操作",
             render(value, application) {
-              return <More id={application.id} />;
+              return <More application={application} />;
             },
             fixed: "right",
             width: "8rem",
@@ -151,7 +151,7 @@ export const List = ({
   );
 };
 
-const More = ({ id }: { id: string }) => {
+const More = ({ application }: { application: ApplicationsItem }) => {
   const confirmDeleteProject = (id: string) => {
     Modal.confirm({
       title: "确定删除该入会申请吗？",
@@ -166,13 +166,26 @@ const More = ({ id }: { id: string }) => {
     <Dropdown
       overlay={
         <Menu>
+          {application.is_deal === "0" ? (
+            <Menu.Item onClick={() => {}} key={"handle"}>
+              处理
+            </Menu.Item>
+          ) : null}
+          {application.is_deal === "0" ? (
+            <Menu.Item onClick={() => {}} key={"reject"}>
+              驳回
+            </Menu.Item>
+          ) : null}
+          <Menu.Item onClick={() => {}} key={"export"}>
+            导出
+          </Menu.Item>
           <Menu.Item onClick={() => {}} key={"edit"}>
             编辑
           </Menu.Item>
-          <Menu.Item onClick={() => {}} key={"edit"}>
-            导出
-          </Menu.Item>
-          <Menu.Item onClick={() => confirmDeleteProject(id)} key={"delete"}>
+          <Menu.Item
+            onClick={() => confirmDeleteProject(application.id)}
+            key={"delete"}
+          >
             删除
           </Menu.Item>
         </Menu>
