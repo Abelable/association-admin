@@ -28,7 +28,7 @@ export const SearchPanel = ({
     mobile: "",
     email: "",
     member_level: undefined,
-    is_deal: "",
+    is_deal: undefined,
   } as Partial<ApplicationsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] = useState<
