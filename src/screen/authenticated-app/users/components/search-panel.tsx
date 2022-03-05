@@ -1,5 +1,3 @@
-import "moment/locale/zh-cn";
-import locale from "antd/lib/date-picker/locale/zh_CN";
 import { useState } from "react";
 import { Button, DatePicker, Input } from "antd";
 import { Row } from "components/lib";
@@ -64,7 +62,6 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
                   ]
                 : undefined
             }
-            locale={locale}
             onChange={setDates}
           />
         </Row>

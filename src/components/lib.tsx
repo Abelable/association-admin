@@ -47,11 +47,13 @@ export const ScreenContainer = styled.div`
 export const Row = styled.div<{
   gap?: number | boolean;
   between?: boolean;
+  flexWrap?: boolean;
   marginBottom?: number;
 }>`
   display: flex;
   align-items: center;
   justify-content: ${(props) => (props.between ? "space-between" : undefined)};
+  flex-wrap: ${(props) => (props.flexWrap ? "wrap" : undefined)};
   margin-bottom: ${(props) => props.marginBottom + "rem"};
   > * {
     margin-top: 0 !important;

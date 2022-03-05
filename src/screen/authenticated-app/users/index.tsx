@@ -3,8 +3,8 @@ import { useUsers } from "service/user";
 import { useUsersSearchParams } from "./util";
 
 import { ErrorBox } from "components/lib";
-import { SearchPanel } from "./components/SearchPanel";
-import { List } from "./components/List";
+import { SearchPanel } from "./components/search-panel";
+import { List } from "./components/list";
 
 export const Users = () => {
   const [params, setParams] = useUsersSearchParams();

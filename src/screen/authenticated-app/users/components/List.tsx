@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { User } from "types/user";
 import { TableProps } from "antd";
-import { SearchPanelProps } from "./SearchPanel";
+import { SearchPanelProps } from "./search-panel";
 
 export interface ListProps extends TableProps<User>, SearchPanelProps {}
 
