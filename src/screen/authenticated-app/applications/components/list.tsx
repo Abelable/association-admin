@@ -96,12 +96,11 @@ export const List = ({
           {
             title: "手机号",
             dataIndex: "mobile",
-            width: "18rem",
+            width: "16rem",
           },
           {
             title: "邮箱",
             dataIndex: "email",
-            width: "24rem",
           },
           {
             title: "状态",
@@ -114,7 +113,7 @@ export const List = ({
                   : "已驳回"}
               </span>
             ),
-            width: "10rem",
+            width: "9rem",
           },
           {
             title: "报名时间",
@@ -127,7 +126,7 @@ export const List = ({
                   : "无"}
               </span>
             ),
-            width: "20rem",
+            width: "18rem",
           },
           {
             title: "操作",
