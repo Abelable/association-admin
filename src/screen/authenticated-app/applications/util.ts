@@ -25,3 +25,8 @@ export const useApplicationsSearchParams = () => {
     setParams,
   ] as const;
 };
+
+export const useApplicationsQueryKey = () => {
+  const [params] = useApplicationsSearchParams();
+  return ["applications", params];
+};

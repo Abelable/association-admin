@@ -14,6 +14,8 @@ import { PlusOutlined, DownOutlined } from "@ant-design/icons";
 import { ApplicationsItem } from "types/application";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
+import { useEditApplicationLevel } from "service/application";
+import { useApplicationsQueryKey } from "../util";
 
 export interface ListProps
   extends TableProps<ApplicationsItem>,
@@ -30,6 +32,10 @@ export const List = ({
   setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
+  const { mutate: editApplicationLevel } = useEditApplicationLevel(
+    useApplicationsQueryKey()
+  );
+
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -72,10 +78,21 @@ export const List = ({
             title: "等级名称",
             render: (value, application) => (
               <Dropdown
+                trigger={["click"]}
                 overlay={
                   <Menu>
                     {levelOptions.map((option) => (
-                      <Menu.Item key={option.id}>{option.name}</Menu.Item>
+                      <Menu.Item
+                        key={option.id}
+                        onClick={() =>
+                          editApplicationLevel({
+                            id: application.id,
+                            level_id: `${option.level}`,
+                          })
+                        }
+                      >
+                        {option.name}
+                      </Menu.Item>
                     ))}
                   </Menu>
                 }

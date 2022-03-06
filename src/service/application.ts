@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import dayjs from "dayjs";
 import { cleanObject } from "utils";
@@ -6,7 +6,9 @@ import {
   ApplicationsResult,
   ApplicationsSearchParams,
   LevelOption,
+  ApplicationsItem,
 } from "types/application";
+import { useEditApplicationsConfig } from "./use-optimistic-options";
 
 export const useLevelOptions = () => {
   const client = useHttp();
@@ -28,5 +30,17 @@ export const useApplications = (params: Partial<ApplicationsSearchParams>) => {
         }),
       },
     })
+  );
+};
+
+export const useEditApplicationLevel = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, level_id }: Partial<ApplicationsItem>) =>
+      client("/api/admin/enter-apply/modify-level", {
+        data: { id, member_level: level_id },
+        method: "POST",
+      }),
+    useEditApplicationsConfig(queryKey)
   );
 };
