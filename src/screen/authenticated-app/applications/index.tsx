@@ -10,7 +10,7 @@ import { useApplicationsSearchParams } from "./util";
 
 export const Applications = () => {
   const statusOptions = [
-    { id: 1, name: "未处理", value: "0" },
+    { id: 1, name: "待处理", value: "0" },
     { id: 2, name: "已处理", value: "1" },
     { id: 3, name: "已驳回", value: "2" },
   ];

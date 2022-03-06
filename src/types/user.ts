@@ -12,6 +12,7 @@ export interface User {
   nickname: string;
   gender: string;
   province: string;
+  city: string;
   created_at: string;
 }
 
