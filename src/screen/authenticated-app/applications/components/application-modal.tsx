@@ -350,9 +350,9 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     originForm.company_type
       ? {
           ...originForm,
+          license,
           company_type: originForm.company_type.split(","),
           website_type: originForm.website_type.split(","),
-          license,
           member_level: Number(currentApplication?.level_id),
         }
       : undefined;
