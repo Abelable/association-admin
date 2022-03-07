@@ -22,9 +22,7 @@ import { useApplicationsQueryKey } from "../util";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;
-export interface ListProps
-  extends TableProps<ApplicationsItem>,
-    SearchPanelProps {
+interface ListProps extends TableProps<ApplicationsItem>, SearchPanelProps {
   error: Error | unknown;
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   dealApplications: DealApplications;

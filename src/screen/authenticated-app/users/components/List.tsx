@@ -6,7 +6,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { User } from "types/user";
 import { ErrorBox } from "components/lib";
 
-export interface ListProps extends TableProps<User>, SearchPanelProps {
+interface ListProps extends TableProps<User>, SearchPanelProps {
   error: Error | unknown;
 }
 
