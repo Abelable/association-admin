@@ -14,14 +14,21 @@ import { PlusOutlined, DownOutlined } from "@ant-design/icons";
 import { ApplicationsItem } from "types/application";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
-import { useEditApplicationLevel } from "service/application";
+import {
+  useDeleteApplication,
+  useEditApplicationLevel,
+} from "service/application";
 import { useApplicationsQueryKey } from "../util";
 
+type DealApplications = (ids: string[]) => void;
+type ExportApplications = DealApplications;
 export interface ListProps
   extends TableProps<ApplicationsItem>,
     SearchPanelProps {
   error: Error | unknown;
   setSelectedRowKeys: (selectedRowKeys: []) => void;
+  dealApplications: DealApplications;
+  exportApplications: ExportApplications;
 }
 
 export const List = ({
@@ -30,6 +37,8 @@ export const List = ({
   params,
   setParams,
   setSelectedRowKeys,
+  dealApplications,
+  exportApplications,
   ...restProps
 }: ListProps) => {
   const { mutate: editApplicationLevel } = useEditApplicationLevel(
@@ -161,7 +170,13 @@ export const List = ({
           {
             title: "操作",
             render(value, application) {
-              return <More application={application} />;
+              return (
+                <More
+                  application={application}
+                  dealApplications={dealApplications}
+                  exportApplications={exportApplications}
+                />
+              );
             },
             fixed: "right",
             width: "8rem",
@@ -174,14 +189,25 @@ export const List = ({
   );
 };
 
-const More = ({ application }: { application: ApplicationsItem }) => {
+const More = ({
+  application,
+  dealApplications,
+  exportApplications,
+}: {
+  application: ApplicationsItem;
+  dealApplications: DealApplications;
+  exportApplications: ExportApplications;
+}) => {
+  const { mutate: deleteApplication } = useDeleteApplication(
+    useApplicationsQueryKey()
+  );
   const confirmDeleteProject = (id: string) => {
     Modal.confirm({
       title: "确定删除该入会申请吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk() {},
+      onOk: () => deleteApplication(id),
     });
   };
 
@@ -190,7 +216,10 @@ const More = ({ application }: { application: ApplicationsItem }) => {
       overlay={
         <Menu>
           {application.is_deal === "0" ? (
-            <Menu.Item onClick={() => {}} key={"handle"}>
+            <Menu.Item
+              onClick={() => dealApplications([application.id])}
+              key={"deal"}
+            >
               处理
             </Menu.Item>
           ) : null}
@@ -199,7 +228,10 @@ const More = ({ application }: { application: ApplicationsItem }) => {
               驳回
             </Menu.Item>
           ) : null}
-          <Menu.Item onClick={() => {}} key={"export"}>
+          <Menu.Item
+            onClick={() => exportApplications([application.id])}
+            key={"export"}
+          >
             导出
           </Menu.Item>
           <Menu.Item onClick={() => {}} key={"edit"}>

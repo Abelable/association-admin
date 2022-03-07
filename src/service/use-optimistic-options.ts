@@ -1,4 +1,5 @@
 import { QueryKey, useQueryClient } from "react-query";
+import { ApplicationsItem } from "types/application";
 
 export const useConfig = (
   queryKey: QueryKey,
@@ -21,7 +22,29 @@ export const useConfig = (
 export const useEditApplicationsConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
-    list: old.list.map((item: any) =>
+    list: old.list.map((item: ApplicationsItem) =>
       item.id === target.id ? { ...item, ...target } : item
     ),
+  }));
+
+export const useDealApplicationConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.map((item: ApplicationsItem) =>
+      target.includes(item.id) ? { ...item, is_deal: "1" } : item
+    ),
+  }));
+
+export const useRejectApplicationConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.map((item: ApplicationsItem) =>
+      target.ids.includes(item.id) ? { ...item, is_deal: "2" } : item
+    ),
+  }));
+
+export const useDeleteApplicationConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.filter((item: ApplicationsItem) => item.id !== target) || [],
   }));

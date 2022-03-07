@@ -8,7 +8,11 @@ import {
   LevelOption,
   ApplicationsItem,
 } from "types/application";
-import { useEditApplicationsConfig } from "./use-optimistic-options";
+import {
+  useDealApplicationConfig,
+  useDeleteApplicationConfig,
+  useEditApplicationsConfig,
+} from "./use-optimistic-options";
 
 export const useLevelOptions = () => {
   const client = useHttp();
@@ -42,5 +46,41 @@ export const useEditApplicationLevel = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditApplicationsConfig(queryKey)
+  );
+};
+
+export const useDealApplications = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (ids: string[]) =>
+      client("/api/admin/enter-apply/deal", {
+        data: { ids: ids.join() },
+        method: "POST",
+      }),
+    useDealApplicationConfig(queryKey)
+  );
+};
+
+export const useRejectApplications = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ ids, reject_mark }: { ids: string[]; reject_mark: string }) =>
+      client("/api/admin/enter-apply/reject", {
+        data: { ids: ids.join(), reject_mark },
+        method: "POST",
+      }),
+    useDealApplicationConfig(queryKey)
+  );
+};
+
+export const useDeleteApplication = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: string) =>
+      client("/api/admin/enter-apply/del", {
+        data: { ids: id },
+        method: "POST",
+      }),
+    useDeleteApplicationConfig(queryKey)
   );
 };

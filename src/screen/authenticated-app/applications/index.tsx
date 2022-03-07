@@ -2,11 +2,15 @@ import styled from "@emotion/styled";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
-import { useApplications, useLevelOptions } from "service/application";
+import {
+  useApplications,
+  useDealApplications,
+  useLevelOptions,
+} from "service/application";
 import { toNumber } from "utils";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
-import { useApplicationsSearchParams } from "./util";
+import { useApplicationsQueryKey, useApplicationsSearchParams } from "./util";
 
 export const Applications = () => {
   const statusOptions = [
@@ -19,6 +23,14 @@ export const Applications = () => {
   const { data, isLoading, error } = useApplications(params);
   const { data: levelOptions } = useLevelOptions();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const { mutate: dealApplications } = useDealApplications(
+    useApplicationsQueryKey()
+  );
+  const exportApplications = (ids: string[]) => {
+    window.location.href = `${
+      process.env.REACT_APP_API_URL
+    }/api/admin/enter-apply/export?ids=${ids.join()}`;
+  };
 
   return (
     <Container drawerVisible={!!selectedRowKeys.length}>
@@ -36,6 +48,8 @@ export const Applications = () => {
           params={params}
           setParams={setParams}
           setSelectedRowKeys={setSelectedRowKeys}
+          dealApplications={dealApplications}
+          exportApplications={exportApplications}
           loading={isLoading}
           dataSource={data?.list}
           pagination={{
@@ -59,8 +73,14 @@ export const Applications = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap={true}>
-            <Button>批量处理</Button>
-            <Button type={"primary"} style={{ marginRight: 0 }}>
+            <Button onClick={() => dealApplications(selectedRowKeys)}>
+              批量处理
+            </Button>
+            <Button
+              onClick={() => exportApplications(selectedRowKeys)}
+              type={"primary"}
+              style={{ marginRight: 0 }}
+            >
               批量导出
             </Button>
           </Row>
