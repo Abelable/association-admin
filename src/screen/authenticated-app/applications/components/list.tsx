@@ -18,7 +18,8 @@ import {
   useDeleteApplication,
   useEditApplicationLevel,
 } from "service/application";
-import { useApplicationsQueryKey } from "../util";
+import { useApplicationsQueryKey, useApplicationModal } from "../util";
+import { ApplicationModal } from "./application-modal";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;
@@ -39,6 +40,8 @@ export const List = ({
   exportApplications,
   ...restProps
 }: ListProps) => {
+  const { open } = useApplicationModal();
+
   const { mutate: editApplicationLevel } = useEditApplicationLevel(
     useApplicationsQueryKey()
   );
@@ -54,7 +57,7 @@ export const List = ({
     <Container>
       <Header between={true}>
         <h3>申请列表</h3>
-        <Button type={"primary"} icon={<PlusOutlined />}>
+        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
       </Header>
@@ -183,6 +186,7 @@ export const List = ({
         onChange={setPagination}
         {...restProps}
       />
+      <ApplicationModal />
     </Container>
   );
 };
@@ -199,6 +203,9 @@ const More = ({
   const { mutate: deleteApplication } = useDeleteApplication(
     useApplicationsQueryKey()
   );
+
+  const { startEdit } = useApplicationModal();
+
   const confirmDeleteProject = (id: string) => {
     Modal.confirm({
       title: "确定删除该入会申请吗？",
@@ -232,7 +239,7 @@ const More = ({
           >
             导出
           </Menu.Item>
-          <Menu.Item onClick={() => {}} key={"edit"}>
+          <Menu.Item onClick={() => startEdit(application.id)} key={"edit"}>
             编辑
           </Menu.Item>
           <Menu.Item
