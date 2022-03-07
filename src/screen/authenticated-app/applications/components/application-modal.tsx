@@ -307,10 +307,8 @@ export const ApplicationModal = ({
 
 const useEditingApplicationForm = (editingApplicationId: string) => {
   const queryClient = useQueryClient();
-  const applicationsResult =
-    (queryClient.getQueryData(
-      useApplicationsQueryKey()
-    ) as ApplicationsResult) || null;
+  const applicationsResult: ApplicationsResult | undefined =
+    queryClient.getQueryData(useApplicationsQueryKey());
   const currentApplication = applicationsResult
     ? applicationsResult.list.find((item) => item.id === editingApplicationId)
     : null;
