@@ -26,8 +26,8 @@ export interface ApplicationForm {
   company_name: string;
   website_url: string;
   ICP: string;
-  company_type: string;
-  website_type: string;
+  company_type: string[];
+  website_type: string[];
   staff_count: string;
   gang_count: string;
   trade_commodity: string;
@@ -41,10 +41,10 @@ export interface ApplicationForm {
   contacter_name: string;
   contacter_job_title: string;
   contacter_mobile: string;
-  license: string;
+  license: { [key in string]: string }[];
   member_count: string;
   operator_count: string;
-  member_level: string;
+  member_level: number;
 }
 
 export interface ApplicationsItem {

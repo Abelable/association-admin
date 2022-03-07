@@ -12,9 +12,13 @@ import {
 } from "antd";
 import { useQueryClient } from "react-query";
 import { PlusOutlined } from "@ant-design/icons";
-import { ApplicationsResult, LevelOption } from "types/application";
+import {
+  ApplicationsResult,
+  LevelOption,
+  ApplicationForm,
+} from "types/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 
 export const ApplicationModal = ({
@@ -27,6 +31,7 @@ export const ApplicationModal = ({
     useApplicationModal();
   const editingApplicationForm =
     useEditingApplicationForm(editingApplicationId);
+  console.log(editingApplicationForm);
 
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -34,6 +39,15 @@ export const ApplicationModal = ({
       return e;
     }
     return e && e.fileList;
+  };
+
+  const closeModal = () => {
+    form.resetFields();
+    close();
+  };
+
+  const submit = () => {
+    console.log(form.getFieldsValue());
   };
 
   useEffect(() => {
@@ -45,13 +59,13 @@ export const ApplicationModal = ({
       title={editingApplicationId ? "编辑申请列表" : "新增申请列表"}
       size={"large"}
       forceRender={true}
-      onClose={close}
+      onClose={closeModal}
       visible={applicationModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
-          <Button onClick={close}>取消</Button>
-          <Button onClick={close} type="primary">
+          <Button onClick={closeModal}>取消</Button>
+          <Button onClick={submit} type="primary">
             提交
           </Button>
         </Space>
@@ -190,8 +204,10 @@ export const ApplicationModal = ({
           <Col span={12}>
             <Form.Item name="member_level" label="企业等级名称">
               <Select placeholder="请选择企业等级名称">
-                {levelOptions.map((item) => (
-                  <Select.Option key={item.id}>{item.name}</Select.Option>
+                {levelOptions.map(({ id, level, name }) => (
+                  <Select.Option key={id} value={level}>
+                    {name}
+                  </Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -200,6 +216,7 @@ export const ApplicationModal = ({
         <Form.Item
           name="license"
           valuePropName="fileList"
+          tooltip="图片大小不能超过10MB"
           getValueFromEvent={normFile}
           label="企业营业执照或副本"
           rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
@@ -319,6 +336,25 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
   formList.forEach((item: { title: string; name: string; value: string }) => {
     list.push([item.name, item.value]);
   });
-  const editingApplicationForm = Object.fromEntries(list);
-  return useMemo(() => editingApplicationForm, [editingApplicationForm]);
+  const originForm = Object.fromEntries(list);
+
+  const license: { [key in string]: string }[] = [];
+  if (originForm.license) {
+    const imgs = originForm.license.split(",");
+    imgs.forEach((item: string) => {
+      license.push({ url: item });
+    });
+  }
+
+  const editingApplicationForm: ApplicationForm | undefined =
+    originForm.company_type
+      ? {
+          ...originForm,
+          company_type: originForm.company_type.split(","),
+          website_type: originForm.website_type.split(","),
+          license,
+          member_level: Number(currentApplication?.level_id),
+        }
+      : undefined;
+  return editingApplicationForm;
 };
