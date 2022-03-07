@@ -12,11 +12,7 @@ import {
 } from "antd";
 import { useQueryClient } from "react-query";
 import { PlusOutlined } from "@ant-design/icons";
-import {
-  ApplicationsResult,
-  ApplicationForm,
-  LevelOption,
-} from "types/application";
+import { ApplicationsResult, LevelOption } from "types/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
 import { useMemo } from "react";
 
@@ -215,6 +211,27 @@ export const ApplicationModal = ({
           </Upload>
         </Form.Item>
         <Divider orientation="left">负责人信息</Divider>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="_name"
+              label="姓名"
+              rules={[{ required: true, message: "请输入负责人姓名" }]}
+            >
+              <Input placeholder="请输入负责人姓名" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="job_title"
+              label="职务"
+              rules={[{ required: true, message: "请输入负责人职务" }]}
+            >
+              <Input placeholder="请输入负责人职务" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}></Row>
       </Form>
     </Drawer>
   );
