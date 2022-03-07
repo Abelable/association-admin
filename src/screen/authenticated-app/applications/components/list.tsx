@@ -186,7 +186,7 @@ export const List = ({
         onChange={setPagination}
         {...restProps}
       />
-      <ApplicationModal />
+      <ApplicationModal levelOptions={levelOptions} />
     </Container>
   );
 };
