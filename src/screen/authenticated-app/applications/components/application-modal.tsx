@@ -311,7 +311,7 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     queryClient.getQueryData(useApplicationsQueryKey());
   const currentApplication = applicationsResult
     ? applicationsResult.list.find((item) => item.id === editingApplicationId)
-    : null;
+    : undefined;
   const formList = currentApplication
     ? JSON.parse(currentApplication?.apply_content_json)
     : [];
