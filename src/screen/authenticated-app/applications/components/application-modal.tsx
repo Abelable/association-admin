@@ -315,12 +315,10 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
   const formList = currentApplication
     ? JSON.parse(currentApplication?.apply_content_json)
     : [];
-
   const list: string[][] = [];
   formList.forEach((item: { title: string; name: string; value: string }) => {
     list.push([item.name, item.value]);
   });
   const editingApplicationForm = Object.fromEntries(list);
-
   return useMemo(() => editingApplicationForm, [editingApplicationForm]);
 };
