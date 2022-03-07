@@ -14,18 +14,19 @@ import { useQueryClient } from "react-query";
 import { PlusOutlined } from "@ant-design/icons";
 import { ApplicationsResult, LevelOption } from "types/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useForm } from "antd/lib/form/Form";
 
 export const ApplicationModal = ({
   levelOptions,
 }: {
   levelOptions: LevelOption[];
 }) => {
+  const [form] = useForm();
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
   const editingApplicationForm =
     useEditingApplicationForm(editingApplicationId);
-  console.log("editingApplicationForm", editingApplicationForm);
 
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -35,10 +36,15 @@ export const ApplicationModal = ({
     return e && e.fileList;
   };
 
+  useEffect(() => {
+    form.setFieldsValue(editingApplicationForm);
+  }, [form, editingApplicationForm]);
+
   return (
     <Drawer
       title={editingApplicationId ? "编辑申请列表" : "新增申请列表"}
       size={"large"}
+      forceRender={true}
       onClose={close}
       visible={applicationModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
@@ -51,7 +57,7 @@ export const ApplicationModal = ({
         </Space>
       }
     >
-      <Form layout="vertical">
+      <Form form={form} layout="vertical">
         <Divider orientation="left">企业信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
@@ -231,7 +237,69 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={16}></Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="political_status"
+              label="政治面貌"
+              rules={[{ required: true, message: "请输入负责人政治面貌" }]}
+            >
+              <Input placeholder="请输入负责人政治面貌" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="_mobile"
+              label="手机"
+              rules={[{ required: true, message: "请输入负责人手机号" }]}
+            >
+              <Input placeholder="请输入负责人手机号" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="_email"
+              label="邮箱"
+              rules={[{ required: true, message: "请输入负责人邮箱" }]}
+            >
+              <Input placeholder="请输入负责人邮箱" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Divider orientation="left">联系人信息</Divider>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="contacter_name"
+              label="姓名"
+              rules={[{ required: true, message: "请输入联系人姓名" }]}
+            >
+              <Input placeholder="请输入联系人姓名" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="contacter_job_title"
+              label="职务"
+              rules={[{ required: true, message: "请输入联系人职务" }]}
+            >
+              <Input placeholder="请输入联系人职务" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="contacter_mobile"
+              label="手机"
+              rules={[{ required: true, message: "请输入联系人手机号" }]}
+            >
+              <Input placeholder="请输入联系人手机号" />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Drawer>
   );
