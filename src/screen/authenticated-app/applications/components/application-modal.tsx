@@ -20,6 +20,7 @@ import {
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
+import { useOssConfig } from "service/common";
 
 export const ApplicationModal = ({
   levelOptions,
@@ -27,6 +28,22 @@ export const ApplicationModal = ({
   levelOptions: LevelOption[];
 }) => {
   const [form] = useForm();
+  const { data: ossConfig } = useOssConfig();
+  const getExtraData = (file: any) => {
+    return {
+      key: file.url,
+      OSSAccessKeyId: ossConfig?.OSSAccessKeyId,
+      policy: ossConfig?.policy,
+      Signature: ossConfig?.signature,
+    };
+  };
+  const beforeUpload = (file: any) => {
+    const suffix = file.name.slice(file.name.lastIndexOf("."));
+    const filename = Date.now() + suffix;
+    file.url = ossConfig?.dir + filename;
+    return file;
+  };
+
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
   const editingApplicationForm =
@@ -214,14 +231,16 @@ export const ApplicationModal = ({
         </Row>
         <Form.Item
           name="license"
-          valuePropName="fileList"
-          tooltip="图片大小不能超过10MB"
-          getValueFromEvent={normFile}
           label="企业营业执照或副本"
+          tooltip="图片大小不能超过10MB"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
           rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
         >
           <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            beforeUpload={beforeUpload}
+            action={ossConfig?.host}
+            data={getExtraData}
             listType="picture-card"
           >
             {
