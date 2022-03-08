@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { resetRoute } from "utils";
 import { useRouteType } from "utils/url";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { HashRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
@@ -61,7 +60,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
 
   return (
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
-      <Logo collapsed={collapsed} onClick={resetRoute}>
+      <Logo to="/" collapsed={collapsed}>
         <LogoImg src={logo} />
         <div>浙江省网商协会</div>
       </Logo>
@@ -124,7 +123,7 @@ const User = () => {
   );
 };
 
-const Logo = styled.div<{ collapsed: boolean }>`
+const Logo = styled(Link)<{ collapsed: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;

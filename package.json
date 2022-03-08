@@ -58,5 +58,6 @@
   },
   "lint-staged": {
     "*.{js,css,md,ts,tsx}": "prettier --write"
-  }
+  },
+  "homepage": "."
 }

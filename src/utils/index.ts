@@ -27,8 +27,6 @@ export const subset = <
   return Object.fromEntries(filteredEntries) as Pick<O, K>;
 };
 
-export const resetRoute = () => (window.location.href = window.location.origin);
-
 export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
