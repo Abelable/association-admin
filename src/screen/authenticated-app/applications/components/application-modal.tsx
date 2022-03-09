@@ -359,7 +359,13 @@ export const ApplicationModal = ({
             <Form.Item
               name="_mobile"
               label="手机"
-              rules={[{ required: true, message: "请输入负责人手机号" }]}
+              rules={[
+                {
+                  pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+                  message: "请输入正确的手机号",
+                },
+                { required: true, message: "请输入负责人手机号" },
+              ]}
             >
               <Input placeholder="请输入负责人手机号" />
             </Form.Item>
@@ -370,7 +376,13 @@ export const ApplicationModal = ({
             <Form.Item
               name="_email"
               label="邮箱"
-              rules={[{ required: true, message: "请输入负责人邮箱" }]}
+              rules={[
+                {
+                  type: "email",
+                  message: "请输入有效邮箱地址",
+                },
+                { required: true, message: "请输入负责人邮箱" },
+              ]}
             >
               <Input placeholder="请输入负责人邮箱" />
             </Form.Item>
