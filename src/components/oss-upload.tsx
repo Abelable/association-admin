@@ -1,6 +1,7 @@
-import { Upload } from "antd";
+import { Modal, Upload } from "antd";
 import { useOssConfig } from "service/common";
 import { PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 interface OssUploadProps extends React.ComponentProps<typeof Upload> {}
 
@@ -22,20 +23,33 @@ export const OssUpload = (props: OssUploadProps) => {
     return file;
   };
 
+  const [previewImage, setPreviewImage] = useState("");
+  const preview = (file: any) => setPreviewImage(file.url);
+
   return (
-    <Upload
-      beforeUpload={beforeUpload}
-      action={ossConfig?.host}
-      data={getExtraData}
-      listType="picture-card"
-      {...props}
-    >
-      {
-        <div>
-          <PlusOutlined />
-          <div style={{ marginTop: 8 }}>点击上传</div>
-        </div>
-      }
-    </Upload>
+    <>
+      <Upload
+        beforeUpload={beforeUpload}
+        action={ossConfig?.host}
+        data={getExtraData}
+        onPreview={preview}
+        listType="picture-card"
+        {...props}
+      >
+        {
+          <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>点击上传</div>
+          </div>
+        }
+      </Upload>
+      <Modal
+        visible={!!previewImage}
+        footer={null}
+        onCancel={() => setPreviewImage("")}
+      >
+        <img alt="example" style={{ width: "100%" }} src={previewImage} />
+      </Modal>
+    </>
   );
 };
