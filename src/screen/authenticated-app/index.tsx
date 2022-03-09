@@ -60,10 +60,12 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
 
   return (
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
-      <Logo to="/" collapsed={collapsed}>
-        <LogoImg src={logo} />
-        <div>浙江省网商协会</div>
-      </Logo>
+      <Link to={"/"}>
+        <Logo collapsed={collapsed}>
+          <LogoImg src={logo} />
+          <div>浙江省网商协会</div>
+        </Logo>
+      </Link>
       <Menu theme="dark" mode="inline" selectedKeys={[routeType]}>
         <Menu.Item key="users" icon={<TeamOutlined />}>
           <Link to={"users"}>用户数据</Link>
@@ -123,7 +125,7 @@ const User = () => {
   );
 };
 
-const Logo = styled(Link)<{ collapsed: boolean }>`
+const Logo = styled.div<{ collapsed: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
