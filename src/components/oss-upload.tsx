@@ -24,7 +24,7 @@ export const OssUpload = (props: OssUploadProps) => {
   return (
     <Upload
       beforeUpload={beforeUpload}
-      action={""}
+      action={ossConfig?.host}
       data={getExtraData}
       listType="picture-card"
       {...props}

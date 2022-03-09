@@ -59,6 +59,5 @@
   "lint-staged": {
     "*.{js,css,md,ts,tsx}": "prettier --write"
   },
-  "homepage": ".",
-  "proxy": "http://img-gov.oss-cn-hangzhou.aliyuncs.com"
+  "homepage": "."
 }
