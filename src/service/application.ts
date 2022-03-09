@@ -13,6 +13,7 @@ import {
   useDealApplicationConfig,
   useDeleteApplicationConfig,
   useEditApplicationsConfig,
+  useRejectApplicationConfig,
 } from "./use-optimistic-options";
 
 export const useLevelOptions = () => {
@@ -50,6 +51,18 @@ export const useAddApplication = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditApplication = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<ApplicationsItem>) =>
+      client("/api/admin/enter-apply/store", {
+        data: { id: params.id, apply_content_json: params.apply_content_json },
+        method: "POST",
+      }),
+    useEditApplicationsConfig(queryKey)
+  );
+};
+
 export const useEditApplicationLevel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
@@ -82,7 +95,7 @@ export const useRejectApplications = (queryKey: QueryKey) => {
         data: { ids: ids.join(), reject_mark },
         method: "POST",
       }),
-    useDealApplicationConfig(queryKey)
+    useRejectApplicationConfig(queryKey)
   );
 };
 

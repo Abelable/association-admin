@@ -20,6 +20,8 @@ import {
 } from "service/application";
 import { useApplicationsQueryKey, useApplicationModal } from "../util";
 import { ApplicationModal } from "./application-modal";
+import { useState } from "react";
+import { RejectApplicationModal } from "./reject-application-modal";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;
@@ -45,6 +47,8 @@ export const List = ({
   const { mutate: editApplicationLevel } = useEditApplicationLevel(
     useApplicationsQueryKey()
   );
+
+  const [rejectingApplicationId, setRejectingApplicationId] = useState("");
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -173,6 +177,7 @@ export const List = ({
                   application={application}
                   dealApplications={dealApplications}
                   exportApplications={exportApplications}
+                  setRejectingApplicationId={setRejectingApplicationId}
                 />
               );
             },
@@ -184,6 +189,10 @@ export const List = ({
         {...restProps}
       />
       <ApplicationModal levelOptions={levelOptions} />
+      <RejectApplicationModal
+        rejectingApplicationId={rejectingApplicationId}
+        onCancel={() => setRejectingApplicationId("")}
+      />
     </Container>
   );
 };
@@ -192,10 +201,12 @@ const More = ({
   application,
   dealApplications,
   exportApplications,
+  setRejectingApplicationId,
 }: {
   application: ApplicationsItem;
   dealApplications: DealApplications;
   exportApplications: ExportApplications;
+  setRejectingApplicationId: (id: string) => void;
 }) => {
   const { mutate: deleteApplication } = useDeleteApplication(
     useApplicationsQueryKey()
@@ -226,7 +237,10 @@ const More = ({
             </Menu.Item>
           ) : null}
           {application.is_deal === "0" ? (
-            <Menu.Item onClick={() => {}} key={"reject"}>
+            <Menu.Item
+              onClick={() => setRejectingApplicationId(application.id)}
+              key={"reject"}
+            >
               驳回
             </Menu.Item>
           ) : null}

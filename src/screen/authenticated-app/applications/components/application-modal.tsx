@@ -20,8 +20,9 @@ import { useApplicationModal, useApplicationsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
-import { useAddApplication } from "service/application";
+import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
+import { cleanObject } from "utils";
 
 export const ApplicationModal = ({
   levelOptions,
@@ -34,11 +35,13 @@ export const ApplicationModal = ({
     useApplicationModal();
   const editingApplicationForm =
     useEditingApplicationForm(editingApplicationId);
-  const {
-    mutateAsync: addApplication,
-    isLoading,
-    error,
-  } = useAddApplication(useApplicationsQueryKey());
+
+  const useMutationApplication = editingApplicationId
+    ? useEditApplication
+    : useAddApplication;
+  const { mutateAsync, error, isLoading } = useMutationApplication(
+    useApplicationsQueryKey()
+  );
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
@@ -134,17 +137,18 @@ export const ApplicationModal = ({
           name: "operator_count",
           value: operator_count,
         },
-        { title: "等级名称", name: "member_level", value: member_level },
+        { title: "等级名称", name: "member_level", value: member_level || "" },
       ];
 
-      const applicationItem: Partial<ApplicationsItem> = {
+      const applicationItem: Partial<ApplicationsItem> = cleanObject({
+        id: editingApplicationId || undefined,
         company_name,
         level_id: `${member_level}`,
         name: _name,
         mobile: _mobile,
         apply_content_json: JSON.stringify(applyContent),
-      };
-      await addApplication(applicationItem);
+      });
+      await mutateAsync(applicationItem);
       closeModal();
     });
   };
@@ -299,11 +303,7 @@ export const ApplicationModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="member_level"
-              label="企业等级名称"
-              rules={[{ required: true, message: "请选择企业等级名称" }]}
-            >
+            <Form.Item name="member_level" label="企业等级名称">
               <Select placeholder="请选择企业等级名称">
                 {levelOptions.map(({ id, level, name }) => (
                   <Select.Option key={id} value={level}>

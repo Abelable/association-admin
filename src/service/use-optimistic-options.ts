@@ -48,7 +48,9 @@ export const useRejectApplicationConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
     list: old.list.map((item: ApplicationsItem) =>
-      target.ids.includes(item.id) ? { ...item, is_deal: "2" } : item
+      target.ids.includes(item.id)
+        ? { ...item, is_deal: "2", reject_mark: target.reject_mark }
+        : item
     ),
   }));
 
