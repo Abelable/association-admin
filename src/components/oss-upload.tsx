@@ -8,7 +8,7 @@ export const OssUpload = (props: OssUploadProps) => {
   const { data: ossConfig } = useOssConfig();
   const getExtraData = (file: any) => {
     return {
-      key: file.url,
+      key: file.key,
       OSSAccessKeyId: ossConfig?.OSSAccessKeyId,
       policy: ossConfig?.policy,
       Signature: ossConfig?.signature,
@@ -17,7 +17,8 @@ export const OssUpload = (props: OssUploadProps) => {
   const beforeUpload = (file: any) => {
     const suffix = file.name.slice(file.name.lastIndexOf("."));
     const filename = Date.now() + suffix;
-    file.url = ossConfig?.dir + filename;
+    file.key = ossConfig?.dir + filename;
+    file.url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
     return file;
   };
 
