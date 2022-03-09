@@ -8,10 +8,8 @@ import {
   Row,
   Select,
   Space,
-  Upload,
 } from "antd";
 import { useQueryClient } from "react-query";
-import { PlusOutlined } from "@ant-design/icons";
 import {
   ApplicationsResult,
   LevelOption,
@@ -20,7 +18,7 @@ import {
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
-import { useOssConfig } from "service/common";
+import { OssUpload } from "components/oss-upload";
 
 export const ApplicationModal = ({
   levelOptions,
@@ -28,21 +26,6 @@ export const ApplicationModal = ({
   levelOptions: LevelOption[];
 }) => {
   const [form] = useForm();
-  const { data: ossConfig } = useOssConfig();
-  const getExtraData = (file: any) => {
-    return {
-      key: file.url,
-      OSSAccessKeyId: ossConfig?.OSSAccessKeyId,
-      policy: ossConfig?.policy,
-      Signature: ossConfig?.signature,
-    };
-  };
-  const beforeUpload = (file: any) => {
-    const suffix = file.name.slice(file.name.lastIndexOf("."));
-    const filename = Date.now() + suffix;
-    file.url = ossConfig?.dir + filename;
-    return file;
-  };
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -60,13 +43,13 @@ export const ApplicationModal = ({
   };
 
   const submit = () => {
-    form.validateFields().then(() => {
-      console.log(form.getFieldsValue());
-    });
+    console.log(form.getFieldsValue());
+    // form.validateFields().then(() => {
+    //   console.log(form.getFieldsValue());
+    // });
   };
 
   useEffect(() => {
-    console.log("editingApplicationForm:", editingApplicationForm);
     form.setFieldsValue(editingApplicationForm);
   }, [form, editingApplicationForm]);
 
@@ -237,19 +220,7 @@ export const ApplicationModal = ({
           getValueFromEvent={normFile}
           rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
         >
-          <Upload
-            beforeUpload={beforeUpload}
-            action={ossConfig?.host}
-            data={getExtraData}
-            listType="picture-card"
-          >
-            {
-              <div>
-                <PlusOutlined />
-                <div style={{ marginTop: 8 }}>点击上传</div>
-              </div>
-            }
-          </Upload>
+          <OssUpload />
         </Form.Item>
         <Divider orientation="left">负责人信息</Divider>
         <Row gutter={16}>
