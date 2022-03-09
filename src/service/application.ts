@@ -9,6 +9,7 @@ import {
   ApplicationsItem,
 } from "types/application";
 import {
+  useAddApplicationConfig,
   useDealApplicationConfig,
   useDeleteApplicationConfig,
   useEditApplicationsConfig,
@@ -34,6 +35,18 @@ export const useApplications = (params: Partial<ApplicationsSearchParams>) => {
         }),
       },
     })
+  );
+};
+
+export const useAddApplication = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<ApplicationsItem>) =>
+      client("/api/admin/enter-apply/store", {
+        data: { apply_content_json: params.apply_content_json },
+        method: "POST",
+      }),
+    useAddApplicationConfig(queryKey)
   );
 };
 

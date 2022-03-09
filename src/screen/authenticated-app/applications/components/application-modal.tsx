@@ -14,11 +14,14 @@ import {
   ApplicationsResult,
   LevelOption,
   ApplicationForm,
+  ApplicationsItem,
 } from "types/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
+import { useAddApplication } from "service/application";
+import { ErrorBox } from "components/lib";
 
 export const ApplicationModal = ({
   levelOptions,
@@ -31,6 +34,11 @@ export const ApplicationModal = ({
     useApplicationModal();
   const editingApplicationForm =
     useEditingApplicationForm(editingApplicationId);
+  const {
+    mutateAsync: addApplication,
+    isLoading,
+    error,
+  } = useAddApplication(useApplicationsQueryKey());
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
@@ -43,10 +51,102 @@ export const ApplicationModal = ({
   };
 
   const submit = () => {
-    console.log(form.getFieldsValue());
-    // form.validateFields().then(() => {
-    //   console.log(form.getFieldsValue());
-    // });
+    form.validateFields().then(async () => {
+      const {
+        company_name,
+        website_url,
+        ICP,
+        company_type,
+        website_type,
+        staff_count,
+        gang_count,
+        trade_commodity,
+        member_count,
+        operator_count,
+        trade_count,
+        trade_amount,
+        _name,
+        job_title,
+        political_status,
+        _mobile,
+        _email,
+        contacter_name,
+        contacter_job_title,
+        contacter_mobile,
+        license,
+        member_level,
+      } = form.getFieldsValue();
+
+      const licenseList: any[] = [];
+      license.forEach((item: any) => licenseList.push(item.url));
+
+      const applyContent = [
+        { title: "企业名称", name: "company_name", value: company_name },
+        { title: "网站（app）名称", name: "website_url", value: website_url },
+        { title: "ICP备案号", name: "ICP", value: ICP },
+        { title: "企业类型", name: "company_type", value: company_type.join() },
+        {
+          title: "网站电子商务类型",
+          name: "website_type",
+          value: website_type.join(),
+        },
+        { title: "员工人数", name: "staff_count", value: staff_count },
+        { title: "党员人数", name: "gang_count", value: gang_count },
+        {
+          title: "交易商品（服务）",
+          name: "trade_commodity",
+          value: trade_commodity,
+        },
+        { title: "上年交易笔数", name: "trade_count", value: trade_count },
+        { title: "上年交易额", name: "trade_amount", value: trade_amount },
+        { title: "负责人姓名", name: "_name", value: _name },
+        { title: "职务", name: "job_title", value: job_title },
+        {
+          title: "政治面貌",
+          name: "political_status",
+          value: political_status,
+        },
+        { title: "手机号", name: "_mobile", value: _mobile },
+        { title: "邮箱", name: "_email", value: _email },
+        {
+          title: "协会联系人姓名",
+          name: "contacter_name",
+          value: contacter_name,
+        },
+        {
+          title: "协会联系人职务",
+          name: "contacter_job_title",
+          value: contacter_job_title,
+        },
+        {
+          title: "协会联系人手机号",
+          name: "contacter_mobile",
+          value: contacter_mobile,
+        },
+        {
+          title: "企业营业执照或副本",
+          name: "license",
+          value: licenseList.join(),
+        },
+        { title: "注册会员数量", name: "member_count", value: member_count },
+        {
+          title: "平台网站内经营者数量",
+          name: "operator_count",
+          value: operator_count,
+        },
+        { title: "等级名称", name: "member_level", value: member_level },
+      ];
+
+      const applicationItem: Partial<ApplicationsItem> = {
+        company_name,
+        level_id: `${member_level}`,
+        name: _name,
+        mobile: _mobile,
+        apply_content_json: JSON.stringify(applyContent),
+      };
+      await addApplication(applicationItem);
+      closeModal();
+    });
   };
 
   useEffect(() => {
@@ -64,13 +164,14 @@ export const ApplicationModal = ({
       extra={
         <Space>
           <Button onClick={closeModal}>取消</Button>
-          <Button onClick={submit} type="primary">
+          <Button onClick={submit} loading={isLoading} type="primary">
             提交
           </Button>
         </Space>
       }
     >
       <Form form={form} layout="vertical">
+        <ErrorBox error={error} />
         <Divider orientation="left">企业信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
@@ -171,10 +272,7 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="trade_commodity"
-              label="平台网站内经营者数量（个）"
-            >
+            <Form.Item name="operator_count" label="平台网站内经营者数量（个）">
               <Input placeholder="请输入平台网站内经营者数量" />
             </Form.Item>
           </Col>
@@ -201,7 +299,11 @@ export const ApplicationModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="member_level" label="企业等级名称">
+            <Form.Item
+              name="member_level"
+              label="企业等级名称"
+              rules={[{ required: true, message: "请选择企业等级名称" }]}
+            >
               <Select placeholder="请选择企业等级名称">
                 {levelOptions.map(({ id, level, name }) => (
                   <Select.Option key={id} value={level}>
@@ -342,7 +444,10 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
           license,
           company_type: originForm.company_type.split(","),
           website_type: originForm.website_type.split(","),
-          member_level: Number(currentApplication?.level_id),
+          member_level:
+            Number(currentApplication?.level_id) === 0
+              ? undefined
+              : Number(currentApplication?.level_id),
         }
       : undefined;
   return editingApplicationForm;

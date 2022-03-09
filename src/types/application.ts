@@ -51,6 +51,7 @@ export interface ApplicationsItem {
   id: string;
   company_name: string;
   level_id: string;
+  level_name: string;
   name: string;
   mobile: string;
   email: string;

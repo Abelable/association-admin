@@ -19,6 +19,15 @@ export const useConfig = (
   };
 };
 
+export const useAddApplicationConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: [
+      { id: `${Number(old.list[0].id) + 1}`, is_deal: "0", ...target },
+      ...old.list,
+    ],
+  }));
+
 export const useEditApplicationsConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,

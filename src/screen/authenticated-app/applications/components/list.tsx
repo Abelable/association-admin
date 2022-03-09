@@ -108,14 +108,11 @@ export const List = ({
                 }
               >
                 <ButtonNoPadding
+                  style={{ color: application.level_name ? "#1890ff" : "#999" }}
                   type={"link"}
                   onClick={(e) => e.preventDefault()}
                 >
-                  {
-                    levelOptions.find(
-                      (option) => option.level === Number(application.level_id)
-                    )?.name
-                  }{" "}
+                  {application.level_name || "选择等级名称"}
                   <DownOutlined />
                 </ButtonNoPadding>
               </Dropdown>
