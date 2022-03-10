@@ -59,3 +59,17 @@ export const useDeleteApplicationConfig = (queryKey: QueryKey) =>
     ...old,
     list: old.list.filter((item: ApplicationsItem) => item.id !== target) || [],
   }));
+
+export const useAddArticleCategoryConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: [{ id: `${Number(old.list[0].id) + 1}`, ...target }, ...old.list],
+  }));
+
+export const useEditArticleCategoryConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.map((item: ApplicationsItem) =>
+      item.id === target.id ? { ...item, ...target } : item
+    ),
+  }));

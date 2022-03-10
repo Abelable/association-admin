@@ -1,10 +1,30 @@
 import styled from "@emotion/styled";
-import { Button, Dropdown, Menu, Table, TablePaginationConfig } from "antd";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Input,
+  Menu,
+  Modal,
+  Table,
+  TablePaginationConfig,
+} from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useArticleCategories } from "service/article";
+import {
+  useAddArticleCategory,
+  useArticleCategories,
+  useEditArticleCategory,
+} from "service/article";
 import { toNumber } from "utils";
-import { useArticleCategoriesSearchParams } from "./util";
+import {
+  useArticleCategoriesQueryKey,
+  useArticleCategoriesSearchParams,
+  useArticleCategoryModal,
+} from "./util";
 import { PlusOutlined } from "@ant-design/icons";
+import { ArticleCategory } from "../../../types/article";
+import { useForm } from "antd/lib/form/Form";
+import { useEffect } from "react";
 
 export const ArticleCategories = () => {
   const [params, setParams] = useArticleCategoriesSearchParams();
@@ -75,8 +95,67 @@ export const ArticleCategories = () => {
           }}
           onChange={setPagination}
         />
+        <ArticleCategoryModal articleCategories={data?.list} />
       </Main>
     </Container>
+  );
+};
+
+const ArticleCategoryModal = ({
+  articleCategories,
+}: {
+  articleCategories: ArticleCategory[];
+}) => {
+  const [form] = useForm();
+  const { articleCategoryModalOpen, editingArticleCategoryId, close } =
+    useArticleCategoryModal();
+  const articleCategory = articleCategories.find(
+    (item) => item.id === editingArticleCategoryId
+  );
+  const useMutationArticleCategory = editingArticleCategoryId
+    ? useEditArticleCategory
+    : useAddArticleCategory;
+  const { mutateAsync, isLoading, error } = useMutationArticleCategory(
+    useArticleCategoriesQueryKey()
+  );
+
+  useEffect(() => {
+    form.setFieldsValue(articleCategory);
+  }, [articleCategory, form]);
+
+  const confirm = () => {
+    form.validateFields().then(async () => {
+      await mutateAsync({ ...articleCategory, ...form.getFieldsValue() });
+      close();
+    });
+  };
+
+  return (
+    <Modal
+      title={editingArticleCategoryId ? "编辑文章分类" : "新增文章分类"}
+      visible={articleCategoryModalOpen}
+      confirmLoading={isLoading}
+      onOk={confirm}
+      onCancel={close}
+    >
+      <ErrorBox error={error} />
+      <Form form={form}>
+        <Form.Item
+          name="title"
+          label="分类名称"
+          rules={[{ required: true, message: "请输入分类名称" }]}
+        >
+          <Input placeholder="请输入分类名称" />
+        </Form.Item>
+        <Form.Item
+          name="sort"
+          label="排序序号"
+          rules={[{ required: true, message: "请输入排序序号" }]}
+        >
+          <Input placeholder="请输入排序序号" />
+        </Form.Item>
+      </Form>
+    </Modal>
   );
 };
 

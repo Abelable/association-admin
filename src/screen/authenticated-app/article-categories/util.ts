@@ -1,5 +1,5 @@
-import { useUrlQueryParams } from "utils/url";
-import { useMemo } from "react";
+import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
+import { useCallback, useMemo } from "react";
 
 export const useArticleCategoriesSearchParams = () => {
   const [params, setParmas] = useUrlQueryParams(["page", "page_size"]);
@@ -13,4 +13,41 @@ export const useArticleCategoriesSearchParams = () => {
     ),
     setParmas,
   ] as const;
+};
+
+export const useArticleCategoryModal = () => {
+  const [{ articleCategoryCreate }, setArticleCategoriesModalOpen] =
+    useUrlQueryParams(["articleCategoryCreate"]);
+  const [{ editingArticleCategoryId }, setEditingArticleCategoryId] =
+    useUrlQueryParams(["editingArticleCategoryId"]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    () => setArticleCategoriesModalOpen({ articleCategoryCreate: true }),
+    [setArticleCategoriesModalOpen]
+  );
+  const startEdit = useCallback(
+    (id: string) =>
+      setEditingArticleCategoryId({ editingArticleCategoryId: id }),
+    [setEditingArticleCategoryId]
+  );
+  const close = useCallback(
+    () =>
+      setUrlParams({ articleCategoryCreate: "", editingArticleCategoryId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    articleCategoryModalOpen:
+      articleCategoryCreate === "true" || !!editingArticleCategoryId,
+    editingArticleCategoryId,
+    open,
+    startEdit,
+    close,
+  };
+};
+
+export const useArticleCategoriesQueryKey = () => {
+  const [params] = useArticleCategoriesSearchParams();
+  return ["articleCategories", params];
 };
