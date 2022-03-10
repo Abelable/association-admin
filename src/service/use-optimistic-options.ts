@@ -1,5 +1,6 @@
 import { QueryKey, useQueryClient } from "react-query";
 import { ApplicationsItem } from "types/application";
+import { ArticleCategory } from "types/article";
 
 export const useConfig = (
   queryKey: QueryKey,
@@ -69,7 +70,13 @@ export const useAddArticleCategoryConfig = (queryKey: QueryKey) =>
 export const useEditArticleCategoryConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
-    list: old.list.map((item: ApplicationsItem) =>
+    list: old.list.map((item: ArticleCategory) =>
       item.id === target.id ? { ...item, ...target } : item
     ),
+  }));
+
+export const useDeleteArticleCategoryConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.filter((item: ArticleCategory) => item.id !== target) || [],
   }));

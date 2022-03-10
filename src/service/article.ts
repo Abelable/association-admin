@@ -3,6 +3,7 @@ import { ArticleCategoriesSearchParams, ArticleCategory } from "types/article";
 import { useHttp } from "./http";
 import {
   useAddArticleCategoryConfig,
+  useDeleteArticleCategoryConfig,
   useEditArticleCategoryConfig,
 } from "./use-optimistic-options";
 
@@ -34,5 +35,17 @@ export const useEditArticleCategory = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditArticleCategoryConfig(queryKey)
+  );
+};
+
+export const useDeleteArticleCategory = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: string) =>
+      client("/api/admin/article/class-del", {
+        data: { id },
+        method: "POST",
+      }),
+    useDeleteArticleCategoryConfig(queryKey)
   );
 };

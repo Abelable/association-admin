@@ -2,8 +2,6 @@ import styled from "@emotion/styled";
 import {
   Button,
   Dropdown,
-  Form,
-  Input,
   Menu,
   Modal,
   Table,
@@ -11,9 +9,8 @@ import {
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import {
-  useAddArticleCategory,
   useArticleCategories,
-  useEditArticleCategory,
+  useDeleteArticleCategory,
 } from "service/article";
 import { toNumber } from "utils";
 import {
@@ -22,13 +19,24 @@ import {
   useArticleCategoryModal,
 } from "./util";
 import { PlusOutlined } from "@ant-design/icons";
-import { ArticleCategory } from "../../../types/article";
-import { useForm } from "antd/lib/form/Form";
-import { useEffect } from "react";
+import { ArticleCategoryModal } from "./components/article-category-modal";
 
 export const ArticleCategories = () => {
   const [params, setParams] = useArticleCategoriesSearchParams();
   const { data, isLoading, error } = useArticleCategories(params);
+  const { startEdit, open } = useArticleCategoryModal();
+  const { mutate: deleteArticleCategory } = useDeleteArticleCategory(
+    useArticleCategoriesQueryKey()
+  );
+  const confirmDeleteArticleCategory = (id: string) => {
+    Modal.confirm({
+      title: "确定删除该文章分类吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => deleteArticleCategory(id),
+    });
+  };
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -41,7 +49,7 @@ export const ArticleCategories = () => {
       <Main>
         <Header between={true}>
           <h3>文章分类列表</h3>
-          <Button onClick={() => {}} type={"primary"} icon={<PlusOutlined />}>
+          <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
         </Header>
@@ -74,10 +82,18 @@ export const ArticleCategories = () => {
                 <Dropdown
                   overlay={
                     <Menu>
-                      <Menu.Item onClick={() => {}} key={"edit"}>
+                      <Menu.Item
+                        onClick={() => startEdit(category.id)}
+                        key={"edit"}
+                      >
                         编辑
                       </Menu.Item>
-                      <Menu.Item onClick={() => {}} key={"delete"}>
+                      <Menu.Item
+                        onClick={() =>
+                          confirmDeleteArticleCategory(category.id)
+                        }
+                        key={"delete"}
+                      >
                         删除
                       </Menu.Item>
                     </Menu>
@@ -98,64 +114,6 @@ export const ArticleCategories = () => {
         <ArticleCategoryModal articleCategories={data?.list} />
       </Main>
     </Container>
-  );
-};
-
-const ArticleCategoryModal = ({
-  articleCategories,
-}: {
-  articleCategories: ArticleCategory[];
-}) => {
-  const [form] = useForm();
-  const { articleCategoryModalOpen, editingArticleCategoryId, close } =
-    useArticleCategoryModal();
-  const articleCategory = articleCategories.find(
-    (item) => item.id === editingArticleCategoryId
-  );
-  const useMutationArticleCategory = editingArticleCategoryId
-    ? useEditArticleCategory
-    : useAddArticleCategory;
-  const { mutateAsync, isLoading, error } = useMutationArticleCategory(
-    useArticleCategoriesQueryKey()
-  );
-
-  useEffect(() => {
-    form.setFieldsValue(articleCategory);
-  }, [articleCategory, form]);
-
-  const confirm = () => {
-    form.validateFields().then(async () => {
-      await mutateAsync({ ...articleCategory, ...form.getFieldsValue() });
-      close();
-    });
-  };
-
-  return (
-    <Modal
-      title={editingArticleCategoryId ? "编辑文章分类" : "新增文章分类"}
-      visible={articleCategoryModalOpen}
-      confirmLoading={isLoading}
-      onOk={confirm}
-      onCancel={close}
-    >
-      <ErrorBox error={error} />
-      <Form form={form}>
-        <Form.Item
-          name="title"
-          label="分类名称"
-          rules={[{ required: true, message: "请输入分类名称" }]}
-        >
-          <Input placeholder="请输入分类名称" />
-        </Form.Item>
-        <Form.Item
-          name="sort"
-          label="排序序号"
-          rules={[{ required: true, message: "请输入排序序号" }]}
-        >
-          <Input placeholder="请输入排序序号" />
-        </Form.Item>
-      </Form>
-    </Modal>
   );
 };
 
