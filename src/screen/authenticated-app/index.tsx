@@ -7,7 +7,7 @@ import { HashRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
-import { ArticleCategory } from "./article/category";
+import { ArticleCategories } from "./article-categories/index";
 import { ArticleList } from "./article/list";
 import { ArticleBanner } from "./article/banner";
 import { Applications } from "./applications";
@@ -39,7 +39,10 @@ export const AuthenticatedApp = () => {
           <Content>
             <Routes>
               <Route path="users" element={<Users />} />
-              <Route path="article_category" element={<ArticleCategory />} />
+              <Route
+                path="article_categories"
+                element={<ArticleCategories />}
+              />
               <Route path="article_list" element={<ArticleList />} />
               <Route path="article_banner" element={<ArticleBanner />} />
               <Route path="applications" element={<Applications />} />
@@ -75,8 +78,8 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           icon={<ReadOutlined />}
           title={"文章管理"}
         >
-          <Menu.Item key="article_category" icon={<PartitionOutlined />}>
-            <Link to={"article_category"}>分类管理</Link>
+          <Menu.Item key="article_categories" icon={<PartitionOutlined />}>
+            <Link to={"article_categories"}>分类管理</Link>
           </Menu.Item>
           <Menu.Item key="article_list" icon={<BarsOutlined />}>
             <Link to={"article_list"}>文章列表</Link>
