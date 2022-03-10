@@ -11,8 +11,8 @@ import {
 import {
   useAddApplicationConfig,
   useDealApplicationConfig,
-  useDeleteApplicationConfig,
-  useEditApplicationsConfig,
+  useDeleteConfig,
+  useEditConfig,
   useRejectApplicationConfig,
 } from "./use-optimistic-options";
 
@@ -59,7 +59,7 @@ export const useEditApplication = (queryKey: QueryKey) => {
         data: { id: params.id, apply_content_json: params.apply_content_json },
         method: "POST",
       }),
-    useEditApplicationsConfig(queryKey)
+    useEditConfig(queryKey)
   );
 };
 
@@ -71,7 +71,7 @@ export const useEditApplicationLevel = (queryKey: QueryKey) => {
         data: { id, member_level: level_id },
         method: "POST",
       }),
-    useEditApplicationsConfig(queryKey)
+    useEditConfig(queryKey)
   );
 };
 
@@ -107,6 +107,6 @@ export const useDeleteApplication = (queryKey: QueryKey) => {
         data: { ids: id },
         method: "POST",
       }),
-    useDeleteApplicationConfig(queryKey)
+    useDeleteConfig(queryKey)
   );
 };

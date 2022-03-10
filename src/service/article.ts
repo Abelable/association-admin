@@ -1,15 +1,22 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
-import { ArticleCategoriesSearchParams, ArticleCategory } from "types/article";
+import {
+  ArticleBanner,
+  ArticleBannersResult,
+  ArticleBannersSearchParams,
+  ArticleCategoriesResult,
+  ArticleCategoriesSearchParams,
+  ArticleCategory,
+} from "types/article";
 import { useHttp } from "./http";
 import {
-  useAddArticleCategoryConfig,
-  useDeleteArticleCategoryConfig,
-  useEditArticleCategoryConfig,
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
 } from "./use-optimistic-options";
 
 export const useArticleCategories = (params: ArticleCategoriesSearchParams) => {
   const client = useHttp();
-  return useQuery(["articleCategories", params], () =>
+  return useQuery<ArticleCategoriesResult>(["articleCategories", params], () =>
     client("/api/admin/article/class-list", { data: params })
   );
 };
@@ -22,7 +29,7 @@ export const useAddArticleCategory = (queryKey: QueryKey) => {
         data: params,
         method: "POST",
       }),
-    useAddArticleCategoryConfig(queryKey)
+    useAddConfig(queryKey)
   );
 };
 
@@ -34,7 +41,7 @@ export const useEditArticleCategory = (queryKey: QueryKey) => {
         data: params,
         method: "POST",
       }),
-    useEditArticleCategoryConfig(queryKey)
+    useEditConfig(queryKey)
   );
 };
 
@@ -46,6 +53,51 @@ export const useDeleteArticleCategory = (queryKey: QueryKey) => {
         data: { id },
         method: "POST",
       }),
-    useDeleteArticleCategoryConfig(queryKey)
+    useDeleteConfig(queryKey)
+  );
+};
+
+export const useArticleBanners = (
+  params: Partial<ArticleBannersSearchParams>
+) => {
+  const client = useHttp();
+  return useQuery<ArticleBannersResult>(["articleBanners", params], () =>
+    client("/api/admin/banner/list", { data: params })
+  );
+};
+
+export const useAddArticleBanner = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<ArticleBanner>) =>
+      client("/api/admin/banner/save", {
+        data: params,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
+  );
+};
+
+export const useEditArticleBanner = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<ArticleBanner>) =>
+      client("/api/admin/banner/save", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteArticleBanner = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: string) =>
+      client("/api/admin/banner/del", {
+        data: { id },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
   );
 };

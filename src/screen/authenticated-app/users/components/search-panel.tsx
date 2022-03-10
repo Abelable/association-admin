@@ -79,6 +79,7 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
+          style={{ marginRight: 0 }}
           type={"primary"}
           onClick={() => setParams({ ...params, ...temporaryParams })}
         >

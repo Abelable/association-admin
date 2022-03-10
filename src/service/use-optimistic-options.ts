@@ -1,6 +1,5 @@
 import { QueryKey, useQueryClient } from "react-query";
 import { ApplicationsItem } from "types/application";
-import { ArticleCategory } from "types/article";
 
 export const useConfig = (
   queryKey: QueryKey,
@@ -20,6 +19,26 @@ export const useConfig = (
   };
 };
 
+export const useAddConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: [{ id: `${Number(old.list[0].id) + 1}`, ...target }, ...old.list],
+  }));
+
+export const useEditConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.map((item: any) =>
+      item.id === target.id ? { ...item, ...target } : item
+    ),
+  }));
+
+export const useDeleteConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => ({
+    ...old,
+    list: old.list.filter((item: any) => item.id !== target) || [],
+  }));
+
 export const useAddApplicationConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
@@ -27,14 +46,6 @@ export const useAddApplicationConfig = (queryKey: QueryKey) =>
       { id: `${Number(old.list[0].id) + 1}`, is_deal: "0", ...target },
       ...old.list,
     ],
-  }));
-
-export const useEditApplicationsConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    list: old.list.map((item: ApplicationsItem) =>
-      item.id === target.id ? { ...item, ...target } : item
-    ),
   }));
 
 export const useDealApplicationConfig = (queryKey: QueryKey) =>
@@ -53,30 +64,4 @@ export const useRejectApplicationConfig = (queryKey: QueryKey) =>
         ? { ...item, is_deal: "2", reject_mark: target.reject_mark }
         : item
     ),
-  }));
-
-export const useDeleteApplicationConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    list: old.list.filter((item: ApplicationsItem) => item.id !== target) || [],
-  }));
-
-export const useAddArticleCategoryConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    list: [{ id: `${Number(old.list[0].id) + 1}`, ...target }, ...old.list],
-  }));
-
-export const useEditArticleCategoryConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    list: old.list.map((item: ArticleCategory) =>
-      item.id === target.id ? { ...item, ...target } : item
-    ),
-  }));
-
-export const useDeleteArticleCategoryConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    list: old.list.filter((item: ArticleCategory) => item.id !== target) || [],
   }));

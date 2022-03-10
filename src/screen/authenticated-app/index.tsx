@@ -9,7 +9,6 @@ import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { ArticleCategories } from "./article-categories/index";
 import { ArticleList } from "./article/list";
-import { ArticleBanner } from "./article/banner";
 import { Applications } from "./applications";
 
 import {
@@ -23,6 +22,7 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
+import { ArticleBanners } from "./article-banners";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -44,7 +44,7 @@ export const AuthenticatedApp = () => {
                 element={<ArticleCategories />}
               />
               <Route path="article_list" element={<ArticleList />} />
-              <Route path="article_banner" element={<ArticleBanner />} />
+              <Route path="article_banners" element={<ArticleBanners />} />
               <Route path="applications" element={<Applications />} />
               <Route
                 path={"*"}
@@ -84,8 +84,8 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Menu.Item key="article_list" icon={<BarsOutlined />}>
             <Link to={"article_list"}>文章列表</Link>
           </Menu.Item>
-          <Menu.Item key="article_banner" icon={<PictureOutlined />}>
-            <Link to={"article_banner"}>头图管理</Link>
+          <Menu.Item key="article_banners" icon={<PictureOutlined />}>
+            <Link to={"article_banners"}>头图管理</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="applications" icon={<UsergroupAddOutlined />}>

@@ -111,7 +111,7 @@ export const ArticleCategories = () => {
           }}
           onChange={setPagination}
         />
-        <ArticleCategoryModal articleCategories={data?.list} />
+        <ArticleCategoryModal articleCategories={data?.list || []} />
       </Main>
     </Container>
   );
