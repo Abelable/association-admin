@@ -20,7 +20,7 @@ export const ArticleCategories = () => {
     <Container>
       <Main>
         <Header between={true}>
-          <h3>分类列表</h3>
+          <h3>文章分类列表</h3>
           <Button onClick={() => {}} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
