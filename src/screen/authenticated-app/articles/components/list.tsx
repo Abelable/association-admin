@@ -10,18 +10,19 @@ import {
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
-import { useArticleBannersQueryKey, useBannerModal } from "../util";
-import { ArticleBanner } from "types/article";
-import { useDeleteArticleBanner } from "service/article";
+import { useArticleModal, useArticlesQueryKey } from "../util";
+import { ArticleItem, ArticlesSearchParams } from "types/article";
+import { useDeleteArticle } from "service/article";
 
-interface ListProps extends TableProps<ArticleBanner>, SearchPanelProps {
+interface ListProps extends TableProps<ArticleItem> {
   error: Error | unknown;
+  params: Partial<ArticlesSearchParams>;
+  setParams: (params: Partial<ArticlesSearchParams>) => void;
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const { open } = useBannerModal();
+  const { open } = useArticleModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -33,7 +34,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>头图列表</h3>
+        <h3>文章列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -44,7 +45,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         columns={[
           {
             title: "编号",
-            render: (value, banner, index) =>
+            render: (value, article, index) =>
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
@@ -54,35 +55,13 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             dataIndex: "title",
           },
           {
-            title: "头图",
-            render: (value, banner) => (
+            title: "图片",
+            render: (value, article) => (
               <img
-                style={{ width: "11.5rem", height: "5rem" }}
-                src={banner.img}
+                style={{ width: "8.8rem", height: "6.2rem" }}
+                src={article.img}
                 alt=""
               />
-            ),
-          },
-          {
-            title: "展示",
-            render: (value, banner) => (
-              <span>{banner.is_show === "1" ? "展示" : "隐藏"}</span>
-            ),
-          },
-          {
-            title: "跳转类型",
-            render: (value, banner) => (
-              <span>{banner.link_type === "1" ? "文章" : "H5"}</span>
-            ),
-          },
-          {
-            title: "跳转链接",
-            render: (value, banner) => (
-              <span>
-                {banner.link_type === "1"
-                  ? `文章ID：${banner.article_id}`
-                  : banner.redirect_url}
-              </span>
             ),
           },
           {
@@ -90,28 +69,41 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             dataIndex: "sort",
           },
           {
-            title: "时间",
-            render: (value, banner) => (
-              <>
-                <div>
-                  开始：
-                  {dayjs(Number(banner.s_time) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
-                  )}
-                </div>
-                <div>
-                  结束：
-                  {dayjs(Number(banner.e_time) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
-                  )}
-                </div>
-              </>
+            title: "观看数",
+            dataIndex: "show_look",
+          },
+          {
+            title: "点赞数",
+            dataIndex: "show_like",
+          },
+          {
+            title: "分类标签",
+            dataIndex: "class_name",
+          },
+          {
+            title: "创建时间",
+            render: (value, article) => (
+              <span>
+                {dayjs(Number(article.created_at) * 1000).format(
+                  "YYYY-MM-DD HH:mm"
+                )}
+              </span>
+            ),
+          },
+          {
+            title: "修改时间",
+            render: (value, article) => (
+              <span>
+                {dayjs(Number(article.updated_at) * 1000).format(
+                  "YYYY-MM-DD HH:mm"
+                )}
+              </span>
             ),
           },
           {
             title: "操作",
-            render(value, banner) {
-              return <More id={banner.id} />;
+            render(value, article) {
+              return <More id={article.id} />;
             },
           },
         ]}
@@ -123,19 +115,17 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 };
 
 const More = ({ id }: { id: string }) => {
-  const { mutate: deleteArticleBanner } = useDeleteArticleBanner(
-    useArticleBannersQueryKey()
-  );
+  const { mutate: deleteArticle } = useDeleteArticle(useArticlesQueryKey());
 
-  const { startEdit } = useBannerModal();
+  const { startEdit } = useArticleModal();
 
-  const confirmDeleteBanner = (id: string) => {
+  const confirmDeleteArticle = (id: string) => {
     Modal.confirm({
-      title: "确定删除该头图吗？",
+      title: "确定删除该文章吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteArticleBanner(id),
+      onOk: () => deleteArticle(id),
     });
   };
 
@@ -146,7 +136,7 @@ const More = ({ id }: { id: string }) => {
           <Menu.Item onClick={() => startEdit(id)} key={"edit"}>
             编辑
           </Menu.Item>
-          <Menu.Item onClick={() => confirmDeleteBanner(id)} key={"delete"}>
+          <Menu.Item onClick={() => confirmDeleteArticle(id)} key={"delete"}>
             删除
           </Menu.Item>
         </Menu>

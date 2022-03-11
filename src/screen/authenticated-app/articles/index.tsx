@@ -1,19 +1,24 @@
 import styled from "@emotion/styled";
-import { useArticleBanners } from "service/article";
+import { useArticleCategories, useArticles } from "service/article";
 import { toNumber } from "utils";
-import { BannerModal } from "./components/banner-modal";
+import { ArticleModal } from "./components/article-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
-import { useArticleBannersSearchParams } from "./util";
+import { useArticlesSearchParams } from "./util";
 
-export const ArticleBanners = () => {
-  const [params, setParams] = useArticleBannersSearchParams();
-  const { data, isLoading, error } = useArticleBanners(params);
+export const Articles = () => {
+  const [params, setParams] = useArticlesSearchParams();
+  const { data, isLoading, error } = useArticles(params);
+  const { data: category } = useArticleCategories({ page: 1, page_size: 10 });
 
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          categoryList={category?.list || []}
+          params={params}
+          setParams={setParams}
+        />
         <List
           error={error}
           params={params}
@@ -26,7 +31,7 @@ export const ArticleBanners = () => {
             total: toNumber(data?.total),
           }}
         />
-        <BannerModal />
+        <ArticleModal />
       </Main>
     </Container>
   );

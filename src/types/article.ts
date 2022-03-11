@@ -41,3 +41,39 @@ export interface ArticleBannersResult {
   page_size: string;
   total: string;
 }
+
+export interface ArticlesSearchParams {
+  page: number;
+  page_size: number;
+  article_class_id: string;
+  title: string;
+}
+
+export interface ArticleItem {
+  id: string;
+  title: string;
+  class_name: string;
+  sort: number;
+  img: string;
+  show_like: number;
+  show_look: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ArticlesResult {
+  list: ArticleItem[];
+  page: string;
+  page_size: string;
+  total: string;
+}
+export interface ArticleForm {
+  id: string;
+  title: string;
+  article_class_id: number;
+  sort: number;
+  img: string;
+  virtual_like: number;
+  virtual_look: number;
+  content: string;
+}

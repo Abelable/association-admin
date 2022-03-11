@@ -8,7 +8,6 @@ import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { ArticleCategories } from "./article-categories/index";
-import { ArticleList } from "./article/list";
 import { Applications } from "./applications";
 
 import {
@@ -23,6 +22,7 @@ import {
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { ArticleBanners } from "./article-banners";
+import { Articles } from "./articles";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -43,7 +43,7 @@ export const AuthenticatedApp = () => {
                 path="article_categories"
                 element={<ArticleCategories />}
               />
-              <Route path="article_list" element={<ArticleList />} />
+              <Route path="articles" element={<Articles />} />
               <Route path="article_banners" element={<ArticleBanners />} />
               <Route path="applications" element={<Applications />} />
               <Route
@@ -81,8 +81,8 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Menu.Item key="article_categories" icon={<PartitionOutlined />}>
             <Link to={"article_categories"}>分类管理</Link>
           </Menu.Item>
-          <Menu.Item key="article_list" icon={<BarsOutlined />}>
-            <Link to={"article_list"}>文章列表</Link>
+          <Menu.Item key="articles" icon={<BarsOutlined />}>
+            <Link to={"articles"}>文章列表</Link>
           </Menu.Item>
           <Menu.Item key="article_banners" icon={<PictureOutlined />}>
             <Link to={"article_banners"}>头图管理</Link>
