@@ -1,11 +1,13 @@
 import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import { useArticleModal, useArticlesQueryKey } from "../util";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { ArticleCategory, ArticleForm } from "types/article";
+import { ArticleCategory } from "types/article";
 import { useAddArticle, useEditArticle } from "service/article";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export const ArticleModal = ({
   categoryList,
@@ -21,6 +23,7 @@ export const ArticleModal = ({
   const { mutateAsync, error, isLoading } = useMutationArticle(
     useArticlesQueryKey()
   );
+  const [content, setContent] = useState("");
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
@@ -29,33 +32,25 @@ export const ArticleModal = ({
 
   const closeModal = () => {
     form.resetFields();
+    setContent("");
     close();
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { img, link_type, linkInfo, dateRange, ...restParams } =
-        form.getFieldsValue();
-      const s_time = `${Math.floor(dateRange[0].valueOf() / 1000) * 1000}`;
-      const e_time = `${Math.floor(dateRange[1].valueOf() / 1000) * 1000}`;
-      const articleParams: ArticleForm = {
+      await mutateAsync({
         id: editingArticleId || "",
-        s_time,
-        e_time,
-        link_type,
-        article_id: link_type === "1" ? linkInfo : "1",
-        redirect_url: link_type === "2" ? linkInfo : "",
-        img: img[0].url,
-        ...restParams,
-      };
-      await mutateAsync(articleParams);
+        content,
+        ...form.getFieldsValue(),
+      });
       closeModal();
     });
   };
 
   useEffect(() => {
     if (editingArticleForm) {
-      const { img, ...restFieldsValue } = editingArticleForm;
+      const { img, content, ...restFieldsValue } = editingArticleForm;
       form.setFieldsValue({ img: [{ url: img }], ...restFieldsValue });
+      setContent(content);
     }
   }, [form, editingArticleForm]);
 
@@ -129,9 +124,11 @@ export const ArticleModal = ({
           tooltip="图片大小不能超过10MB"
           valuePropName="fileList"
           getValueFromEvent={normFile}
-          rules={[{ required: true, message: "请上传分享图片" }]}
         >
           <OssUpload maxCount={1} />
+        </Form.Item>
+        <Form.Item label="文章内容" tooltip="排版自定义规则">
+          <ReactQuill theme="snow" value={content} onChange={setContent} />
         </Form.Item>
       </Form>
     </Drawer>
