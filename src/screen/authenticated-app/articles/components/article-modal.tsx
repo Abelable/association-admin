@@ -1,23 +1,17 @@
-import {
-  Button,
-  Col,
-  DatePicker,
-  Drawer,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-} from "antd";
+import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import { useArticleModal, useArticlesQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { ArticleForm } from "types/article";
+import { ArticleCategory, ArticleForm } from "types/article";
 import { useAddArticle, useEditArticle } from "service/article";
 
-export const ArticleModal = () => {
+export const ArticleModal = ({
+  categoryList,
+}: {
+  categoryList: ArticleCategory[];
+}) => {
   const [form] = useForm();
 
   const { articleModalOpen, editingArticleId, editingArticleForm, close } =
@@ -59,7 +53,10 @@ export const ArticleModal = () => {
   };
 
   useEffect(() => {
-    editingArticleForm && form.setFieldsValue(editingArticleForm);
+    if (editingArticleForm) {
+      const { img, ...restFieldsValue } = editingArticleForm;
+      form.setFieldsValue({ img: [{ url: img }], ...restFieldsValue });
+    }
   }, [form, editingArticleForm]);
 
   return (
@@ -94,16 +91,13 @@ export const ArticleModal = () => {
           <Col span={12}>
             <Form.Item
               name="article_class_id"
-              noStyle
-              rules={[{ required: true, message: "请选择跳文章分类" }]}
+              label="文章分类"
+              rules={[{ required: true, message: "请选择文章分类" }]}
             >
               <Select placeholder="请选择文章分类">
-                {[
-                  { name: "跳转新闻", value: "1" },
-                  { name: "跳转H5", value: "2" },
-                ].map((item, index) => (
-                  <Select.Option key={index} value={item.value}>
-                    {item.name}
+                {categoryList?.map(({ id, title }) => (
+                  <Select.Option key={id} value={id}>
+                    {title}
                   </Select.Option>
                 ))}
               </Select>
@@ -112,41 +106,20 @@ export const ArticleModal = () => {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="dateRange"
-              label="投放时间"
-              rules={[{ required: true, message: "请选择投放时间" }]}
-            >
-              <DatePicker.RangePicker style={{ width: "100%" }} />
+            <Form.Item label="文章排序" name="sort">
+              <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              label="跳转信息"
-              name="linkInfo"
-              rules={[{ required: true, message: "请输入新闻编号或H5地址" }]}
-            >
-              <Input placeholder="请输入新闻编号或H5地址" />
+            <Form.Item label="虚拟点赞数" name="virtual_like">
+              <Input placeholder="请输入虚拟点赞数" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="is_show"
-              label="是否显示"
-              rules={[{ required: true, message: "请选择显示或隐藏" }]}
-            >
-              <Select placeholder="请选择显示或隐藏">
-                {[
-                  { name: "显示", value: "1" },
-                  { name: "隐藏", value: "0" },
-                ].map((item, index) => (
-                  <Select.Option key={index} value={item.value}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
+            <Form.Item label="虚拟观看数" name="virtual_look">
+              <Input placeholder="请输入虚拟观看数" />
             </Form.Item>
           </Col>
         </Row>

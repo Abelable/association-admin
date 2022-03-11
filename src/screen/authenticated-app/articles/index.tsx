@@ -31,7 +31,7 @@ export const Articles = () => {
             total: toNumber(data?.total),
           }}
         />
-        <ArticleModal />
+        <ArticleModal categoryList={category?.list || []} />
       </Main>
     </Container>
   );
