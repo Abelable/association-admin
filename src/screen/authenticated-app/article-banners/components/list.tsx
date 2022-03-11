@@ -81,7 +81,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             render: (value, banner) => (
               <span>
                 {banner.link_type === "1"
-                  ? banner.article_id
+                  ? `文章ID：${banner.article_id}`
                   : banner.redirect_url}
               </span>
             ),

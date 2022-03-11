@@ -69,14 +69,7 @@ export const useArticleBanners = (
 export const useAddArticleBanner = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (
-      params: Partial<
-        Omit<ArticleBanner, "link_type" | "id"> & {
-          id: string | 0;
-          link_type: number;
-        }
-      >
-    ) =>
+    (params: Partial<ArticleBanner>) =>
       client("/api/admin/banner/save", {
         data: params,
         method: "POST",
@@ -88,14 +81,7 @@ export const useAddArticleBanner = (queryKey: QueryKey) => {
 export const useEditArticleBanner = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (
-      params: Partial<
-        Omit<ArticleBanner, "link_type" | "id"> & {
-          id: string | 0;
-          link_type: number;
-        }
-      >
-    ) =>
+    (params: Partial<ArticleBanner>) =>
       client("/api/admin/banner/save", {
         data: params,
         method: "POST",

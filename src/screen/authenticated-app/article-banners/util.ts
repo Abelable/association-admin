@@ -1,5 +1,5 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { useQueryClient } from "react-query";
 import { ArticleBanner, ArticleBannersResult } from "types/article";
 import moment from "moment";
@@ -62,9 +62,8 @@ export const useBannerModal = () => {
   };
 };
 
-interface BannerForm extends Partial<Omit<ArticleBanner, "img" | "link_type">> {
+interface BannerForm extends Partial<Omit<ArticleBanner, "img">> {
   img: any[];
-  link_type: number;
   linkInfo: string;
   dateRange: any[];
 }
@@ -81,7 +80,7 @@ const useEditingBannerFrom = (id: string) => {
         title: editingBanner.title,
         is_show: editingBanner.is_show,
         img: [{ url: editingBanner.img }],
-        link_type: Number(editingBanner.link_type),
+        link_type: editingBanner.link_type === "0" ? "2" : "1",
         sort: editingBanner.sort,
         linkInfo:
           editingBanner.link_type === "1"
