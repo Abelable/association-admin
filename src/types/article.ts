@@ -33,8 +33,6 @@ export interface ArticleBanner {
   sort: string;
   s_time: string;
   e_time: string;
-  status: string;
-  created_at: string;
 }
 
 export interface ArticleBannersResult {

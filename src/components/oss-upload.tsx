@@ -3,7 +3,9 @@ import { useOssConfig } from "service/common";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-interface OssUploadProps extends React.ComponentProps<typeof Upload> {}
+interface OssUploadProps extends React.ComponentProps<typeof Upload> {
+  maxCount?: number;
+}
 
 export const OssUpload = (props: OssUploadProps) => {
   const { data: ossConfig } = useOssConfig();
@@ -36,12 +38,14 @@ export const OssUpload = (props: OssUploadProps) => {
         listType="picture-card"
         {...props}
       >
-        {
+        {props.maxCount &&
+        props.fileList &&
+        props.fileList.length >= props.maxCount ? null : (
           <div>
             <PlusOutlined />
             <div style={{ marginTop: 8 }}>点击上传</div>
           </div>
-        }
+        )}
       </Upload>
       <Modal
         visible={!!previewImage}

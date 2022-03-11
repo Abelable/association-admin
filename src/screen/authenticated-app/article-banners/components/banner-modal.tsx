@@ -9,20 +9,19 @@ import {
   Select,
   Space,
 } from "antd";
-import { useQueryClient } from "react-query";
 import { useBannerModal, useArticleBannersQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { ArticleBannersResult } from "types/article";
+import { ArticleBanner } from "types/article";
 import { useAddArticleBanner, useEditArticleBanner } from "service/article";
 
 export const BannerModal = () => {
   const [form] = useForm();
 
-  const { bannerModalOpen, editingBannerId, close } = useBannerModal();
-  const editingBannerForm = useEditingBannerForm(editingBannerId);
+  const { bannerModalOpen, editingBannerId, editingBannerForm, close } =
+    useBannerModal();
 
   const useMutationBanner = editingBannerId
     ? useEditArticleBanner
@@ -40,11 +39,28 @@ export const BannerModal = () => {
     form.resetFields();
     close();
   };
-
   const submit = () => {
-    console.log(form.validateFields());
     form.validateFields().then(async () => {
-      // const {} = form.getFieldsValue();
+      const { img, link_type, linkInfo, dateRange, ...restParams } =
+        form.getFieldsValue();
+      const s_time = `${Math.floor(dateRange[0].valueOf() / 100000) * 100000}`;
+      const e_time = `${Math.floor(dateRange[1].valueOf() / 100000) * 100000}`;
+      const bannerParams: Partial<
+        Omit<ArticleBanner, "link_type" | "id"> & {
+          id: string | 0;
+          link_type: number;
+        }
+      > = {
+        id: editingBannerId || 0,
+        s_time,
+        e_time,
+        link_type,
+        article_id: link_type === 1 ? linkInfo : "",
+        redirect_url: link_type === 2 ? linkInfo : "",
+        img: img[0].url,
+        ...restParams,
+      };
+      await mutateAsync({ ...bannerParams });
       closeModal();
     });
   };
@@ -101,39 +117,30 @@ export const BannerModal = () => {
           <Col span={12}>
             <Form.Item
               label="跳转信息"
-              name={["linkType", "linkInfo"]}
-              rules={[{ required: true, message: "请选择并填写跳转信息" }]}
+              name="linkInfo"
+              rules={[{ required: true, message: "请输入新闻编号或H5地址" }]}
             >
-              <Input.Group compact>
-                <Form.Item
-                  name="linkType"
-                  noStyle
-                  rules={[{ required: true, message: "Province is required" }]}
-                >
-                  <Select style={{ width: "35%" }} placeholder="请选择类型">
-                    {[
-                      { name: "跳转新闻", value: 1 },
-                      { name: "跳转H5", value: 2 },
-                    ].map((item, index) => (
-                      <Select.Option key={index} value={item.value}>
-                        {item.name}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  name="linkInfo"
-                  noStyle
-                  rules={[
-                    { required: true, message: "请输入新闻编号或H5地址" },
-                  ]}
-                >
-                  <Input
-                    style={{ width: "65%" }}
-                    placeholder="请输入新闻编号或H5地址"
-                  />
-                </Form.Item>
-              </Input.Group>
+              <Input
+                addonBefore={
+                  <Form.Item
+                    name="link_type"
+                    noStyle
+                    rules={[{ required: true, message: "请选择跳转类型" }]}
+                  >
+                    <Select placeholder="请选择类型">
+                      {[
+                        { name: "跳转新闻", value: 1 },
+                        { name: "跳转H5", value: 2 },
+                      ].map((item, index) => (
+                        <Select.Option key={index} value={item.value}>
+                          {item.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                }
+                placeholder="请输入新闻编号或H5地址"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -146,8 +153,8 @@ export const BannerModal = () => {
             >
               <Select placeholder="请选择显示或隐藏">
                 {[
-                  { name: "显示", value: "1" },
-                  { name: "隐藏", value: "0" },
+                  { name: "显示", value: 1 },
+                  { name: "隐藏", value: 0 },
                 ].map((item, index) => (
                   <Select.Option key={index} value={item.value}>
                     {item.name}
@@ -165,19 +172,9 @@ export const BannerModal = () => {
           getValueFromEvent={normFile}
           rules={[{ required: true, message: "请上传分享图片" }]}
         >
-          <OssUpload />
+          <OssUpload maxCount={1} />
         </Form.Item>
       </Form>
     </Drawer>
   );
-};
-
-const useEditingBannerForm = (id: string) => {
-  const queryClient = useQueryClient();
-  const bannersResult: ArticleBannersResult | undefined =
-    queryClient.getQueryData(useArticleBannersQueryKey());
-  const currentBanner = bannersResult
-    ? bannersResult.list.find((item) => item.id === id)
-    : undefined;
-  return currentBanner;
 };
