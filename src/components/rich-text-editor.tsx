@@ -1,10 +1,15 @@
 import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useOssConfig } from "service/common";
+import { http } from "service/http";
 
-export const RichTextEditor = () => {
+interface RichTextEditorProps extends React.ComponentProps<typeof ReactQuill> {}
+
+export const RichTextEditor = (props: RichTextEditorProps) => {
   const [text, setText] = useState("");
   const quillRef: any = useRef(null);
+  const { data: ossConfig } = useOssConfig();
 
   // 配置toolbar
   const toolbarContainer = [
@@ -18,10 +23,8 @@ export const RichTextEditor = () => {
     [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
     [{ direction: "rtl" }], // text direction
     ["blockquote", "code-block"],
-
     [{ list: "ordered" }, { list: "bullet" }],
-    ["image", "video", "link"],
-
+    ["image", "link"],
     ["clean"],
   ];
 
@@ -32,30 +35,28 @@ export const RichTextEditor = () => {
     input.setAttribute("accept", "image/*");
     input.click();
     input.onchange = async () => {
-      // try {
-      //   // 获取 signature
-      //   const res = await fetchSignature();
-      //   if (!res.success) return;
-      //   const oss = res.data;
-      //   const file = input.files[0];
-      //   let formData = new FormData();
-      //   const fileName = file.name;
-      //   formData.append('key', `website/${oss['dir']}/${fileName}`);
-      //   formData.append('dir', oss['dir']);
-      //   formData.append('policy', oss['policy']);
-      //   formData.append('OSSAccessKeyId', oss['accessid']);
-      //   formData.append('success_action_status', '200');
-      //   formData.append('signature', oss['signature']);
-      //   formData.append('file', file, fileName);
-      //   const host = oss.host.replace('http', 'https');
-      //   // 上传 oss
-      //   await axios.post(host, formData);
-      //   const url = `${host}/website/${oss['dir']}/${fileName}`;
-      //   const range = quillEditor.getSelection();
-      //   quillEditor.insertEmbed(range.index, 'image', url);
-      // } catch (err) {
-      //   console.error(err);
-      // }
+      try {
+        const file = input.files ? input.files[0] : null;
+        const fileName = file?.name;
+
+        const formData = new FormData();
+        formData.append("key", `website/${ossConfig?.dir}/${fileName}`);
+        formData.append("dir", ossConfig?.dir || "");
+        formData.append("policy", ossConfig?.policy || "");
+        formData.append("OSSAccessKeyId", ossConfig?.OSSAccessKeyId || "");
+        formData.append("success_action_status", "200");
+        formData.append("signature", ossConfig?.signature || "");
+        formData.append("file", file || "", fileName);
+
+        const host = ossConfig?.host.replace("http", "https") || "";
+        // 上传 ossConfig
+        await http(host, { data: formData, method: "POST" });
+        const url = `${host}/website/${ossConfig?.dir}/${fileName}`;
+        const range = quillEditor.getSelection();
+        quillEditor.insertEmbed(range.index, "image", url);
+      } catch (err) {
+        console.error(err);
+      }
     };
   };
 
@@ -83,6 +84,7 @@ export const RichTextEditor = () => {
       modules={modules}
       value={text}
       onChange={() => handleTextChange}
+      {...props}
     />
   );
 };
