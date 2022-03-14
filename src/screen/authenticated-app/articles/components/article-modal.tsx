@@ -16,9 +16,8 @@ import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { ArticleCategory } from "types/article";
 import { useAddArticle, useEditArticle } from "service/article";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import styled from "@emotion/styled";
+import { RichTextEditor } from "components/rich-text-editor";
 
 export const ArticleModal = ({
   categoryList,
@@ -151,7 +150,7 @@ export const ArticleModal = ({
             <OssUpload maxCount={1} />
           </Form.Item>
           <Form.Item label="文章内容" tooltip="排版自定义规则">
-            <ReactQuill theme="snow" value={content} onChange={setContent} />
+            <RichTextEditor />
           </Form.Item>
         </Form>
       )}

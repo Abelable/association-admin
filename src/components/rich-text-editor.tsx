@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import styled from "@emotion/styled";
+import { useRef, useState, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useOssConfig } from "service/common";
-import { http } from "service/http";
 
 interface RichTextEditorProps extends React.ComponentProps<typeof ReactQuill> {}
 
@@ -11,80 +11,78 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
   const quillRef: any = useRef(null);
   const { data: ossConfig } = useOssConfig();
 
-  // 配置toolbar
-  const toolbarContainer = [
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-    [{ font: [] }],
-    [{ header: 1 }, { header: 2 }], // custom button values
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    ["bold", "italic", "underline", "strike"], // toggled buttons
-    [{ align: [] }],
-    [{ color: [] }, { background: [] }],
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-    [{ direction: "rtl" }], // text direction
-    ["blockquote", "code-block"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["image", "link"],
-    ["clean"],
-  ];
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          ["bold", "italic", "underline", "strike"],
+          [{ header: 1 }, { header: 2 }],
+          [{ color: [] }, { background: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
+          ["link", "image"],
+        ],
+        handlers: {
+          image: () => {
+            const quillEditor = quillRef.current.getEditor();
+            const input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
+            input.click();
+            input.onchange = async () => {
+              try {
+                const file = input.files ? input.files[0] : null;
+                const suffix =
+                  file?.name.slice(file.name.lastIndexOf(".")) || "";
+                const filename = Date.now() + suffix;
 
-  const showImageUI = () => {
-    const quillEditor = quillRef.current.getEditor();
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
-    input.onchange = async () => {
-      try {
-        const file = input.files ? input.files[0] : null;
-        const fileName = file?.name;
+                const formData = new FormData();
+                formData.append("key", `${ossConfig?.dir}${filename}`);
+                formData.append("dir", ossConfig?.dir || "");
+                formData.append("policy", ossConfig?.policy || "");
+                formData.append(
+                  "OSSAccessKeyId",
+                  ossConfig?.OSSAccessKeyId || ""
+                );
+                formData.append("success_action_status", "200");
+                formData.append("signature", ossConfig?.signature || "");
+                formData.append("file", file || "", filename);
 
-        const formData = new FormData();
-        formData.append("key", `website/${ossConfig?.dir}/${fileName}`);
-        formData.append("dir", ossConfig?.dir || "");
-        formData.append("policy", ossConfig?.policy || "");
-        formData.append("OSSAccessKeyId", ossConfig?.OSSAccessKeyId || "");
-        formData.append("success_action_status", "200");
-        formData.append("signature", ossConfig?.signature || "");
-        formData.append("file", file || "", fileName);
+                await window.fetch(`https:${ossConfig?.host}`, {
+                  method: "POST",
+                  body: formData,
+                });
 
-        const host = ossConfig?.host.replace("http", "https") || "";
-        // 上传 ossConfig
-        await http(host, { data: formData, method: "POST" });
-        const url = `${host}/website/${ossConfig?.dir}/${fileName}`;
-        const range = quillEditor.getSelection();
-        quillEditor.insertEmbed(range.index, "image", url);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-  };
-
-  // 重新上传图片
-  const modules = {
-    toolbar: {
-      container: toolbarContainer,
-      handlers: {
-        image: showImageUI,
+                const url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
+                const range = quillEditor.getSelection();
+                const index = range ? range.index : 0;
+                quillEditor.insertEmbed(index, "image", url);
+                quillEditor.setSelection(index + 1);
+              } catch (err) {
+                console.error(err);
+              }
+            };
+          },
+        },
       },
-    },
-  };
-
-  // 为啥这边要价格setTimeout呢？因为不加的话会有抖动效果
-  const handleTextChange = (textTyped: any) => {
-    setTimeout(() => {
-      setText(textTyped);
-    }, 10);
-  };
+    }),
+    [ossConfig]
+  );
 
   return (
-    <ReactQuill
+    <Editor
       ref={quillRef}
       theme="snow"
       modules={modules}
       value={text}
-      onChange={() => handleTextChange}
+      onChange={setText}
       {...props}
     />
   );
 };
+
+const Editor = styled(ReactQuill)`
+  > .ql-container.ql-snow {
+    min-height: 30rem;
+  }
+`;
