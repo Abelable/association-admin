@@ -67,8 +67,13 @@ export const ArticleModal = ({
 
   useEffect(() => {
     if (editingArticleForm) {
-      const { img, content, ...restFieldsValue } = editingArticleForm;
-      form.setFieldsValue({ img: [{ url: img }], ...restFieldsValue });
+      const { img, content, article_class_id, ...restFieldsValue } =
+        editingArticleForm;
+      form.setFieldsValue({
+        img: [{ url: img }],
+        article_class_id: `${article_class_id}`,
+        ...restFieldsValue,
+      });
       setContent(content);
     }
   }, [form, editingArticleForm]);
