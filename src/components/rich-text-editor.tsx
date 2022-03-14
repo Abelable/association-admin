@@ -1,13 +1,16 @@
 import styled from "@emotion/styled";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useOssConfig } from "service/common";
 
-interface RichTextEditorProps extends React.ComponentProps<typeof ReactQuill> {}
-
-export const RichTextEditor = (props: RichTextEditorProps) => {
-  const [text, setText] = useState("");
+export const RichTextEditor = ({
+  content,
+  setContent,
+}: {
+  content: string;
+  setContent: (value: any) => void;
+}) => {
   const quillRef: any = useRef(null);
   const { data: ossConfig } = useOssConfig();
 
@@ -74,9 +77,8 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       ref={quillRef}
       theme="snow"
       modules={modules}
-      value={text}
-      onChange={setText}
-      {...props}
+      value={content}
+      onChange={setContent}
     />
   );
 };

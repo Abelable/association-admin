@@ -150,7 +150,7 @@ export const ArticleModal = ({
             <OssUpload maxCount={1} />
           </Form.Item>
           <Form.Item label="文章内容" tooltip="排版自定义规则">
-            <RichTextEditor />
+            <RichTextEditor content={content} setContent={setContent} />
           </Form.Item>
         </Form>
       )}
