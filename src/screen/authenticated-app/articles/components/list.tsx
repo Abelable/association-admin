@@ -42,6 +42,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -49,6 +50,8 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
+            fixed: "left",
+            width: "8rem",
           },
           {
             title: "标题",
@@ -63,22 +66,27 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 alt=""
               />
             ),
+            width: "16rem",
           },
           {
             title: "排序",
             dataIndex: "sort",
+            width: "12rem",
           },
           {
             title: "观看数",
             dataIndex: "show_look",
+            width: "12rem",
           },
           {
             title: "点赞数",
             dataIndex: "show_like",
+            width: "12rem",
           },
           {
             title: "分类标签",
             dataIndex: "class_name",
+            width: "12rem",
           },
           {
             title: "创建时间",
@@ -89,6 +97,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 )}
               </span>
             ),
+            width: "18rem",
           },
           {
             title: "修改时间",
@@ -99,12 +108,15 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 )}
               </span>
             ),
+            width: "18rem",
           },
           {
             title: "操作",
             render(value, article) {
               return <More id={article.id} />;
             },
+            fixed: "right",
+            width: "8rem",
           },
         ]}
         onChange={setPagination}
