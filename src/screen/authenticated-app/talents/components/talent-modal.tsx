@@ -1,4 +1,14 @@
-import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import { useQueryClient } from "react-query";
 import {
   ApplicationsResult,
@@ -19,6 +29,10 @@ export const TalentModal = ({
 }: {
   expertOptions: ExpertOption[];
 }) => {
+  const genderOptions = [
+    { value: 1, desc: "男" },
+    { value: 2, desc: "女" },
+  ];
   const [form] = useForm();
 
   const { applicationModalOpen, editingApplicationId, close } =
@@ -149,7 +163,7 @@ export const TalentModal = ({
 
   return (
     <Drawer
-      title={editingApplicationId ? "编辑申请列表" : "新增申请列表"}
+      title={editingApplicationId ? "编辑申报列表" : "新增申报列表"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
@@ -166,6 +180,7 @@ export const TalentModal = ({
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Divider orientation="left">个人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
@@ -209,96 +224,171 @@ export const TalentModal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
+              name="work_time"
+              label="参加工作日期"
+              rules={[{ required: true, message: "请输入参加工作日期" }]}
+            >
+              <Input placeholder="请输入参加工作日期" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="id_number"
+              label="身份证号"
+              rules={[{ required: true, message: "请输入身份证号" }]}
+            >
+              <Input placeholder="请输入身份证号" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
               name="website_type"
-              label="网站电子商务类型（可多选）"
-              rules={[{ required: true, message: "请选择网站电子商务类型" }]}
+              label="性别"
+              rules={[{ required: true, message: "请选择性别" }]}
             >
-              <Select
-                placeholder="请选择网站电子商务类型"
-                mode="tags"
-                showArrow
-              >
-                {["B2B", "B2C", "C2C", "G2C", "其他"].map((item) => (
-                  <Select.Option key={item}>{item}</Select.Option>
+              <Select placeholder="请选择性别" showArrow>
+                {genderOptions.map((item) => (
+                  <Select.Option key={item.value}>{item.desc}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="staff_count"
-              label="员工人数"
-              rules={[{ required: true, message: "请输入员工人数" }]}
+              name="position"
+              label="现任职务"
+              rules={[{ required: true, message: "请输入现任职务" }]}
             >
-              <Input placeholder="请输入员工人数" />
+              <Input placeholder="请输入现任职务" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="gang_count"
-              label="党员人数"
-              rules={[{ required: true, message: "请输入党员人数" }]}
+              name="expert_intent_id"
+              tooltip="最多选择两项"
+              label="专家意向库"
+              rules={[{ required: true, message: "请选择专家意向库" }]}
             >
-              <Input placeholder="请输入党员人数" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="trade_commodity"
-              label="交易商品（服务）"
-              rules={[{ required: true, message: "请输入交易商品（服务）" }]}
-            >
-              <Input placeholder="请输入交易商品（服务）" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="member_count" label="注册会员数量（个）">
-              <Input placeholder="请输入注册会员数量" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="operator_count" label="平台网站内经营者数量（个）">
-              <Input placeholder="请输入平台网站内经营者数量" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="trade_count"
-              label="上年交易笔数（笔）"
-              rules={[{ required: true, message: "请输入上年交易笔数" }]}
-            >
-              <Input placeholder="请输入上年交易笔数" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="trade_amount"
-              label="上年交易额（元）"
-              rules={[{ required: true, message: "请输入上年交易额" }]}
-            >
-              <Input placeholder="请输入上年交易额" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="member_level" label="企业等级名称">
-              <Select placeholder="请选择企业等级名称">
-                {expertOptions.map(({ id, title }) => (
-                  <Select.Option key={id} value={id}>
-                    {title}
-                  </Select.Option>
+              <Select placeholder="请选择专家意向库" mode="tags" showArrow>
+                {expertOptions.map((item) => (
+                  <Select.Option key={item.id}>{item.title}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item
+              name="telephone"
+              label="固话"
+              rules={[{ required: true, message: "请输入固话" }]}
+            >
+              <Input placeholder="请输入固话" />
+            </Form.Item>
+          </Col>
         </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="mobile"
+              label="移动电话"
+              rules={[{ required: true, message: "请输入移动电话" }]}
+            >
+              <Input placeholder="请输入移动电话" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="fax"
+              label="传真"
+              rules={[{ required: true, message: "请输入传真" }]}
+            >
+              <Input placeholder="请输入传真" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="email"
+              label="电子邮箱"
+              rules={[{ required: true, message: "请输入电子邮箱" }]}
+            >
+              <Input placeholder="请输入电子邮箱" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="QQ"
+              label="QQ"
+              rules={[{ required: true, message: "请输入QQ" }]}
+            >
+              <Input placeholder="请输入QQ" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="wechat"
+              label="微信号"
+              rules={[{ required: true, message: "请输入微信号" }]}
+            >
+              <Input placeholder="请输入微信号" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="graduated_school"
+              label="毕业院校"
+              rules={[{ required: true, message: "请输入毕业院校" }]}
+            >
+              <Input placeholder="请输入毕业院校" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="profession"
+              label="学历及专业"
+              rules={[{ required: true, message: "请输入学历及专业" }]}
+            >
+              <Input placeholder="请输入学历及专业" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item
+          name="work_experience"
+          label="工作经历"
+          rules={[{ required: true, message: "请输入工作经历" }]}
+        >
+          <Input.TextArea rows={4} placeholder="请输入工作经历" />
+        </Form.Item>
+        <Form.Item
+          name="honor"
+          label="所获荣誉以及网监专长"
+          rules={[{ required: true, message: "请输入所获荣誉以及网监专长" }]}
+        >
+          <Input.TextArea rows={4} placeholder="请输入所获荣誉以及网监专长" />
+        </Form.Item>
+        <Form.Item
+          name="professional_qualification"
+          label="已有职业资格"
+          rules={[{ required: true, message: "请输入已有职业资格" }]}
+        >
+          <Input.TextArea rows={4} placeholder="请输入已有职业资格" />
+        </Form.Item>
+        <Form.Item
+          name="address"
+          label="通讯地址"
+          rules={[{ required: true, message: "请输入通讯地址" }]}
+        >
+          <Input.TextArea rows={4} placeholder="请输入通讯地址" />
+        </Form.Item>
         <Form.Item
           name="license"
           label="企业营业执照或副本"
@@ -309,100 +399,6 @@ export const TalentModal = ({
         >
           <OssUpload />
         </Form.Item>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="_name"
-              label="姓名"
-              rules={[{ required: true, message: "请输入负责人姓名" }]}
-            >
-              <Input placeholder="请输入负责人姓名" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="job_title"
-              label="职务"
-              rules={[{ required: true, message: "请输入负责人职务" }]}
-            >
-              <Input placeholder="请输入负责人职务" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="political_status"
-              label="政治面貌"
-              rules={[{ required: true, message: "请输入负责人政治面貌" }]}
-            >
-              <Input placeholder="请输入负责人政治面貌" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="_mobile"
-              label="手机"
-              rules={[
-                {
-                  pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-                  message: "请输入正确的手机号",
-                },
-                { required: true, message: "请输入负责人手机号" },
-              ]}
-            >
-              <Input placeholder="请输入负责人手机号" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="_email"
-              label="邮箱"
-              rules={[
-                {
-                  type: "email",
-                  message: "请输入有效邮箱地址",
-                },
-                { required: true, message: "请输入负责人邮箱" },
-              ]}
-            >
-              <Input placeholder="请输入负责人邮箱" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="contacter_name"
-              label="姓名"
-              rules={[{ required: true, message: "请输入联系人姓名" }]}
-            >
-              <Input placeholder="请输入联系人姓名" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="contacter_job_title"
-              label="职务"
-              rules={[{ required: true, message: "请输入联系人职务" }]}
-            >
-              <Input placeholder="请输入联系人职务" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="contacter_mobile"
-              label="手机"
-              rules={[{ required: true, message: "请输入联系人手机号" }]}
-            >
-              <Input placeholder="请输入联系人手机号" />
-            </Form.Item>
-          </Col>
-        </Row>
       </Form>
     </Drawer>
   );
