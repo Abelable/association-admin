@@ -181,6 +181,15 @@ export const TalentModal = ({
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
         <Divider orientation="left">个人信息</Divider>
+        <Form.Item
+          name="image"
+          label="添加照片"
+          tooltip="照片大小不能超过10MB"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <OssUpload />
+        </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
@@ -193,22 +202,26 @@ export const TalentModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="employer"
-              label="工作单位"
-              rules={[{ required: true, message: "请输入工作单位" }]}
+              name="website_type"
+              label="性别"
+              rules={[{ required: true, message: "请选择性别" }]}
             >
-              <Input placeholder="请输入工作单位" />
+              <Select placeholder="请选择性别" showArrow>
+                {genderOptions.map((item) => (
+                  <Select.Option key={item.value}>{item.desc}</Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="department"
-              label="具体工作单位或所"
-              rules={[{ required: true, message: "请输入具体工作单位或所" }]}
+              name="id_number"
+              label="身份证号"
+              rules={[{ required: true, message: "请输入身份证号" }]}
             >
-              <Input placeholder="请输入具体工作单位或所" />
+              <Input placeholder="请输入身份证号" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -224,44 +237,20 @@ export const TalentModal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="work_time"
-              label="参加工作日期"
-              rules={[{ required: true, message: "请输入参加工作日期" }]}
+              name="graduated_school"
+              label="毕业院校"
+              rules={[{ required: true, message: "请输入毕业院校" }]}
             >
-              <Input placeholder="请输入参加工作日期" />
+              <Input placeholder="请输入毕业院校" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="id_number"
-              label="身份证号"
-              rules={[{ required: true, message: "请输入身份证号" }]}
+              name="profession"
+              label="学历及专业"
+              rules={[{ required: true, message: "请输入学历及专业" }]}
             >
-              <Input placeholder="请输入身份证号" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="website_type"
-              label="性别"
-              rules={[{ required: true, message: "请选择性别" }]}
-            >
-              <Select placeholder="请选择性别" showArrow>
-                {genderOptions.map((item) => (
-                  <Select.Option key={item.value}>{item.desc}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="position"
-              label="现任职务"
-              rules={[{ required: true, message: "请输入现任职务" }]}
-            >
-              <Input placeholder="请输入现任职务" />
+              <Input placeholder="请输入学历及专业" />
             </Form.Item>
           </Col>
         </Row>
@@ -280,87 +269,49 @@ export const TalentModal = ({
               </Select>
             </Form.Item>
           </Col>
+        </Row>
+        <Divider orientation="left">工作履历</Divider>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="telephone"
-              label="固话"
-              rules={[{ required: true, message: "请输入固话" }]}
+              name="employer"
+              label="工作单位"
+              rules={[{ required: true, message: "请输入工作单位" }]}
             >
-              <Input placeholder="请输入固话" />
+              <Input placeholder="请输入工作单位" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="department"
+              label="具体工作部门或所"
+              rules={[{ required: true, message: "请输入具体工作部门或所" }]}
+            >
+              <Input placeholder="请输入具体工作部门或所" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="mobile"
-              label="移动电话"
-              rules={[{ required: true, message: "请输入移动电话" }]}
+              name="position"
+              label="现任职务"
+              rules={[{ required: true, message: "请输入现任职务" }]}
             >
-              <Input placeholder="请输入移动电话" />
+              <Input placeholder="请输入现任职务" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="fax"
-              label="传真"
-              rules={[{ required: true, message: "请输入传真" }]}
+              name="work_time"
+              label="参加工作日期"
+              rules={[{ required: true, message: "请输入参加工作日期" }]}
             >
-              <Input placeholder="请输入传真" />
+              <Input placeholder="请输入参加工作日期" />
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="email"
-              label="电子邮箱"
-              rules={[{ required: true, message: "请输入电子邮箱" }]}
-            >
-              <Input placeholder="请输入电子邮箱" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="QQ"
-              label="QQ"
-              rules={[{ required: true, message: "请输入QQ" }]}
-            >
-              <Input placeholder="请输入QQ" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="wechat"
-              label="微信号"
-              rules={[{ required: true, message: "请输入微信号" }]}
-            >
-              <Input placeholder="请输入微信号" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="graduated_school"
-              label="毕业院校"
-              rules={[{ required: true, message: "请输入毕业院校" }]}
-            >
-              <Input placeholder="请输入毕业院校" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="profession"
-              label="学历及专业"
-              rules={[{ required: true, message: "请输入学历及专业" }]}
-            >
-              <Input placeholder="请输入学历及专业" />
-            </Form.Item>
-          </Col>
-        </Row>
+
         <Form.Item
           name="work_experience"
           label="工作经历"
@@ -382,22 +333,73 @@ export const TalentModal = ({
         >
           <Input.TextArea rows={4} placeholder="请输入已有职业资格" />
         </Form.Item>
+        <Divider orientation="left">联系方式</Divider>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="mobile"
+              label="移动电话"
+              rules={[{ required: true, message: "请输入移动电话" }]}
+            >
+              <Input placeholder="请输入移动电话" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="telephone"
+              label="固话"
+              rules={[{ required: true, message: "请输入固话" }]}
+            >
+              <Input placeholder="请输入固话" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="email"
+              label="电子邮箱"
+              rules={[{ required: true, message: "请输入电子邮箱" }]}
+            >
+              <Input placeholder="请输入电子邮箱" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="fax"
+              label="传真"
+              rules={[{ required: true, message: "请输入传真" }]}
+            >
+              <Input placeholder="请输入传真" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="wechat"
+              label="微信号"
+              rules={[{ required: true, message: "请输入微信号" }]}
+            >
+              <Input placeholder="请输入微信号" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="QQ"
+              label="QQ"
+              rules={[{ required: true, message: "请输入QQ" }]}
+            >
+              <Input placeholder="请输入QQ" />
+            </Form.Item>
+          </Col>
+        </Row>
         <Form.Item
           name="address"
           label="通讯地址"
           rules={[{ required: true, message: "请输入通讯地址" }]}
         >
           <Input.TextArea rows={4} placeholder="请输入通讯地址" />
-        </Form.Item>
-        <Form.Item
-          name="license"
-          label="企业营业执照或副本"
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-          rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
-        >
-          <OssUpload />
         </Form.Item>
       </Form>
     </Drawer>
