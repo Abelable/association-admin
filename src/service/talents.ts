@@ -1,7 +1,7 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
-import { ApplicationsResult, ApplicationsItem } from "types/application";
-import { ExpertOption, TalentsSearchParams } from "types/talents";
+import { ApplicationsItem } from "types/application";
+import { ExpertOption, TalentResult, TalentsSearchParams } from "types/talents";
 import {
   useAddApplicationConfig,
   useDealApplicationConfig,
@@ -19,7 +19,7 @@ export const useExpertOptions = () => {
 
 export const useTalents = (params: Partial<TalentsSearchParams>) => {
   const client = useHttp();
-  return useQuery<ApplicationsResult>(["applications", params], () =>
+  return useQuery<TalentResult>(["applications", params], () =>
     client("/api/admin/enter-apply/list", { data: { ...params } })
   );
 };

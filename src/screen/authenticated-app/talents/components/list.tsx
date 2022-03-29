@@ -7,19 +7,18 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
-  Tooltip,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import { ApplicationsItem } from "types/application";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useApplicationModal } from "../util";
 import { ApplicationModal } from "./application-modal";
+import { TalentItem } from "types/talents";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;
-interface ListProps extends TableProps<ApplicationsItem>, SearchPanelProps {
+interface ListProps extends TableProps<TalentItem>, SearchPanelProps {
   error: Error | unknown;
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   exportApplications: ExportApplications;
@@ -70,48 +69,33 @@ export const List = ({
             width: "8rem",
           },
           {
-            title: "公司",
-            dataIndex: "company_name",
-          },
-          {
             title: "姓名",
             dataIndex: "name",
-            width: "12rem",
-          },
-          {
-            title: "手机号",
-            dataIndex: "mobile",
             width: "16rem",
           },
           {
-            title: "邮箱",
-            dataIndex: "email",
+            title: "性别",
+            dataIndex: "sex",
+            width: "8rem",
           },
           {
-            title: "状态",
-            render: (value, application) => (
-              <span>
-                {application.is_deal === "0" ? (
-                  <span style={{ color: "#52c41a" }}>待处理</span>
-                ) : application.is_deal === "1" ? (
-                  <span style={{ color: "#d9d9d9" }}>已处理</span>
-                ) : (
-                  <Tooltip title={`驳回理由：${application.reject_mark}`}>
-                    <ButtonNoPadding type={"link"} danger>
-                      已驳回
-                    </ButtonNoPadding>
-                  </Tooltip>
-                )}
-              </span>
-            ),
-            width: "9rem",
+            title: "工作单位",
+            dataIndex: "employer",
+          },
+          {
+            title: "具体工作部门或所",
+            dataIndex: "department",
+          },
+          {
+            title: "总评分",
+            dataIndex: "score",
           },
           {
             title: "报名时间",
-            render: (value, application) => (
+            render: (value, talent) => (
               <span>
-                {application.created_at
-                  ? dayjs(Number(application.created_at) * 1000).format(
+                {talent.created_at
+                  ? dayjs(Number(talent.created_at) * 1000).format(
                       "YYYY-MM-DD HH:mm"
                     )
                   : "无"}
@@ -121,12 +105,9 @@ export const List = ({
           },
           {
             title: "操作",
-            render(value, application) {
+            render(value, talent) {
               return (
-                <More
-                  application={application}
-                  exportApplications={exportApplications}
-                />
+                <More talent={talent} exportApplications={exportApplications} />
               );
             },
             fixed: "right",
@@ -142,10 +123,10 @@ export const List = ({
 };
 
 const More = ({
-  application,
+  talent,
   exportApplications,
 }: {
-  application: ApplicationsItem;
+  talent: TalentItem;
   exportApplications: ExportApplications;
 }) => {
   const { startEdit } = useApplicationModal();
@@ -165,16 +146,16 @@ const More = ({
       overlay={
         <Menu>
           <Menu.Item
-            onClick={() => exportApplications([application.id])}
+            onClick={() => exportApplications([talent.id])}
             key={"export"}
           >
             导出
           </Menu.Item>
-          <Menu.Item onClick={() => startEdit(application.id)} key={"edit"}>
+          <Menu.Item onClick={() => startEdit(talent.id)} key={"edit"}>
             编辑
           </Menu.Item>
           <Menu.Item
-            onClick={() => confirmDeleteProject(application.id)}
+            onClick={() => confirmDeleteProject(talent.id)}
             key={"delete"}
           >
             删除

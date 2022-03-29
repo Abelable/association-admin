@@ -19,7 +19,7 @@ export interface TalentsSearchParams {
   expert_intent_id: number;
 }
 
-export interface ApplicationForm {
+export interface TalentForm {
   company_name: string;
   website_url: string;
   ICP: string;
@@ -44,22 +44,21 @@ export interface ApplicationForm {
   member_level: number;
 }
 
-export interface ApplicationsItem {
+export interface TalentItem {
   id: string;
-  company_name: string;
-  level_id: string;
-  level_name: string;
   name: string;
   mobile: string;
-  email: string;
-  is_deal: string;
-  reject_mark: string;
-  created_at: string;
+  sex: string;
+  employer: string;
+  department: string;
+  score: string;
+  expert_intent_id: string;
   apply_content_json: string;
+  created_at: string;
 }
 
-export interface ApplicationsResult {
-  list: ApplicationsItem[];
+export interface TalentResult {
+  list: TalentItem[];
   page: string;
   page_size: string;
   total: string;
