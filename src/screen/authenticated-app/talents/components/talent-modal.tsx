@@ -1,14 +1,4 @@
-import {
-  Button,
-  Col,
-  Divider,
-  Drawer,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-} from "antd";
+import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import { useQueryClient } from "react-query";
 import {
   ApplicationsResult,
@@ -24,7 +14,7 @@ import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
 import { ExpertOption } from "types/talents";
 
-export const ApplicationModal = ({
+export const TalentModal = ({
   expertOptions,
 }: {
   expertOptions: ExpertOption[];
@@ -176,48 +166,43 @@ export const ApplicationModal = ({
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
-        <Divider orientation="left">企业信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="company_name"
-              label="企业名称"
-              rules={[{ required: true, message: "请输入企业名称" }]}
+              name="name"
+              label="姓名"
+              rules={[{ required: true, message: "请输入姓名" }]}
             >
-              <Input placeholder="请输入企业名称" />
+              <Input placeholder="请输入姓名" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="website_url"
-              label="网站（app）名称"
-              rules={[{ required: true, message: "请输入网站(app)名称" }]}
+              name="employer"
+              label="工作单位"
+              rules={[{ required: true, message: "请输入工作单位" }]}
             >
-              <Input placeholder="请输入网站(app)名称" />
+              <Input placeholder="请输入工作单位" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="ICP"
-              label="ICP备案号"
-              rules={[{ required: true, message: "请输入ICP备案号" }]}
+              name="department"
+              label="具体工作单位或所"
+              rules={[{ required: true, message: "请输入具体工作单位或所" }]}
             >
-              <Input placeholder="请输入ICP备案号" />
+              <Input placeholder="请输入具体工作单位或所" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="company_type"
-              label="企业类型（可多选）"
-              rules={[{ required: true, message: "请选择企业类型" }]}
+              name="political_status"
+              label="政治面貌"
+              rules={[{ required: true, message: "请输入政治面貌" }]}
             >
-              <Select placeholder="请选择企业类型" mode="tags" showArrow>
-                {["第三方平台", "自营平台", "非平台"].map((item) => (
-                  <Select.Option key={item}>{item}</Select.Option>
-                ))}
-              </Select>
+              <Input placeholder="请输入政治面貌" />
             </Form.Item>
           </Col>
         </Row>
@@ -324,7 +309,6 @@ export const ApplicationModal = ({
         >
           <OssUpload />
         </Form.Item>
-        <Divider orientation="left">负责人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
@@ -388,7 +372,6 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
         </Row>
-        <Divider orientation="left">联系人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item

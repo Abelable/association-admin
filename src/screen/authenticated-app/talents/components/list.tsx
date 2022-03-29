@@ -13,7 +13,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useApplicationModal } from "../util";
-import { ApplicationModal } from "./application-modal";
+import { TalentModal } from "./talent-modal";
 import { TalentItem } from "types/talents";
 
 type DealApplications = (ids: string[]) => void;
@@ -117,7 +117,7 @@ export const List = ({
         onChange={setPagination}
         {...restProps}
       />
-      <ApplicationModal expertOptions={expertOptions} />
+      <TalentModal expertOptions={expertOptions} />
     </Container>
   );
 };
