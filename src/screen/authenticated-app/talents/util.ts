@@ -1,7 +1,7 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useMemo, useCallback } from "react";
 
-export const useApplicationsSearchParams = () => {
+export const useTalentsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "s_time",
     "e_time",
@@ -26,8 +26,8 @@ export const useApplicationsSearchParams = () => {
   ] as const;
 };
 
-export const useApplicationsQueryKey = () => {
-  const [params] = useApplicationsSearchParams();
+export const useTalentsQueryKey = () => {
+  const [params] = useTalentsSearchParams();
   return ["applications", params];
 };
 

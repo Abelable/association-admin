@@ -12,22 +12,22 @@ import {
 import { useQueryClient } from "react-query";
 import {
   ApplicationsResult,
-  LevelOption,
   ApplicationForm,
   ApplicationsItem,
 } from "types/application";
-import { useApplicationModal, useApplicationsQueryKey } from "../util";
+import { useApplicationModal, useTalentsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
+import { ExpertOption } from "types/talents";
 
 export const ApplicationModal = ({
-  levelOptions,
+  expertOptions,
 }: {
-  levelOptions: LevelOption[];
+  expertOptions: ExpertOption[];
 }) => {
   const [form] = useForm();
 
@@ -40,7 +40,7 @@ export const ApplicationModal = ({
     ? useEditApplication
     : useAddApplication;
   const { mutateAsync, error, isLoading } = useMutationApplication(
-    useApplicationsQueryKey()
+    useTalentsQueryKey()
   );
 
   const normFile = (e: any) => {
@@ -305,9 +305,9 @@ export const ApplicationModal = ({
           <Col span={12}>
             <Form.Item name="member_level" label="企业等级名称">
               <Select placeholder="请选择企业等级名称">
-                {levelOptions.map(({ id, level, name }) => (
-                  <Select.Option key={id} value={level}>
-                    {name}
+                {expertOptions.map(({ id, title }) => (
+                  <Select.Option key={id} value={id}>
+                    {title}
                   </Select.Option>
                 ))}
               </Select>
@@ -428,7 +428,7 @@ export const ApplicationModal = ({
 const useEditingApplicationForm = (editingApplicationId: string) => {
   const queryClient = useQueryClient();
   const applicationsResult: ApplicationsResult | undefined =
-    queryClient.getQueryData(useApplicationsQueryKey());
+    queryClient.getQueryData(useTalentsQueryKey());
   const currentApplication = applicationsResult
     ? applicationsResult.list.find((item) => item.id === editingApplicationId)
     : undefined;

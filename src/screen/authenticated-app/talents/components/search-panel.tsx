@@ -1,46 +1,30 @@
 import styled from "@emotion/styled";
-import { Button, DatePicker, Input, Select } from "antd";
+import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
-import {
-  ApplicationsSearchParams,
-  LevelOption,
-  StatusOption,
-} from "types/application";
+import { TalentsSearchParams, ExpertOption } from "types/talents";
 import { useState } from "react";
-import moment from "moment";
 export interface SearchPanelProps {
-  statusOptions: StatusOption[];
-  levelOptions: LevelOption[];
-  params: Partial<ApplicationsSearchParams>;
-  setParams: (params: Partial<ApplicationsSearchParams>) => void;
+  expertOptions: ExpertOption[];
+  params: Partial<TalentsSearchParams>;
+  setParams: (params: Partial<TalentsSearchParams>) => void;
 }
 
 export const SearchPanel = ({
-  statusOptions,
-  levelOptions,
+  expertOptions,
   params,
   setParams,
 }: SearchPanelProps) => {
   const defaultParams = {
-    s_time: "",
-    e_time: "",
     name: "",
-    mobile: "",
-    email: "",
+    employer: "",
+    department: "",
     member_level: undefined,
     is_deal: undefined,
-  } as Partial<ApplicationsSearchParams>;
+  } as Partial<TalentsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] = useState<
-    Partial<ApplicationsSearchParams>
+    Partial<TalentsSearchParams>
   >({});
-
-  const setDates = (dates: any, formatString: [string, string]) =>
-    setTemporaryParams({
-      ...temporaryParams,
-      s_time: formatString[0],
-      e_time: formatString[1],
-    });
 
   const setName = (evt: any) => {
     // onInputClear
@@ -58,47 +42,43 @@ export const SearchPanel = ({
     });
   };
 
-  const setMobile = (evt: any) => {
+  const setEmployer = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        mobile: "",
+        employer: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      mobile: evt.target.value,
+      employer: evt.target.value,
     });
   };
 
-  const setEmail = (evt: any) => {
+  const setDepartment = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        email: "",
+        department: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      email: evt.target.value,
+      department: evt.target.value,
     });
   };
 
-  const setLevel = (member_level: any) =>
-    setTemporaryParams({ ...temporaryParams, member_level });
-  const clearLevel = () =>
-    setTemporaryParams({ ...temporaryParams, member_level: undefined });
+  const setExpert = (expert_intent_id: any) =>
+    setTemporaryParams({ ...temporaryParams, expert_intent_id });
+  const clearExpert = () =>
+    setTemporaryParams({ ...temporaryParams, expert_intent_id: undefined });
 
-  const setStatus = (is_deal: any) =>
-    setTemporaryParams({ ...temporaryParams, is_deal });
-  const clearStatus = () =>
-    setTemporaryParams({ ...temporaryParams, is_deal: undefined });
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -106,17 +86,6 @@ export const SearchPanel = ({
 
   return (
     <Container>
-      <Item>
-        <div>报名时间：</div>
-        <DatePicker.RangePicker
-          value={
-            temporaryParams.s_time
-              ? [moment(temporaryParams.s_time), moment(temporaryParams.e_time)]
-              : undefined
-          }
-          onChange={setDates}
-        />
-      </Item>
       <Item>
         <div>姓名：</div>
         <Input
@@ -128,55 +97,38 @@ export const SearchPanel = ({
         />
       </Item>
       <Item>
-        <div>手机号：</div>
+        <div>工作单位：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.mobile}
-          onChange={setMobile}
-          placeholder="请输入手机号"
+          value={temporaryParams.employer}
+          onChange={setEmployer}
+          placeholder="请输入工作单位"
           allowClear={true}
         />
       </Item>
       <Item>
-        <div>邮箱：</div>
+        <div>具体工作部门或所：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.email}
-          onChange={setEmail}
-          placeholder="请输入邮箱"
+          value={temporaryParams.department}
+          onChange={setDepartment}
+          placeholder="请输入具体工作部门或所"
           allowClear={true}
         />
       </Item>
       <Item>
-        <div>等级名称：</div>
+        <div>专家库意向：</div>
         <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.member_level}
-          placeholder="请选择等级名称"
+          value={temporaryParams.expert_intent_id}
+          placeholder="请选择专家库意向"
           allowClear={true}
-          onSelect={setLevel}
-          onClear={clearLevel}
+          onSelect={setExpert}
+          onClear={clearExpert}
         >
-          {levelOptions?.map(({ id, level, name }) => (
-            <Select.Option key={id} value={level}>
-              {name}
-            </Select.Option>
-          ))}
-        </Select>
-      </Item>
-      <Item>
-        <div>状态：</div>
-        <Select
-          style={{ width: "20rem" }}
-          value={temporaryParams.is_deal}
-          placeholder="请选择状态"
-          allowClear={true}
-          onSelect={setStatus}
-          onClear={clearStatus}
-        >
-          {statusOptions?.map(({ id, value, name }) => (
-            <Select.Option key={id} value={value}>
-              {name}
+          {expertOptions?.map(({ id, title }) => (
+            <Select.Option key={id} value={id}>
+              {title}
             </Select.Option>
           ))}
         </Select>

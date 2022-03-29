@@ -1,31 +1,18 @@
 import styled from "@emotion/styled";
+import { useState } from "react";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
-import { useState } from "react";
-import {
-  useApplications,
-  useDealApplications,
-  useLevelOptions,
-} from "service/application";
+import { useExpertOptions, useTalents } from "service/talents";
 import { toNumber } from "utils";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
-import { useApplicationsQueryKey, useApplicationsSearchParams } from "./util";
+import { useTalentsSearchParams } from "./util";
 
 export const Talents = () => {
-  const statusOptions = [
-    { id: 1, name: "待处理", value: "0" },
-    { id: 2, name: "已处理", value: "1" },
-    { id: 3, name: "已驳回", value: "2" },
-  ];
-
-  const [params, setParams] = useApplicationsSearchParams();
-  const { data, isLoading, error } = useApplications(params);
-  const { data: levelOptions } = useLevelOptions();
+  const [params, setParams] = useTalentsSearchParams();
+  const { data, isLoading, error } = useTalents(params);
+  const { data: expertOptions } = useExpertOptions();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const { mutate: dealApplications } = useDealApplications(
-    useApplicationsQueryKey()
-  );
   const exportApplications = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
@@ -36,19 +23,16 @@ export const Talents = () => {
     <Container drawerVisible={!!selectedRowKeys.length}>
       <Main>
         <SearchPanel
-          statusOptions={statusOptions}
-          levelOptions={levelOptions || []}
+          expertOptions={expertOptions || []}
           params={params}
           setParams={setParams}
         />
         <List
+          expertOptions={expertOptions || []}
           error={error}
-          statusOptions={statusOptions}
-          levelOptions={levelOptions || []}
           params={params}
           setParams={setParams}
           setSelectedRowKeys={setSelectedRowKeys}
-          dealApplications={dealApplications}
           exportApplications={exportApplications}
           loading={isLoading}
           dataSource={data?.list}
@@ -73,9 +57,6 @@ export const Talents = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap={true}>
-            <Button onClick={() => dealApplications(selectedRowKeys)}>
-              批量处理
-            </Button>
             <Button
               onClick={() => exportApplications(selectedRowKeys)}
               type={"primary"}

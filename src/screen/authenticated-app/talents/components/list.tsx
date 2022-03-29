@@ -10,45 +10,31 @@ import {
   Tooltip,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined, DownOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { ApplicationsItem } from "types/application";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
-import {
-  useDeleteApplication,
-  useEditApplicationLevel,
-} from "service/application";
-import { useApplicationsQueryKey, useApplicationModal } from "../util";
+import { useApplicationModal } from "../util";
 import { ApplicationModal } from "./application-modal";
-import { useState } from "react";
-import { RejectApplicationModal } from "./reject-application-modal";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;
 interface ListProps extends TableProps<ApplicationsItem>, SearchPanelProps {
   error: Error | unknown;
   setSelectedRowKeys: (selectedRowKeys: []) => void;
-  dealApplications: DealApplications;
   exportApplications: ExportApplications;
 }
 
 export const List = ({
   error,
-  levelOptions,
+  expertOptions,
   params,
   setParams,
   setSelectedRowKeys,
-  dealApplications,
   exportApplications,
   ...restProps
 }: ListProps) => {
   const { open } = useApplicationModal();
-
-  const { mutate: editApplicationLevel } = useEditApplicationLevel(
-    useApplicationsQueryKey()
-  );
-
-  const [rejectingApplicationId, setRejectingApplicationId] = useState("");
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -60,7 +46,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>申请列表</h3>
+        <h3>申报列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -73,7 +59,6 @@ export const List = ({
             setSelectedRowKeys(selectedRowKeys as []),
         }}
         rowKey={"id"}
-        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -87,41 +72,6 @@ export const List = ({
           {
             title: "公司",
             dataIndex: "company_name",
-          },
-          {
-            title: "等级名称",
-            render: (value, application) => (
-              <Dropdown
-                trigger={["click"]}
-                overlay={
-                  <Menu>
-                    {levelOptions.map((option) => (
-                      <Menu.Item
-                        key={option.id}
-                        onClick={() =>
-                          editApplicationLevel({
-                            id: application.id,
-                            level_id: `${option.level}`,
-                          })
-                        }
-                      >
-                        {option.name}
-                      </Menu.Item>
-                    ))}
-                  </Menu>
-                }
-              >
-                <ButtonNoPadding
-                  style={{ color: application.level_name ? "#1890ff" : "#999" }}
-                  type={"link"}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {application.level_name || "选择等级名称"}
-                  <DownOutlined />
-                </ButtonNoPadding>
-              </Dropdown>
-            ),
-            width: "16rem",
           },
           {
             title: "姓名",
@@ -175,9 +125,7 @@ export const List = ({
               return (
                 <More
                   application={application}
-                  dealApplications={dealApplications}
                   exportApplications={exportApplications}
-                  setRejectingApplicationId={setRejectingApplicationId}
                 />
               );
             },
@@ -188,30 +136,18 @@ export const List = ({
         onChange={setPagination}
         {...restProps}
       />
-      <ApplicationModal levelOptions={levelOptions} />
-      <RejectApplicationModal
-        rejectingApplicationId={rejectingApplicationId}
-        onCancel={() => setRejectingApplicationId("")}
-      />
+      <ApplicationModal expertOptions={expertOptions} />
     </Container>
   );
 };
 
 const More = ({
   application,
-  dealApplications,
   exportApplications,
-  setRejectingApplicationId,
 }: {
   application: ApplicationsItem;
-  dealApplications: DealApplications;
   exportApplications: ExportApplications;
-  setRejectingApplicationId: (id: string) => void;
 }) => {
-  const { mutate: deleteApplication } = useDeleteApplication(
-    useApplicationsQueryKey()
-  );
-
   const { startEdit } = useApplicationModal();
 
   const confirmDeleteProject = (id: string) => {
@@ -220,7 +156,7 @@ const More = ({
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteApplication(id),
+      onOk: () => {},
     });
   };
 
@@ -228,22 +164,6 @@ const More = ({
     <Dropdown
       overlay={
         <Menu>
-          {application.is_deal === "0" ? (
-            <Menu.Item
-              onClick={() => dealApplications([application.id])}
-              key={"deal"}
-            >
-              处理
-            </Menu.Item>
-          ) : null}
-          {application.is_deal === "0" ? (
-            <Menu.Item
-              onClick={() => setRejectingApplicationId(application.id)}
-              key={"reject"}
-            >
-              驳回
-            </Menu.Item>
-          ) : null}
           <Menu.Item
             onClick={() => exportApplications([application.id])}
             key={"export"}
