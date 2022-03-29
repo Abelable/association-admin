@@ -9,6 +9,7 @@ import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { ArticleCategories } from "./article-categories/index";
 import { Applications } from "./applications";
+import { Talents } from "./talents";
 
 import {
   MenuUnfoldOutlined,
@@ -18,7 +19,8 @@ import {
   PartitionOutlined,
   BarsOutlined,
   PictureOutlined,
-  UsergroupAddOutlined,
+  AuditOutlined,
+  SolutionOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { ArticleBanners } from "./article-banners";
@@ -46,6 +48,7 @@ export const AuthenticatedApp = () => {
               <Route path="articles" element={<Articles />} />
               <Route path="article_banners" element={<ArticleBanners />} />
               <Route path="applications" element={<Applications />} />
+              <Route path="talents" element={<Talents />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"users"} replace={true} />}
@@ -88,8 +91,11 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
             <Link to={"article_banners"}>头图管理</Link>
           </Menu.Item>
         </Menu.SubMenu>
-        <Menu.Item key="applications" icon={<UsergroupAddOutlined />}>
+        <Menu.Item key="applications" icon={<AuditOutlined />}>
           <Link to={"applications"}>入会申请</Link>
+        </Menu.Item>
+        <Menu.Item key="talents" icon={<SolutionOutlined />}>
+          <Link to={"talents"}>人才管理</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
