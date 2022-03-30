@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { TalentsSearchParams, ExpertOption } from "types/talents";
+import { TalentsSearchParams, ExpertOption } from "types/talent";
 import { useState } from "react";
 export interface SearchPanelProps {
   expertOptions: ExpertOption[];

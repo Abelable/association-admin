@@ -14,7 +14,7 @@ import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useApplicationModal } from "../util";
 import { TalentModal } from "./talent-modal";
-import { TalentItem } from "types/talents";
+import { TalentItem } from "types/talent";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;

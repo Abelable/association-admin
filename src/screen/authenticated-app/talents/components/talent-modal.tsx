@@ -22,7 +22,7 @@ import { OssUpload } from "components/oss-upload";
 import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
-import { ExpertOption } from "types/talents";
+import { ExpertOption } from "types/talent";
 
 export const TalentModal = ({
   expertOptions,
@@ -60,6 +60,7 @@ export const TalentModal = ({
   const submit = () => {
     form.validateFields().then(async () => {
       const {
+        image,
         company_name,
         website_url,
         ICP,

@@ -1,13 +1,15 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
-import { ApplicationsItem } from "types/application";
-import { ExpertOption, TalentResult, TalentsSearchParams } from "types/talents";
+import {
+  ExpertOption,
+  TalentItem,
+  TalentResult,
+  TalentsSearchParams,
+} from "types/talent";
 import {
   useAddApplicationConfig,
-  useDealApplicationConfig,
   useDeleteConfig,
   useEditConfig,
-  useRejectApplicationConfig,
 } from "./use-optimistic-options";
 
 export const useExpertOptions = () => {
@@ -24,10 +26,10 @@ export const useTalents = (params: Partial<TalentsSearchParams>) => {
   );
 };
 
-export const useAddApplication = (queryKey: QueryKey) => {
+export const useAddTalent = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<ApplicationsItem>) =>
+    (params: Partial<TalentItem>) =>
       client("/api/admin/enter-apply/store", {
         data: { apply_content_json: params.apply_content_json },
         method: "POST",
@@ -36,51 +38,15 @@ export const useAddApplication = (queryKey: QueryKey) => {
   );
 };
 
-export const useEditApplication = (queryKey: QueryKey) => {
+export const useEditTalent = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<ApplicationsItem>) =>
+    (params: Partial<TalentItem>) =>
       client("/api/admin/enter-apply/store", {
         data: { id: params.id, apply_content_json: params.apply_content_json },
         method: "POST",
       }),
     useEditConfig(queryKey)
-  );
-};
-
-export const useEditApplicationLevel = (queryKey: QueryKey) => {
-  const client = useHttp();
-  return useMutation(
-    ({ id, level_id }: Partial<ApplicationsItem>) =>
-      client("/api/admin/enter-apply/modify-level", {
-        data: { id, member_level: level_id },
-        method: "POST",
-      }),
-    useEditConfig(queryKey)
-  );
-};
-
-export const useDealApplications = (queryKey: QueryKey) => {
-  const client = useHttp();
-  return useMutation(
-    (ids: string[]) =>
-      client("/api/admin/enter-apply/deal", {
-        data: { ids: ids.join() },
-        method: "POST",
-      }),
-    useDealApplicationConfig(queryKey)
-  );
-};
-
-export const useRejectApplications = (queryKey: QueryKey) => {
-  const client = useHttp();
-  return useMutation(
-    ({ ids, reject_mark }: { ids: string[]; reject_mark: string }) =>
-      client("/api/admin/enter-apply/reject", {
-        data: { ids: ids.join(), reject_mark },
-        method: "POST",
-      }),
-    useRejectApplicationConfig(queryKey)
   );
 };
 
