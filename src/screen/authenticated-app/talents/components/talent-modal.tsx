@@ -139,7 +139,7 @@ export const TalentModal = ({
 
   return (
     <Drawer
-      title={editingTalentId ? "编辑申报列表" : "新增申报列表"}
+      title={editingTalentId ? "编辑人才申报" : "新增人才申报"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}

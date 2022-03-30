@@ -159,7 +159,7 @@ export const ApplicationModal = ({
 
   return (
     <Drawer
-      title={editingApplicationId ? "编辑申请列表" : "新增申请列表"}
+      title={editingApplicationId ? "编辑入会申请" : "新增入会申请"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
