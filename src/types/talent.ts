@@ -4,12 +4,6 @@ export interface ExpertOption {
   status: number;
 }
 
-export interface StatusOption {
-  id: number;
-  value: string;
-  name: string;
-}
-
 export interface TalentsSearchParams {
   page: number;
   page_size: number;

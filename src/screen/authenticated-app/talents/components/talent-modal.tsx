@@ -89,60 +89,122 @@ export const TalentModal = ({
       license.forEach((item: any) => licenseList.push(item.url));
 
       const applyContent = [
-        { title: "企业名称", name: "company_name", value: company_name },
-        { title: "网站（app）名称", name: "website_url", value: website_url },
-        { title: "ICP备案号", name: "ICP", value: ICP },
-        { title: "企业类型", name: "company_type", value: company_type.join() },
         {
-          title: "网站电子商务类型",
-          name: "website_type",
-          value: website_type.join(),
+          title: "图片",
+          name: "image",
+          value: image,
         },
-        { title: "员工人数", name: "staff_count", value: staff_count },
-        { title: "党员人数", name: "gang_count", value: gang_count },
         {
-          title: "交易商品（服务）",
-          name: "trade_commodity",
-          value: trade_commodity,
+          title: "姓名",
+          name: "name",
+          value: "张三",
         },
-        { title: "上年交易笔数", name: "trade_count", value: trade_count },
-        { title: "上年交易额", name: "trade_amount", value: trade_amount },
-        { title: "负责人姓名", name: "_name", value: _name },
-        { title: "职务", name: "job_title", value: job_title },
+        {
+          title: "工作单位",
+          name: "employer",
+          value: "有播",
+        },
+        {
+          title: "部门",
+          name: "department",
+          value: "技术部",
+        },
+
         {
           title: "政治面貌",
           name: "political_status",
-          value: political_status,
-        },
-        { title: "手机号", name: "_mobile", value: _mobile },
-        { title: "邮箱", name: "_email", value: _email },
-        {
-          title: "协会联系人姓名",
-          name: "contacter_name",
-          value: contacter_name,
+          value: "群众",
         },
         {
-          title: "协会联系人职务",
-          name: "contacter_job_title",
-          value: contacter_job_title,
+          title: "参加工作时间",
+          name: "work_time",
+          value: "2020-12",
         },
         {
-          title: "协会联系人手机号",
-          name: "contacter_mobile",
-          value: contacter_mobile,
+          title: "身份证号码",
+          name: "id_number",
+          value: "330514895484844",
         },
         {
-          title: "企业营业执照或副本",
-          name: "license",
-          value: licenseList.join(),
+          title: "性别",
+          name: "sex",
+          value: "男",
         },
-        { title: "注册会员数量", name: "member_count", value: member_count },
         {
-          title: "平台网站内经营者数量",
-          name: "operator_count",
-          value: operator_count,
+          title: "现任职务",
+          name: "position",
+          value: "开发",
         },
-        { title: "等级名称", name: "member_level", value: member_level || "" },
+        {
+          title: "入库意向",
+          name: "inventory_ntention",
+          value: "专家库",
+        },
+        {
+          title: "专家库意向",
+          name: "expert_intent_id",
+          value: "2",
+        },
+        {
+          title: "固话",
+          name: "telephone",
+          value: "89574686",
+        },
+        {
+          title: "移动电话",
+          name: "mobile",
+          value: "13578948877",
+        },
+        {
+          title: "传真",
+          name: "fax",
+          value: "445566",
+        },
+        {
+          title: "电子邮件",
+          name: "email",
+          value: "478499554@qq.com",
+        },
+        {
+          title: "QQ",
+          name: "QQ",
+          value: "478499554",
+        },
+        {
+          title: "微信号",
+          name: "wechat",
+          value: "445566",
+        },
+        {
+          title: "毕业院校",
+          name: "graduated_school",
+          value: "厦大",
+        },
+        {
+          title: "学历及专业",
+          name: "profession",
+          value: "计算机",
+        },
+        {
+          title: "工作经历",
+          name: "work_experience",
+          value: "上过班",
+        },
+        {
+          title: "所获荣誉以及网监专长",
+          name: "honor",
+          value: "三好学生",
+        },
+        {
+          title: "已有职业资格",
+          name: "professional_qualification",
+          value: "厨师证",
+        },
+        {
+          title: "通讯地址",
+          name: "address",
+          value: "杭州",
+        },
       ];
 
       const applicationItem: Partial<ApplicationsItem> = cleanObject({
