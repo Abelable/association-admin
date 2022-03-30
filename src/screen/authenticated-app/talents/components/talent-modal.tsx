@@ -59,51 +59,12 @@ export const TalentModal = ({
 
   const submit = () => {
     form.validateFields().then(async () => {
-      const {
-        image,
-        company_name,
-        website_url,
-        ICP,
-        company_type,
-        website_type,
-        staff_count,
-        gang_count,
-        trade_commodity,
-        member_count,
-        operator_count,
-        trade_count,
-        trade_amount,
-        _name,
-        job_title,
-        political_status,
-        _mobile,
-        _email,
-        contacter_name,
-        contacter_job_title,
-        contacter_mobile,
-        license,
-        member_level,
-      } = form.getFieldsValue();
-
-      const licenseList: any[] = [];
-      license.forEach((item: any) => licenseList.push(item.url));
+      const { image } = form.getFieldsValue();
 
       const applyContent = [
-        {
-          title: "图片",
-          name: "image",
-          value: image,
-        },
-        {
-          title: "姓名",
-          name: "name",
-          value: "张三",
-        },
-        {
-          title: "工作单位",
-          name: "employer",
-          value: "有播",
-        },
+        { title: "图片", name: "image", value: image },
+        { title: "姓名", name: "name", value: "张三" },
+        { title: "工作单位", name: "employer", value: "有播" },
         {
           title: "部门",
           name: "department",
@@ -209,10 +170,6 @@ export const TalentModal = ({
 
       const applicationItem: Partial<ApplicationsItem> = cleanObject({
         id: editingApplicationId || undefined,
-        company_name,
-        level_id: `${member_level}`,
-        name: _name,
-        mobile: _mobile,
         apply_content_json: JSON.stringify(applyContent),
       });
       await mutateAsync(applicationItem);
