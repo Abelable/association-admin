@@ -18,8 +18,7 @@ export const SearchPanel = ({
     name: "",
     employer: "",
     department: "",
-    member_level: undefined,
-    is_deal: undefined,
+    expert_intent_id: undefined,
   } as Partial<TalentsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] = useState<
@@ -27,7 +26,6 @@ export const SearchPanel = ({
   >({});
 
   const setName = (evt: any) => {
-    // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
@@ -43,7 +41,6 @@ export const SearchPanel = ({
   };
 
   const setEmployer = (evt: any) => {
-    // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,

@@ -3,13 +3,10 @@ import { useMemo, useCallback } from "react";
 
 export const useTalentsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "s_time",
-    "e_time",
     "name",
-    "mobile",
-    "email",
-    "member_level",
-    "is_deal",
+    "employer",
+    "department",
+    "expert_intent_id",
     "page",
     "page_size",
   ]);

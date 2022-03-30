@@ -12,9 +12,10 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
-import { useTalentModal } from "../util";
+import { useTalentModal, useTalentsQueryKey } from "../util";
 import { TalentModal } from "./talent-modal";
 import { TalentItem } from "types/talent";
+import { useDeleteTalent } from "service/talents";
 
 type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentItem>, SearchPanelProps {
@@ -137,14 +138,15 @@ const More = ({
   exportTalents: ExportTalents;
 }) => {
   const { startEdit } = useTalentModal();
+  const { mutate: deleteTalent } = useDeleteTalent(useTalentsQueryKey());
 
   const confirmDeleteProject = (id: string) => {
     Modal.confirm({
-      title: "确定删除该入会申请吗？",
+      title: "确定删除该人才申报吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => {},
+      onOk: () => deleteTalent(id),
     });
   };
 

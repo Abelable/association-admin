@@ -16,7 +16,7 @@ export const Talents = () => {
   const exportTalents = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
-    }/api/admin/enter-apply/export?ids=${ids.join()}`;
+    }/api/admin/enter-apply/personal-export?ids=${ids.join()}`;
   };
 
   return (
