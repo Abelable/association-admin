@@ -14,7 +14,6 @@ import { useTalentModal, useTalentsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
-import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
 import {
@@ -24,6 +23,7 @@ import {
   TalentItem,
   TalentsResult,
 } from "types/talent";
+import { useAddTalent, useEditTalent } from "service/talents";
 
 export const TalentModal = ({
   genderOptions,
@@ -37,10 +37,8 @@ export const TalentModal = ({
   const { talentModalOpen, editingTalentId, close } = useTalentModal();
   const editingTalentForm = useEditingTalentForm(editingTalentId);
 
-  const useMutationApplication = editingTalentId
-    ? useEditApplication
-    : useAddApplication;
-  const { mutateAsync, error, isLoading } = useMutationApplication(
+  const useMutationTalent = editingTalentId ? useEditTalent : useAddTalent;
+  const { mutateAsync, error, isLoading } = useMutationTalent(
     useTalentsQueryKey()
   );
 
@@ -104,7 +102,7 @@ export const TalentModal = ({
         {
           title: "专家库意向",
           name: "expert_intent_id",
-          value: expert_intent_id,
+          value: expert_intent_id.join(),
         },
         { title: "工作单位", name: "employer", value: employer },
         { title: "部门", name: "department", value: department },
@@ -419,6 +417,5 @@ const useEditingTalentForm = (editingTalentId: string) => {
             : originForm.sex,
       }
     : undefined;
-  console.log(editingTalentForm);
   return editingTalentForm;
 };
