@@ -259,10 +259,10 @@ export const TalentModal = ({
             <Form.Item
               name="expert_intent_id"
               tooltip="最多选择两项"
-              label="专家意向库"
-              rules={[{ required: true, message: "请选择专家意向库" }]}
+              label="专家库意向"
+              rules={[{ required: true, message: "请选择专家库意向" }]}
             >
-              <Select placeholder="请选择专家意向库" mode="tags" showArrow>
+              <Select placeholder="请选择专家库意向" mode="tags" showArrow>
                 {expertOptions.map((item) => (
                   <Select.Option key={item.id}>{item.title}</Select.Option>
                 ))}
@@ -311,7 +311,6 @@ export const TalentModal = ({
             </Form.Item>
           </Col>
         </Row>
-
         <Form.Item
           name="work_experience"
           label="工作经历"
