@@ -59,113 +59,71 @@ export const TalentModal = ({
 
   const submit = () => {
     form.validateFields().then(async () => {
-      const { image } = form.getFieldsValue();
+      const {
+        image,
+        name,
+        sex,
+        id_number,
+        political_status,
+        graduated_school,
+        profession,
+        expert_intent_id,
+        employer,
+        department,
+        position,
+        work_time,
+        work_experience,
+        honor,
+        professional_qualification,
+        mobile,
+        telephone,
+        email,
+        fax,
+        wechat,
+        QQ,
+        address,
+      } = form.getFieldsValue();
 
       const applyContent = [
         { title: "图片", name: "image", value: image },
-        { title: "姓名", name: "name", value: "张三" },
-        { title: "工作单位", name: "employer", value: "有播" },
-        {
-          title: "部门",
-          name: "department",
-          value: "技术部",
-        },
-
+        { title: "姓名", name: "name", value: name },
+        { title: "性别", name: "sex", value: sex },
+        { title: "身份证号码", name: "id_number", value: id_number },
         {
           title: "政治面貌",
           name: "political_status",
-          value: "群众",
-        },
-        {
-          title: "参加工作时间",
-          name: "work_time",
-          value: "2020-12",
-        },
-        {
-          title: "身份证号码",
-          name: "id_number",
-          value: "330514895484844",
-        },
-        {
-          title: "性别",
-          name: "sex",
-          value: "男",
-        },
-        {
-          title: "现任职务",
-          name: "position",
-          value: "开发",
-        },
-        {
-          title: "入库意向",
-          name: "inventory_ntention",
-          value: "专家库",
-        },
-        {
-          title: "专家库意向",
-          name: "expert_intent_id",
-          value: "2",
-        },
-        {
-          title: "固话",
-          name: "telephone",
-          value: "89574686",
-        },
-        {
-          title: "移动电话",
-          name: "mobile",
-          value: "13578948877",
-        },
-        {
-          title: "传真",
-          name: "fax",
-          value: "445566",
-        },
-        {
-          title: "电子邮件",
-          name: "email",
-          value: "478499554@qq.com",
-        },
-        {
-          title: "QQ",
-          name: "QQ",
-          value: "478499554",
-        },
-        {
-          title: "微信号",
-          name: "wechat",
-          value: "445566",
+          value: political_status,
         },
         {
           title: "毕业院校",
           name: "graduated_school",
-          value: "厦大",
+          value: graduated_school,
         },
+        { title: "学历及专业", name: "profession", value: profession },
+        { title: "入库意向", name: "inventory_ntention", value: "专家库" },
         {
-          title: "学历及专业",
-          name: "profession",
-          value: "计算机",
+          title: "专家库意向",
+          name: "expert_intent_id",
+          value: expert_intent_id,
         },
-        {
-          title: "工作经历",
-          name: "work_experience",
-          value: "上过班",
-        },
-        {
-          title: "所获荣誉以及网监专长",
-          name: "honor",
-          value: "三好学生",
-        },
+        { title: "工作单位", name: "employer", value: employer },
+        { title: "部门", name: "department", value: department },
+        { title: "现任职务", name: "position", value: position },
+        { title: "参加工作时间", name: "work_time", value: work_time },
+        { title: "工作经历", name: "work_experience", value: work_experience },
+        { title: "所获荣誉以及网监专长", name: "honor", value: honor },
         {
           title: "已有职业资格",
           name: "professional_qualification",
-          value: "厨师证",
+          value: professional_qualification,
         },
-        {
-          title: "通讯地址",
-          name: "address",
-          value: "杭州",
-        },
+        { title: "移动电话", name: "mobile", value: mobile },
+        { title: "固话", name: "telephone", value: telephone },
+        { title: "电子邮件", name: "email", value: email },
+        { title: "传真", name: "fax", value: fax },
+        { title: "微信号", name: "wechat", value: wechat },
+        { title: "QQ", name: "QQ", value: QQ },
+        { title: "通讯地址", name: "address", value: address },
       ];
 
       const applicationItem: Partial<ApplicationsItem> = cleanObject({
