@@ -1,3 +1,8 @@
+export interface GenderOption {
+  value: string;
+  desc: string;
+}
+
 export interface ExpertOption {
   id: number;
   title: string;
@@ -21,7 +26,7 @@ export interface TalentForm {
   political_status: string;
   graduated_school: string;
   profession: string;
-  expert_intent_id: string;
+  expert_intent_id: string[];
   employer: string;
   department: string;
   position: string;

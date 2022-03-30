@@ -19,20 +19,19 @@ import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
 import {
   ExpertOption,
+  GenderOption,
   TalentForm,
   TalentItem,
   TalentsResult,
 } from "types/talent";
 
 export const TalentModal = ({
+  genderOptions,
   expertOptions,
 }: {
+  genderOptions: GenderOption[];
   expertOptions: ExpertOption[];
 }) => {
-  const genderOptions = [
-    { value: 1, desc: "男" },
-    { value: 2, desc: "女" },
-  ];
   const [form] = useForm();
 
   const { talentModalOpen, editingTalentId, close } = useTalentModal();
@@ -181,7 +180,7 @@ export const TalentModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="website_type"
+              name="sex"
               label="性别"
               rules={[{ required: true, message: "请选择性别" }]}
             >
@@ -409,6 +408,17 @@ const useEditingTalentForm = (editingTalentId: string) => {
     });
   }
 
-  const editingTalentForm: TalentForm = originForm;
+  const editingTalentForm: TalentForm | undefined = originForm.expert_intent_id
+    ? {
+        ...originForm,
+        image,
+        expert_intent_id: originForm.expert_intent_id.split(","),
+        sex:
+          originForm.sex !== "1" && originForm.sex !== "2"
+            ? "0"
+            : originForm.sex,
+      }
+    : undefined;
+  console.log(editingTalentForm);
   return editingTalentForm;
 };

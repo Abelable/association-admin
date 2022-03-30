@@ -33,6 +33,12 @@ export const List = ({
   exportApplications,
   ...restProps
 }: ListProps) => {
+  const genderOptions = [
+    { value: "0", desc: "未知" },
+    { value: "1", desc: "男" },
+    { value: "2", desc: "女" },
+  ];
+
   const { open } = useTalentModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -61,22 +67,23 @@ export const List = ({
         columns={[
           {
             title: "编号",
-            render: (value, application, index) =>
+            render: (value, talent, index) =>
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
-            fixed: "left",
             width: "8rem",
           },
           {
             title: "姓名",
             dataIndex: "name",
-            width: "16rem",
+            width: "12rem",
           },
           {
             title: "性别",
             dataIndex: "sex",
             width: "8rem",
+            render: (value, talent) =>
+              genderOptions.find((item) => item.value === talent.sex)?.desc,
           },
           {
             title: "工作单位",
@@ -89,6 +96,7 @@ export const List = ({
           {
             title: "总评分",
             dataIndex: "score",
+            width: "10rem",
           },
           {
             title: "报名时间",
@@ -110,14 +118,16 @@ export const List = ({
                 <More talent={talent} exportApplications={exportApplications} />
               );
             },
-            fixed: "right",
             width: "8rem",
           },
         ]}
         onChange={setPagination}
         {...restProps}
       />
-      <TalentModal expertOptions={expertOptions} />
+      <TalentModal
+        genderOptions={genderOptions}
+        expertOptions={expertOptions}
+      />
     </Container>
   );
 };
