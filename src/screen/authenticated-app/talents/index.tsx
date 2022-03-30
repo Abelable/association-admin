@@ -13,7 +13,7 @@ export const Talents = () => {
   const { data, isLoading, error } = useTalents(params);
   const { data: expertOptions } = useExpertOptions();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const exportApplications = (ids: string[]) => {
+  const exportTalents = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
@@ -33,7 +33,7 @@ export const Talents = () => {
           params={params}
           setParams={setParams}
           setSelectedRowKeys={setSelectedRowKeys}
-          exportApplications={exportApplications}
+          exportTalents={exportTalents}
           loading={isLoading}
           dataSource={data?.list}
           pagination={{
@@ -58,7 +58,7 @@ export const Talents = () => {
           </div>
           <Row gap={true}>
             <Button
-              onClick={() => exportApplications(selectedRowKeys)}
+              onClick={() => exportTalents(selectedRowKeys)}
               type={"primary"}
               style={{ marginRight: 0 }}
             >

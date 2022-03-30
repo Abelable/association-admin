@@ -16,12 +16,11 @@ import { useTalentModal } from "../util";
 import { TalentModal } from "./talent-modal";
 import { TalentItem } from "types/talent";
 
-type DealApplications = (ids: string[]) => void;
-type ExportApplications = DealApplications;
+type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentItem>, SearchPanelProps {
   error: Error | unknown;
   setSelectedRowKeys: (selectedRowKeys: []) => void;
-  exportApplications: ExportApplications;
+  exportTalents: ExportTalents;
 }
 
 export const List = ({
@@ -30,7 +29,7 @@ export const List = ({
   params,
   setParams,
   setSelectedRowKeys,
-  exportApplications,
+  exportTalents,
   ...restProps
 }: ListProps) => {
   const genderOptions = [
@@ -114,9 +113,7 @@ export const List = ({
           {
             title: "操作",
             render(value, talent) {
-              return (
-                <More talent={talent} exportApplications={exportApplications} />
-              );
+              return <More talent={talent} exportTalents={exportTalents} />;
             },
             width: "8rem",
           },
@@ -134,10 +131,10 @@ export const List = ({
 
 const More = ({
   talent,
-  exportApplications,
+  exportTalents,
 }: {
   talent: TalentItem;
-  exportApplications: ExportApplications;
+  exportTalents: ExportTalents;
 }) => {
   const { startEdit } = useTalentModal();
 
@@ -155,10 +152,7 @@ const More = ({
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item
-            onClick={() => exportApplications([talent.id])}
-            key={"export"}
-          >
+          <Menu.Item onClick={() => exportTalents([talent.id])} key={"export"}>
             导出
           </Menu.Item>
           <Menu.Item onClick={() => startEdit(talent.id)} key={"edit"}>
