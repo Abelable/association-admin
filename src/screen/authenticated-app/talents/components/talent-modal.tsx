@@ -63,6 +63,7 @@ export const TalentModal = ({
         graduated_school,
         profession,
         expert_intent_id,
+        score,
         employer,
         department,
         position,
@@ -80,7 +81,7 @@ export const TalentModal = ({
       } = form.getFieldsValue();
 
       const imageList: any[] = [];
-      image.forEach((item: any) => imageList.push(item.url));
+      image && image.forEach((item: any) => imageList.push(item.url));
 
       const applyContent = [
         { title: "图片", name: "image", value: imageList.join() },
@@ -102,8 +103,12 @@ export const TalentModal = ({
         {
           title: "专家库意向",
           name: "expert_intent_id",
-          value: expert_intent_id.join(),
+          value:
+            expert_intent_id.length > 2
+              ? expert_intent_id.slice(0, 2).join()
+              : expert_intent_id.join(),
         },
+        { title: "评分", name: "score", value: score },
         { title: "工作单位", name: "employer", value: employer },
         { title: "部门", name: "department", value: department },
         { title: "现任职务", name: "position", value: position },
@@ -243,6 +248,11 @@ export const TalentModal = ({
                   <Select.Option key={item.id}>{item.title}</Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="score" label="评分">
+              <Input placeholder="请输入评分" />
             </Form.Item>
           </Col>
         </Row>

@@ -27,6 +27,7 @@ export interface TalentForm {
   graduated_school: string;
   profession: string;
   expert_intent_id: string[];
+  score: string;
   employer: string;
   department: string;
   position: string;
