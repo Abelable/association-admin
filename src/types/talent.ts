@@ -14,28 +14,28 @@ export interface TalentsSearchParams {
 }
 
 export interface TalentForm {
-  company_name: string;
-  website_url: string;
-  ICP: string;
-  company_type: string[];
-  website_type: string[];
-  staff_count: string;
-  gang_count: string;
-  trade_commodity: string;
-  trade_count: string;
-  trade_amount: string;
-  _name: string;
-  job_title: string;
+  image: { [key in string]: string }[];
+  name: string;
+  sex: string;
+  id_number: string;
   political_status: string;
-  _mobile: string;
-  _email: string;
-  contacter_name: string;
-  contacter_job_title: string;
-  contacter_mobile: string;
-  license: { [key in string]: string }[];
-  member_count: string;
-  operator_count: string;
-  member_level: number;
+  graduated_school: string;
+  profession: string;
+  expert_intent_id: string;
+  employer: string;
+  department: string;
+  position: string;
+  work_time: string;
+  work_experience: string;
+  honor: string;
+  professional_qualification: string;
+  mobile: string;
+  telephone: string;
+  email: string;
+  fax: string;
+  wechat: string;
+  QQ: string;
+  address: string;
 }
 
 export interface TalentItem {

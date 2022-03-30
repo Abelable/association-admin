@@ -17,7 +17,12 @@ import { OssUpload } from "components/oss-upload";
 import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
-import { ExpertOption, TalentItem, TalentsResult } from "types/talent";
+import {
+  ExpertOption,
+  TalentForm,
+  TalentItem,
+  TalentsResult,
+} from "types/talent";
 
 export const TalentModal = ({
   expertOptions,
@@ -31,7 +36,7 @@ export const TalentModal = ({
   const [form] = useForm();
 
   const { talentModalOpen, editingTalentId, close } = useTalentModal();
-  const editingApplicationForm = useEditingApplicationForm(editingTalentId);
+  const editingTalentForm = useEditingTalentForm(editingTalentId);
 
   const useMutationApplication = editingTalentId
     ? useEditApplication
@@ -77,8 +82,11 @@ export const TalentModal = ({
         address,
       } = form.getFieldsValue();
 
+      const imageList: any[] = [];
+      image.forEach((item: any) => imageList.push(item.url));
+
       const applyContent = [
-        { title: "图片", name: "image", value: image },
+        { title: "图片", name: "image", value: imageList.join() },
         { title: "姓名", name: "name", value: name },
         { title: "性别", name: "sex", value: sex },
         { title: "身份证号码", name: "id_number", value: id_number },
@@ -129,8 +137,8 @@ export const TalentModal = ({
   };
 
   useEffect(() => {
-    form.setFieldsValue(editingApplicationForm);
-  }, [form, editingApplicationForm]);
+    form.setFieldsValue(editingTalentForm);
+  }, [form, editingTalentForm]);
 
   return (
     <Drawer
@@ -393,25 +401,14 @@ const useEditingTalentForm = (editingTalentId: string) => {
   });
   const originForm = Object.fromEntries(list);
 
-  const license: { [key in string]: string }[] = [];
-  if (originForm.license) {
-    const imgs = originForm.license.split(",");
+  const image: { [key in string]: string }[] = [];
+  if (originForm.image) {
+    const imgs = originForm.image.split(",");
     imgs.forEach((item: string) => {
-      license.push({ url: item });
+      image.push({ url: item });
     });
   }
 
-  const editingTalentForm: TalentForm | undefined = originForm.company_type
-    ? {
-        ...originForm,
-        license,
-        company_type: originForm.company_type.split(","),
-        website_type: originForm.website_type.split(","),
-        member_level:
-          Number(currentTalent?.level_id) === 0
-            ? undefined
-            : Number(currentTalent?.level_id),
-      }
-    : undefined;
+  const editingTalentForm: TalentForm = originForm;
   return editingTalentForm;
 };
