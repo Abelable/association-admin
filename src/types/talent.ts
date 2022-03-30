@@ -51,7 +51,7 @@ export interface TalentItem {
   created_at: string;
 }
 
-export interface TalentResult {
+export interface TalentsResult {
   list: TalentItem[];
   page: string;
   page_size: string;

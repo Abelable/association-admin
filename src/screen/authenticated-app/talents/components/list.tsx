@@ -12,7 +12,7 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
-import { useApplicationModal } from "../util";
+import { useTalentModal } from "../util";
 import { TalentModal } from "./talent-modal";
 import { TalentItem } from "types/talent";
 
@@ -33,7 +33,7 @@ export const List = ({
   exportApplications,
   ...restProps
 }: ListProps) => {
-  const { open } = useApplicationModal();
+  const { open } = useTalentModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -129,7 +129,7 @@ const More = ({
   talent: TalentItem;
   exportApplications: ExportApplications;
 }) => {
-  const { startEdit } = useApplicationModal();
+  const { startEdit } = useTalentModal();
 
   const confirmDeleteProject = (id: string) => {
     Modal.confirm({

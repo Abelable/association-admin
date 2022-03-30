@@ -10,19 +10,14 @@ import {
   Space,
 } from "antd";
 import { useQueryClient } from "react-query";
-import {
-  ApplicationsResult,
-  ApplicationForm,
-  ApplicationsItem,
-} from "types/application";
-import { useApplicationModal, useTalentsQueryKey } from "../util";
+import { useTalentModal, useTalentsQueryKey } from "../util";
 import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
-import { ExpertOption } from "types/talent";
+import { ExpertOption, TalentItem, TalentsResult } from "types/talent";
 
 export const TalentModal = ({
   expertOptions,
@@ -35,12 +30,10 @@ export const TalentModal = ({
   ];
   const [form] = useForm();
 
-  const { applicationModalOpen, editingApplicationId, close } =
-    useApplicationModal();
-  const editingApplicationForm =
-    useEditingApplicationForm(editingApplicationId);
+  const { talentModalOpen, editingTalentId, close } = useTalentModal();
+  const editingApplicationForm = useEditingApplicationForm(editingTalentId);
 
-  const useMutationApplication = editingApplicationId
+  const useMutationApplication = editingTalentId
     ? useEditApplication
     : useAddApplication;
   const { mutateAsync, error, isLoading } = useMutationApplication(
@@ -126,11 +119,11 @@ export const TalentModal = ({
         { title: "通讯地址", name: "address", value: address },
       ];
 
-      const applicationItem: Partial<ApplicationsItem> = cleanObject({
-        id: editingApplicationId || undefined,
+      const talentItem: Partial<TalentItem> = cleanObject({
+        id: editingTalentId || undefined,
         apply_content_json: JSON.stringify(applyContent),
       });
-      await mutateAsync(applicationItem);
+      await mutateAsync(talentItem);
       closeModal();
     });
   };
@@ -141,11 +134,11 @@ export const TalentModal = ({
 
   return (
     <Drawer
-      title={editingApplicationId ? "编辑申报列表" : "新增申报列表"}
+      title={editingTalentId ? "编辑申报列表" : "新增申报列表"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
-      visible={applicationModalOpen}
+      visible={talentModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
@@ -383,15 +376,16 @@ export const TalentModal = ({
   );
 };
 
-const useEditingApplicationForm = (editingApplicationId: string) => {
+const useEditingTalentForm = (editingTalentId: string) => {
   const queryClient = useQueryClient();
-  const applicationsResult: ApplicationsResult | undefined =
-    queryClient.getQueryData(useTalentsQueryKey());
-  const currentApplication = applicationsResult
-    ? applicationsResult.list.find((item) => item.id === editingApplicationId)
+  const talentsResult: TalentsResult | undefined = queryClient.getQueryData(
+    useTalentsQueryKey()
+  );
+  const currentTalent = talentsResult
+    ? talentsResult.list.find((item) => item.id === editingTalentId)
     : undefined;
-  const formList = currentApplication
-    ? JSON.parse(currentApplication?.apply_content_json)
+  const formList = currentTalent
+    ? JSON.parse(currentTalent?.apply_content_json)
     : [];
   const list: string[][] = [];
   formList.forEach((item: { title: string; name: string; value: string }) => {
@@ -407,18 +401,17 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     });
   }
 
-  const editingApplicationForm: ApplicationForm | undefined =
-    originForm.company_type
-      ? {
-          ...originForm,
-          license,
-          company_type: originForm.company_type.split(","),
-          website_type: originForm.website_type.split(","),
-          member_level:
-            Number(currentApplication?.level_id) === 0
-              ? undefined
-              : Number(currentApplication?.level_id),
-        }
-      : undefined;
-  return editingApplicationForm;
+  const editingTalentForm: TalentForm | undefined = originForm.company_type
+    ? {
+        ...originForm,
+        license,
+        company_type: originForm.company_type.split(","),
+        website_type: originForm.website_type.split(","),
+        member_level:
+          Number(currentTalent?.level_id) === 0
+            ? undefined
+            : Number(currentTalent?.level_id),
+      }
+    : undefined;
+  return editingTalentForm;
 };

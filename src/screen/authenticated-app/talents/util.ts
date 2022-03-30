@@ -28,35 +28,34 @@ export const useTalentsSearchParams = () => {
 
 export const useTalentsQueryKey = () => {
   const [params] = useTalentsSearchParams();
-  return ["applications", params];
+  return ["talents", params];
 };
 
-export const useApplicationModal = () => {
-  const [{ applicationCreate }, setApplicationModalOpen] = useUrlQueryParams([
-    "applicationCreate",
+export const useTalentModal = () => {
+  const [{ talentCreate }, setTalentModalOpen] = useUrlQueryParams([
+    "talentCreate",
   ]);
-  const [{ editingApplicationId }, setEditingApplicationId] = useUrlQueryParams(
-    ["editingApplicationId"]
-  );
+  const [{ editingTalentId }, setEditingTalentId] = useUrlQueryParams([
+    "editingTalentId",
+  ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setApplicationModalOpen({ applicationCreate: true }),
-    [setApplicationModalOpen]
+    () => setTalentModalOpen({ talentCreate: true }),
+    [setTalentModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingApplicationId({ editingApplicationId: id }),
-    [setEditingApplicationId]
+    (id: string) => setEditingTalentId({ editingTalentId: id }),
+    [setEditingTalentId]
   );
   const close = useCallback(
-    () => setUrlParams({ applicationCreate: "", editingApplicationId: "" }),
+    () => setUrlParams({ talentCreate: "", editingTalentId: "" }),
     [setUrlParams]
   );
 
   return {
-    applicationModalOpen:
-      applicationCreate === "true" || !!editingApplicationId,
-    editingApplicationId,
+    talentModalOpen: talentCreate === "true" || !!editingTalentId,
+    editingTalentId,
     open,
     startEdit,
     close,

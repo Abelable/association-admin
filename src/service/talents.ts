@@ -3,11 +3,11 @@ import { useHttp } from "./http";
 import {
   ExpertOption,
   TalentItem,
-  TalentResult,
+  TalentsResult,
   TalentsSearchParams,
 } from "types/talent";
 import {
-  useAddApplicationConfig,
+  useAddConfig,
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
@@ -21,8 +21,11 @@ export const useExpertOptions = () => {
 
 export const useTalents = (params: Partial<TalentsSearchParams>) => {
   const client = useHttp();
-  return useQuery<TalentResult>(["applications", params], () =>
-    client("/api/admin/enter-apply/list", { data: { ...params } })
+  return useQuery<TalentsResult>(["talents", params], () =>
+    client("/api/admin/enter-apply/personal-apply-list", {
+      method: "POST",
+      data: params,
+    })
   );
 };
 
@@ -30,11 +33,11 @@ export const useAddTalent = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<TalentItem>) =>
-      client("/api/admin/enter-apply/store", {
+      client("/api/admin/enter-apply/personal-apply-store", {
         data: { apply_content_json: params.apply_content_json },
         method: "POST",
       }),
-    useAddApplicationConfig(queryKey)
+    useAddConfig(queryKey)
   );
 };
 
@@ -42,7 +45,7 @@ export const useEditTalent = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<TalentItem>) =>
-      client("/api/admin/enter-apply/store", {
+      client("/api/admin/enter-apply/personal-apply-store", {
         data: { id: params.id, apply_content_json: params.apply_content_json },
         method: "POST",
       }),
@@ -50,12 +53,12 @@ export const useEditTalent = (queryKey: QueryKey) => {
   );
 };
 
-export const useDeleteApplication = (queryKey: QueryKey) => {
+export const useDeleteTalent = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client("/api/admin/enter-apply/del", {
-        data: { ids: id },
+      client("/api/admin/enter-apply/personal-apply-store", {
+        data: { id, status: -1 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)
