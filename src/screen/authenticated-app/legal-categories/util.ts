@@ -1,7 +1,7 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useArticleCategoriesSearchParams = () => {
+export const useLegalCategoriesSearchParams = () => {
   const [params, setParmas] = useUrlQueryParams(["page", "page_size"]);
   return [
     useMemo(
@@ -15,39 +15,37 @@ export const useArticleCategoriesSearchParams = () => {
   ] as const;
 };
 
-export const useArticleCategoryModal = () => {
-  const [{ articleCategoryCreate }, setArticleCategoriesModalOpen] =
-    useUrlQueryParams(["articleCategoryCreate"]);
-  const [{ editingArticleCategoryId }, setEditingArticleCategoryId] =
-    useUrlQueryParams(["editingArticleCategoryId"]);
+export const useLegalCategoryModal = () => {
+  const [{ legalCategoryCreate }, setLegalCategoriesModalOpen] =
+    useUrlQueryParams(["legalCategoryCreate"]);
+  const [{ editingLegalCategoryId }, setEditingLegalCategoryId] =
+    useUrlQueryParams(["editingLegalCategoryId"]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setArticleCategoriesModalOpen({ articleCategoryCreate: true }),
-    [setArticleCategoriesModalOpen]
+    () => setLegalCategoriesModalOpen({ legalCategoryCreate: true }),
+    [setLegalCategoriesModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) =>
-      setEditingArticleCategoryId({ editingArticleCategoryId: id }),
-    [setEditingArticleCategoryId]
+    (id: string) => setEditingLegalCategoryId({ editingLegalCategoryId: id }),
+    [setEditingLegalCategoryId]
   );
   const close = useCallback(
-    () =>
-      setUrlParams({ articleCategoryCreate: "", editingArticleCategoryId: "" }),
+    () => setUrlParams({ legalCategoryCreate: "", editingLegalCategoryId: "" }),
     [setUrlParams]
   );
 
   return {
-    articleCategoryModalOpen:
-      articleCategoryCreate === "true" || !!editingArticleCategoryId,
-    editingArticleCategoryId,
+    legalCategoryModalOpen:
+      legalCategoryCreate === "true" || !!editingLegalCategoryId,
+    editingLegalCategoryId,
     open,
     startEdit,
     close,
   };
 };
 
-export const useArticleCategoriesQueryKey = () => {
-  const [params] = useArticleCategoriesSearchParams();
-  return ["articleCategories", params];
+export const useLegalCategoriesQueryKey = () => {
+  const [params] = useLegalCategoriesSearchParams();
+  return ["legalCategories", params];
 };

@@ -2,35 +2,35 @@ import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEffect } from "react";
-import { useAddArticleCategory, useEditArticleCategory } from "service/article";
-import { ArticleCategory } from "types/article";
-import { useArticleCategoriesQueryKey, useArticleCategoryModal } from "../util";
+import { useAddLegalCategory, useEditLegalCategory } from "service/legal";
+import { LegalCategory } from "types/legal";
+import { useLegalCategoriesQueryKey, useLegalCategoryModal } from "../util";
 
-export const ArticleCategoryModal = ({
-  articleCategories,
+export const LegalCategoryModal = ({
+  legalCategories,
 }: {
-  articleCategories: ArticleCategory[];
+  legalCategories: LegalCategory[];
 }) => {
   const [form] = useForm();
-  const { articleCategoryModalOpen, editingArticleCategoryId, close } =
-    useArticleCategoryModal();
-  const articleCategory =
-    articleCategories?.find((item) => item.id === editingArticleCategoryId) ||
+  const { legalCategoryModalOpen, editingLegalCategoryId, close } =
+    useLegalCategoryModal();
+  const legalCategory =
+    legalCategories?.find((item) => item.id === editingLegalCategoryId) ||
     undefined;
-  const useMutationArticleCategory = editingArticleCategoryId
-    ? useEditArticleCategory
-    : useAddArticleCategory;
-  const { mutateAsync, isLoading, error } = useMutationArticleCategory(
-    useArticleCategoriesQueryKey()
+  const useMutationLegalCategory = editingLegalCategoryId
+    ? useEditLegalCategory
+    : useAddLegalCategory;
+  const { mutateAsync, isLoading, error } = useMutationLegalCategory(
+    useLegalCategoriesQueryKey()
   );
 
   useEffect(() => {
-    articleCategory && form.setFieldsValue(articleCategory);
-  }, [articleCategory, form]);
+    legalCategory && form.setFieldsValue(legalCategory);
+  }, [legalCategory, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      await mutateAsync({ ...articleCategory, ...form.getFieldsValue() });
+      await mutateAsync({ ...legalCategory, ...form.getFieldsValue() });
       closeModal();
     });
   };
@@ -42,8 +42,8 @@ export const ArticleCategoryModal = ({
 
   return (
     <Modal
-      title={editingArticleCategoryId ? "编辑文章分类" : "新增文章分类"}
-      visible={articleCategoryModalOpen}
+      title={editingLegalCategoryId ? "编辑文章分类" : "新增文章分类"}
+      visible={legalCategoryModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
