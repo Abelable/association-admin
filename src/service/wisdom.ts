@@ -49,12 +49,3 @@ export const useDeleteWisdom = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
-
-export const useWisdom = (id?: number) => {
-  const client = useHttp();
-  return useQuery<WisdomForm>(
-    ["wisdom", { id }],
-    () => client("/api/admin/wisdom/wisdom-info", { data: { id } }),
-    { enabled: !!id }
-  );
-};

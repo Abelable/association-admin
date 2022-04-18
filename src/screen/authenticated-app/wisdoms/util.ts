@@ -1,6 +1,5 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
-import { useWisdom } from "service/wisdom";
 
 export const useWisdomsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams(["name", "page", "page_size"]);
@@ -30,9 +29,6 @@ export const useWisdomModal = () => {
     "editingWisdomId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
-  const { data: editingWisdomForm, isLoading } = useWisdom(
-    Number(editingWisdomId)
-  );
 
   const open = useCallback(
     () => setWisdomModalOpen({ wisdomCreate: true }),
@@ -50,8 +46,6 @@ export const useWisdomModal = () => {
   return {
     wisdomModalOpen: wisdomCreate === "true" || !!editingWisdomId,
     editingWisdomId,
-    editingWisdomForm,
-    isLoading,
     open,
     startEdit,
     close,
