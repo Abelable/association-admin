@@ -62,7 +62,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             render: (value, legal) => (
               <img
                 style={{ width: "8.8rem", height: "6.2rem" }}
-                src={legal.img}
+                src={legal.image}
                 alt=""
               />
             ),
@@ -103,7 +103,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           {
             title: "操作",
             render(value, legal) {
-              return <More id={legal.id} />;
+              return <More legal={legal} />;
             },
             fixed: "right",
             width: "8rem",
@@ -116,18 +116,18 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   );
 };
 
-const More = ({ id }: { id: string }) => {
+const More = ({ legal }: { legal: LegalItem }) => {
   const { mutate: deleteLegal } = useDeleteLegal(useLegalsQueryKey());
 
   const { startEdit } = useLegalModal();
 
-  const confirmDeleteLegal = (id: string) => {
+  const confirmDeleteLegal = (legal: LegalItem) => {
     Modal.confirm({
       title: "确定删除该文章吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteLegal(id),
+      onOk: () => deleteLegal(legal),
     });
   };
 
@@ -135,10 +135,10 @@ const More = ({ id }: { id: string }) => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item onClick={() => startEdit(id)} key={"edit"}>
+          <Menu.Item onClick={() => startEdit(legal.id)} key={"edit"}>
             编辑
           </Menu.Item>
-          <Menu.Item onClick={() => confirmDeleteLegal(id)} key={"delete"}>
+          <Menu.Item onClick={() => confirmDeleteLegal(legal)} key={"delete"}>
             删除
           </Menu.Item>
         </Menu>

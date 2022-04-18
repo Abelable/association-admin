@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { LegalCategory } from "types/legal";
+import { LegalCategory, LegalForm, LegalsResult } from "types/legal";
 import { useAddLegal, useEditLegal } from "service/legal";
 import { RichTextEditor } from "components/rich-text-editor";
+import { useQueryClient } from "react-query";
+import { LegalItem } from "../../../../types/legal";
 
 export const LegalModal = ({
   categoryList,
@@ -18,6 +20,7 @@ export const LegalModal = ({
   const { legalModalOpen, editingLegalId, close } = useLegalModal();
 
   const useMutationLegal = editingLegalId ? useEditLegal : useAddLegal;
+  const editingLegalForm = useEditingLegalForm(editingLegalId);
   const {
     mutateAsync,
     error,
@@ -50,11 +53,11 @@ export const LegalModal = ({
 
   useEffect(() => {
     if (editingLegalForm) {
-      const { img, content, legal_class_id, ...restFieldsValue } =
+      const { image, content, category_id, ...restFieldsValue } =
         editingLegalForm;
       form.setFieldsValue({
-        img: [{ url: img }],
-        legal_class_id: `${legal_class_id}`,
+        image: [{ url: image }],
+        category_id: `${category_id}`,
         ...restFieldsValue,
       });
       setContent(content);
@@ -128,4 +131,19 @@ export const LegalModal = ({
       </Form>
     </Drawer>
   );
+};
+
+const useEditingLegalForm = (editingLegalId: string) => {
+  const queryClient = useQueryClient();
+  const legalsResult: LegalsResult | undefined = queryClient.getQueryData(
+    useLegalsQueryKey()
+  );
+  const currentLegal = legalsResult
+    ? legalsResult.list.find((item) => item.id === editingLegalId)
+    : undefined;
+
+  const editingLegalForm: LegalItem | undefined = currentLegal?.image
+    ? currentLegal
+    : undefined;
+  return editingLegalForm;
 };

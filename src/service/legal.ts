@@ -4,6 +4,7 @@ import {
   LegalCategoriesSearchParams,
   LegalCategory,
   LegalForm,
+  LegalItem,
   LegalsResult,
   LegalsSearchParams,
 } from "types/legal";
@@ -91,7 +92,7 @@ export const useEditLegal = (queryKey: QueryKey) => {
 export const useDeleteLegal = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<LegalForm>) =>
+    (params: Partial<LegalItem>) =>
       client("/api/admin/legal/legal-save", {
         data: { ...params, status: -1 },
         method: "POST",

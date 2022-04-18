@@ -23,10 +23,10 @@ export const SearchPanel = ({
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<LegalsSearchParams>>(params);
 
-  const setCategory = (legal_class_id: any) =>
-    setTemporaryParams({ ...temporaryParams, legal_class_id });
+  const setCategory = (category_id: any) =>
+    setTemporaryParams({ ...temporaryParams, category_id });
   const clearCategory = () =>
-    setTemporaryParams({ ...temporaryParams, legal_class_id: undefined });
+    setTemporaryParams({ ...temporaryParams, category_id: undefined });
 
   const setTitle = (evt: any) => {
     // onInputClear
@@ -56,7 +56,7 @@ export const SearchPanel = ({
           <div>文章分类：</div>
           <Select
             style={{ width: "20rem" }}
-            value={temporaryParams.legal_class_id}
+            value={temporaryParams.category_id}
             placeholder="请选择文章分类"
             allowClear={true}
             onSelect={setCategory}

@@ -21,18 +21,17 @@ export interface LegalCategoriesResult {
 export interface LegalsSearchParams {
   page: number;
   page_size: number;
-  legal_class_id: string;
+  category_id: string;
   title: string;
 }
 
 export interface LegalItem {
   id: string;
   title: string;
-  class_name: string;
+  category_id: string;
   sort: number;
-  img: string;
-  show_like: number;
-  show_look: number;
+  image: string;
+  content: string;
   created_at: string;
   updated_at: string;
 }
@@ -46,10 +45,8 @@ export interface LegalsResult {
 export interface LegalForm {
   id: string;
   title: string;
-  legal_class_id: number;
+  category_id: number;
   sort: number;
-  img: string;
-  virtual_like: number;
-  virtual_look: number;
+  image: string;
   content: string;
 }
