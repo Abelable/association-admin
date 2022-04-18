@@ -26,6 +26,7 @@ import {
   AuditOutlined,
   SolutionOutlined,
   AlertOutlined,
+  HighlightOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 
@@ -45,6 +46,8 @@ export const AuthenticatedApp = () => {
             <Routes>
               <Route path="users" element={<Users />} />
               <Route path="wisdoms" element={<Wisdoms />} />
+              <Route path="legal_categories" element={<ArticleCategories />} />
+              <Route path="legals" element={<Articles />} />
               <Route
                 path="article_categories"
                 element={<ArticleCategories />}
@@ -83,6 +86,18 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="wisdoms" icon={<AlertOutlined />}>
           <Link to={"wisdoms"}>网商智库</Link>
         </Menu.Item>
+        <Menu.SubMenu
+          key={"legal"}
+          icon={<HighlightOutlined />}
+          title={"法律汇编"}
+        >
+          <Menu.Item key="legal_categories" icon={<PartitionOutlined />}>
+            <Link to={"legal_categories"}>分类管理</Link>
+          </Menu.Item>
+          <Menu.Item key="legals" icon={<BarsOutlined />}>
+            <Link to={"legals"}>文章列表</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
         <Menu.SubMenu
           key={"article"}
           icon={<ReadOutlined />}
