@@ -7,6 +7,10 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
+import { ArticleBanners } from "./article-banners";
+import { Articles } from "./articles";
+import { Wisdoms } from "./wisdoms";
+
 import { ArticleCategories } from "./article-categories/index";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
@@ -21,10 +25,9 @@ import {
   PictureOutlined,
   AuditOutlined,
   SolutionOutlined,
+  AlertOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
-import { ArticleBanners } from "./article-banners";
-import { Articles } from "./articles";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,6 +44,7 @@ export const AuthenticatedApp = () => {
           <Content>
             <Routes>
               <Route path="users" element={<Users />} />
+              <Route path="wisdoms" element={<Wisdoms />} />
               <Route
                 path="article_categories"
                 element={<ArticleCategories />}
@@ -75,6 +79,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       <Menu theme="dark" mode="inline" selectedKeys={[routeType]}>
         <Menu.Item key="users" icon={<TeamOutlined />}>
           <Link to={"users"}>用户数据</Link>
+        </Menu.Item>
+        <Menu.Item key="wisdoms" icon={<AlertOutlined />}>
+          <Link to={"wisdoms"}>网商智库</Link>
         </Menu.Item>
         <Menu.SubMenu
           key={"article"}
