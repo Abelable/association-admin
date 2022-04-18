@@ -17,7 +17,7 @@ import {
 export const useLegalCategories = (params: LegalCategoriesSearchParams) => {
   const client = useHttp();
   return useQuery<LegalCategoriesResult>(["legalCategories", params], () =>
-    client("/api/admin/legal/class-list", { data: params })
+    client("/api/admin/legal/category-list", { data: params })
   );
 };
 
@@ -25,7 +25,7 @@ export const useAddLegalCategory = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<LegalCategory>) =>
-      client("/api/admin/legal/class-save", {
+      client("/api/admin/legal/category-save", {
         data: params,
         method: "POST",
       }),
@@ -37,7 +37,7 @@ export const useEditLegalCategory = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<LegalCategory>) =>
-      client("/api/admin/legal/class-save", {
+      client("/api/admin/legal/category-save", {
         data: params,
         method: "POST",
       }),
@@ -48,9 +48,9 @@ export const useEditLegalCategory = (queryKey: QueryKey) => {
 export const useDeleteLegalCategory = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (id: string) =>
-      client("/api/admin/legal/class-del", {
-        data: { id },
+    (params: Partial<LegalCategory>) =>
+      client("/api/admin/legal/category-save", {
+        data: { ...params, status: -1 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)

@@ -5,7 +5,9 @@ export interface LegalCategoriesSearchParams {
 
 export interface LegalCategory {
   id: string;
-  title: string;
+  name: string;
+  description: string;
+  image: string;
   sort: string;
 }
 

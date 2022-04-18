@@ -17,6 +17,7 @@ import {
 } from "./util";
 import { PlusOutlined } from "@ant-design/icons";
 import { LegalCategoryModal } from "./components/legal-category-modal";
+import { LegalCategory } from "types/legal";
 
 export const LegalCategories = () => {
   const [params, setParams] = useLegalCategoriesSearchParams();
@@ -25,13 +26,13 @@ export const LegalCategories = () => {
   const { mutate: deleteLegalCategory } = useDeleteLegalCategory(
     useLegalCategoriesQueryKey()
   );
-  const confirmDeleteLegalCategory = (id: string) => {
+  const confirmDeleteLegalCategory = (category: LegalCategory) => {
     Modal.confirm({
-      title: "确定删除该文章分类吗？",
+      title: "确定删除该法律汇编分类吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteLegalCategory(id),
+      onOk: () => deleteLegalCategory(category),
     });
   };
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -45,7 +46,7 @@ export const LegalCategories = () => {
     <Container>
       <Main>
         <Header between={true}>
-          <h3>文章分类列表</h3>
+          <h3>法律汇编分类列表</h3>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
@@ -66,8 +67,18 @@ export const LegalCategories = () => {
                 }`,
             },
             {
-              title: "分类名称",
-              dataIndex: "title",
+              title: "分类",
+              dataIndex: "name",
+            },
+            {
+              title: "图片",
+              render: (value, category) => (
+                <img
+                  style={{ width: "8.8rem", height: "6.2rem" }}
+                  src={category.image}
+                  alt=""
+                />
+              ),
             },
             {
               title: "排序（越大越在前面）",
@@ -86,7 +97,7 @@ export const LegalCategories = () => {
                         编辑
                       </Menu.Item>
                       <Menu.Item
-                        onClick={() => confirmDeleteLegalCategory(category.id)}
+                        onClick={() => confirmDeleteLegalCategory(category)}
                         key={"delete"}
                       >
                         删除

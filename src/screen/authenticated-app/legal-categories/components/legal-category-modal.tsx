@@ -1,6 +1,7 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
+import { OssUpload } from "components/oss-upload";
 import { useEffect } from "react";
 import { useAddLegalCategory, useEditLegalCategory } from "service/legal";
 import { LegalCategory } from "types/legal";
@@ -25,12 +26,23 @@ export const LegalCategoryModal = ({
   );
 
   useEffect(() => {
-    legalCategory && form.setFieldsValue(legalCategory);
+    if (legalCategory) {
+      const { image, ...restFieldsValue } = legalCategory;
+      form.setFieldsValue({
+        image: [{ url: image }],
+        ...restFieldsValue,
+      });
+    }
   }, [legalCategory, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      await mutateAsync({ ...legalCategory, ...form.getFieldsValue() });
+      const { image, ...restFieldsValue } = form.getFieldsValue();
+      await mutateAsync({
+        id: editingLegalCategoryId || "",
+        image: image[0].url,
+        ...restFieldsValue,
+      });
       closeModal();
     });
   };
@@ -40,22 +52,34 @@ export const LegalCategoryModal = ({
     close();
   };
 
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) return e;
+    return e && e.fileList;
+  };
+
   return (
     <Modal
-      title={editingLegalCategoryId ? "编辑文章分类" : "新增文章分类"}
+      title={editingLegalCategoryId ? "编辑法律汇编分类" : "新增法律汇编分类"}
       visible={legalCategoryModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form}>
+      <Form form={form} layout="vertical">
         <Form.Item
-          name="title"
+          name="name"
           label="分类名称"
           rules={[{ required: true, message: "请输入分类名称" }]}
         >
           <Input placeholder="请输入分类名称" />
+        </Form.Item>
+        <Form.Item
+          name="description"
+          label="描述"
+          rules={[{ required: true, message: "请输入分类描述" }]}
+        >
+          <Input placeholder="请输入分类描述" />
         </Form.Item>
         <Form.Item
           name="sort"
@@ -63,6 +87,16 @@ export const LegalCategoryModal = ({
           rules={[{ required: true, message: "请输入排序序号" }]}
         >
           <Input placeholder="请输入排序序号" />
+        </Form.Item>
+        <Form.Item
+          name="image"
+          label="图片"
+          tooltip="图片大小不能超过10MB"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+          rules={[{ required: true, message: "请上传分类图片" }]}
+        >
+          <OssUpload maxCount={1} />
         </Form.Item>
       </Form>
     </Modal>
