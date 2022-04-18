@@ -1,10 +1,9 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
-import { useArticle } from "service/article";
 
-export const useArticlesSearchParams = () => {
+export const useLegalsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "article_class_id",
+    "category_id",
     "title",
     "page",
     "page_size",
@@ -22,41 +21,36 @@ export const useArticlesSearchParams = () => {
   ] as const;
 };
 
-export const useArticlesQueryKey = () => {
-  const [params] = useArticlesSearchParams();
-  return ["articles", params];
+export const useLegalsQueryKey = () => {
+  const [params] = useLegalsSearchParams();
+  return ["legals", params];
 };
 
-export const useArticleModal = () => {
-  const [{ articleCreate }, setArticleModalOpen] = useUrlQueryParams([
-    "articleCreate",
+export const useLegalModal = () => {
+  const [{ legalCreate }, setLegalModalOpen] = useUrlQueryParams([
+    "legalCreate",
   ]);
-  const [{ editingArticleId }, setEditingArticleId] = useUrlQueryParams([
-    "editingArticleId",
+  const [{ editingLegalId }, setEditingLegalId] = useUrlQueryParams([
+    "editingLegalId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
-  const { data: editingArticleForm, isLoading } = useArticle(
-    Number(editingArticleId)
-  );
 
   const open = useCallback(
-    () => setArticleModalOpen({ articleCreate: true }),
-    [setArticleModalOpen]
+    () => setLegalModalOpen({ legalCreate: true }),
+    [setLegalModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingArticleId({ editingArticleId: id }),
-    [setEditingArticleId]
+    (id: string) => setEditingLegalId({ editingLegalId: id }),
+    [setEditingLegalId]
   );
   const close = useCallback(
-    () => setUrlParams({ articleCreate: "", editingArticleId: "" }),
+    () => setUrlParams({ legalCreate: "", editingLegalId: "" }),
     [setUrlParams]
   );
 
   return {
-    articleModalOpen: articleCreate === "true" || !!editingArticleId,
-    editingArticleId,
-    editingArticleForm,
-    isLoading,
+    legalModalOpen: legalCreate === "true" || !!editingLegalId,
+    editingLegalId,
     open,
     startEdit,
     close,

@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
-import { useArticleCategories, useArticles } from "service/article";
+import { useLegalCategories, useLegals } from "service/legal";
 import { toNumber } from "utils";
-import { ArticleModal } from "./components/article-modal";
+import { LegalModal } from "./components/legal-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
-import { useArticlesSearchParams } from "./util";
+import { useLegalsSearchParams } from "./util";
 
-export const Articles = () => {
-  const [params, setParams] = useArticlesSearchParams();
-  const { data, isLoading, error } = useArticles(params);
-  const { data: category } = useArticleCategories({ page: 1, page_size: 10 });
+export const Legals = () => {
+  const [params, setParams] = useLegalsSearchParams();
+  const { data, isLoading, error } = useLegals(params);
+  const { data: category } = useLegalCategories({ page: 1, page_size: 30 });
 
   return (
     <Container>
@@ -31,7 +31,7 @@ export const Articles = () => {
             total: toNumber(data?.total),
           }}
         />
-        <ArticleModal categoryList={category?.list || []} />
+        <LegalModal categoryList={category?.list || []} />
       </Main>
     </Container>
   );

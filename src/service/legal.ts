@@ -91,20 +91,11 @@ export const useEditLegal = (queryKey: QueryKey) => {
 export const useDeleteLegal = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (id: string) =>
-      client("/api/admin/legal/legal-del", {
-        data: { id },
+    (params: Partial<LegalForm>) =>
+      client("/api/admin/legal/legal-save", {
+        data: { ...params, status: -1 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)
-  );
-};
-
-export const useLegal = (id?: number) => {
-  const client = useHttp();
-  return useQuery<LegalForm>(
-    ["legal", { id }],
-    () => client("/api/admin/legal/legal-info", { data: { id } }),
-    { enabled: !!id }
   );
 };

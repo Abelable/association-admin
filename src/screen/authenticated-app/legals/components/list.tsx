@@ -11,18 +11,18 @@ import {
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useArticleModal, useArticlesQueryKey } from "../util";
-import { ArticleItem, ArticlesSearchParams } from "types/article";
-import { useDeleteArticle } from "service/article";
+import { useLegalModal, useLegalsQueryKey } from "../util";
+import { LegalItem, LegalsSearchParams } from "types/legal";
+import { useDeleteLegal } from "service/legal";
 
-interface ListProps extends TableProps<ArticleItem> {
+interface ListProps extends TableProps<LegalItem> {
   error: Error | unknown;
-  params: Partial<ArticlesSearchParams>;
-  setParams: (params: Partial<ArticlesSearchParams>) => void;
+  params: Partial<LegalsSearchParams>;
+  setParams: (params: Partial<LegalsSearchParams>) => void;
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const { open } = useArticleModal();
+  const { open } = useLegalModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -46,7 +46,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         columns={[
           {
             title: "编号",
-            render: (value, article, index) =>
+            render: (value, legal, index) =>
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
@@ -59,10 +59,10 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "图片",
-            render: (value, article) => (
+            render: (value, legal) => (
               <img
                 style={{ width: "8.8rem", height: "6.2rem" }}
-                src={article.img}
+                src={legal.img}
                 alt=""
               />
             ),
@@ -74,25 +74,15 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             width: "12rem",
           },
           {
-            title: "观看数",
-            dataIndex: "show_look",
-            width: "12rem",
-          },
-          {
-            title: "点赞数",
-            dataIndex: "show_like",
-            width: "12rem",
-          },
-          {
             title: "分类标签",
             dataIndex: "class_name",
             width: "12rem",
           },
           {
             title: "创建时间",
-            render: (value, article) => (
+            render: (value, legal) => (
               <span>
-                {dayjs(Number(article.created_at) * 1000).format(
+                {dayjs(Number(legal.created_at) * 1000).format(
                   "YYYY-MM-DD HH:mm"
                 )}
               </span>
@@ -101,9 +91,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "修改时间",
-            render: (value, article) => (
+            render: (value, legal) => (
               <span>
-                {dayjs(Number(article.updated_at) * 1000).format(
+                {dayjs(Number(legal.updated_at) * 1000).format(
                   "YYYY-MM-DD HH:mm"
                 )}
               </span>
@@ -112,8 +102,8 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "操作",
-            render(value, article) {
-              return <More id={article.id} />;
+            render(value, legal) {
+              return <More id={legal.id} />;
             },
             fixed: "right",
             width: "8rem",
@@ -127,17 +117,17 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 };
 
 const More = ({ id }: { id: string }) => {
-  const { mutate: deleteArticle } = useDeleteArticle(useArticlesQueryKey());
+  const { mutate: deleteLegal } = useDeleteLegal(useLegalsQueryKey());
 
-  const { startEdit } = useArticleModal();
+  const { startEdit } = useLegalModal();
 
-  const confirmDeleteArticle = (id: string) => {
+  const confirmDeleteLegal = (id: string) => {
     Modal.confirm({
       title: "确定删除该文章吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteArticle(id),
+      onOk: () => deleteLegal(id),
     });
   };
 
@@ -148,7 +138,7 @@ const More = ({ id }: { id: string }) => {
           <Menu.Item onClick={() => startEdit(id)} key={"edit"}>
             编辑
           </Menu.Item>
-          <Menu.Item onClick={() => confirmDeleteArticle(id)} key={"delete"}>
+          <Menu.Item onClick={() => confirmDeleteLegal(id)} key={"delete"}>
             删除
           </Menu.Item>
         </Menu>

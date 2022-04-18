@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { ArticleCategory, ArticlesSearchParams } from "types/article";
+import { LegalCategory, LegalsSearchParams } from "types/legal";
 
 export interface SearchPanelProps {
-  categoryList: ArticleCategory[];
-  params: Partial<ArticlesSearchParams>;
-  setParams: (params: Partial<ArticlesSearchParams>) => void;
+  categoryList: LegalCategory[];
+  params: Partial<LegalsSearchParams>;
+  setParams: (params: Partial<LegalsSearchParams>) => void;
 }
 
 export const SearchPanel = ({
@@ -16,17 +16,17 @@ export const SearchPanel = ({
   setParams,
 }: SearchPanelProps) => {
   const defaultParams = {
-    article_class_id: undefined,
+    legal_class_id: undefined,
     title: "",
-  } as Partial<ArticlesSearchParams>;
+  } as Partial<LegalsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<ArticlesSearchParams>>(params);
+    useState<Partial<LegalsSearchParams>>(params);
 
-  const setCategory = (article_class_id: any) =>
-    setTemporaryParams({ ...temporaryParams, article_class_id });
+  const setCategory = (legal_class_id: any) =>
+    setTemporaryParams({ ...temporaryParams, legal_class_id });
   const clearCategory = () =>
-    setTemporaryParams({ ...temporaryParams, article_class_id: undefined });
+    setTemporaryParams({ ...temporaryParams, legal_class_id: undefined });
 
   const setTitle = (evt: any) => {
     // onInputClear
@@ -56,15 +56,15 @@ export const SearchPanel = ({
           <div>文章分类：</div>
           <Select
             style={{ width: "20rem" }}
-            value={temporaryParams.article_class_id}
+            value={temporaryParams.legal_class_id}
             placeholder="请选择文章分类"
             allowClear={true}
             onSelect={setCategory}
             onClear={clearCategory}
           >
-            {categoryList?.map(({ id, title }) => (
+            {categoryList?.map(({ id, name }) => (
               <Select.Option key={id} value={id}>
-                {title}
+                {name}
               </Select.Option>
             ))}
           </Select>
