@@ -51,15 +51,21 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
   useEffect(() => {
     if (editingCourseForm) {
       const {
+        title,
         cover_img,
         media_url,
         duration,
         author_id,
+        tags,
         introduction,
         ...restFieldsValue
       } = editingCourseForm;
       form.setFieldsValue({
-        video: [{ url: cover_img, cover: cover_img, duration }],
+        title,
+        video: [
+          { name: `${title}.mp4`, url: cover_img, cover: cover_img, duration },
+        ],
+        tags: typeof tags === "string" ? (tags as string).split(",") : tags,
         author_id: `${author_id}`,
         ...restFieldsValue,
       });
@@ -110,6 +116,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
               name="tags"
               label="视频标签"
               rules={[{ required: true, message: "请输入视频标签" }]}
+              tooltip="最多可生成3个标签"
             >
               <Select mode="tags" placeholder="输入后回车生产标签" />
             </Form.Item>
