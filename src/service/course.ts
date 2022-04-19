@@ -18,7 +18,7 @@ import {
 export const useCourseAuthors = (params: CourseAuthorsSearchParams) => {
   const client = useHttp();
   return useQuery<CourseAuthorsResult>(["courseAuthors", params], () =>
-    client("/api/admin/course/category-list", { data: params })
+    client("/api/admin/class-room/author-list", { data: params })
   );
 };
 

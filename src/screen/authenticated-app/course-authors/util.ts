@@ -48,5 +48,5 @@ export const useCourseAuthorModal = () => {
 
 export const useCourseAuthorsQueryKey = () => {
   const [params] = useCourseAuthorsSearchParams();
-  return ["legalCategories", params];
+  return ["courseAuthors", params];
 };
