@@ -26,6 +26,8 @@ import {
   SolutionOutlined,
   AlertOutlined,
   HighlightOutlined,
+  PlayCircleOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 
@@ -47,6 +49,8 @@ export const AuthenticatedApp = () => {
               <Route path="wisdoms" element={<Wisdoms />} />
               <Route path="legal_categories" element={<LegalCategories />} />
               <Route path="legals" element={<Legals />} />
+              <Route path="course_authors" element={<LegalCategories />} />
+              <Route path="courses" element={<Legals />} />
               <Route
                 path="article_categories"
                 element={<ArticleCategories />}
@@ -95,6 +99,18 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           </Menu.Item>
           <Menu.Item key="legals" icon={<BarsOutlined />}>
             <Link to={"legals"}>文章列表</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.SubMenu
+          key={"course"}
+          icon={<PlayCircleOutlined />}
+          title={"网商课堂"}
+        >
+          <Menu.Item key="course_authors" icon={<UserOutlined />}>
+            <Link to={"course_authors"}>作者管理</Link>
+          </Menu.Item>
+          <Menu.Item key="courses" icon={<BarsOutlined />}>
+            <Link to={"courses"}>课堂列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
         {/* <Menu.SubMenu
