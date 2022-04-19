@@ -20,6 +20,7 @@ export const Legals = () => {
           setParams={setParams}
         />
         <List
+          categoryList={category?.list || []}
           error={error}
           params={params}
           setParams={setParams}

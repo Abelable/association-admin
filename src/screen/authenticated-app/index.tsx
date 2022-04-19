@@ -11,6 +11,7 @@ import { ArticleBanners } from "./article-banners";
 import { Articles } from "./articles";
 import { Wisdoms } from "./wisdoms";
 import { LegalCategories } from "./legal-categories/index";
+import { Legals } from "./legals";
 import { ArticleCategories } from "./article-categories/index";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
@@ -47,7 +48,7 @@ export const AuthenticatedApp = () => {
               <Route path="users" element={<Users />} />
               <Route path="wisdoms" element={<Wisdoms />} />
               <Route path="legal_categories" element={<LegalCategories />} />
-              <Route path="legals" element={<Articles />} />
+              <Route path="legals" element={<Legals />} />
               <Route
                 path="article_categories"
                 element={<ArticleCategories />}

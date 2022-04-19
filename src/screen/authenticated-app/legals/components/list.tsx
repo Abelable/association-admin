@@ -12,16 +12,23 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useLegalModal, useLegalsQueryKey } from "../util";
-import { LegalItem, LegalsSearchParams } from "types/legal";
+import { LegalCategory, LegalItem, LegalsSearchParams } from "types/legal";
 import { useDeleteLegal } from "service/legal";
 
 interface ListProps extends TableProps<LegalItem> {
+  categoryList: LegalCategory[];
   error: Error | unknown;
   params: Partial<LegalsSearchParams>;
   setParams: (params: Partial<LegalsSearchParams>) => void;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  categoryList,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const { open } = useLegalModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -42,7 +49,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -50,7 +56,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
-            fixed: "left",
             width: "8rem",
           },
           {
@@ -66,17 +71,22 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 alt=""
               />
             ),
-            width: "16rem",
           },
           {
             title: "排序",
             dataIndex: "sort",
-            width: "12rem",
+            width: "8rem",
           },
           {
             title: "分类标签",
-            dataIndex: "class_name",
-            width: "12rem",
+            render: (value, legal) => (
+              <span>
+                {
+                  categoryList.find((item) => item.id === legal.category_id)
+                    ?.name
+                }
+              </span>
+            ),
           },
           {
             title: "创建时间",
@@ -87,7 +97,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 )}
               </span>
             ),
-            width: "18rem",
           },
           {
             title: "修改时间",
@@ -98,14 +107,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 )}
               </span>
             ),
-            width: "18rem",
           },
           {
             title: "操作",
             render(value, legal) {
               return <More legal={legal} />;
             },
-            fixed: "right",
             width: "8rem",
           },
         ]}
