@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { LegalCategory, LegalForm, LegalsResult } from "types/legal";
+import { LegalCategory, LegalsResult } from "types/legal";
 import { useAddLegal, useEditLegal } from "service/legal";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
