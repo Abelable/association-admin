@@ -26,7 +26,7 @@ export const useAddCourseAuthor = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CourseAuthor>) =>
-      client("/api/admin/course/category-save", {
+      client("/api/admin/class-room/author-save", {
         data: params,
         method: "POST",
       }),
@@ -38,7 +38,7 @@ export const useEditCourseAuthor = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CourseAuthor>) =>
-      client("/api/admin/course/category-save", {
+      client("/api/admin/class-room/author-save", {
         data: params,
         method: "POST",
       }),
@@ -50,7 +50,7 @@ export const useDeleteCourseAuthor = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CourseAuthor>) =>
-      client("/api/admin/course/category-save", {
+      client("/api/admin/class-room/author-save", {
         data: { ...params, status: -1 },
         method: "POST",
       }),

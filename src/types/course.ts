@@ -5,8 +5,8 @@ export interface CourseAuthorsSearchParams {
 
 export interface CourseAuthor {
   id: string;
-  name: string;
-  image: string;
+  author_name: string;
+  head_img: string;
   created_at: string;
 }
 

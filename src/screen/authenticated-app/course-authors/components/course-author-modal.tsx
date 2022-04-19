@@ -8,15 +8,15 @@ import { CourseAuthor } from "types/course";
 import { useCourseAuthorsQueryKey, useCourseAuthorModal } from "../util";
 
 export const CourseAuthorModal = ({
-  courseCategories,
+  courseAuthors,
 }: {
-  courseCategories: CourseAuthor[];
+  courseAuthors: CourseAuthor[];
 }) => {
   const [form] = useForm();
   const { courseAuthorModalOpen, editingCourseAuthorId, close } =
     useCourseAuthorModal();
   const courseAuthor =
-    courseCategories?.find((item) => item.id === editingCourseAuthorId) ||
+    courseAuthors?.find((item) => item.id === editingCourseAuthorId) ||
     undefined;
   const useMutationCourseAuthor = editingCourseAuthorId
     ? useEditCourseAuthor
@@ -27,9 +27,9 @@ export const CourseAuthorModal = ({
 
   useEffect(() => {
     if (courseAuthor) {
-      const { image, ...restFieldsValue } = courseAuthor;
+      const { head_img, ...restFieldsValue } = courseAuthor;
       form.setFieldsValue({
-        image: [{ url: image }],
+        head_img: [{ url: head_img }],
         ...restFieldsValue,
       });
     }
@@ -37,10 +37,10 @@ export const CourseAuthorModal = ({
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { image, ...restFieldsValue } = form.getFieldsValue();
+      const { head_img, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingCourseAuthorId || "",
-        image: image[0].url,
+        head_img: head_img[0].url,
         ...restFieldsValue,
       });
       closeModal();
@@ -59,7 +59,7 @@ export const CourseAuthorModal = ({
 
   return (
     <Modal
-      title={editingCourseAuthorId ? "编辑法律汇编分类" : "新增法律汇编分类"}
+      title={editingCourseAuthorId ? "编辑课堂作者" : "新增课堂作者"}
       visible={courseAuthorModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
@@ -68,33 +68,19 @@ export const CourseAuthorModal = ({
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="name"
-          label="分类名称"
-          rules={[{ required: true, message: "请输入分类名称" }]}
+          name="author_name"
+          label="作者名称"
+          rules={[{ required: true, message: "请输入作者名称" }]}
         >
-          <Input placeholder="请输入分类名称" />
+          <Input placeholder="请输入作者名称" />
         </Form.Item>
         <Form.Item
-          name="description"
-          label="描述"
-          rules={[{ required: true, message: "请输入分类描述" }]}
-        >
-          <Input placeholder="请输入分类描述" />
-        </Form.Item>
-        <Form.Item
-          name="sort"
-          label="排序序号"
-          rules={[{ required: true, message: "请输入排序序号" }]}
-        >
-          <Input placeholder="请输入排序序号" />
-        </Form.Item>
-        <Form.Item
-          name="image"
-          label="图片"
+          name="head_img"
+          label="作者头像"
           tooltip="图片大小不能超过10MB"
           valuePropName="fileList"
           getValueFromEvent={normFile}
-          rules={[{ required: true, message: "请上传分类图片" }]}
+          rules={[{ required: true, message: "请上传作者头像" }]}
         >
           <OssUpload maxCount={1} />
         </Form.Item>

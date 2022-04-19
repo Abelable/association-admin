@@ -71,12 +71,12 @@ export const CourseAuthors = () => {
             },
             {
               title: "作者名称",
-              dataIndex: "name",
+              dataIndex: "author_name",
             },
             {
               title: "头像",
               render: (value, user) => (
-                <Avatar src={user.image} icon={<UserOutlined />} />
+                <Avatar src={user.head_img} icon={<UserOutlined />} />
               ),
             },
             {
@@ -123,7 +123,7 @@ export const CourseAuthors = () => {
           }}
           onChange={setPagination}
         />
-        <CourseAuthorModal courseCategories={data?.list || []} />
+        <CourseAuthorModal courseAuthors={data?.list || []} />
       </Main>
     </Container>
   );
