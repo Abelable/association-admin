@@ -7,14 +7,11 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
-import { ArticleBanners } from "./article-banners";
-import { Articles } from "./articles";
 import { Wisdoms } from "./wisdoms";
 import { LegalCategories } from "./legal-categories/index";
 import { Legals } from "./legals";
 import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
-import { ArticleCategories } from "./article-categories/index";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
 
@@ -53,12 +50,6 @@ export const AuthenticatedApp = () => {
               <Route path="legals" element={<Legals />} />
               <Route path="course_authors" element={<CourseAuthors />} />
               <Route path="courses" element={<Courses />} />
-              <Route
-                path="article_categories"
-                element={<ArticleCategories />}
-              />
-              <Route path="articles" element={<Articles />} />
-              <Route path="article_banners" element={<ArticleBanners />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
               <Route
@@ -115,21 +106,6 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
             <Link to={"courses"}>课堂列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
-        {/* <Menu.SubMenu
-          key={"article"}
-          icon={<ReadOutlined />}
-          title={"文章管理"}
-        >
-          <Menu.Item key="article_categories" icon={<PartitionOutlined />}>
-            <Link to={"article_categories"}>分类管理</Link>
-          </Menu.Item>
-          <Menu.Item key="articles" icon={<BarsOutlined />}>
-            <Link to={"articles"}>文章列表</Link>
-          </Menu.Item>
-          <Menu.Item key="article_banners" icon={<PictureOutlined />}>
-            <Link to={"article_banners"}>头图管理</Link>
-          </Menu.Item>
-        </Menu.SubMenu> */}
         <Menu.Item key="applications" icon={<AuditOutlined />}>
           <Link to={"applications"}>入会申请</Link>
         </Menu.Item>
