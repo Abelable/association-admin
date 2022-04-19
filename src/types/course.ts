@@ -50,7 +50,7 @@ export interface CoursesResult {
   total: string;
 }
 export interface CourseForm {
-  id: string;
+  id: number;
   title: string;
   author_id: string;
   cover_img: string;
