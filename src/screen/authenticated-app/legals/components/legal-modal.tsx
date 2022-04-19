@@ -40,11 +40,11 @@ export const LegalModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { img, ...restFieldsValue } = form.getFieldsValue();
+      const { image, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingLegalId || "",
         content,
-        img: img[0].url,
+        image: image[0].url,
         ...restFieldsValue,
       });
       closeModal();
@@ -53,11 +53,9 @@ export const LegalModal = ({
 
   useEffect(() => {
     if (editingLegalForm) {
-      const { image, content, category_id, ...restFieldsValue } =
-        editingLegalForm;
+      const { image, content, ...restFieldsValue } = editingLegalForm;
       form.setFieldsValue({
         image: [{ url: image }],
-        category_id: `${category_id}`,
         ...restFieldsValue,
       });
       setContent(content);
@@ -95,7 +93,7 @@ export const LegalModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="legal_class_id"
+              name="category_id"
               label="文章分类"
               rules={[{ required: true, message: "请选择文章分类" }]}
             >
@@ -117,7 +115,7 @@ export const LegalModal = ({
           </Col>
         </Row>
         <Form.Item
-          name="img"
+          name="image"
           label="分享图片"
           tooltip="图片大小不能超过10MB"
           valuePropName="fileList"
