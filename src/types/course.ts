@@ -20,8 +20,9 @@ export interface CourseAuthorsResult {
 export interface CoursesSearchParams {
   page: number;
   page_size: number;
-  category_id: string;
   title: string;
+  start_time: string;
+  end_time: string;
 }
 
 export interface CourseItem {

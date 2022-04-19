@@ -1,31 +1,27 @@
 import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
-import { useLegalModal, useLegalsQueryKey } from "../util";
+import { useCourseModal, useCoursesQueryKey } from "../util";
 import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { LegalCategory, LegalsResult } from "types/legal";
-import { useAddLegal, useEditLegal } from "service/legal";
+import { CourseAuthor, CoursesResult } from "types/course";
+import { useAddCourse, useEditCourse } from "service/course";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
-import { LegalItem } from "../../../../types/legal";
+import { CourseItem } from "../../../../types/course";
 
-export const LegalModal = ({
-  categoryList,
-}: {
-  categoryList: LegalCategory[];
-}) => {
+export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
   const [form] = useForm();
 
-  const { legalModalOpen, editingLegalId, close } = useLegalModal();
+  const { courseModalOpen, editingCourseId, close } = useCourseModal();
 
-  const useMutationLegal = editingLegalId ? useEditLegal : useAddLegal;
-  const editingLegalForm = useEditingLegalForm(editingLegalId);
+  const useMutationCourse = editingCourseId ? useEditCourse : useAddCourse;
+  const editingCourseForm = useEditingCourseForm(editingCourseId);
   const {
     mutateAsync,
     error,
     isLoading: mutateLoading,
-  } = useMutationLegal(useLegalsQueryKey());
+  } = useMutationCourse(useCoursesQueryKey());
   const [content, setContent] = useState("");
 
   const normFile = (e: any) => {
@@ -42,7 +38,7 @@ export const LegalModal = ({
     form.validateFields().then(async () => {
       const { image, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
-        id: editingLegalId || "",
+        id: editingCourseId || "",
         content,
         image: image[0].url,
         ...restFieldsValue,
@@ -52,23 +48,23 @@ export const LegalModal = ({
   };
 
   useEffect(() => {
-    if (editingLegalForm) {
-      const { image, content, ...restFieldsValue } = editingLegalForm;
+    if (editingCourseForm) {
+      const { image, content, ...restFieldsValue } = editingCourseForm;
       form.setFieldsValue({
         image: [{ url: image }],
         ...restFieldsValue,
       });
       setContent(content);
     }
-  }, [form, editingLegalForm]);
+  }, [form, editingCourseForm]);
 
   return (
     <Drawer
-      title={editingLegalId ? "编辑文章" : "新增文章"}
+      title={editingCourseId ? "编辑文章" : "新增文章"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
-      visible={legalModalOpen}
+      visible={courseModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
@@ -93,12 +89,12 @@ export const LegalModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="category_id"
+              name="author_id"
               label="文章分类"
               rules={[{ required: true, message: "请选择文章分类" }]}
             >
               <Select placeholder="请选择文章分类">
-                {categoryList?.map(({ id, name }) => (
+                {authorList?.map(({ id, name }) => (
                   <Select.Option key={id} value={id}>
                     {name}
                   </Select.Option>
@@ -131,17 +127,17 @@ export const LegalModal = ({
   );
 };
 
-const useEditingLegalForm = (editingLegalId: string) => {
+const useEditingCourseForm = (editingCourseId: string) => {
   const queryClient = useQueryClient();
-  const legalsResult: LegalsResult | undefined = queryClient.getQueryData(
-    useLegalsQueryKey()
+  const coursesResult: CoursesResult | undefined = queryClient.getQueryData(
+    useCoursesQueryKey()
   );
-  const currentLegal = legalsResult
-    ? legalsResult.list.find((item) => item.id === editingLegalId)
+  const currentCourse = coursesResult
+    ? coursesResult.list.find((item) => item.id === editingCourseId)
     : undefined;
 
-  const editingLegalForm: LegalItem | undefined = currentLegal?.image
-    ? currentLegal
+  const editingCourseForm: CourseItem | undefined = currentCourse?.image
+    ? currentCourse
     : undefined;
-  return editingLegalForm;
+  return editingCourseForm;
 };

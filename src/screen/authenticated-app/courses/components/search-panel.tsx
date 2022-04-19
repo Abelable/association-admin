@@ -1,32 +1,24 @@
 import { useState } from "react";
-import { Button, Input, Select } from "antd";
+import { Button, DatePicker, Input } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { LegalCategory, LegalsSearchParams } from "types/legal";
+import { CourseAuthor, CoursesSearchParams } from "types/course";
+import moment from "moment";
 
 export interface SearchPanelProps {
-  categoryList: LegalCategory[];
-  params: Partial<LegalsSearchParams>;
-  setParams: (params: Partial<LegalsSearchParams>) => void;
+  params: Partial<CoursesSearchParams>;
+  setParams: (params: Partial<CoursesSearchParams>) => void;
 }
 
-export const SearchPanel = ({
-  categoryList,
-  params,
-  setParams,
-}: SearchPanelProps) => {
+export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
-    legal_class_id: undefined,
     title: "",
-  } as Partial<LegalsSearchParams>;
+    start_time: "",
+    end_time: "",
+  } as Partial<CoursesSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<LegalsSearchParams>>(params);
-
-  const setCategory = (category_id: any) =>
-    setTemporaryParams({ ...temporaryParams, category_id });
-  const clearCategory = () =>
-    setTemporaryParams({ ...temporaryParams, category_id: undefined });
+    useState<Partial<CoursesSearchParams>>(params);
 
   const setTitle = (evt: any) => {
     // onInputClear
@@ -44,6 +36,13 @@ export const SearchPanel = ({
     });
   };
 
+  const setDates = (dates: any, formatString: [string, string]) =>
+    setTemporaryParams({
+      ...temporaryParams,
+      start_time: formatString[0],
+      end_time: formatString[1],
+    });
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -52,23 +51,6 @@ export const SearchPanel = ({
   return (
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
-        <Row>
-          <div>文章分类：</div>
-          <Select
-            style={{ width: "20rem" }}
-            value={temporaryParams.category_id}
-            placeholder="请选择文章分类"
-            allowClear={true}
-            onSelect={setCategory}
-            onClear={clearCategory}
-          >
-            {categoryList?.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
         <Row>
           <div>文章标题：</div>
           <Input
@@ -79,6 +61,20 @@ export const SearchPanel = ({
             allowClear={true}
           />
         </Row>
+      </Row>
+      <Row>
+        <div>注册时间：</div>
+        <DatePicker.RangePicker
+          value={
+            temporaryParams.start_time
+              ? [
+                  moment(temporaryParams.start_time),
+                  moment(temporaryParams.end_time),
+                ]
+              : undefined
+          }
+          onChange={setDates}
+        />
       </Row>
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>

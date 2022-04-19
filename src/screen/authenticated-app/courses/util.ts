@@ -1,7 +1,7 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useLegalsSearchParams = () => {
+export const useCoursesSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "category_id",
     "title",
@@ -21,36 +21,36 @@ export const useLegalsSearchParams = () => {
   ] as const;
 };
 
-export const useLegalsQueryKey = () => {
-  const [params] = useLegalsSearchParams();
-  return ["legals", params];
+export const useCoursesQueryKey = () => {
+  const [params] = useCoursesSearchParams();
+  return ["courses", params];
 };
 
-export const useLegalModal = () => {
-  const [{ legalCreate }, setLegalModalOpen] = useUrlQueryParams([
-    "legalCreate",
+export const useCourseModal = () => {
+  const [{ courseCreate }, setCourseModalOpen] = useUrlQueryParams([
+    "courseCreate",
   ]);
-  const [{ editingLegalId }, setEditingLegalId] = useUrlQueryParams([
-    "editingLegalId",
+  const [{ editingCourseId }, setEditingCourseId] = useUrlQueryParams([
+    "editingCourseId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setLegalModalOpen({ legalCreate: true }),
-    [setLegalModalOpen]
+    () => setCourseModalOpen({ courseCreate: true }),
+    [setCourseModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingLegalId({ editingLegalId: id }),
-    [setEditingLegalId]
+    (id: string) => setEditingCourseId({ editingCourseId: id }),
+    [setEditingCourseId]
   );
   const close = useCallback(
-    () => setUrlParams({ legalCreate: "", editingLegalId: "" }),
+    () => setUrlParams({ courseCreate: "", editingCourseId: "" }),
     [setUrlParams]
   );
 
   return {
-    legalModalOpen: legalCreate === "true" || !!editingLegalId,
-    editingLegalId,
+    courseModalOpen: courseCreate === "true" || !!editingCourseId,
+    editingCourseId,
     open,
     startEdit,
     close,
