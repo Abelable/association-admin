@@ -2,7 +2,7 @@ import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import { useCourseModal, useCoursesQueryKey } from "../util";
 import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
-import { OssUpload } from "components/oss-upload";
+import { OssUpload } from "components/oss-video-upload";
 import { ErrorBox } from "components/lib";
 import { CourseAuthor, CoursesResult } from "types/course";
 import { useAddCourse, useEditCourse } from "service/course";
@@ -35,6 +35,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
     close();
   };
   const submit = () => {
+    console.log(form.getFieldsValue());
     form.validateFields().then(async () => {
       const { image, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
@@ -49,9 +50,17 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
 
   useEffect(() => {
     if (editingCourseForm) {
-      const { cover_img, introduction, ...restFieldsValue } = editingCourseForm;
+      const {
+        cover_img,
+        media_url,
+        duration,
+        author_id,
+        introduction,
+        ...restFieldsValue
+      } = editingCourseForm;
       form.setFieldsValue({
-        cover_img: [{ url: cover_img }],
+        video: [{ url: cover_img, cover: cover_img, duration }],
+        author_id: `${author_id}`,
         ...restFieldsValue,
       });
       setIntroduction(introduction);
@@ -60,7 +69,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
 
   return (
     <Drawer
-      title={editingCourseId ? "编辑文章" : "新增文章"}
+      title={editingCourseId ? "编辑课堂" : "新增课堂"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
@@ -77,16 +86,36 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Form.Item
+          name="video"
+          label="上传视频"
+          rules={[{ required: true, message: "请上传视频" }]}
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <OssUpload maxCount={1} />
+        </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="title"
-              label="文章标题"
-              rules={[{ required: true, message: "请输入文章标题" }]}
+              label="作品名称"
+              rules={[{ required: true, message: "请输入作品名称" }]}
             >
-              <Input placeholder="请输入文章标题" />
+              <Input placeholder="请输入作品名称" />
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item
+              name="tags"
+              label="视频标签"
+              rules={[{ required: true, message: "请输入视频标签" }]}
+            >
+              <Select mode="tags" placeholder="输入后回车生产标签" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="author_id"
@@ -102,24 +131,24 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
               </Select>
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
-              <Input placeholder="请输入文章排序" />
+            <Form.Item
+              label="课堂权重"
+              name="sort"
+              rules={[{ required: true, message: "请输入课堂权重" }]}
+            >
+              <Input placeholder="请输入课堂权重" />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item
-          name="image"
-          label="分享图片"
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <OssUpload maxCount={1} />
-        </Form.Item>
-        <Form.Item label="文章内容" tooltip="排版自定义规则">
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item label="观看密码" name="password">
+              <Input placeholder="请输入6位数字密码" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item label="简介说明" tooltip="排版自定义规则">
           <RichTextEditor content={introduction} setContent={setIntroduction} />
         </Form.Item>
       </Form>
@@ -132,12 +161,14 @@ const useEditingCourseForm = (editingCourseId: string) => {
   const coursesResult: CoursesResult | undefined = queryClient.getQueryData(
     useCoursesQueryKey()
   );
+
   const currentCourse = coursesResult
-    ? coursesResult.list.find((item) => item.id === editingCourseId)
+    ? coursesResult.list.find((item) => item.id === Number(editingCourseId))
     : undefined;
 
-  const editingCourseForm: CourseItem | undefined = currentCourse?.cover_img
+  const editingCourseForm: CourseItem | undefined = currentCourse?.id
     ? currentCourse
     : undefined;
+
   return editingCourseForm;
 };

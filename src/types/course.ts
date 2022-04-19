@@ -26,7 +26,7 @@ export interface CoursesSearchParams {
 }
 
 export interface CourseItem {
-  id: string;
+  id: number;
   title: string;
   author_id: string;
   cover_img: string;
@@ -52,8 +52,14 @@ export interface CoursesResult {
 export interface CourseForm {
   id: string;
   title: string;
-  category_id: number;
+  author_id: string;
+  cover_img: string;
+  media_url: string;
+  duration: string;
+  is_try: string;
+  try_time: string;
+  password: string;
+  introduction: string;
   sort: number;
-  image: string;
-  content: string;
+  tags: string[];
 }

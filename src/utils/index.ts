@@ -67,3 +67,12 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 
   return debouncedValue;
 };
+
+export const getVideoDuration = async (file: File) =>
+  new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const audio = new Audio(url);
+    audio.addEventListener("loadedmetadata", () =>
+      resolve(Math.round(audio.duration))
+    );
+  });

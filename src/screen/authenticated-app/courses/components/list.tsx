@@ -8,6 +8,7 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
+  Tag,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, UserOutlined } from "@ant-design/icons";
@@ -150,7 +151,7 @@ const More = ({ course }: { course: CourseItem }) => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item onClick={() => startEdit(course.id)} key={"edit"}>
+          <Menu.Item onClick={() => startEdit(`${course.id}`)} key={"edit"}>
             编辑
           </Menu.Item>
           <Menu.Item onClick={() => confirmDeleteCourse(course)} key={"delete"}>
@@ -176,12 +177,4 @@ const Header = styled(Row)`
 const Author = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Tag = styled.div`
-  display: inline-block;
-  margin: 0.5rem 1rem 0.5rem 0;
-  padding: 0 1rem;
-  border: 1px solid #d1d1d1;
-  border-radius: 0.5rem;
 `;
