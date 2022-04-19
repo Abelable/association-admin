@@ -99,7 +99,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
             <Link to={"legals"}>文章列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
-        <Menu.SubMenu
+        {/* <Menu.SubMenu
           key={"article"}
           icon={<ReadOutlined />}
           title={"文章管理"}
@@ -113,7 +113,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Menu.Item key="article_banners" icon={<PictureOutlined />}>
             <Link to={"article_banners"}>头图管理</Link>
           </Menu.Item>
-        </Menu.SubMenu>
+        </Menu.SubMenu> */}
         <Menu.Item key="applications" icon={<AuditOutlined />}>
           <Link to={"applications"}>入会申请</Link>
         </Menu.Item>
