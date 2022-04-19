@@ -22,7 +22,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
     error,
     isLoading: mutateLoading,
   } = useMutationCourse(useCoursesQueryKey());
-  const [content, setContent] = useState("");
+  const [introduction, setIntroduction] = useState("");
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
@@ -31,7 +31,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
 
   const closeModal = () => {
     form.resetFields();
-    setContent("");
+    setIntroduction("");
     close();
   };
   const submit = () => {
@@ -39,7 +39,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
       const { image, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingCourseId || "",
-        content,
+        introduction,
         image: image[0].url,
         ...restFieldsValue,
       });
@@ -49,12 +49,12 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
 
   useEffect(() => {
     if (editingCourseForm) {
-      const { image, content, ...restFieldsValue } = editingCourseForm;
+      const { cover_img, introduction, ...restFieldsValue } = editingCourseForm;
       form.setFieldsValue({
-        image: [{ url: image }],
+        cover_img: [{ url: cover_img }],
         ...restFieldsValue,
       });
-      setContent(content);
+      setIntroduction(introduction);
     }
   }, [form, editingCourseForm]);
 
@@ -90,13 +90,13 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
           <Col span={12}>
             <Form.Item
               name="author_id"
-              label="文章分类"
-              rules={[{ required: true, message: "请选择文章分类" }]}
+              label="关联作者"
+              rules={[{ required: true, message: "请选择作者" }]}
             >
-              <Select placeholder="请选择文章分类">
-                {authorList?.map(({ id, name }) => (
+              <Select placeholder="请选择作者">
+                {authorList?.map(({ id, author_name }) => (
                   <Select.Option key={id} value={id}>
-                    {name}
+                    {author_name}
                   </Select.Option>
                 ))}
               </Select>
@@ -120,7 +120,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
           <OssUpload maxCount={1} />
         </Form.Item>
         <Form.Item label="文章内容" tooltip="排版自定义规则">
-          <RichTextEditor content={content} setContent={setContent} />
+          <RichTextEditor content={introduction} setContent={setIntroduction} />
         </Form.Item>
       </Form>
     </Drawer>
@@ -136,7 +136,7 @@ const useEditingCourseForm = (editingCourseId: string) => {
     ? coursesResult.list.find((item) => item.id === editingCourseId)
     : undefined;
 
-  const editingCourseForm: CourseItem | undefined = currentCourse?.image
+  const editingCourseForm: CourseItem | undefined = currentCourse?.cover_img
     ? currentCourse
     : undefined;
   return editingCourseForm;

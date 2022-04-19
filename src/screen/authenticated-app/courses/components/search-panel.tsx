@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, DatePicker, Input } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { CourseAuthor, CoursesSearchParams } from "types/course";
+import { CoursesSearchParams } from "types/course";
 import moment from "moment";
 
 export interface SearchPanelProps {
@@ -52,7 +52,7 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
-          <div>文章标题：</div>
+          <div>标题：</div>
           <Input
             style={{ width: "20rem" }}
             value={temporaryParams.title}
@@ -61,20 +61,20 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             allowClear={true}
           />
         </Row>
-      </Row>
-      <Row>
-        <div>注册时间：</div>
-        <DatePicker.RangePicker
-          value={
-            temporaryParams.start_time
-              ? [
-                  moment(temporaryParams.start_time),
-                  moment(temporaryParams.end_time),
-                ]
-              : undefined
-          }
-          onChange={setDates}
-        />
+        <Row>
+          <div>上传时间：</div>
+          <DatePicker.RangePicker
+            value={
+              temporaryParams.start_time
+                ? [
+                    moment(temporaryParams.start_time),
+                    moment(temporaryParams.end_time),
+                  ]
+                : undefined
+            }
+            onChange={setDates}
+          />
+        </Row>
       </Row>
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>

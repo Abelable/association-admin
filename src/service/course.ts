@@ -61,7 +61,7 @@ export const useDeleteCourseAuthor = (queryKey: QueryKey) => {
 export const useCourses = (params: Partial<CoursesSearchParams>) => {
   const client = useHttp();
   return useQuery<CoursesResult>(["courses", params], () =>
-    client("/api/admin/course/course-list", { data: params })
+    client("/api/admin/class-room/list", { data: params })
   );
 };
 

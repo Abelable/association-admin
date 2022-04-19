@@ -14,11 +14,7 @@ export const Courses = () => {
   return (
     <Container>
       <Main>
-        <SearchPanel
-          authorList={author?.list || []}
-          params={params}
-          setParams={setParams}
-        />
+        <SearchPanel params={params} setParams={setParams} />
         <List
           authorList={author?.list || []}
           error={error}

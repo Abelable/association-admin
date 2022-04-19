@@ -28,10 +28,17 @@ export interface CoursesSearchParams {
 export interface CourseItem {
   id: string;
   title: string;
-  category_id: string;
+  author_id: string;
+  cover_img: string;
+  media_url: string;
+  duration: string;
+  is_try: string;
+  try_time: string;
+  password: string;
+  introduction: string;
   sort: number;
-  image: string;
-  content: string;
+  tags: string[];
+  author: CourseAuthor;
   created_at: string;
   updated_at: string;
 }

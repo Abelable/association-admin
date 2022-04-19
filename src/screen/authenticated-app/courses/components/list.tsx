@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import {
+  Avatar,
   Button,
   Dropdown,
   Menu,
@@ -9,27 +10,27 @@ import {
   TableProps,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useLegalModal, useLegalsQueryKey } from "../util";
-import { LegalCategory, LegalItem, LegalsSearchParams } from "types/legal";
-import { useDeleteLegal } from "service/legal";
+import { useCourseModal, useCoursesQueryKey } from "../util";
+import { CourseAuthor, CourseItem, CoursesSearchParams } from "types/course";
+import { useDeleteCourse } from "service/course";
 
-interface ListProps extends TableProps<LegalItem> {
-  categoryList: LegalCategory[];
+interface ListProps extends TableProps<CourseItem> {
+  authorList: CourseAuthor[];
   error: Error | unknown;
-  params: Partial<LegalsSearchParams>;
-  setParams: (params: Partial<LegalsSearchParams>) => void;
+  params: Partial<CoursesSearchParams>;
+  setParams: (params: Partial<CoursesSearchParams>) => void;
 }
 
 export const List = ({
-  categoryList,
+  authorList,
   error,
   params,
   setParams,
   ...restProps
 }: ListProps) => {
-  const { open } = useLegalModal();
+  const { open } = useCourseModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -41,7 +42,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>文章列表</h3>
+        <h3>课堂列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -52,57 +53,64 @@ export const List = ({
         columns={[
           {
             title: "编号",
-            render: (value, legal, index) =>
+            render: (value, course, index) =>
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
             width: "8rem",
           },
           {
-            title: "标题",
-            dataIndex: "title",
-          },
-          {
-            title: "图片",
-            render: (value, legal) => (
+            title: "封面",
+            render: (value, course) => (
               <img
                 style={{ width: "8.8rem", height: "6.2rem" }}
-                src={legal.image}
+                src={course.cover_img}
                 alt=""
               />
             ),
           },
           {
-            title: "排序",
+            title: "标题",
+            dataIndex: "title",
+          },
+          {
+            title: "关联作者",
+            render: (value, course) => (
+              <Author>
+                <Avatar src={course.author.head_img} icon={<UserOutlined />} />
+                <span style={{ marginLeft: "1rem" }}>
+                  {course.author.author_name}
+                </span>
+              </Author>
+            ),
+          },
+          {
+            title: "视频标签",
+            render: (value, course) =>
+              course.tags.map((item, index) => <Tag key={index}>{item}</Tag>),
+          },
+          {
+            title: "密码",
+            dataIndex: "password",
+          },
+          {
+            title: "权重",
             dataIndex: "sort",
             width: "8rem",
           },
           {
-            title: "分类标签",
-            render: (value, legal) => (
+            title: "状态",
+            render: (value, course) => (
               <span>
-                {
-                  categoryList.find((item) => item.id === legal.category_id)
-                    ?.name
-                }
+                {course.try_time ? `试看${course.try_time}分钟` : "免费"}
               </span>
             ),
           },
           {
             title: "创建时间",
-            render: (value, legal) => (
+            render: (value, course) => (
               <span>
-                {dayjs(Number(legal.created_at) * 1000).format(
-                  "YYYY-MM-DD HH:mm"
-                )}
-              </span>
-            ),
-          },
-          {
-            title: "修改时间",
-            render: (value, legal) => (
-              <span>
-                {dayjs(Number(legal.updated_at) * 1000).format(
+                {dayjs(Number(course.created_at) * 1000).format(
                   "YYYY-MM-DD HH:mm"
                 )}
               </span>
@@ -110,8 +118,8 @@ export const List = ({
           },
           {
             title: "操作",
-            render(value, legal) {
-              return <More legal={legal} />;
+            render(value, course) {
+              return <More course={course} />;
             },
             width: "8rem",
           },
@@ -123,18 +131,18 @@ export const List = ({
   );
 };
 
-const More = ({ legal }: { legal: LegalItem }) => {
-  const { mutate: deleteLegal } = useDeleteLegal(useLegalsQueryKey());
+const More = ({ course }: { course: CourseItem }) => {
+  const { mutate: deleteCourse } = useDeleteCourse(useCoursesQueryKey());
 
-  const { startEdit } = useLegalModal();
+  const { startEdit } = useCourseModal();
 
-  const confirmDeleteLegal = (legal: LegalItem) => {
+  const confirmDeleteCourse = (course: CourseItem) => {
     Modal.confirm({
       title: "确定删除该文章吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteLegal(legal),
+      onOk: () => deleteCourse(course),
     });
   };
 
@@ -142,10 +150,10 @@ const More = ({ legal }: { legal: LegalItem }) => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item onClick={() => startEdit(legal.id)} key={"edit"}>
+          <Menu.Item onClick={() => startEdit(course.id)} key={"edit"}>
             编辑
           </Menu.Item>
-          <Menu.Item onClick={() => confirmDeleteLegal(legal)} key={"delete"}>
+          <Menu.Item onClick={() => confirmDeleteCourse(course)} key={"delete"}>
             删除
           </Menu.Item>
         </Menu>
@@ -163,4 +171,17 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const Author = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Tag = styled.div`
+  display: inline-block;
+  margin: 0.5rem 1rem 0.5rem 0;
+  padding: 0 1rem;
+  border: 1px solid #d1d1d1;
+  border-radius: 0.5rem;
 `;
