@@ -1,14 +1,24 @@
-import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
+import {
+  Button,
+  Col,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Switch,
+  InputNumber,
+} from "antd";
 import { useCourseModal, useCoursesQueryKey } from "../util";
 import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-video-upload";
 import { ErrorBox } from "components/lib";
-import { CourseAuthor, CoursesResult } from "types/course";
+import { CourseAuthor, CoursesResult, CourseItem } from "types/course";
 import { useAddCourse, useEditCourse } from "service/course";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
-import { CourseItem } from "../../../../types/course";
 
 export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
   const [form] = useForm();
@@ -34,14 +44,18 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
     setIntroduction("");
     close();
   };
+
   const submit = () => {
-    console.log(form.getFieldsValue());
     form.validateFields().then(async () => {
-      const { image, ...restFieldsValue } = form.getFieldsValue();
+      const { video, is_try, tags, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingCourseId || "",
+        cover_img: video[0].cover,
+        media_url: video[0].url,
+        duration: video[0].duration,
+        is_try: is_try ? 1 : 0,
+        tags: tags.join(),
         introduction,
-        image: image[0].url,
         ...restFieldsValue,
       });
       closeModal();
@@ -57,6 +71,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
         duration,
         author_id,
         tags,
+        is_try,
         introduction,
         ...restFieldsValue
       } = editingCourseForm;
@@ -67,6 +82,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
         ],
         tags: typeof tags === "string" ? (tags as string).split(",") : tags,
         author_id: `${author_id}`,
+        is_try: !!is_try,
         ...restFieldsValue,
       });
       setIntroduction(introduction);
@@ -149,6 +165,19 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
           </Col>
         </Row>
         <Row gutter={16}>
+          <Col span={3}>
+            <Form.Item name="is_try" label="是否试看" valuePropName="checked">
+              <Switch />
+            </Form.Item>
+          </Col>
+          <Col span={9}>
+            <Form.Item label="试看时间（分钟）" name="try_time">
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入课堂权重"
+              />
+            </Form.Item>
+          </Col>
           <Col span={12}>
             <Form.Item label="观看密码" name="password">
               <Input placeholder="请输入6位数字密码" />

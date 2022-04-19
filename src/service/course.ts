@@ -69,7 +69,7 @@ export const useAddCourse = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CourseForm>) =>
-      client("/api/admin/course/course-save", {
+      client("/api/admin/class-room/save", {
         data: params,
         method: "POST",
       }),
@@ -81,7 +81,7 @@ export const useEditCourse = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CourseForm>) =>
-      client("/api/admin/course/course-save", {
+      client("/api/admin/class-room/save", {
         data: params,
         method: "POST",
       }),
@@ -93,7 +93,7 @@ export const useDeleteCourse = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CourseItem>) =>
-      client("/api/admin/course/course-save", {
+      client("/api/admin/class-room/save", {
         data: { ...params, status: -1 },
         method: "POST",
       }),

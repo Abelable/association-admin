@@ -32,7 +32,7 @@ export interface CourseItem {
   cover_img: string;
   media_url: string;
   duration: string;
-  is_try: string;
+  is_try: number;
   try_time: string;
   password: string;
   introduction: string;
@@ -61,5 +61,5 @@ export interface CourseForm {
   password: string;
   introduction: string;
   sort: number;
-  tags: string[];
+  tags: string;
 }
