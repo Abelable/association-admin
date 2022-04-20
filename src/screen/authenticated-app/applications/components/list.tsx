@@ -121,7 +121,7 @@ export const List = ({
                 </ButtonNoPadding>
               </Dropdown>
             ),
-            width: "16rem",
+            width: "18rem",
           },
           {
             title: "姓名",
@@ -131,11 +131,7 @@ export const List = ({
           {
             title: "手机号",
             dataIndex: "mobile",
-            width: "16rem",
-          },
-          {
-            title: "邮箱",
-            dataIndex: "email",
+            width: "20rem",
           },
           {
             title: "状态",

@@ -26,7 +26,6 @@ export const SearchPanel = ({
     e_time: "",
     name: "",
     mobile: "",
-    email: "",
     member_level: undefined,
     is_deal: undefined,
   } as Partial<ApplicationsSearchParams>;
@@ -74,22 +73,6 @@ export const SearchPanel = ({
     });
   };
 
-  const setEmail = (evt: any) => {
-    // onInputClear
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        email: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      email: evt.target.value,
-    });
-  };
-
   const setLevel = (member_level: any) =>
     setTemporaryParams({ ...temporaryParams, member_level });
   const clearLevel = () =>
@@ -134,16 +117,6 @@ export const SearchPanel = ({
           value={temporaryParams.mobile}
           onChange={setMobile}
           placeholder="请输入手机号"
-          allowClear={true}
-        />
-      </Item>
-      <Item>
-        <div>邮箱：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.email}
-          onChange={setEmail}
-          placeholder="请输入邮箱"
           allowClear={true}
         />
       </Item>

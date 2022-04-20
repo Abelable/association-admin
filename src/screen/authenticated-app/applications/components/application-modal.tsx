@@ -60,19 +60,14 @@ export const ApplicationModal = ({
         website_url,
         ICP,
         company_type,
-        website_type,
         staff_count,
         gang_count,
-        trade_commodity,
-        member_count,
-        operator_count,
-        trade_count,
+        revenue,
         trade_amount,
         _name,
         job_title,
         political_status,
         _mobile,
-        _email,
         contacter_name,
         contacter_job_title,
         contacter_mobile,
@@ -88,20 +83,10 @@ export const ApplicationModal = ({
         { title: "网站（app）名称", name: "website_url", value: website_url },
         { title: "ICP备案号", name: "ICP", value: ICP },
         { title: "企业类型", name: "company_type", value: company_type.join() },
-        {
-          title: "网站电子商务类型",
-          name: "website_type",
-          value: website_type.join(),
-        },
+        { title: "上年度GMV", name: "trade_amount", value: trade_amount },
+        { title: "上年度营收", name: "revenue", value: revenue },
         { title: "员工人数", name: "staff_count", value: staff_count },
         { title: "党员人数", name: "gang_count", value: gang_count },
-        {
-          title: "交易商品（服务）",
-          name: "trade_commodity",
-          value: trade_commodity,
-        },
-        { title: "上年交易笔数", name: "trade_count", value: trade_count },
-        { title: "上年交易额", name: "trade_amount", value: trade_amount },
         { title: "负责人姓名", name: "_name", value: _name },
         { title: "职务", name: "job_title", value: job_title },
         {
@@ -110,7 +95,6 @@ export const ApplicationModal = ({
           value: political_status,
         },
         { title: "手机号", name: "_mobile", value: _mobile },
-        { title: "邮箱", name: "_email", value: _email },
         {
           title: "协会联系人姓名",
           name: "contacter_name",
@@ -130,12 +114,6 @@ export const ApplicationModal = ({
           title: "企业营业执照或副本",
           name: "license",
           value: licenseList.join(),
-        },
-        { title: "注册会员数量", name: "member_count", value: member_count },
-        {
-          title: "平台网站内经营者数量",
-          name: "operator_count",
-          value: operator_count,
         },
         { title: "等级名称", name: "member_level", value: member_level || "" },
       ];
@@ -214,7 +192,15 @@ export const ApplicationModal = ({
               rules={[{ required: true, message: "请选择企业类型" }]}
             >
               <Select placeholder="请选择企业类型" mode="tags" showArrow>
-                {["第三方平台", "自营平台", "非平台"].map((item) => (
+                {[
+                  "网络销售类平台",
+                  "生活服务类平台",
+                  "社交娱乐类平台",
+                  "信息资讯类平台",
+                  "金融服务类平台",
+                  "计算机应用类平台",
+                  "其它类",
+                ].map((item) => (
                   <Select.Option key={item}>{item}</Select.Option>
                 ))}
               </Select>
@@ -224,21 +210,24 @@ export const ApplicationModal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="website_type"
-              label="网站电子商务类型（可多选）"
-              rules={[{ required: true, message: "请选择网站电子商务类型" }]}
+              name="trade_amount"
+              label="上年度GMV（元）"
+              rules={[{ required: true, message: "请输入上年度GMV" }]}
             >
-              <Select
-                placeholder="请选择网站电子商务类型"
-                mode="tags"
-                showArrow
-              >
-                {["B2B", "B2C", "C2C", "G2C", "其他"].map((item) => (
-                  <Select.Option key={item}>{item}</Select.Option>
-                ))}
-              </Select>
+              <Input placeholder="请输入上年度GMV" />
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item
+              name="revenue"
+              label="上年度营收（元）"
+              rules={[{ required: true, message: "请输入上年度营收" }]}
+            >
+              <Input placeholder="请输入上年度营收" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="staff_count"
@@ -248,8 +237,6 @@ export const ApplicationModal = ({
               <Input placeholder="请输入员工人数" />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="gang_count"
@@ -257,47 +244,6 @@ export const ApplicationModal = ({
               rules={[{ required: true, message: "请输入党员人数" }]}
             >
               <Input placeholder="请输入党员人数" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="trade_commodity"
-              label="交易商品（服务）"
-              rules={[{ required: true, message: "请输入交易商品（服务）" }]}
-            >
-              <Input placeholder="请输入交易商品（服务）" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="member_count" label="注册会员数量（个）">
-              <Input placeholder="请输入注册会员数量" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="operator_count" label="平台网站内经营者数量（个）">
-              <Input placeholder="请输入平台网站内经营者数量" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="trade_count"
-              label="上年交易笔数（笔）"
-              rules={[{ required: true, message: "请输入上年交易笔数" }]}
-            >
-              <Input placeholder="请输入上年交易笔数" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="trade_amount"
-              label="上年交易额（元）"
-              rules={[{ required: true, message: "请输入上年交易额" }]}
-            >
-              <Input placeholder="请输入上年交易额" />
             </Form.Item>
           </Col>
         </Row>
@@ -371,23 +317,6 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="_email"
-              label="邮箱"
-              rules={[
-                {
-                  type: "email",
-                  message: "请输入有效邮箱地址",
-                },
-                { required: true, message: "请输入负责人邮箱" },
-              ]}
-            >
-              <Input placeholder="请输入负责人邮箱" />
-            </Form.Item>
-          </Col>
-        </Row>
         <Divider orientation="left">联系人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
@@ -455,7 +384,6 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
           ...originForm,
           license,
           company_type: originForm.company_type.split(","),
-          website_type: originForm.website_type.split(","),
           member_level:
             Number(currentApplication?.level_id) === 0
               ? undefined
