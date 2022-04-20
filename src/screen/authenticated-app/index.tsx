@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
+import { Banners } from "./banners";
 import { Wisdoms } from "./wisdoms";
 import { LegalCategories } from "./legal-categories/index";
 import { Legals } from "./legals";
@@ -19,6 +20,7 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   TeamOutlined,
+  PictureOutlined,
   PartitionOutlined,
   BarsOutlined,
   AuditOutlined,
@@ -45,6 +47,7 @@ export const AuthenticatedApp = () => {
           <Content>
             <Routes>
               <Route path="users" element={<Users />} />
+              <Route path="banners" element={<Banners />} />
               <Route path="wisdoms" element={<Wisdoms />} />
               <Route path="legal_categories" element={<LegalCategories />} />
               <Route path="legals" element={<Legals />} />
@@ -78,6 +81,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       <Menu theme="dark" mode="inline" selectedKeys={[routeType]}>
         <Menu.Item key="users" icon={<TeamOutlined />}>
           <Link to={"users"}>用户数据</Link>
+        </Menu.Item>
+        <Menu.Item key="banners" icon={<PictureOutlined />}>
+          <Link to={"banners"}>头图管理</Link>
         </Menu.Item>
         <Menu.SubMenu
           key={"course"}
