@@ -27,7 +27,6 @@ export const RichTextEditor = ({
         ],
         handlers: {
           image: () => {
-            const quillEditor = quillRef.current.getEditor();
             const input = document.createElement("input");
             input.setAttribute("type", "file");
             input.setAttribute("accept", "image/*");
@@ -57,10 +56,13 @@ export const RichTextEditor = ({
                 });
 
                 const url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
-                const range = quillEditor.getSelection();
-                const index = range ? range.index : 0;
-                quillEditor.insertEmbed(index, "image", url);
-                quillEditor.setSelection(index + 1);
+                setTimeout(() => {
+                  const quillEditor = quillRef.current.getEditor();
+                  const range = quillEditor.getSelection();
+                  const index = range ? range.index : 0;
+                  quillEditor.insertEmbed(index, "image", url);
+                  quillEditor.setSelection(index + 1);
+                });
               } catch (err) {
                 console.error(err);
               }
