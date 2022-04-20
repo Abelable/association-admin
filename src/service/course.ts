@@ -4,7 +4,6 @@ import {
   CourseAuthorsSearchParams,
   CourseAuthor,
   CourseForm,
-  CourseItem,
   CoursesResult,
   CoursesSearchParams,
 } from "types/course";
