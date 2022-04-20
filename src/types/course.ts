@@ -56,7 +56,7 @@ export interface CourseForm {
   cover_img: string;
   media_url: string;
   duration: string;
-  is_try: string;
+  is_try: number;
   try_time: string;
   password: string;
   introduction: string;

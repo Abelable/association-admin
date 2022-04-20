@@ -138,12 +138,13 @@ const More = ({ course }: { course: CourseItem }) => {
   const { startEdit } = useCourseModal();
 
   const confirmDeleteCourse = (course: CourseItem) => {
+    const { tags, created_at, updated_at, author, ...rest } = course;
     Modal.confirm({
-      title: "确定删除该文章吗？",
+      title: "确定删除该课堂吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteCourse(course),
+      onOk: () => deleteCourse({ tags: tags.join(), ...rest }),
     });
   };
 

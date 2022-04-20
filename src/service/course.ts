@@ -92,7 +92,7 @@ export const useEditCourse = (queryKey: QueryKey) => {
 export const useDeleteCourse = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<CourseItem>) =>
+    (params: Partial<CourseForm>) =>
       client("/api/admin/class-room/save", {
         data: { ...params, status: -1 },
         method: "POST",
