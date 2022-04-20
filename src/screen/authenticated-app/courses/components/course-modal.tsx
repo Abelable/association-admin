@@ -143,7 +143,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
             <Form.Item
               name="author_id"
               label="关联作者"
-              rules={[{ required: true, message: "请选择作者" }]}
+              rules={[{ required: true, message: "请选择关联作者" }]}
             >
               <Select placeholder="请选择作者">
                 {authorList?.map(({ id, author_name }) => (
@@ -174,7 +174,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
             <Form.Item label="试看时间（分钟）" name="try_time">
               <InputNumber
                 style={{ width: "100%" }}
-                placeholder="请输入课堂权重"
+                placeholder="请输入试看时间"
               />
             </Form.Item>
           </Col>

@@ -23,7 +23,7 @@ import {
   BarsOutlined,
   AuditOutlined,
   SolutionOutlined,
-  AlertOutlined,
+  BulbOutlined,
   HighlightOutlined,
   PlayCircleOutlined,
   UserOutlined,
@@ -79,21 +79,6 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="users" icon={<TeamOutlined />}>
           <Link to={"users"}>用户数据</Link>
         </Menu.Item>
-        <Menu.Item key="wisdoms" icon={<AlertOutlined />}>
-          <Link to={"wisdoms"}>网商智库</Link>
-        </Menu.Item>
-        <Menu.SubMenu
-          key={"legal"}
-          icon={<HighlightOutlined />}
-          title={"法律汇编"}
-        >
-          <Menu.Item key="legal_categories" icon={<PartitionOutlined />}>
-            <Link to={"legal_categories"}>分类管理</Link>
-          </Menu.Item>
-          <Menu.Item key="legals" icon={<BarsOutlined />}>
-            <Link to={"legals"}>文章列表</Link>
-          </Menu.Item>
-        </Menu.SubMenu>
         <Menu.SubMenu
           key={"course"}
           icon={<PlayCircleOutlined />}
@@ -106,6 +91,21 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
             <Link to={"courses"}>课堂列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
+        <Menu.SubMenu
+          key={"legal"}
+          icon={<HighlightOutlined />}
+          title={"法律汇编"}
+        >
+          <Menu.Item key="legal_categories" icon={<PartitionOutlined />}>
+            <Link to={"legal_categories"}>分类管理</Link>
+          </Menu.Item>
+          <Menu.Item key="legals" icon={<BarsOutlined />}>
+            <Link to={"legals"}>文章列表</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.Item key="wisdoms" icon={<BulbOutlined />}>
+          <Link to={"wisdoms"}>网商智库</Link>
+        </Menu.Item>
         <Menu.Item key="applications" icon={<AuditOutlined />}>
           <Link to={"applications"}>入会申请</Link>
         </Menu.Item>
