@@ -56,13 +56,11 @@ export const RichTextEditor = ({
                 });
 
                 const url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
-                setTimeout(() => {
-                  const quillEditor = quillRef.current.getEditor();
-                  const range = quillEditor.getSelection();
-                  const index = range ? range.index : 0;
-                  quillEditor.insertEmbed(index, "image", url);
-                  quillEditor.setSelection(index + 1);
-                });
+                const quillEditor = quillRef.current.getEditor();
+                const range = quillEditor.getSelection();
+                const index = range ? range.index : 0;
+                quillEditor.insertEmbed(index, "image", url);
+                quillEditor.setSelection(index + 1);
               } catch (err) {
                 console.error(err);
               }
