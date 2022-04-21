@@ -92,7 +92,11 @@ export const BannerModal = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="sort" label="头图排序">
+            <Form.Item
+              name="sort"
+              label="头图排序"
+              rules={[{ required: true, message: "请输入头图序号" }]}
+            >
               <Input placeholder="请输入头图序号" />
             </Form.Item>
           </Col>

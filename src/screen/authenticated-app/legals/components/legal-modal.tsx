@@ -44,7 +44,7 @@ export const LegalModal = ({
       await mutateAsync({
         id: editingLegalId || "",
         content,
-        image: image[0].url,
+        image: image.length ? image[0].url : "",
         ...restFieldsValue,
       });
       closeModal();
@@ -109,7 +109,11 @@ export const LegalModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
+            <Form.Item
+              label="文章排序"
+              name="sort"
+              rules={[{ required: true, message: "请选择文章排序" }]}
+            >
               <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>
@@ -117,6 +121,7 @@ export const LegalModal = ({
         <Form.Item
           name="image"
           label="分享图片"
+          rules={[{ required: true, message: "请上传分享图片" }]}
           tooltip="图片大小不能超过10MB"
           valuePropName="fileList"
           getValueFromEvent={normFile}
