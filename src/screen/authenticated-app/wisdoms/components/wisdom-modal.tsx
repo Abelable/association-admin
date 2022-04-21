@@ -110,7 +110,11 @@ export const WisdomModal = () => {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
+            <Form.Item
+              label="文章排序"
+              name="sort"
+              rules={[{ required: true, message: "请输入文章排序" }]}
+            >
               <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>
@@ -118,6 +122,7 @@ export const WisdomModal = () => {
         <Form.Item
           name="head_img"
           label="人物头像"
+          rules={[{ required: true, message: "请上传人物头像" }]}
           tooltip="图片大小不能超过10MB"
           valuePropName="fileList"
           getValueFromEvent={normFile}

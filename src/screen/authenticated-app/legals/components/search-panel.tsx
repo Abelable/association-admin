@@ -16,7 +16,7 @@ export const SearchPanel = ({
   setParams,
 }: SearchPanelProps) => {
   const defaultParams = {
-    legal_class_id: undefined,
+    category_id: undefined,
     title: "",
   } as Partial<LegalsSearchParams>;
 
