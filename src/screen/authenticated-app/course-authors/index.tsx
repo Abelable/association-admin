@@ -3,41 +3,24 @@ import {
   Button,
   Dropdown,
   Menu,
-  Modal,
   Table,
   TablePaginationConfig,
   Avatar,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useCourseAuthors, useDeleteCourseAuthor } from "service/course";
+import { useCourseAuthors } from "service/course";
 import { toNumber } from "utils";
-import {
-  useCourseAuthorsQueryKey,
-  useCourseAuthorsSearchParams,
-  useCourseAuthorModal,
-} from "./util";
+import { useCourseAuthorsSearchParams, useCourseAuthorModal } from "./util";
 import { PlusOutlined } from "@ant-design/icons";
 import { CourseAuthorModal } from "./components/course-author-modal";
-import { CourseAuthor } from "types/course";
 import dayjs from "dayjs";
 
 export const CourseAuthors = () => {
   const [params, setParams] = useCourseAuthorsSearchParams();
   const { data, isLoading, error } = useCourseAuthors(params);
   const { startEdit, open } = useCourseAuthorModal();
-  const { mutate: deleteCourseAuthor } = useDeleteCourseAuthor(
-    useCourseAuthorsQueryKey()
-  );
-  const confirmDeleteCourseAuthor = (category: CourseAuthor) => {
-    Modal.confirm({
-      title: "确定删除该作者吗？",
-      content: "点击确定删除",
-      okText: "确定",
-      cancelText: "取消",
-      onOk: () => deleteCourseAuthor(category),
-    });
-  };
+
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -101,12 +84,6 @@ export const CourseAuthors = () => {
                         key={"edit"}
                       >
                         编辑
-                      </Menu.Item>
-                      <Menu.Item
-                        onClick={() => confirmDeleteCourseAuthor(category)}
-                        key={"delete"}
-                      >
-                        删除
                       </Menu.Item>
                     </Menu>
                   }
