@@ -78,7 +78,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
       form.setFieldsValue({
         title,
         video: [
-          { name: `${title}.mp4`, url: cover_img, cover: cover_img, duration },
+          { name: `${title}.mp4`, url: media_url, cover: cover_img, duration },
         ],
         tags: typeof tags === "string" ? (tags as string).split(",") : tags,
         author_id: `${author_id}`,
