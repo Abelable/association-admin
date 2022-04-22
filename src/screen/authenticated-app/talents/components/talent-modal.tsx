@@ -84,7 +84,6 @@ export const TalentModal = ({
         QQ,
         address,
       } = form.getFieldsValue();
-      console.log("expert_intent_id", expert_intent_id);
 
       const imageList: any[] = [];
       image && image.forEach((item: any) => imageList.push(item.url));
@@ -371,6 +370,5 @@ const useEditingTalentForm = (editingTalentId: string) => {
         talent_classification: `${currentTalent?.talent_classification}`,
       }
     : undefined;
-  console.log("editingTalentForm", editingTalentForm);
   return editingTalentForm;
 };

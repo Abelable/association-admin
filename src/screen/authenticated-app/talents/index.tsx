@@ -66,8 +66,6 @@ export const Talents = () => {
       })
     : [];
 
-  console.log(list);
-
   const categoryOptions = [
     { id: 1, name: "市场监管" },
     { id: 2, name: "非市场监管" },
