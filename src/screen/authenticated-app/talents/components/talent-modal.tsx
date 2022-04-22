@@ -342,6 +342,7 @@ const useEditingTalentForm = (editingTalentId: string) => {
   const currentTalent = talentsResult
     ? talentsResult.list.find((item) => item.id === editingTalentId)
     : undefined;
+
   const formList = currentTalent
     ? JSON.parse(currentTalent?.apply_content_json)
     : [];
@@ -359,15 +360,16 @@ const useEditingTalentForm = (editingTalentId: string) => {
     });
   }
 
-  const editingTalentForm: TalentForm | undefined = originForm.expert_intent_id
+  const editingTalentForm: TalentForm | undefined = originForm
     ? {
         ...originForm,
         image,
-        expert_intent_id: originForm.expert_intent_id.split(","),
+        expert_intent_id: originForm.expert_intent_id
+          ? originForm.expert_intent_id.split(",")
+          : [],
         sex: `${originForm.sex}`,
         talent_classification: `${currentTalent?.talent_classification}`,
       }
     : undefined;
-  console.log(editingTalentForm);
   return editingTalentForm;
 };
