@@ -28,7 +28,7 @@ export interface CoursesSearchParams {
 export interface CourseItem {
   id: number;
   title: string;
-  author_id: string;
+  author_id: number;
   cover_img: string;
   media_url: string;
   duration: string;
@@ -37,7 +37,7 @@ export interface CourseItem {
   password: string;
   introduction: string;
   sort: number;
-  tags: string[];
+  tags: string[] | string;
   author: CourseAuthor;
   created_at: string;
   updated_at: string;
@@ -52,7 +52,7 @@ export interface CoursesResult {
 export interface CourseForm {
   id: number;
   title: string;
-  author_id: string;
+  author_id: number;
   cover_img: string;
   media_url: string;
   duration: string;

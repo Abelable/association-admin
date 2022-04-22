@@ -78,17 +78,33 @@ export const List = ({
             title: "关联作者",
             render: (value, course) => (
               <Author>
-                <Avatar src={course.author.head_img} icon={<UserOutlined />} />
+                <Avatar
+                  src={
+                    authorList.find(
+                      (item) => Number(item.id) === course.author_id
+                    )?.head_img
+                  }
+                  icon={<UserOutlined />}
+                />
                 <span style={{ marginLeft: "1rem" }}>
-                  {course.author.author_name}
+                  {
+                    authorList.find(
+                      (item) => Number(item.id) === course.author_id
+                    )?.author_name
+                  }
                 </span>
               </Author>
             ),
           },
           {
             title: "视频标签",
-            render: (value, course) =>
-              course.tags.map((item, index) => <Tag key={index}>{item}</Tag>),
+            render: (value, course) => {
+              let tags: string[];
+              if (typeof course.tags === "string")
+                tags = (course.tags as string).split(",");
+              else tags = course.tags;
+              return tags.map((item, index) => <Tag key={index}>{item}</Tag>);
+            },
           },
           {
             title: "密码",
@@ -144,7 +160,7 @@ const More = ({ course }: { course: CourseItem }) => {
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteCourse({ tags: tags.join(), ...rest }),
+      onOk: () => deleteCourse({ tags: (tags as string[]).join(), ...rest }),
     });
   };
 

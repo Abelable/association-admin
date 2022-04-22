@@ -168,7 +168,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="是否试看">
-              <Switch />
+              <Switch checked={isTry} onChange={setIsTry} />
             </Form.Item>
           </Col>
         </Row>
