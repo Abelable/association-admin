@@ -367,9 +367,10 @@ const useEditingTalentForm = (editingTalentId: string) => {
         expert_intent_id: originForm.expert_intent_id
           ? originForm.expert_intent_id.split(",")
           : [],
-        sex: `${originForm.sex}`,
+        sex: `${originForm.sex ? originForm.sex : 0}`,
         talent_classification: `${currentTalent?.talent_classification}`,
       }
     : undefined;
+  console.log("editingTalentForm", editingTalentForm);
   return editingTalentForm;
 };
