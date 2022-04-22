@@ -261,38 +261,7 @@ export const TalentModal = ({
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="score" label="评分">
-              <Input placeholder="请输入评分" />
-            </Form.Item>
-          </Col>
         </Row>
-        <Divider orientation="left">人才评价</Divider>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="talent_classification" label="人才分类">
-              <Select placeholder="请选择人才分类">
-                {categoryOptions.map(({ id, name }) => (
-                  <Select.Option key={id} value={id}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="score" label="评分">
-              <Input placeholder="请输入评分" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item
-          name="introduction"
-          label="人才介绍"
-          rules={[{ required: true, message: "请输入人才介绍" }]}
-        >
-          <Input.TextArea rows={4} placeholder="请输入人才介绍" />
-        </Form.Item>
         <Divider orientation="left">工作履历</Divider>
         <Row gutter={16}>
           <Col span={12}>
@@ -422,6 +391,28 @@ export const TalentModal = ({
           rules={[{ required: true, message: "请输入通讯地址" }]}
         >
           <Input.TextArea rows={4} placeholder="请输入通讯地址" />
+        </Form.Item>
+        <Divider orientation="left">人才评价</Divider>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="talent_classification" label="人才分类">
+              <Select placeholder="请选择人才分类">
+                {categoryOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="score" label="评分">
+              <Input placeholder="请输入评分" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item name="introduction" label="人才介绍">
+          <Input.TextArea rows={4} placeholder="请输入人才介绍" />
         </Form.Item>
       </Form>
     </Drawer>
