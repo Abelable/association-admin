@@ -19,9 +19,9 @@ export const Talents = () => {
     ? data?.list.map((item) => {
         const {
           id,
-          created_at,
           score,
           talent_classification,
+          created_at,
           apply_content_json,
         } = item;
         const jsonDataList = JSON.parse(apply_content_json);
@@ -29,9 +29,9 @@ export const Talents = () => {
         jsonDataList.forEach(
           (item: { title: string; name: string; value: string }) => {
             if (item.name === "expert_intent_id") {
-              list.push([item.name, item.value.split(",")]);
+              list.push([item.name, item.value ? item.value.split(",") : []]);
             } else if (item.name === "work_time") {
-              list.push([item.name, item.value.slice(0, 10)]);
+              list.push([item.name, item.value ? item.value.slice(0, 10) : ""]);
             } else {
               list.push([item.name, item.value]);
             }

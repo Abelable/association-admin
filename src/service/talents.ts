@@ -34,7 +34,7 @@ export const useAddTalent = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<TalentItem>) =>
       client("/api/admin/enter-apply/personal-apply-store", {
-        data: { apply_content_json: params.apply_content_json },
+        data: { apply_content_json: params.apply_content_json, status: 1 },
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -46,7 +46,11 @@ export const useEditTalent = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<TalentItem>) =>
       client("/api/admin/enter-apply/personal-apply-store", {
-        data: { id: params.id, apply_content_json: params.apply_content_json },
+        data: {
+          id: params.id,
+          apply_content_json: params.apply_content_json,
+          status: 1,
+        },
         method: "POST",
       }),
     useEditConfig(queryKey)

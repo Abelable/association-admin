@@ -84,6 +84,7 @@ export const TalentModal = ({
         QQ,
         address,
       } = form.getFieldsValue();
+      console.log("expert_intent_id", expert_intent_id);
 
       const imageList: any[] = [];
       image && image.forEach((item: any) => imageList.push(item.url));
@@ -108,10 +109,7 @@ export const TalentModal = ({
         {
           title: "专家库意向",
           name: "expert_intent_id",
-          value:
-            expert_intent_id.length > 2
-              ? expert_intent_id.slice(0, 2).join()
-              : expert_intent_id.join(),
+          value: expert_intent_id ? expert_intent_id.join() : "",
         },
         {
           title: "人才分类",
@@ -180,7 +178,7 @@ export const TalentModal = ({
           valuePropName="fileList"
           getValueFromEvent={normFile}
         >
-          <OssUpload />
+          <OssUpload maxCount={1} />
         </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
@@ -317,9 +315,7 @@ export const TalentModal = ({
             <Form.Item name="talent_classification" label="人才分类">
               <Select placeholder="请选择人才分类">
                 {categoryOptions.map(({ id, name }) => (
-                  <Select.Option key={id} value={id}>
-                    {name}
-                  </Select.Option>
+                  <Select.Option key={id}>{name}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -368,11 +364,10 @@ const useEditingTalentForm = (editingTalentId: string) => {
         ...originForm,
         image,
         expert_intent_id: originForm.expert_intent_id.split(","),
-        sex:
-          originForm.sex !== "1" && originForm.sex !== "2"
-            ? "0"
-            : originForm.sex,
+        sex: `${originForm.sex}`,
+        talent_classification: `${currentTalent?.talent_classification}`,
       }
     : undefined;
+  console.log(editingTalentForm);
   return editingTalentForm;
 };

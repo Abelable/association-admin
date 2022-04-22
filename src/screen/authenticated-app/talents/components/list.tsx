@@ -37,9 +37,9 @@ export const List = ({
   ...restProps
 }: ListProps) => {
   const genderOptions = [
-    { value: "0", desc: "未知" },
-    { value: "1", desc: "男" },
-    { value: "2", desc: "女" },
+    { value: 0, desc: "未知" },
+    { value: 1, desc: "男" },
+    { value: 2, desc: "女" },
   ];
 
   const { open } = useTalentModal();
@@ -92,7 +92,11 @@ export const List = ({
           },
           {
             title: "性别",
-            dataIndex: "sex",
+            render: (value, talent) => (
+              <span>
+                {genderOptions.find((item) => item.value === talent.sex)?.desc}
+              </span>
+            ),
             width: "8rem",
           },
           {
@@ -119,7 +123,7 @@ export const List = ({
             title: "专家库意向",
             render: (value, talent) =>
               talent.expert_intent_id.map((item) => (
-                <Tag>
+                <Tag key={item}>
                   {expertOptions.find((_item) => _item.id === item)?.title}
                 </Tag>
               )),
@@ -206,13 +210,13 @@ export const List = ({
                   onClick={(e) => e.preventDefault()}
                 >
                   {categoryOptions.find(
-                    (item) => item.id === talent.talent_classification
+                    (item) => item.id === Number(talent.talent_classification)
                   )?.name || "选择人才分类"}
                   <DownOutlined />
                 </ButtonNoPadding>
               </Dropdown>
             ),
-            width: "18rem",
+            width: "14rem",
           },
           {
             title: "总评分",

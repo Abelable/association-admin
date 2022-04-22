@@ -1,5 +1,5 @@
 export interface GenderOption {
-  value: string;
+  value: number;
   desc: string;
 }
 
@@ -27,7 +27,7 @@ export interface TalentsSearchParams {
 export interface TalentForm {
   image: { [key in string]: string }[];
   name: string;
-  sex: string;
+  sex: number;
   id_number: string;
   political_status: string;
   graduated_school: string;
