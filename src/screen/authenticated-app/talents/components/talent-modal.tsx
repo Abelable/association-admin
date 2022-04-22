@@ -131,7 +131,7 @@ export const TalentModal = ({
           name: "professional_qualification",
           value: professional_qualification,
         },
-        { title: "移动电话", name: "mobile", value: mobile },
+        { title: "手机号", name: "mobile", value: mobile },
         { title: "固话", name: "telephone", value: telephone },
         { title: "电子邮件", name: "email", value: email },
         { title: "传真", name: "fax", value: fax },
@@ -274,8 +274,8 @@ export const TalentModal = ({
         <Divider orientation="left">联系方式</Divider>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="mobile" label="移动电话">
-              <Input placeholder="请输入移动电话" />
+            <Form.Item name="mobile" label="手机号">
+              <Input placeholder="请输入手机号" />
             </Form.Item>
           </Col>
           <Col span={12}>

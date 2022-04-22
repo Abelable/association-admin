@@ -11,26 +11,45 @@ import { TalentListItem } from "types/talent";
 
 export const Talents = () => {
   const [params, setParams] = useTalentsSearchParams();
+  const { data: expertOptions } = useExpertOptions();
   const { data, isLoading, error } = useTalents(params);
 
   // 处理列表数据
   const list: TalentListItem[] = data
     ? data?.list.map((item) => {
-        const { id, created_at, apply_content_json } = item;
+        const {
+          id,
+          created_at,
+          score,
+          talent_classification,
+          apply_content_json,
+        } = item;
         const jsonDataList = JSON.parse(apply_content_json);
-        const list: string[][] = [];
+        const list: (string | string[])[][] = [];
         jsonDataList.forEach(
           (item: { title: string; name: string; value: string }) => {
-            list.push([item.name, item.value]);
+            if (item.name === "expert_intent_id") {
+              const value = item.value.split(",");
+              list.push([item.name, value]);
+            } else {
+              list.push([item.name, item.value]);
+            }
           }
         );
         const restData = Object.fromEntries(list);
 
-        return { id, created_at, ...restData };
+        return {
+          id,
+          score,
+          talent_classification: Number(talent_classification),
+          created_at,
+          ...restData,
+        };
       })
     : [];
 
-  const { data: expertOptions } = useExpertOptions();
+  console.log(list);
+
   const categoryOptions = [
     { id: 1, name: "市场监管" },
     { id: 2, name: "非市场监管" },

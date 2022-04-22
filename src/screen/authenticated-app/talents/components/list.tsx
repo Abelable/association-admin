@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import {
+  Avatar,
   Button,
   Dropdown,
   Menu,
@@ -7,9 +8,10 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
+  Tag,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useTalentModal, useTalentsQueryKey } from "../util";
@@ -77,6 +79,13 @@ export const List = ({
             width: "8rem",
           },
           {
+            title: "照片",
+            render: (value, talent) => (
+              <Avatar src={talent.image} icon={<UserOutlined />} />
+            ),
+            width: "8rem",
+          },
+          {
             title: "姓名",
             dataIndex: "name",
             width: "12rem",
@@ -85,16 +94,99 @@ export const List = ({
             title: "性别",
             dataIndex: "sex",
             width: "8rem",
+          },
+          {
+            title: "身份证号",
+            dataIndex: "id_number",
+            width: "24rem",
+          },
+          {
+            title: "政治面貌",
+            dataIndex: "political_status",
+            width: "12rem",
+          },
+          {
+            title: "毕业院校",
+            dataIndex: "graduated_school",
+            width: "24rem",
+          },
+          {
+            title: "学历及专业",
+            dataIndex: "profession",
+            width: "24rem",
+          },
+          {
+            title: "专家库意向",
             render: (value, talent) =>
-              genderOptions.find((item) => item.value === talent.sex)?.desc,
+              talent.expert_intent_id.map((item) => (
+                <Tag>
+                  {expertOptions.find((_item) => _item.id === item)?.title}
+                </Tag>
+              )),
+            width: "22rem",
           },
           {
             title: "工作单位",
             dataIndex: "employer",
+            width: "30rem",
           },
           {
             title: "具体工作部门或所",
             dataIndex: "department",
+            width: "20rem",
+          },
+          {
+            title: "现任职务",
+            dataIndex: "position",
+            width: "20rem",
+          },
+          {
+            title: "参加工作日期",
+            dataIndex: "work_time",
+            width: "20rem",
+          },
+          {
+            title: "手机号",
+            dataIndex: "mobile",
+            width: "20rem",
+          },
+          {
+            title: "固话",
+            dataIndex: "telephone",
+            width: "20rem",
+          },
+          {
+            title: "电子邮箱",
+            dataIndex: "email",
+            width: "20rem",
+          },
+          {
+            title: "传真",
+            dataIndex: "fax",
+            width: "20rem",
+          },
+          {
+            title: "微信号",
+            dataIndex: "wechat",
+            width: "20rem",
+          },
+          {
+            title: "QQ",
+            dataIndex: "QQ",
+            width: "20rem",
+          },
+          {
+            title: "专家库意向",
+            render: (value, talent) => (
+              <Tag>
+                {
+                  categoryOptions.find(
+                    (item) => item.id === talent.talent_classification
+                  )?.name
+                }
+              </Tag>
+            ),
+            width: "22rem",
           },
           {
             title: "总评分",

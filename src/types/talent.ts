@@ -4,7 +4,7 @@ export interface GenderOption {
 }
 
 export interface ExpertOption {
-  id: number;
+  id: string;
   title: string;
   status: number;
 }
@@ -52,10 +52,16 @@ export interface TalentForm {
   address: string;
 }
 
-export interface TalentListItem extends Omit<TalentForm, "image"> {
+export interface TalentListItem
+  extends Omit<
+    TalentForm,
+    "image" | "expert_intent_id" | "talent_classification"
+  > {
   id: string;
   image: string;
   created_at: string;
+  expert_intent_id: string[];
+  talent_classification: number;
 }
 
 export interface TalentItem {
@@ -66,6 +72,7 @@ export interface TalentItem {
   employer: string;
   department: string;
   score: string;
+  talent_classification: string;
   expert_intent_id: string;
   apply_content_json: string;
   created_at: string;
