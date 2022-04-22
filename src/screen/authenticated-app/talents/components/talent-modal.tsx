@@ -17,6 +17,7 @@ import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
 import {
+  CategoryOption,
   ExpertOption,
   GenderOption,
   TalentForm,
@@ -27,9 +28,11 @@ import { useAddTalent, useEditTalent } from "service/talents";
 
 export const TalentModal = ({
   genderOptions,
+  categoryOptions,
   expertOptions,
 }: {
   genderOptions: GenderOption[];
+  categoryOptions: CategoryOption[];
   expertOptions: ExpertOption[];
 }) => {
   const [form] = useForm();
@@ -63,7 +66,9 @@ export const TalentModal = ({
         graduated_school,
         profession,
         expert_intent_id,
+        talent_classification,
         score,
+        introduction,
         employer,
         department,
         position,
@@ -108,7 +113,13 @@ export const TalentModal = ({
               ? expert_intent_id.slice(0, 2).join()
               : expert_intent_id.join(),
         },
+        {
+          title: "人才分类",
+          name: "talent_classification",
+          value: talent_classification,
+        },
         { title: "评分", name: "score", value: score },
+        { title: "人才介绍", name: "introduction", value: introduction },
         { title: "工作单位", name: "employer", value: employer },
         { title: "部门", name: "department", value: department },
         { title: "现任职务", name: "position", value: position },
@@ -256,6 +267,32 @@ export const TalentModal = ({
             </Form.Item>
           </Col>
         </Row>
+        <Divider orientation="left">人才评价</Divider>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="talent_classification" label="人才分类">
+              <Select placeholder="请选择人才分类">
+                {categoryOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="score" label="评分">
+              <Input placeholder="请输入评分" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item
+          name="introduction"
+          label="人才介绍"
+          rules={[{ required: true, message: "请输入人才介绍" }]}
+        >
+          <Input.TextArea rows={4} placeholder="请输入人才介绍" />
+        </Form.Item>
         <Divider orientation="left">工作履历</Divider>
         <Row gutter={16}>
           <Col span={12}>

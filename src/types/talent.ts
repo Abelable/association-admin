@@ -9,6 +9,11 @@ export interface ExpertOption {
   status: number;
 }
 
+export interface CategoryOption {
+  id: number;
+  name: string;
+}
+
 export interface TalentsSearchParams {
   page: number;
   page_size: number;
@@ -16,6 +21,7 @@ export interface TalentsSearchParams {
   employer: string;
   department: string;
   expert_intent_id: number;
+  talent_classification: number;
 }
 
 export interface TalentForm {
@@ -27,7 +33,9 @@ export interface TalentForm {
   graduated_school: string;
   profession: string;
   expert_intent_id: string[];
+  talent_classification: number[];
   score: string;
+  introduction: string;
   employer: string;
   department: string;
   position: string;

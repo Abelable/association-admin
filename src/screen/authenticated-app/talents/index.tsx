@@ -12,6 +12,10 @@ export const Talents = () => {
   const [params, setParams] = useTalentsSearchParams();
   const { data, isLoading, error } = useTalents(params);
   const { data: expertOptions } = useExpertOptions();
+  const categoryOptions = [
+    { id: 1, name: "市场监管" },
+    { id: 2, name: "非市场监管" },
+  ];
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const exportTalents = (ids: string[]) => {
     window.location.href = `${
@@ -24,11 +28,13 @@ export const Talents = () => {
       <Main>
         <SearchPanel
           expertOptions={expertOptions || []}
+          categoryOptions={categoryOptions}
           params={params}
           setParams={setParams}
         />
         <List
           expertOptions={expertOptions || []}
+          categoryOptions={categoryOptions}
           error={error}
           params={params}
           setParams={setParams}

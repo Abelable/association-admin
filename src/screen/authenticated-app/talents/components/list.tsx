@@ -27,6 +27,7 @@ interface ListProps extends TableProps<TalentItem>, SearchPanelProps {
 export const List = ({
   error,
   expertOptions,
+  categoryOptions,
   params,
   setParams,
   setSelectedRowKeys,
@@ -125,6 +126,7 @@ export const List = ({
       <TalentModal
         genderOptions={genderOptions}
         expertOptions={expertOptions}
+        categoryOptions={categoryOptions}
       />
     </Container>
   );

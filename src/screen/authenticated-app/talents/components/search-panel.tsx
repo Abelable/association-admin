@@ -1,16 +1,22 @@
 import styled from "@emotion/styled";
 import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { TalentsSearchParams, ExpertOption } from "types/talent";
+import {
+  TalentsSearchParams,
+  ExpertOption,
+  CategoryOption,
+} from "types/talent";
 import { useState } from "react";
 export interface SearchPanelProps {
   expertOptions: ExpertOption[];
+  categoryOptions: CategoryOption[];
   params: Partial<TalentsSearchParams>;
   setParams: (params: Partial<TalentsSearchParams>) => void;
 }
 
 export const SearchPanel = ({
   expertOptions,
+  categoryOptions,
   params,
   setParams,
 }: SearchPanelProps) => {
@@ -76,6 +82,14 @@ export const SearchPanel = ({
   const clearExpert = () =>
     setTemporaryParams({ ...temporaryParams, expert_intent_id: undefined });
 
+  const setCategory = (talent_classification: any) =>
+    setTemporaryParams({ ...temporaryParams, talent_classification });
+  const clearCategory = () =>
+    setTemporaryParams({
+      ...temporaryParams,
+      talent_classification: undefined,
+    });
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -126,6 +140,23 @@ export const SearchPanel = ({
           {expertOptions?.map(({ id, title }) => (
             <Select.Option key={id} value={id}>
               {title}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>分类：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.talent_classification}
+          placeholder="请选择人才分类"
+          allowClear={true}
+          onSelect={setCategory}
+          onClear={clearCategory}
+        >
+          {categoryOptions?.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
             </Select.Option>
           ))}
         </Select>
