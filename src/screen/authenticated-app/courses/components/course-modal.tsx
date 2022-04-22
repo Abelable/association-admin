@@ -116,7 +116,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
           valuePropName="fileList"
           getValueFromEvent={normFile}
         >
-          <OssUpload maxCount={1} />
+          <OssUpload />
         </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
