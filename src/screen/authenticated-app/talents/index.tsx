@@ -45,13 +45,6 @@ export const Talents = () => {
                 list.push([item.name, item.value]);
                 break;
             }
-            // if (item.name === "expert_intent_id") {
-            //   list.push([item.name, item.value ? item.value.split(",") : []]);
-            // } else if (item.name === "work_time") {
-            //   list.push([item.name, item.value ? item.value.slice(0, 10) : ""]);
-            // } else {
-            //   list.push([item.name, item.value]);
-            // }
           }
         );
         const restData = Object.fromEntries(list);
