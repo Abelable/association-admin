@@ -33,6 +33,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
     isLoading: mutateLoading,
   } = useMutationCourse(useCoursesQueryKey());
   const [introduction, setIntroduction] = useState("");
+  const [isTry, setIsTry] = useState(false);
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
@@ -47,13 +48,13 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
 
   const submit = () => {
     form.validateFields().then(async () => {
-      const { video, is_try, tags, ...restFieldsValue } = form.getFieldsValue();
+      const { video, tags, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingCourseId || "",
         cover_img: video[0].cover,
         media_url: video[0].url,
         duration: video[0].duration,
-        is_try: is_try ? 1 : 0,
+        is_try: isTry ? 1 : 0,
         tags: tags.join(),
         introduction,
         ...restFieldsValue,
@@ -82,10 +83,10 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
         ],
         tags: typeof tags === "string" ? (tags as string).split(",") : tags,
         author_id: `${author_id}`,
-        is_try: !!is_try,
         ...restFieldsValue,
       });
       setIntroduction(introduction);
+      setIsTry(!!is_try);
     }
   }, [form, editingCourseForm]);
 
@@ -165,25 +166,39 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={3}>
-            <Form.Item name="is_try" label="是否试看" valuePropName="checked">
+          <Col span={12}>
+            <Form.Item label="是否试看">
               <Switch />
             </Form.Item>
           </Col>
-          <Col span={9}>
-            <Form.Item label="试看时间（分钟）" name="try_time">
-              <InputNumber
-                style={{ width: "100%" }}
-                placeholder="请输入试看时间"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="观看密码" name="password">
-              <Input placeholder="请输入6位数字密码" />
-            </Form.Item>
-          </Col>
         </Row>
+        {isTry ? (
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                label="试看时间（分钟）"
+                name="try_time"
+                rules={[{ required: true, message: "请输入试看时间" }]}
+              >
+                <InputNumber
+                  style={{ width: "100%" }}
+                  placeholder="请输入试看时间"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="观看密码"
+                name="password"
+                rules={[{ required: true, message: "请输入观看密码" }]}
+              >
+                <Input placeholder="请输入6位数字密码" />
+              </Form.Item>
+            </Col>
+          </Row>
+        ) : (
+          <></>
+        )}
         <Form.Item label="简介说明" tooltip="排版自定义规则">
           <RichTextEditor content={introduction} setContent={setIntroduction} />
         </Form.Item>
