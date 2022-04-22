@@ -25,6 +25,7 @@ export const SearchPanel = ({
     employer: "",
     department: "",
     expert_intent_id: undefined,
+    talent_classification: undefined,
   } as Partial<TalentsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] = useState<

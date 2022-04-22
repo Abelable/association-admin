@@ -7,6 +7,7 @@ export const useTalentsSearchParams = () => {
     "employer",
     "department",
     "expert_intent_id",
+    "talent_classification",
     "page",
     "page_size",
   ]);
