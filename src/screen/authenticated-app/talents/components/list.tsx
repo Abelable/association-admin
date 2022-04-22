@@ -11,7 +11,7 @@ import {
   Tag,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { PlusOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useTalentModal, useTalentsQueryKey } from "../util";
@@ -158,7 +158,7 @@ export const List = ({
           {
             title: "电子邮箱",
             dataIndex: "email",
-            width: "20rem",
+            width: "24rem",
           },
           {
             title: "传真",
@@ -176,17 +176,43 @@ export const List = ({
             width: "20rem",
           },
           {
-            title: "专家库意向",
+            title: "人才分类",
             render: (value, talent) => (
-              <Tag>
-                {
-                  categoryOptions.find(
-                    (item) => item.id === talent.talent_classification
-                  )?.name
+              <Dropdown
+                trigger={["click"]}
+                overlay={
+                  <Menu>
+                    {categoryOptions.map((option) => (
+                      <Menu.Item
+                        key={option.id}
+                        // onClick={() =>
+                        //   editApplicationLevel({
+                        //     id: talent.id,
+                        //     level_id: `${option.id}`,
+                        //   })
+                        // }
+                      >
+                        {option.name}
+                      </Menu.Item>
+                    ))}
+                  </Menu>
                 }
-              </Tag>
+              >
+                <ButtonNoPadding
+                  style={{
+                    color: talent.talent_classification ? "#1890ff" : "#999",
+                  }}
+                  type={"link"}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {categoryOptions.find(
+                    (item) => item.id === talent.talent_classification
+                  )?.name || "选择人才分类"}
+                  <DownOutlined />
+                </ButtonNoPadding>
+              </Dropdown>
             ),
-            width: "22rem",
+            width: "18rem",
           },
           {
             title: "总评分",

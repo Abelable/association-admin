@@ -29,8 +29,9 @@ export const Talents = () => {
         jsonDataList.forEach(
           (item: { title: string; name: string; value: string }) => {
             if (item.name === "expert_intent_id") {
-              const value = item.value.split(",");
-              list.push([item.name, value]);
+              list.push([item.name, item.value.split(",")]);
+            } else if (item.name === "work_time") {
+              list.push([item.name, item.value.slice(0, 10)]);
             } else {
               list.push([item.name, item.value]);
             }
