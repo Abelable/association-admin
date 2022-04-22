@@ -68,3 +68,15 @@ export const useDeleteTalent = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useEditTalentCategory = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, talent_classification }: Partial<TalentItem>) =>
+      client("/api/admin/enter-apply/modify-category", {
+        data: { id, talent_classification },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};

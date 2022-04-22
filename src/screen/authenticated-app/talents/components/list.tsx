@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 import { useTalentModal, useTalentsQueryKey } from "../util";
 import { TalentModal } from "./talent-modal";
 import { TalentListItem } from "types/talent";
-import { useDeleteTalent } from "service/talents";
+import { useDeleteTalent, useEditTalentCategory } from "service/talents";
 
 type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentListItem>, SearchPanelProps {
@@ -43,6 +43,9 @@ export const List = ({
   ];
 
   const { open } = useTalentModal();
+  const { mutate: editTalentCategory } = useEditTalentCategory(
+    useTalentsQueryKey()
+  );
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -189,12 +192,12 @@ export const List = ({
                     {categoryOptions.map((option) => (
                       <Menu.Item
                         key={option.id}
-                        // onClick={() =>
-                        //   editApplicationLevel({
-                        //     id: talent.id,
-                        //     level_id: `${option.id}`,
-                        //   })
-                        // }
+                        onClick={() =>
+                          editTalentCategory({
+                            id: talent.id,
+                            talent_classification: `${option.id}`,
+                          })
+                        }
                       >
                         {option.name}
                       </Menu.Item>

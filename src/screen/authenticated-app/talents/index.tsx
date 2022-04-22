@@ -28,13 +28,30 @@ export const Talents = () => {
         const list: (string | string[])[][] = [];
         jsonDataList.forEach(
           (item: { title: string; name: string; value: string }) => {
-            if (item.name === "expert_intent_id") {
-              list.push([item.name, item.value ? item.value.split(",") : []]);
-            } else if (item.name === "work_time") {
-              list.push([item.name, item.value ? item.value.slice(0, 10) : ""]);
-            } else {
-              list.push([item.name, item.value]);
+            switch (item.name) {
+              case "expert_intent_id":
+                list.push([item.name, item.value ? item.value.split(",") : []]);
+                break;
+              case "work_time":
+                list.push([
+                  item.name,
+                  item.value ? item.value.slice(0, 10) : "",
+                ]);
+                break;
+              case "talent_classification":
+              case "score":
+                break;
+              default:
+                list.push([item.name, item.value]);
+                break;
             }
+            // if (item.name === "expert_intent_id") {
+            //   list.push([item.name, item.value ? item.value.split(",") : []]);
+            // } else if (item.name === "work_time") {
+            //   list.push([item.name, item.value ? item.value.slice(0, 10) : ""]);
+            // } else {
+            //   list.push([item.name, item.value]);
+            // }
           }
         );
         const restData = Object.fromEntries(list);
