@@ -52,6 +52,12 @@ export interface TalentForm {
   address: string;
 }
 
+export interface TalentListItem extends Omit<TalentForm, "image"> {
+  id: string;
+  image: string;
+  created_at: string;
+}
+
 export interface TalentItem {
   id: string;
   name: string;

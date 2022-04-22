@@ -14,11 +14,11 @@ import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useTalentModal, useTalentsQueryKey } from "../util";
 import { TalentModal } from "./talent-modal";
-import { TalentItem } from "types/talent";
+import { TalentListItem } from "types/talent";
 import { useDeleteTalent } from "service/talents";
 
 type ExportTalents = (ids: string[]) => void;
-interface ListProps extends TableProps<TalentItem>, SearchPanelProps {
+interface ListProps extends TableProps<TalentListItem>, SearchPanelProps {
   error: Error | unknown;
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   exportTalents: ExportTalents;
@@ -65,6 +65,7 @@ export const List = ({
             setSelectedRowKeys(selectedRowKeys as []),
         }}
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -72,6 +73,7 @@ export const List = ({
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
+            fixed: "left",
             width: "8rem",
           },
           {
@@ -117,6 +119,7 @@ export const List = ({
             render(value, talent) {
               return <More talent={talent} exportTalents={exportTalents} />;
             },
+            fixed: "right",
             width: "8rem",
           },
         ]}
@@ -136,7 +139,7 @@ const More = ({
   talent,
   exportTalents,
 }: {
-  talent: TalentItem;
+  talent: TalentListItem;
   exportTalents: ExportTalents;
 }) => {
   const { startEdit } = useTalentModal();
