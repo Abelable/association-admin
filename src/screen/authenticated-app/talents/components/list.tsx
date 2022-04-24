@@ -233,7 +233,45 @@ export const List = ({
     },
   ];
 
-  const [columns, setColumns] = useState<ColumnsType<TalentListItem>>([]);
+  const defaultColumnTitleList = [
+    "照片",
+    "姓名",
+    "性别",
+    "身份证号",
+    "政治面貌",
+    "毕业院校",
+    "学历及专业",
+    "专家库意向",
+    "工作单位",
+    "具体工作部门或所",
+    "现任职务",
+    "参加工作日期",
+    "手机号",
+    "固话",
+    "电子邮箱",
+    "传真",
+    "微信号",
+    "QQ",
+    "人才分类",
+    "总评分",
+    "报名时间",
+  ];
+  const columnTitleList = window.localStorage.getItem("talentColumnTitleList")
+    ? (JSON.parse(
+        window.localStorage.getItem("talentColumnTitleList") as string
+      ) as string[])
+    : defaultColumnTitleList;
+
+  const mainColumns: ColumnsType<TalentListItem> = [];
+  defaultColumns.forEach((item) => {
+    if (columnTitleList.includes(item.title as string)) mainColumns.push(item);
+  });
+
+  const [columns, setColumns] = useState<ColumnsType<TalentListItem>>([
+    defaultColumns[0],
+    ...mainColumns,
+    defaultColumns[defaultColumns.length - 1],
+  ]);
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -265,6 +303,8 @@ export const List = ({
             <Download onClick={downloadTemplate} />
           </Tooltip>
           <ColumnsSelect
+            defaultColumnTitleList={defaultColumnTitleList}
+            columnTitleList={columnTitleList}
             defaultColumns={defaultColumns}
             setColumns={setColumns}
           />
@@ -279,7 +319,7 @@ export const List = ({
         }}
         rowKey={"id"}
         scroll={{ x: 1500 }}
-        columns={columns.length ? columns : defaultColumns}
+        columns={columns}
         onChange={setPagination}
         {...restProps}
       />

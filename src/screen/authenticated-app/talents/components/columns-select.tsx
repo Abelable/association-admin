@@ -7,59 +7,43 @@ import type { ColumnsType } from "antd/lib/table";
 import type { TalentListItem } from "types/talent";
 
 export const ColumnsSelect = ({
+  defaultColumnTitleList,
+  columnTitleList,
   defaultColumns,
   setColumns,
 }: {
+  defaultColumnTitleList: string[];
+  columnTitleList: string[];
   defaultColumns: ColumnsType<TalentListItem>;
   setColumns: Dispatch<SetStateAction<ColumnsType<TalentListItem>>>;
 }) => {
-  const defaultList = [
-    "照片",
-    "姓名",
-    "性别",
-    "身份证号",
-    "政治面貌",
-    "毕业院校",
-    "学历及专业",
-    "专家库意向",
-    "工作单位",
-    "具体工作部门或所",
-    "现任职务",
-    "参加工作日期",
-    "手机号",
-    "固话",
-    "电子邮箱",
-    "传真",
-    "微信号",
-    "QQ",
-    "人才分类",
-    "总评分",
-    "报名时间",
-  ];
-  const list = window.localStorage.getItem("talentColumns")
-    ? (JSON.parse(
-        window.localStorage.getItem("talentColumns") as string
-      ) as string[])
-    : defaultList;
-
-  const [checkedList, setCheckedList] = useState(list);
-  const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(list.length === defaultList.length);
+  const [checkedList, setCheckedList] = useState(columnTitleList);
+  const [indeterminate, setIndeterminate] = useState(
+    !!checkedList.length && checkedList.length < defaultColumnTitleList.length
+  );
+  const [checkAll, setCheckAll] = useState(
+    checkedList.length === defaultColumnTitleList.length
+  );
 
   useEffect(
     () => () =>
-      window.localStorage.setItem("talentColumns", JSON.stringify(checkedList)),
+      window.localStorage.setItem(
+        "talentColumnTitleList",
+        JSON.stringify(checkedList)
+      ),
     [checkedList]
   );
 
   const onChange = (list: any[]) => {
     setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < defaultList.length);
-    setCheckAll(list.length === defaultList.length);
+    setIndeterminate(
+      !!list.length && list.length < defaultColumnTitleList.length
+    );
+    setCheckAll(list.length === defaultColumnTitleList.length);
   };
 
   const onCheckAllChange = (e: any) => {
-    setCheckedList(e.target.checked ? defaultList : []);
+    setCheckedList(e.target.checked ? defaultColumnTitleList : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
   };
@@ -77,7 +61,7 @@ export const ColumnsSelect = ({
   const Content = (
     <Checkbox.Group
       style={{ width: "26rem" }}
-      options={defaultList}
+      options={defaultColumnTitleList}
       value={checkedList}
       onChange={onChange}
     />
