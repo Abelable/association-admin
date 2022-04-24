@@ -64,7 +64,7 @@ export const ColumnsSelect = () => {
 
   return (
     <Popover
-      placement="bottomRight"
+      placement="bottomLeft"
       title={Title}
       content={Content}
       trigger="click"

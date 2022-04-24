@@ -9,9 +9,16 @@ import {
   TablePaginationConfig,
   TableProps,
   Tag,
+  Tooltip,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  UserOutlined,
+  DownOutlined,
+  DownloadOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import { useTalentModal, useTalentsQueryKey } from "../util";
@@ -55,6 +62,16 @@ export const List = ({
       page_size: pagination.pageSize,
     });
 
+  const downloadTemplate = () => {
+    const eleLink = document.createElement("a");
+    eleLink.style.display = "none";
+    eleLink.href =
+      "http://img-gov.oss-cn-hangzhou.aliyuncs.com/telant_template.xls";
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    document.body.removeChild(eleLink);
+  };
+
   return (
     <Container>
       <Header between={true}>
@@ -63,6 +80,10 @@ export const List = ({
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
+          <Button>上传模版</Button>
+          <Tooltip title="模版下载">
+            <Download onClick={downloadTemplate} />
+          </Tooltip>
           <ColumnsSelect />
         </Row>
       </Header>
@@ -315,4 +336,13 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const Download = styled(DownloadOutlined)`
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: #1890ff;
+  }
 `;
