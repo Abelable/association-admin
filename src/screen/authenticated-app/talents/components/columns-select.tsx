@@ -4,9 +4,18 @@ import styled from "@emotion/styled";
 import { SettingOutlined } from "@ant-design/icons";
 
 export const ColumnsSelect = () => {
-  const plainOptions = ["Apple", "Pear", "Orange"];
-  const defaultCheckedList = ["Apple", "Orange"];
-  const [checkedList, setCheckedList] = useState(defaultCheckedList);
+  const plainOptions = [
+    "照片",
+    "姓名",
+    "性别",
+    "照片",
+    "身份证号",
+    "政治面貌",
+    "毕业院校",
+    "学历及专业",
+    "专家库意向",
+  ];
+  const [checkedList, setCheckedList] = useState(plainOptions);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
 

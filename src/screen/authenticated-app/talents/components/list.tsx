@@ -18,6 +18,7 @@ import { useTalentModal, useTalentsQueryKey } from "../util";
 import { TalentModal } from "./talent-modal";
 import { TalentListItem } from "types/talent";
 import { useDeleteTalent, useEditTalentCategory } from "service/talents";
+import { ColumnsSelect } from "./columns-select";
 
 type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentListItem>, SearchPanelProps {
@@ -62,6 +63,7 @@ export const List = ({
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
+          <ColumnsSelect />
         </Row>
       </Header>
       <ErrorBox error={error} />
