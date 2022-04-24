@@ -76,3 +76,10 @@ export const getVideoDuration = async (file: File) =>
       resolve(Math.round(audio.duration))
     );
   });
+
+export const fileToBase64 = async (file: File) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve(reader.result));
+    reader.readAsDataURL(file);
+  });

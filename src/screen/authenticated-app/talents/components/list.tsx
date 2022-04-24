@@ -9,7 +9,6 @@ import {
   TablePaginationConfig,
   TableProps,
   Tag,
-  Upload,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import {
@@ -17,7 +16,6 @@ import {
   UserOutlined,
   DownOutlined,
   DownloadOutlined,
-  ImportOutlined,
 } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
@@ -28,6 +26,7 @@ import { useDeleteTalent, useEditTalentCategory } from "service/talents";
 import { ColumnsSelect } from "./columns-select";
 import { ColumnsType } from "antd/lib/table";
 import { useState } from "react";
+import { FileUpload } from "./file-upload";
 
 type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentListItem>, SearchPanelProps {
@@ -302,10 +301,6 @@ export const List = ({
     document.body.removeChild(eleLink);
   };
 
-  const onChange = (info: any) => {
-    console.log(info);
-  };
-
   return (
     <Container>
       <Header between={true}>
@@ -314,14 +309,7 @@ export const List = ({
           <Button onClick={downloadTemplate} icon={<DownloadOutlined />}>
             下载模版
           </Button>
-          <Upload
-            action={`${process.env.REACT_APP_API_URL}/api/admin/enter-apply/personal-import`}
-            onChange={onChange}
-            maxCount={1}
-            showUploadList={false}
-          >
-            <Button icon={<ImportOutlined />}>导入数据</Button>
-          </Upload>
+          <FileUpload />
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>

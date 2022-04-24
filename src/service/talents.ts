@@ -1,4 +1,4 @@
-import { QueryKey, useMutation, useQuery } from "react-query";
+import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { useHttp } from "./http";
 import {
   ExpertOption,
@@ -78,5 +78,20 @@ export const useEditTalentCategory = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useImportTalentData = (queryKey: QueryKey) => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ excel_file }: { excel_file: any }) =>
+      client("/api/admin/enter-apply/personal-import", {
+        data: { excel_file },
+        method: "POST",
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+    }
   );
 };
