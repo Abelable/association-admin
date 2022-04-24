@@ -9,6 +9,7 @@ import {
   TablePaginationConfig,
   TableProps,
   Tag,
+  Upload,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import {
@@ -301,6 +302,10 @@ export const List = ({
     document.body.removeChild(eleLink);
   };
 
+  const onChange = (info: any) => {
+    console.log(info);
+  };
+
   return (
     <Container>
       <Header between={true}>
@@ -309,7 +314,14 @@ export const List = ({
           <Button onClick={downloadTemplate} icon={<DownloadOutlined />}>
             下载模版
           </Button>
-          <Button icon={<ImportOutlined />}>导入数据</Button>
+          <Upload
+            action={`${process.env.REACT_APP_API_URL}/api/admin/enter-apply/personal-import`}
+            onChange={onChange}
+            maxCount={1}
+            showUploadList={false}
+          >
+            <Button icon={<ImportOutlined />}>导入数据</Button>
+          </Upload>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
