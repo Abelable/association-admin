@@ -17,7 +17,6 @@ import {
   UserOutlined,
   DownOutlined,
   DownloadOutlined,
-  EllipsisOutlined,
 } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
