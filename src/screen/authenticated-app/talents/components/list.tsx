@@ -9,7 +9,6 @@ import {
   TablePaginationConfig,
   TableProps,
   Tag,
-  Tooltip,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import {
@@ -17,6 +16,7 @@ import {
   UserOutlined,
   DownOutlined,
   DownloadOutlined,
+  ImportOutlined,
 } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
@@ -245,6 +245,7 @@ export const List = ({
   ];
 
   const defaultColumnTitleList = [
+    "编号",
     "照片",
     "姓名",
     "性别",
@@ -266,6 +267,7 @@ export const List = ({
     "人才分类",
     "总评分",
     "报名时间",
+    "操作",
   ];
   const columnTitleList = window.localStorage.getItem("talentColumnTitleList")
     ? (JSON.parse(
@@ -273,16 +275,14 @@ export const List = ({
       ) as string[])
     : defaultColumnTitleList;
 
-  const mainColumns: ColumnsType<TalentListItem> = [];
+  const checkedColumns: ColumnsType<TalentListItem> = [];
   defaultColumns.forEach((item) => {
-    if (columnTitleList.includes(item.title as string)) mainColumns.push(item);
+    if (columnTitleList.includes(item.title as string))
+      checkedColumns.push(item);
   });
 
-  const [columns, setColumns] = useState<ColumnsType<TalentListItem>>([
-    defaultColumns[0],
-    ...mainColumns,
-    defaultColumns[defaultColumns.length - 1],
-  ]);
+  const [columns, setColumns] =
+    useState<ColumnsType<TalentListItem>>(checkedColumns);
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -306,13 +306,13 @@ export const List = ({
       <Header between={true}>
         <h3>人才申报列表</h3>
         <Row gap>
+          <Button onClick={downloadTemplate} icon={<DownloadOutlined />}>
+            下载模版
+          </Button>
+          <Button icon={<ImportOutlined />}>导入数据</Button>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
-          <Button>上传模版</Button>
-          <Tooltip title="模版下载">
-            <Download onClick={downloadTemplate} />
-          </Tooltip>
           <ColumnsSelect
             defaultColumnTitleList={defaultColumnTitleList}
             columnTitleList={columnTitleList}
@@ -394,13 +394,4 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
-`;
-
-const Download = styled(DownloadOutlined)`
-  font-size: 1.6rem;
-  cursor: pointer;
-  transition: color 0.3s;
-  &:hover {
-    color: #1890ff;
-  }
 `;

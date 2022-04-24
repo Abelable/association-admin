@@ -36,16 +36,30 @@ export const ColumnsSelect = ({
 
   const onChange = (list: any[]) => {
     setCheckedList(list);
+    setCheckAll(list.length === defaultColumnTitleList.length);
+
+    const checkedColumns: ColumnsType<TalentListItem> = [];
+    defaultColumns.forEach((item) => {
+      if (list.includes(item.title as string)) checkedColumns.push(item);
+    });
+    setColumns(checkedColumns);
+
     setIndeterminate(
       !!list.length && list.length < defaultColumnTitleList.length
     );
-    setCheckAll(list.length === defaultColumnTitleList.length);
   };
 
   const onCheckAllChange = (e: any) => {
-    setCheckedList(e.target.checked ? defaultColumnTitleList : []);
+    if (e.target.checked) {
+      setCheckedList(defaultColumnTitleList);
+      setCheckAll(true);
+      setColumns(defaultColumns);
+    } else {
+      setCheckedList([]);
+      setCheckAll(false);
+      setColumns([]);
+    }
     setIndeterminate(false);
-    setCheckAll(e.target.checked);
   };
 
   const Title = (
