@@ -13,7 +13,7 @@ export const ColumnsSelect = ({
   defaultColumns: ColumnsType<TalentListItem>;
   setColumns: Dispatch<SetStateAction<ColumnsType<TalentListItem>>>;
 }) => {
-  const talentColumnsOptions = [
+  const defaultList = [
     "照片",
     "姓名",
     "性别",
@@ -37,33 +37,33 @@ export const ColumnsSelect = ({
     "报名时间",
   ];
 
-  const [checkedList, setCheckedList] = useState(
-    (JSON.parse(
-      window.localStorage.getItem("talentColumnsOptions") as string
-    ) as string[]) || talentColumnsOptions
-  );
+  const [checkedList, setCheckedList] = useState(defaultList);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
 
-  useEffect(
-    () => () =>
+  useEffect(() => {
+    if (window.localStorage.getItem("talentColumns")) {
+      setCheckedList(
+        JSON.parse(
+          window.localStorage.getItem("talentColumns") as string
+        ) as string[]
+      );
+    }
+    return () =>
       window.localStorage.setItem(
         "talentColumnsOptions",
         JSON.stringify(checkedList)
-      ),
-    [checkedList]
-  );
+      );
+  }, [checkedList]);
 
   const onChange = (list: any[]) => {
     setCheckedList(list);
-    setIndeterminate(
-      !!list.length && list.length < talentColumnsOptions.length
-    );
-    setCheckAll(list.length === talentColumnsOptions.length);
+    setIndeterminate(!!list.length && list.length < defaultList.length);
+    setCheckAll(list.length === defaultList.length);
   };
 
   const onCheckAllChange = (e: any) => {
-    setCheckedList(e.target.checked ? talentColumnsOptions : []);
+    setCheckedList(e.target.checked ? defaultList : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
   };
@@ -81,7 +81,7 @@ export const ColumnsSelect = ({
   const Content = (
     <Checkbox.Group
       style={{ width: "26rem" }}
-      options={talentColumnsOptions}
+      options={defaultList}
       value={checkedList}
       onChange={onChange}
     />
