@@ -19,8 +19,9 @@ export const Talents = () => {
     ? data?.list.map((item) => {
         const {
           id,
-          score,
+          sex,
           talent_classification,
+          score,
           created_at,
           apply_content_json,
         } = item;
@@ -38,6 +39,7 @@ export const Talents = () => {
                   item.value ? item.value.slice(0, 10) : "",
                 ]);
                 break;
+              case "sex":
               case "talent_classification":
               case "score":
                 break;
@@ -51,6 +53,7 @@ export const Talents = () => {
 
         return {
           id,
+          sex,
           score,
           talent_classification: Number(talent_classification),
           created_at,

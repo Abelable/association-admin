@@ -25,6 +25,7 @@ import { TalentModal } from "./talent-modal";
 import { TalentListItem } from "types/talent";
 import { useDeleteTalent, useEditTalentCategory } from "service/talents";
 import { ColumnsSelect } from "./columns-select";
+import { ColumnsType } from "antd/lib/table";
 
 type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentListItem>, SearchPanelProps {
@@ -53,6 +54,183 @@ export const List = ({
   const { mutate: editTalentCategory } = useEditTalentCategory(
     useTalentsQueryKey()
   );
+
+  const columns: ColumnsType<TalentListItem> = [
+    {
+      title: "编号",
+      render: (value, talent, index) =>
+        `${index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)}`,
+      fixed: "left",
+      width: "8rem",
+    },
+    {
+      title: "照片",
+      render: (value, talent) => (
+        <Avatar src={talent.image} icon={<UserOutlined />} />
+      ),
+      width: "8rem",
+    },
+    {
+      title: "姓名",
+      dataIndex: "name",
+      width: "12rem",
+    },
+    {
+      title: "性别",
+      render: (value, talent) => (
+        <span>
+          {
+            genderOptions.find((item) => item.value === Number(talent.sex))
+              ?.desc
+          }
+        </span>
+      ),
+      width: "8rem",
+    },
+    {
+      title: "身份证号",
+      dataIndex: "id_number",
+      width: "24rem",
+    },
+    {
+      title: "政治面貌",
+      dataIndex: "political_status",
+      width: "12rem",
+    },
+    {
+      title: "毕业院校",
+      dataIndex: "graduated_school",
+      width: "24rem",
+    },
+    {
+      title: "学历及专业",
+      dataIndex: "profession",
+      width: "24rem",
+    },
+    {
+      title: "专家库意向",
+      render: (value, talent) =>
+        talent.expert_intent_id.map((item) => (
+          <Tag key={item}>
+            {expertOptions.find((_item) => _item.id === item)?.title}
+          </Tag>
+        )),
+      width: "22rem",
+    },
+    {
+      title: "工作单位",
+      dataIndex: "employer",
+      width: "30rem",
+    },
+    {
+      title: "具体工作部门或所",
+      dataIndex: "department",
+      width: "20rem",
+    },
+    {
+      title: "现任职务",
+      dataIndex: "position",
+      width: "20rem",
+    },
+    {
+      title: "参加工作日期",
+      dataIndex: "work_time",
+      width: "20rem",
+    },
+    {
+      title: "手机号",
+      dataIndex: "mobile",
+      width: "20rem",
+    },
+    {
+      title: "固话",
+      dataIndex: "telephone",
+      width: "20rem",
+    },
+    {
+      title: "电子邮箱",
+      dataIndex: "email",
+      width: "24rem",
+    },
+    {
+      title: "传真",
+      dataIndex: "fax",
+      width: "20rem",
+    },
+    {
+      title: "微信号",
+      dataIndex: "wechat",
+      width: "20rem",
+    },
+    {
+      title: "QQ",
+      dataIndex: "QQ",
+      width: "20rem",
+    },
+    {
+      title: "人才分类",
+      render: (value, talent) => (
+        <Dropdown
+          trigger={["click"]}
+          overlay={
+            <Menu>
+              {categoryOptions.map((option) => (
+                <Menu.Item
+                  key={option.id}
+                  onClick={() =>
+                    editTalentCategory({
+                      id: talent.id,
+                      talent_classification: `${option.id}`,
+                    })
+                  }
+                >
+                  {option.name}
+                </Menu.Item>
+              ))}
+            </Menu>
+          }
+        >
+          <ButtonNoPadding
+            style={{
+              color: talent.talent_classification ? "#1890ff" : "#999",
+            }}
+            type={"link"}
+            onClick={(e) => e.preventDefault()}
+          >
+            {categoryOptions.find(
+              (item) => item.id === Number(talent.talent_classification)
+            )?.name || "选择人才分类"}
+            <DownOutlined />
+          </ButtonNoPadding>
+        </Dropdown>
+      ),
+      width: "14rem",
+    },
+    {
+      title: "总评分",
+      dataIndex: "score",
+      width: "10rem",
+    },
+    {
+      title: "报名时间",
+      render: (value, talent) => (
+        <span>
+          {talent.created_at
+            ? dayjs(Number(talent.created_at) * 1000).format("YYYY-MM-DD HH:mm")
+            : "无"}
+        </span>
+      ),
+      width: "18rem",
+    },
+    {
+      title: "操作",
+      render(value, talent) {
+        return <More talent={talent} exportTalents={exportTalents} />;
+      },
+      fixed: "right",
+      width: "8rem",
+    },
+  ];
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -87,7 +265,7 @@ export const List = ({
         </Row>
       </Header>
       <ErrorBox error={error} />
-      <Table
+      <Table<TalentListItem>
         rowSelection={{
           type: "checkbox",
           onChange: (selectedRowKeys) =>
@@ -95,183 +273,7 @@ export const List = ({
         }}
         rowKey={"id"}
         scroll={{ x: 1500 }}
-        columns={[
-          {
-            title: "编号",
-            render: (value, talent, index) =>
-              `${
-                index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
-              }`,
-            fixed: "left",
-            width: "8rem",
-          },
-          {
-            title: "照片",
-            render: (value, talent) => (
-              <Avatar src={talent.image} icon={<UserOutlined />} />
-            ),
-            width: "8rem",
-          },
-          {
-            title: "姓名",
-            dataIndex: "name",
-            width: "12rem",
-          },
-          {
-            title: "性别",
-            render: (value, talent) => (
-              <span>
-                {genderOptions.find((item) => item.value === talent.sex)?.desc}
-              </span>
-            ),
-            width: "8rem",
-          },
-          {
-            title: "身份证号",
-            dataIndex: "id_number",
-            width: "24rem",
-          },
-          {
-            title: "政治面貌",
-            dataIndex: "political_status",
-            width: "12rem",
-          },
-          {
-            title: "毕业院校",
-            dataIndex: "graduated_school",
-            width: "24rem",
-          },
-          {
-            title: "学历及专业",
-            dataIndex: "profession",
-            width: "24rem",
-          },
-          {
-            title: "专家库意向",
-            render: (value, talent) =>
-              talent.expert_intent_id.map((item) => (
-                <Tag key={item}>
-                  {expertOptions.find((_item) => _item.id === item)?.title}
-                </Tag>
-              )),
-            width: "22rem",
-          },
-          {
-            title: "工作单位",
-            dataIndex: "employer",
-            width: "30rem",
-          },
-          {
-            title: "具体工作部门或所",
-            dataIndex: "department",
-            width: "20rem",
-          },
-          {
-            title: "现任职务",
-            dataIndex: "position",
-            width: "20rem",
-          },
-          {
-            title: "参加工作日期",
-            dataIndex: "work_time",
-            width: "20rem",
-          },
-          {
-            title: "手机号",
-            dataIndex: "mobile",
-            width: "20rem",
-          },
-          {
-            title: "固话",
-            dataIndex: "telephone",
-            width: "20rem",
-          },
-          {
-            title: "电子邮箱",
-            dataIndex: "email",
-            width: "24rem",
-          },
-          {
-            title: "传真",
-            dataIndex: "fax",
-            width: "20rem",
-          },
-          {
-            title: "微信号",
-            dataIndex: "wechat",
-            width: "20rem",
-          },
-          {
-            title: "QQ",
-            dataIndex: "QQ",
-            width: "20rem",
-          },
-          {
-            title: "人才分类",
-            render: (value, talent) => (
-              <Dropdown
-                trigger={["click"]}
-                overlay={
-                  <Menu>
-                    {categoryOptions.map((option) => (
-                      <Menu.Item
-                        key={option.id}
-                        onClick={() =>
-                          editTalentCategory({
-                            id: talent.id,
-                            talent_classification: `${option.id}`,
-                          })
-                        }
-                      >
-                        {option.name}
-                      </Menu.Item>
-                    ))}
-                  </Menu>
-                }
-              >
-                <ButtonNoPadding
-                  style={{
-                    color: talent.talent_classification ? "#1890ff" : "#999",
-                  }}
-                  type={"link"}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {categoryOptions.find(
-                    (item) => item.id === Number(talent.talent_classification)
-                  )?.name || "选择人才分类"}
-                  <DownOutlined />
-                </ButtonNoPadding>
-              </Dropdown>
-            ),
-            width: "14rem",
-          },
-          {
-            title: "总评分",
-            dataIndex: "score",
-            width: "10rem",
-          },
-          {
-            title: "报名时间",
-            render: (value, talent) => (
-              <span>
-                {talent.created_at
-                  ? dayjs(Number(talent.created_at) * 1000).format(
-                      "YYYY-MM-DD HH:mm"
-                    )
-                  : "无"}
-              </span>
-            ),
-            width: "18rem",
-          },
-          {
-            title: "操作",
-            render(value, talent) {
-              return <More talent={talent} exportTalents={exportTalents} />;
-            },
-            fixed: "right",
-            width: "8rem",
-          },
-        ]}
+        columns={columns}
         onChange={setPagination}
         {...restProps}
       />
