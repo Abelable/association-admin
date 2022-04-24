@@ -58,9 +58,11 @@ export const List = ({
     <Container>
       <Header between={true}>
         <h3>人才申报列表</h3>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
-        </Button>
+        <Row gap>
+          <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
+            新增
+          </Button>
+        </Row>
       </Header>
       <ErrorBox error={error} />
       <Table
