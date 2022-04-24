@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { Checkbox, Popover, Tooltip } from "antd";
 import styled from "@emotion/styled";
 import { SettingOutlined } from "@ant-design/icons";
@@ -36,8 +36,6 @@ export const ColumnsSelect = ({
     "总评分",
     "报名时间",
   ];
-  // window.localStorage.getItem(localStorageKey);
-  // window.localStorage.setItem(localStorageKey, token);
 
   const [checkedList, setCheckedList] = useState(
     (JSON.parse(
@@ -46,6 +44,15 @@ export const ColumnsSelect = ({
   );
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
+
+  useEffect(
+    () => () =>
+      window.localStorage.setItem(
+        "talentColumnsOptions",
+        JSON.stringify(checkedList)
+      ),
+    []
+  );
 
   const onChange = (list: any[]) => {
     setCheckedList(list);
