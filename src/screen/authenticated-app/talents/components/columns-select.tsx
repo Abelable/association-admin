@@ -36,25 +36,21 @@ export const ColumnsSelect = ({
     "总评分",
     "报名时间",
   ];
+  const list = window.localStorage.getItem("talentColumns")
+    ? (JSON.parse(
+        window.localStorage.getItem("talentColumns") as string
+      ) as string[])
+    : defaultList;
 
-  const [checkedList, setCheckedList] = useState(defaultList);
+  const [checkedList, setCheckedList] = useState(list);
   const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(false);
+  const [checkAll, setCheckAll] = useState(list.length === defaultList.length);
 
-  useEffect(() => {
-    if (window.localStorage.getItem("talentColumns")) {
-      setCheckedList(
-        JSON.parse(
-          window.localStorage.getItem("talentColumns") as string
-        ) as string[]
-      );
-    }
-    return () =>
-      window.localStorage.setItem(
-        "talentColumnsOptions",
-        JSON.stringify(checkedList)
-      );
-  }, [checkedList]);
+  useEffect(
+    () => () =>
+      window.localStorage.setItem("talentColumns", JSON.stringify(checkedList)),
+    [checkedList]
+  );
 
   const onChange = (list: any[]) => {
     setCheckedList(list);
