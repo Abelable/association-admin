@@ -113,7 +113,18 @@ export const List = ({
       render: (value, talent) =>
         talent.expert_intent_id.map((item) => (
           <Tag key={item}>
-            {expertOptions.find((_item) => _item.id === item)?.title}
+            {
+              (expertOptions.length
+                ? expertOptions
+                : [
+                    { id: "1", title: "重大项目组" },
+                    { id: "2", title: "课题调研组" },
+                    { id: "3", title: "技术支持组" },
+                    { id: "4", title: "政策法规组" },
+                    { id: "5", title: "案件执法组" },
+                  ]
+              ).find((_item) => _item.id === item)?.title
+            }
           </Tag>
         )),
       width: "22rem",
