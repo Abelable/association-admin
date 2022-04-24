@@ -156,11 +156,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              label="课堂权重"
-              name="sort"
-              rules={[{ required: true, message: "请输入课堂权重" }]}
-            >
+            <Form.Item label="课堂权重" name="sort">
               <Input placeholder="请输入课堂权重" />
             </Form.Item>
           </Col>

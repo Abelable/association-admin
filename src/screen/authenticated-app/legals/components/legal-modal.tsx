@@ -109,11 +109,7 @@ export const LegalModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              label="文章排序"
-              name="sort"
-              rules={[{ required: true, message: "请选择文章排序" }]}
-            >
+            <Form.Item label="文章排序" name="sort">
               <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>

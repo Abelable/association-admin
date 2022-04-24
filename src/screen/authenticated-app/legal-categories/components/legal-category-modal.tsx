@@ -81,11 +81,7 @@ export const LegalCategoryModal = ({
         >
           <Input placeholder="请输入分类描述" />
         </Form.Item>
-        <Form.Item
-          name="sort"
-          label="排序序号"
-          rules={[{ required: true, message: "请输入排序序号" }]}
-        >
+        <Form.Item name="sort" label="排序序号">
           <Input placeholder="请输入排序序号" />
         </Form.Item>
         <Form.Item
