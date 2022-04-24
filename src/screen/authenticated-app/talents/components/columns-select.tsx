@@ -8,12 +8,24 @@ export const ColumnsSelect = () => {
     "照片",
     "姓名",
     "性别",
-    "照片",
     "身份证号",
     "政治面貌",
     "毕业院校",
     "学历及专业",
     "专家库意向",
+    "工作单位",
+    "具体工作部门或所",
+    "现任职务",
+    "参加工作日期",
+    "手机号",
+    "固话",
+    "电子邮箱",
+    "传真",
+    "微信号",
+    "QQ",
+    "人才分类",
+    "总评分",
+    "报名时间",
   ];
   const [checkedList, setCheckedList] = useState(plainOptions);
   const [indeterminate, setIndeterminate] = useState(true);
@@ -43,6 +55,7 @@ export const ColumnsSelect = () => {
 
   const Content = (
     <Checkbox.Group
+      style={{ width: "26rem" }}
       options={plainOptions}
       value={checkedList}
       onChange={onChange}
