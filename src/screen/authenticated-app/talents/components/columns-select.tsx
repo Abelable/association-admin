@@ -51,7 +51,7 @@ export const ColumnsSelect = ({
         "talentColumnsOptions",
         JSON.stringify(checkedList)
       ),
-    []
+    [checkedList]
   );
 
   const onChange = (list: any[]) => {
