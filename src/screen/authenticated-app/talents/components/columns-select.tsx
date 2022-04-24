@@ -3,7 +3,16 @@ import { Checkbox, Popover, Tooltip } from "antd";
 import styled from "@emotion/styled";
 import { SettingOutlined } from "@ant-design/icons";
 
-export const ColumnsSelect = () => {
+import type { ColumnsType } from "antd/lib/table";
+import type { TalentListItem } from "types/talent";
+
+export const ColumnsSelect = ({
+  defaultColumns,
+  setColumns,
+}: {
+  defaultColumns: ColumnsType<TalentListItem>;
+  setColumns: () => void;
+}) => {
   const plainOptions = [
     "照片",
     "姓名",

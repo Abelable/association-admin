@@ -26,6 +26,7 @@ import { TalentListItem } from "types/talent";
 import { useDeleteTalent, useEditTalentCategory } from "service/talents";
 import { ColumnsSelect } from "./columns-select";
 import { ColumnsType } from "antd/lib/table";
+import { useState } from "react";
 
 type ExportTalents = (ids: string[]) => void;
 interface ListProps extends TableProps<TalentListItem>, SearchPanelProps {
@@ -55,7 +56,7 @@ export const List = ({
     useTalentsQueryKey()
   );
 
-  const columns: ColumnsType<TalentListItem> = [
+  const defaultColumns: ColumnsType<TalentListItem> = [
     {
       title: "编号",
       render: (value, talent, index) =>
@@ -232,6 +233,8 @@ export const List = ({
     },
   ];
 
+  const [columns, setColumns] = useState<ColumnsType<TalentListItem>>([]);
+
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -261,7 +264,10 @@ export const List = ({
           <Tooltip title="模版下载">
             <Download onClick={downloadTemplate} />
           </Tooltip>
-          <ColumnsSelect />
+          <ColumnsSelect
+            defaultColumns={defaultColumns}
+            setColumns={setColumns}
+          />
         </Row>
       </Header>
       <ErrorBox error={error} />
@@ -273,7 +279,7 @@ export const List = ({
         }}
         rowKey={"id"}
         scroll={{ x: 1500 }}
-        columns={columns}
+        columns={columns.length ? columns : defaultColumns}
         onChange={setPagination}
         {...restProps}
       />
