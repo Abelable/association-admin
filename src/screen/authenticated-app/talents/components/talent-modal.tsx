@@ -359,15 +359,17 @@ const useEditingTalentForm = (editingTalentId: string) => {
     });
   }
 
-  const editingTalentForm: TalentForm | undefined = originForm
+  const editingTalentForm: TalentForm | undefined = currentTalent
     ? {
         ...originForm,
         image,
         expert_intent_id: originForm.expert_intent_id
           ? originForm.expert_intent_id.split(",")
           : [],
-        sex: `${originForm.sex ? originForm.sex : 0}`,
-        talent_classification: `${currentTalent?.talent_classification}`,
+        sex: `${originForm.sex || undefined}`,
+        talent_classification: `${
+          currentTalent?.talent_classification || undefined
+        }`,
       }
     : undefined;
   return editingTalentForm;
