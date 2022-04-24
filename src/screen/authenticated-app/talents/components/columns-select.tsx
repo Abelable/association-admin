@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Checkbox, Popover, Tooltip } from "antd";
 import styled from "@emotion/styled";
 import { SettingOutlined } from "@ant-design/icons";
@@ -11,9 +11,9 @@ export const ColumnsSelect = ({
   setColumns,
 }: {
   defaultColumns: ColumnsType<TalentListItem>;
-  setColumns: () => void;
+  setColumns: Dispatch<SetStateAction<ColumnsType<TalentListItem>>>;
 }) => {
-  const plainOptions = [
+  const talentColumnsOptions = [
     "照片",
     "姓名",
     "性别",
@@ -36,18 +36,27 @@ export const ColumnsSelect = ({
     "总评分",
     "报名时间",
   ];
-  const [checkedList, setCheckedList] = useState(plainOptions);
+  // window.localStorage.getItem(localStorageKey);
+  // window.localStorage.setItem(localStorageKey, token);
+
+  const [checkedList, setCheckedList] = useState(
+    (JSON.parse(
+      window.localStorage.getItem("talentColumnsOptions") as string
+    ) as string[]) || talentColumnsOptions
+  );
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
 
   const onChange = (list: any[]) => {
     setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
+    setIndeterminate(
+      !!list.length && list.length < talentColumnsOptions.length
+    );
+    setCheckAll(list.length === talentColumnsOptions.length);
   };
 
   const onCheckAllChange = (e: any) => {
-    setCheckedList(e.target.checked ? plainOptions : []);
+    setCheckedList(e.target.checked ? talentColumnsOptions : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
   };
@@ -65,7 +74,7 @@ export const ColumnsSelect = ({
   const Content = (
     <Checkbox.Group
       style={{ width: "26rem" }}
-      options={plainOptions}
+      options={talentColumnsOptions}
       value={checkedList}
       onChange={onChange}
     />
