@@ -1,13 +1,15 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
-import { useCallback, useMemo } from "react";
+import { useMemo, useCallback } from "react";
 
 export const useCustomSignupUsersSearchParams = () => {
-  const [params, setParmas] = useUrlQueryParams([
-    "custom_event_id",
+  const [params, setParams] = useUrlQueryParams([
+    "s_time",
+    "e_time",
     "name",
     "mobile",
-    "start_time",
-    "end_time",
+    "email",
+    "member_level",
+    "is_deal",
     "page",
     "page_size",
   ]);
@@ -20,20 +22,25 @@ export const useCustomSignupUsersSearchParams = () => {
       }),
       [params]
     ),
-    setParmas,
+    setParams,
   ] as const;
 };
 
+export const useCustomSignupUsersQueryKey = () => {
+  const [params] = useCustomSignupUsersSearchParams();
+  return ["customSignupUsers", params];
+};
+
 export const useCustomSignupUserModal = () => {
-  const [{ customSignupUserCreate }, setCustomSignupUsersModalOpen] =
+  const [{ customSignupUserCreate }, setCustomSignupUserModalOpen] =
     useUrlQueryParams(["customSignupUserCreate"]);
   const [{ editingCustomSignupUserId }, setEditingCustomSignupUserId] =
     useUrlQueryParams(["editingCustomSignupUserId"]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setCustomSignupUsersModalOpen({ customSignupUserCreate: true }),
-    [setCustomSignupUsersModalOpen]
+    () => setCustomSignupUserModalOpen({ customSignupUserCreate: true }),
+    [setCustomSignupUserModalOpen]
   );
   const startEdit = useCallback(
     (id: string) =>
@@ -57,9 +64,4 @@ export const useCustomSignupUserModal = () => {
     startEdit,
     close,
   };
-};
-
-export const useCustomSignupUsersQueryKey = () => {
-  const [params] = useCustomSignupUsersSearchParams();
-  return ["customSignupUsers", params];
 };

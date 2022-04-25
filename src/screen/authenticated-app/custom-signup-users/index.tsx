@@ -1,134 +1,83 @@
 import styled from "@emotion/styled";
-import { Button, Table, TablePaginationConfig } from "antd";
-import { ErrorBox, Row } from "components/lib";
+import { Button, Drawer } from "antd";
+import { Row } from "components/lib";
+import { useState } from "react";
 import { useCustomSignupUsers } from "service/custom-signup";
 import { toNumber } from "utils";
-import {
-  useCustomSignupUsersSearchParams,
-  useCustomSignupUserModal,
-} from "./util";
-import { PlusOutlined } from "@ant-design/icons";
-import { CustomSignupUserModal } from "./components/custom-signup-user-modal";
-import dayjs from "dayjs";
+import { List } from "./components/list";
+import { SearchPanel } from "./components/search-panel";
+import { useCustomSignupUsersSearchParams } from "./util";
 
 export const CustomSignupUsers = () => {
   const [params, setParams] = useCustomSignupUsersSearchParams();
   const { data, isLoading, error } = useCustomSignupUsers(params);
-  const { startEdit, open } = useCustomSignupUserModal();
-
-  const setPagination = (pagination: TablePaginationConfig) =>
-    setParams({
-      ...params,
-      page: pagination.current,
-      page_size: pagination.pageSize,
-    });
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const exportCustomSignupUsers = (ids: string[]) => {
+    window.location.href = `${
+      process.env.REACT_APP_API_URL
+    }/api/admin/enter-apply/export?ids=${ids.join()}`;
+  };
 
   return (
-    <Container>
+    <Container drawerVisible={!!selectedRowKeys.length}>
       <Main>
-        <Header between={true}>
-          <h3>报名列表</h3>
-          <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-            新增
-          </Button>
-        </Header>
-        <ErrorBox error={error} />
-        <Table
-          rowKey={"id"}
-          dataSource={data?.list}
+        <SearchPanel params={params} setParams={setParams} />
+        <List
+          error={error}
+          params={params}
+          setParams={setParams}
+          setSelectedRowKeys={setSelectedRowKeys}
+          exportCustomSignupUsers={exportCustomSignupUsers}
           loading={isLoading}
-          columns={[
-            {
-              title: "编号",
-              render: (value, signup, index) =>
-                `${
-                  index +
-                  1 +
-                  ((params.page || 1) - 1) * (params.page_size || 10)
-                }`,
-              width: "8rem",
-            },
-            {
-              title: "活动名称",
-              dataIndex: "title",
-            },
-            {
-              title: "已报名人数",
-              render: (value, signup) => (
-                <span>{`${signup.registered_num}/${signup.enter_num}`}</span>
-              ),
-            },
-            {
-              title: "活动创建时间",
-              render: (value, signup) => (
-                <span>
-                  {dayjs(Number(signup.created_at) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
-                  )}
-                </span>
-              ),
-            },
-            {
-              title: "状态",
-              render: (value, signup) => (
-                <span>
-                  {["未开始", "进行中", "已结束"][signup.activity_status]}
-                </span>
-              ),
-            },
-            {
-              title: "操作",
-              render: (value, signup) => (
-                <Row>
-                  {signup.activity_status === 0 ? (
-                    <>
-                      <Button type="link" onClick={() => startEdit(signup.id)}>
-                        编辑
-                      </Button>
-                      <Button type="link">提前开始</Button>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  {signup.activity_status !== 0 ? (
-                    <Button type="link">查看报名列表</Button>
-                  ) : (
-                    <></>
-                  )}
-                  {signup.activity_status === 1 ? (
-                    <Button type="link">结束活动</Button>
-                  ) : (
-                    <></>
-                  )}
-                  <Button type="link">获取活动地址</Button>
-                </Row>
-              ),
-            },
-          ]}
+          dataSource={data?.list}
           pagination={{
             current: toNumber(data?.page),
             pageSize: toNumber(data?.page_size),
             total: toNumber(data?.total),
           }}
-          onChange={setPagination}
         />
-        <CustomSignupUserModal customSignupUsers={data?.list || []} />
       </Main>
+      <Drawer
+        visible={!!selectedRowKeys.length}
+        style={{ position: "absolute" }}
+        height={"8rem"}
+        placement="bottom"
+        mask={false}
+        getContainer={false}
+        closable={false}
+      >
+        <Row between={true}>
+          <div>
+            已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
+          </div>
+          <Row gap={true}>
+            <Button
+              onClick={() => exportCustomSignupUsers(selectedRowKeys)}
+              type={"primary"}
+              style={{ marginRight: 0 }}
+            >
+              批量导出
+            </Button>
+          </Row>
+        </Row>
+      </Drawer>
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ drawerVisible: boolean }>`
+  position: relative;
+  padding-bottom: ${(props) => (props.drawerVisible ? "8rem" : 0)};
+  height: 100%;
+`;
+
+const Main = styled.div`
   padding: 2.4rem;
   height: 100%;
   overflow: scroll;
 `;
 
-const Main = styled.div`
-  padding: 2.4rem;
-  background: #fff;
-`;
-
-const Header = styled(Row)`
-  margin-bottom: 2.4rem;
+const SelectedCount = styled.span`
+  color: #1890ff;
+  font-weight: 600;
 `;

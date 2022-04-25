@@ -7,8 +7,10 @@ import { useCustomSignupsSearchParams, useCustomSignupModal } from "./util";
 import { PlusOutlined } from "@ant-design/icons";
 import { CustomSignupModal } from "./components/custom-signup-modal";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 export const CustomSignups = () => {
+  const navigate = useNavigate();
   const [params, setParams] = useCustomSignupsSearchParams();
   const { data, isLoading, error } = useCustomSignups(params);
   const { startEdit, open } = useCustomSignupModal();
@@ -19,6 +21,10 @@ export const CustomSignups = () => {
       page: pagination.current,
       page_size: pagination.pageSize,
     });
+
+  const check = (id: string) => {
+    navigate("/custom_signup_users");
+  };
 
   return (
     <Container>
@@ -97,22 +103,22 @@ export const CustomSignups = () => {
                       ) : (
                         <></>
                       )}
-                      {signup.activity_status !== 0 ? (
-                        <Menu.Item
-                          onClick={() => startEdit(signup.id)}
-                          key={"check"}
-                        >
-                          查看报名列表
-                        </Menu.Item>
-                      ) : (
-                        <></>
-                      )}
                       {signup.activity_status === 1 ? (
                         <Menu.Item
                           onClick={() => startEdit(signup.id)}
                           key={"check"}
                         >
                           结束活动
+                        </Menu.Item>
+                      ) : (
+                        <></>
+                      )}
+                      {signup.activity_status !== 0 ? (
+                        <Menu.Item
+                          onClick={() => check(signup.id)}
+                          key={"check"}
+                        >
+                          查看报名列表
                         </Menu.Item>
                       ) : (
                         <></>
