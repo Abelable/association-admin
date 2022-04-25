@@ -27,7 +27,7 @@ export const CustomSignupUsers = () => {
     <Container>
       <Main>
         <Header between={true}>
-          <h3>自定义活动列表</h3>
+          <h3>报名列表</h3>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
@@ -91,7 +91,7 @@ export const CustomSignupUsers = () => {
                     <></>
                   )}
                   {signup.activity_status !== 0 ? (
-                    <Button type="link">查看</Button>
+                    <Button type="link">查看报名列表</Button>
                   ) : (
                     <></>
                   )}

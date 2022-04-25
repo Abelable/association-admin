@@ -7,6 +7,7 @@ import { useCustomSignupsSearchParams, useCustomSignupModal } from "./util";
 import { PlusOutlined } from "@ant-design/icons";
 import { CustomSignupModal } from "./components/custom-signup-modal";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 export const CustomSignups = () => {
   const [params, setParams] = useCustomSignupsSearchParams();
@@ -88,7 +89,9 @@ export const CustomSignups = () => {
                     <></>
                   )}
                   {signup.activity_status !== 0 ? (
-                    <Button type="link">查看</Button>
+                    <Link to={"/custom_signup_users"}>
+                      <Button type="link">查看</Button>
+                    </Link>
                   ) : (
                     <></>
                   )}
