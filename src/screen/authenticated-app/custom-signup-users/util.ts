@@ -3,13 +3,11 @@ import { useMemo, useCallback } from "react";
 
 export const useCustomSignupUsersSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "s_time",
-    "e_time",
+    "custom_event_id",
     "name",
     "mobile",
-    "email",
-    "member_level",
-    "is_deal",
+    "start_time",
+    "end_time",
     "page",
     "page_size",
   ]);

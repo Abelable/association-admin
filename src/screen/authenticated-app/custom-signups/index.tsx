@@ -24,6 +24,10 @@ export const CustomSignups = () => {
 
   const check = (id: string) => {
     navigate("/custom_signup_users");
+    // setCustomSignupUsersSearchParams({
+    //   ...customSignupUsersSearchParams,
+    //   custom_event_id: id
+    // })
   };
 
   return (
@@ -106,7 +110,7 @@ export const CustomSignups = () => {
                       {signup.activity_status === 1 ? (
                         <Menu.Item
                           onClick={() => startEdit(signup.id)}
-                          key={"check"}
+                          key={"stop"}
                         >
                           结束活动
                         </Menu.Item>

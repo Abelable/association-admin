@@ -70,10 +70,6 @@ export const List = ({
             width: "8rem",
           },
           {
-            title: "公司",
-            dataIndex: "company_name",
-          },
-          {
             title: "姓名",
             dataIndex: "name",
             width: "12rem",
