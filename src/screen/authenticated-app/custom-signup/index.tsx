@@ -98,7 +98,7 @@ export const CustomSignups = () => {
                   <Button type="link">获取活动地址</Button>
                 </Row>
               ),
-              width: "30rem",
+              width: "50rem",
             },
           ]}
           pagination={{
