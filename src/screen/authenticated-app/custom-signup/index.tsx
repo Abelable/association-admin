@@ -1,13 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Table,
-  TablePaginationConfig,
-  Avatar,
-} from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Menu, Table, TablePaginationConfig } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { useCustomSignups } from "service/custom-signup";
 import { toNumber } from "utils";
@@ -51,6 +43,7 @@ export const CustomSignups = () => {
                   1 +
                   ((params.page || 1) - 1) * (params.page_size || 10)
                 }`,
+              width: "8rem",
             },
             {
               title: "活动名称",
@@ -71,7 +64,6 @@ export const CustomSignups = () => {
                   )}
                 </span>
               ),
-              width: "18rem",
             },
             {
               title: "状态",
@@ -83,25 +75,30 @@ export const CustomSignups = () => {
             },
             {
               title: "操作",
-              render: (value, category) => (
-                <Dropdown
-                  overlay={
-                    <Menu>
-                      <Menu.Item
-                        onClick={() => startEdit(category.id)}
-                        key={"edit"}
-                      >
-                        编辑
-                      </Menu.Item>
-                      <Menu.Item key={"check"}>查看</Menu.Item>
-                      <Menu.Item key={"stop"}>结束活动</Menu.Item>
-                      <Menu.Item key={"link"}>获取活动地址</Menu.Item>
-                    </Menu>
-                  }
-                >
-                  <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
-                </Dropdown>
+              render: (value, signup) => (
+                <Row>
+                  {signup.activity_status === 0 ? (
+                    <>
+                      <Button type="link">编辑</Button>
+                      <Button type="link">提前开始</Button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {signup.activity_status !== 0 ? (
+                    <Button type="link">查看</Button>
+                  ) : (
+                    <></>
+                  )}
+                  {signup.activity_status === 1 ? (
+                    <Button type="link">结束活动</Button>
+                  ) : (
+                    <></>
+                  )}
+                  <Button type="link">获取活动地址</Button>
+                </Row>
               ),
+              width: "30rem",
             },
           ]}
           pagination={{

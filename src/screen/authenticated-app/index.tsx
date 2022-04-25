@@ -15,6 +15,7 @@ import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
+import { CustomSignups } from "./custom-signup";
 
 import {
   MenuUnfoldOutlined,
@@ -56,6 +57,7 @@ export const AuthenticatedApp = () => {
               <Route path="courses" element={<Courses />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
+              <Route path="custom_signup" element={<CustomSignups />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"users"} replace={true} />}
