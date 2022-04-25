@@ -3,6 +3,9 @@ import {
   CustomSignupsResult,
   CustomSignupsSearchParams,
   CustomSignup,
+  CustomSignupUsersResult,
+  CustomSignupUsersSearchParams,
+  CustomSignupUser,
 } from "types/custom-signup";
 import { useHttp } from "./http";
 import {
@@ -46,6 +49,49 @@ export const useDeleteCustomSignup = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<CustomSignup>) =>
+      client("/api/admin/class-room/author-save", {
+        data: { ...params, status: -1 },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
+export const useCustomSignupUsers = (params: CustomSignupUsersSearchParams) => {
+  const client = useHttp();
+  return useQuery<CustomSignupUsersResult>(["customSignupUsers", params], () =>
+    client("/api/admin/enter-form/custom-event-list", { data: params })
+  );
+};
+
+export const useAddCustomSignupUser = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<CustomSignupUser>) =>
+      client("/api/admin/class-room/author-save", {
+        data: params,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
+  );
+};
+
+export const useEditCustomSignupUser = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<CustomSignupUser>) =>
+      client("/api/admin/class-room/author-save", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteCustomSignupUser = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<CustomSignupUser>) =>
       client("/api/admin/class-room/author-save", {
         data: { ...params, status: -1 },
         method: "POST",
