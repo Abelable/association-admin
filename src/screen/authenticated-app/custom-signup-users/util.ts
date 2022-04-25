@@ -2,12 +2,21 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useCustomSignupUsersSearchParams = () => {
-  const [params, setParmas] = useUrlQueryParams(["page", "page_size"]);
+  const [params, setParmas] = useUrlQueryParams([
+    "custom_event_id",
+    "name",
+    "mobile",
+    "start_time",
+    "end_time",
+    "page",
+    "page_size",
+  ]);
   return [
     useMemo(
       () => ({
         page: Number(params.page) || 1,
         page_size: Number(params.page_size) || 10,
+        ...params,
       }),
       [params]
     ),
