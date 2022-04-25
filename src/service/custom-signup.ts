@@ -42,6 +42,18 @@ export const useEditCustomSignup = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditCustomSignupStatus = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, activity_status }: { id: string; activity_status: number }) =>
+      client("/api/admin/enter-form/custom-event-operate", {
+        data: { id, action: activity_status },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useCustomSignupUsers = (
   params: Partial<CustomSignupUsersSearchParams>
 ) => {

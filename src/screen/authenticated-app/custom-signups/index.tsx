@@ -1,9 +1,16 @@
 import styled from "@emotion/styled";
 import { Button, Dropdown, Menu, Table, TablePaginationConfig } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useCustomSignups } from "service/custom-signup";
+import {
+  useCustomSignups,
+  useEditCustomSignupStatus,
+} from "service/custom-signup";
 import { toNumber } from "utils";
-import { useCustomSignupsSearchParams, useCustomSignupModal } from "./util";
+import {
+  useCustomSignupsSearchParams,
+  useCustomSignupModal,
+  useCustomSignupsQueryKey,
+} from "./util";
 import { PlusOutlined } from "@ant-design/icons";
 import { CustomSignupModal } from "./components/custom-signup-modal";
 import dayjs from "dayjs";
@@ -14,6 +21,9 @@ export const CustomSignups = () => {
   const [params, setParams] = useCustomSignupsSearchParams();
   const { data, isLoading, error } = useCustomSignups(params);
   const { startEdit, open } = useCustomSignupModal();
+  const { mutate: editCustomSignupStatus } = useEditCustomSignupStatus(
+    useCustomSignupsQueryKey()
+  );
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -93,7 +103,12 @@ export const CustomSignups = () => {
                             编辑
                           </Menu.Item>
                           <Menu.Item
-                            onClick={() => startEdit(signup.id)}
+                            onClick={() =>
+                              editCustomSignupStatus({
+                                id: signup.id,
+                                activity_status: 1,
+                              })
+                            }
                             key={"start"}
                           >
                             提前开始
@@ -104,7 +119,12 @@ export const CustomSignups = () => {
                       )}
                       {signup.activity_status === 1 ? (
                         <Menu.Item
-                          onClick={() => startEdit(signup.id)}
+                          onClick={() =>
+                            editCustomSignupStatus({
+                              id: signup.id,
+                              activity_status: 2,
+                            })
+                          }
                           key={"stop"}
                         >
                           结束活动
