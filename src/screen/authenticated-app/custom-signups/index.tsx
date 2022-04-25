@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Button, Table, TablePaginationConfig } from "antd";
-import { ErrorBox, Row } from "components/lib";
+import { Button, Dropdown, Menu, Table, TablePaginationConfig } from "antd";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { useCustomSignups } from "service/custom-signup";
 import { toNumber } from "utils";
 import { useCustomSignupsSearchParams, useCustomSignupModal } from "./util";
@@ -44,7 +44,7 @@ export const CustomSignups = () => {
                   1 +
                   ((params.page || 1) - 1) * (params.page_size || 10)
                 }`,
-              width: "8rem",
+              width: "10rem",
             },
             {
               title: "活动名称",
@@ -77,32 +77,60 @@ export const CustomSignups = () => {
             {
               title: "操作",
               render: (value, signup) => (
-                <Row>
-                  {signup.activity_status === 0 ? (
-                    <>
-                      <Button type="link" onClick={() => startEdit(signup.id)}>
-                        编辑
-                      </Button>
-                      <Button type="link">提前开始</Button>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  {signup.activity_status !== 0 ? (
-                    <Link to={"/custom_signup_users"}>
-                      <Button type="link">查看</Button>
-                    </Link>
-                  ) : (
-                    <></>
-                  )}
-                  {signup.activity_status === 1 ? (
-                    <Button type="link">结束活动</Button>
-                  ) : (
-                    <></>
-                  )}
-                  <Button type="link">获取活动地址</Button>
-                </Row>
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      {signup.activity_status === 0 ? (
+                        <>
+                          <Menu.Item
+                            onClick={() => startEdit(signup.id)}
+                            key={"edit"}
+                          >
+                            编辑
+                          </Menu.Item>
+                          <Menu.Item
+                            onClick={() => startEdit(signup.id)}
+                            key={"start"}
+                          >
+                            提前开始
+                          </Menu.Item>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {signup.activity_status !== 0 ? (
+                        <Menu.Item
+                          onClick={() => startEdit(signup.id)}
+                          key={"check"}
+                        >
+                          查看报名列表
+                        </Menu.Item>
+                      ) : (
+                        <></>
+                      )}
+                      {signup.activity_status === 1 ? (
+                        <Menu.Item
+                          onClick={() => startEdit(signup.id)}
+                          key={"check"}
+                        >
+                          结束活动
+                        </Menu.Item>
+                      ) : (
+                        <></>
+                      )}
+                      <Menu.Item
+                        onClick={() => startEdit(signup.id)}
+                        key={"link"}
+                      >
+                        获取活动地址
+                      </Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+                </Dropdown>
               ),
+              width: "10rem",
             },
           ]}
           pagination={{
