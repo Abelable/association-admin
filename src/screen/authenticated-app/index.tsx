@@ -16,6 +16,7 @@ import { Courses } from "./courses";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
 import { CustomSignups } from "./custom-signups";
+import { CustomSignupUsers } from "./custom-signup-users";
 
 import {
   MenuUnfoldOutlined,
@@ -57,7 +58,11 @@ export const AuthenticatedApp = () => {
               <Route path="courses" element={<Courses />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
-              <Route path="custom_signup" element={<CustomSignups />} />
+              <Route path="custom_signups" element={<CustomSignups />} />
+              <Route
+                path="custom_signup_users"
+                element={<CustomSignupUsers />}
+              />
               <Route
                 path={"*"}
                 element={<Navigate to={"users"} replace={true} />}
@@ -121,8 +126,8 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="talents" icon={<SolutionOutlined />}>
           <Link to={"talents"}>人才管理</Link>
         </Menu.Item>
-        <Menu.Item key="custom_signup" icon={<StarOutlined />}>
-          <Link to={"custom_signup"}>自定义活动报名</Link>
+        <Menu.Item key="custom_signups" icon={<StarOutlined />}>
+          <Link to={"custom_signups"}>自定义活动报名</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
