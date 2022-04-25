@@ -29,6 +29,7 @@ import {
   HighlightOutlined,
   PlayCircleOutlined,
   UserOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 
@@ -117,6 +118,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.Item>
         <Menu.Item key="talents" icon={<SolutionOutlined />}>
           <Link to={"talents"}>人才管理</Link>
+        </Menu.Item>
+        <Menu.Item key="custom_signup" icon={<StarOutlined />}>
+          <Link to={"custom_signup"}>自定义活动报名</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
