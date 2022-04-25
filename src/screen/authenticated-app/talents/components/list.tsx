@@ -304,7 +304,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>人才申报列表</h3>
+        <h3>申报列表</h3>
         <Row gap>
           <Button onClick={downloadTemplate} icon={<DownloadOutlined />}>
             下载模版

@@ -46,7 +46,7 @@ export const LegalCategories = () => {
     <Container>
       <Main>
         <Header between={true}>
-          <h3>法律汇编分类列表</h3>
+          <h3>分类列表</h3>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>

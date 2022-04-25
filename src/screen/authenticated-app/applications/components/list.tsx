@@ -60,7 +60,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>入会申请列表</h3>
+        <h3>申请列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>

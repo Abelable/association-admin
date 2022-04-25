@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
-import { Breadcrumb, Button, Dropdown, Layout, Menu } from "antd";
+import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { Banners } from "./banners";
 import { Wisdoms } from "./wisdoms";
@@ -34,6 +34,7 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
+import { NavigationBar } from "components/navigation-bar";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -47,32 +48,21 @@ export const AuthenticatedApp = () => {
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
             <User />
           </Header>
-          <NavigationBar>
-            <Breadcrumb>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <a href="">Application Center</a>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <a href="">Application List</a>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>An Application</Breadcrumb.Item>
-            </Breadcrumb>
-          </NavigationBar>
+          <NavigationBar />
           <Content>
             <Routes>
               <Route path="users" element={<Users />} />
               <Route path="banners" element={<Banners />} />
+              <Route path="course/author" element={<CourseAuthors />} />
+              <Route path="course/list" element={<Courses />} />
+              <Route path="legal/categories" element={<LegalCategories />} />
+              <Route path="legal/list" element={<Legals />} />
               <Route path="wisdoms" element={<Wisdoms />} />
-              <Route path="legal_categories" element={<LegalCategories />} />
-              <Route path="legals" element={<Legals />} />
-              <Route path="course_authors" element={<CourseAuthors />} />
-              <Route path="courses" element={<Courses />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
               <Route path="custom_signups" element={<CustomSignups />} />
               <Route
-                path="custom_signup_users"
+                path="custom_signups/enlist"
                 element={<CustomSignupUsers />}
               />
               <Route
@@ -110,11 +100,11 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           icon={<PlayCircleOutlined />}
           title={"网商课堂"}
         >
-          <Menu.Item key="course_authors" icon={<UserOutlined />}>
-            <Link to={"course_authors"}>作者管理</Link>
+          <Menu.Item key="author" icon={<UserOutlined />}>
+            <Link to={"course/author"}>作者管理</Link>
           </Menu.Item>
-          <Menu.Item key="courses" icon={<BarsOutlined />}>
-            <Link to={"courses"}>课堂列表</Link>
+          <Menu.Item key="list" icon={<BarsOutlined />}>
+            <Link to={"course/list"}>课堂列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
@@ -123,10 +113,10 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           title={"法律汇编"}
         >
           <Menu.Item key="legal_categories" icon={<PartitionOutlined />}>
-            <Link to={"legal_categories"}>分类管理</Link>
+            <Link to={"legal/categories"}>分类管理</Link>
           </Menu.Item>
           <Menu.Item key="legals" icon={<BarsOutlined />}>
-            <Link to={"legals"}>文章列表</Link>
+            <Link to={"legal/list"}>文章列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="wisdoms" icon={<BulbOutlined />}>
@@ -145,6 +135,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
     </Layout.Sider>
   );
 };
+
 interface Collapsed {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
@@ -226,11 +217,6 @@ const Unfold = styled(MenuUnfoldOutlined)`
   }
 `;
 const Fold = Unfold.withComponent(MenuFoldOutlined);
-
-const NavigationBar = styled.div`
-  padding: 2.4rem;
-  background: #fff;
-`;
 
 const Content = styled(Layout.Content)`
   height: 100%;

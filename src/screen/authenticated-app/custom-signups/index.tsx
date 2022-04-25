@@ -23,13 +23,13 @@ export const CustomSignups = () => {
     });
 
   const check = (custom_event_id: string) =>
-    navigate("/custom_signup_users", { state: { custom_event_id } });
+    navigate("/custom_signups/enlist", { state: { custom_event_id } });
 
   return (
     <Container>
       <Main>
         <Header between={true}>
-          <h3>自定义活动列表</h3>
+          <h3>活动列表</h3>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
