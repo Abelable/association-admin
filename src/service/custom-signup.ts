@@ -41,7 +41,9 @@ export const useEditCustomSignup = (queryKey: QueryKey) => {
   );
 };
 
-export const useCustomSignupUsers = (params: CustomSignupUsersSearchParams) => {
+export const useCustomSignupUsers = (
+  params: Partial<CustomSignupUsersSearchParams>
+) => {
   const client = useHttp();
   return useQuery<CustomSignupUsersResult>(["customSignupUsers", params], () =>
     client("/api/admin/enter-form/registered-list", { data: params })
