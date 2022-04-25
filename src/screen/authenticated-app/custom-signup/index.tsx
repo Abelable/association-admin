@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Button, Dropdown, Menu, Table, TablePaginationConfig } from "antd";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
+import { Button, Table, TablePaginationConfig } from "antd";
+import { ErrorBox, Row } from "components/lib";
 import { useCustomSignups } from "service/custom-signup";
 import { toNumber } from "utils";
 import { useCustomSignupsSearchParams, useCustomSignupModal } from "./util";
@@ -79,7 +79,9 @@ export const CustomSignups = () => {
                 <Row>
                   {signup.activity_status === 0 ? (
                     <>
-                      <Button type="link">编辑</Button>
+                      <Button type="link" onClick={() => startEdit(signup.id)}>
+                        编辑
+                      </Button>
                       <Button type="link">提前开始</Button>
                     </>
                   ) : (
