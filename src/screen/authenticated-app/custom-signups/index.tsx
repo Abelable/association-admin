@@ -24,7 +24,7 @@ export const CustomSignups = () => {
     <Container>
       <Main>
         <Header between={true}>
-          <h3>活动列表</h3>
+          <h3>自定义活动列表</h3>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
@@ -100,7 +100,6 @@ export const CustomSignups = () => {
                   <Button type="link">获取活动地址</Button>
                 </Row>
               ),
-              width: "50rem",
             },
           ]}
           pagination={{

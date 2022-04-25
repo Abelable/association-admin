@@ -15,7 +15,7 @@ import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
-import { CustomSignups } from "./custom-signup";
+import { CustomSignups } from "./custom-signups";
 
 import {
   MenuUnfoldOutlined,
