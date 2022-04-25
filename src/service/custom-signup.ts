@@ -1,4 +1,5 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
+import { useLocation } from "react-router-dom";
 import {
   CustomSignupsResult,
   CustomSignupsSearchParams,
@@ -45,8 +46,12 @@ export const useCustomSignupUsers = (
   params: Partial<CustomSignupUsersSearchParams>
 ) => {
   const client = useHttp();
+  const location = useLocation();
+  const { custom_event_id } = location.state as { custom_event_id: string };
   return useQuery<CustomSignupUsersResult>(["customSignupUsers", params], () =>
-    client("/api/admin/enter-form/registered-list", { data: params })
+    client("/api/admin/enter-form/registered-list", {
+      data: { custom_event_id, ...params },
+    })
   );
 };
 

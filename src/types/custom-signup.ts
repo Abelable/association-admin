@@ -25,7 +25,6 @@ export interface CustomSignupsResult {
 }
 
 export interface CustomSignupUsersSearchParams {
-  custom_event_id: string;
   name: string;
   mobile: string;
   start_time: string;

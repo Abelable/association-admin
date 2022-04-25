@@ -22,13 +22,8 @@ export const CustomSignups = () => {
       page_size: pagination.pageSize,
     });
 
-  const check = (id: string) => {
-    navigate("/custom_signup_users");
-    // setCustomSignupUsersSearchParams({
-    //   ...customSignupUsersSearchParams,
-    //   custom_event_id: id
-    // })
-  };
+  const check = (custom_event_id: string) =>
+    navigate("/custom_signup_users", { state: { custom_event_id } });
 
   return (
     <Container>
