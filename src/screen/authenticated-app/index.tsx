@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
-import { Button, Dropdown, Layout, Menu } from "antd";
+import { Breadcrumb, Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { Banners } from "./banners";
 import { Wisdoms } from "./wisdoms";
@@ -47,6 +47,18 @@ export const AuthenticatedApp = () => {
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
             <User />
           </Header>
+          <NavigationBar>
+            <Breadcrumb>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <a href="">Application Center</a>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <a href="">Application List</a>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>An Application</Breadcrumb.Item>
+            </Breadcrumb>
+          </NavigationBar>
           <Content>
             <Routes>
               <Route path="users" element={<Users />} />
@@ -214,6 +226,11 @@ const Unfold = styled(MenuUnfoldOutlined)`
   }
 `;
 const Fold = Unfold.withComponent(MenuFoldOutlined);
+
+const NavigationBar = styled.div`
+  padding: 2.4rem;
+  background: #fff;
+`;
 
 const Content = styled(Layout.Content)`
   height: 100%;
