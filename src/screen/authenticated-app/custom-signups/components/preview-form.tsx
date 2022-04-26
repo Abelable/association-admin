@@ -1,4 +1,4 @@
-import { Col, DatePicker, Form, Input, InputNumber, Row, Select } from "antd";
+import { Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { OssUpload } from "components/oss-upload";
 import { FormItem } from "types/custom-signup";
 
