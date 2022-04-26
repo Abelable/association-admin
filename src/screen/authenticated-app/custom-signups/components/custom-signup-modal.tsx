@@ -25,6 +25,7 @@ import { useQueryClient } from "react-query";
 import { RichTextEditor } from "components/rich-text-editor";
 import { FormBuilder } from "./form-builder";
 import { PreviewForm } from "./preview-form";
+import moment from "moment";
 
 const defaultFormList: FormItem[] = [
   {
@@ -67,7 +68,11 @@ export const CustomSignupModal = () => {
     useCustomSignupsQueryKey()
   );
   const [introduction, setIntroduction] = useState("");
-  const [formList, setFormList] = useState(defaultFormList);
+  const [formList, setFormList] = useState(
+    editingCustomSignupForm
+      ? editingCustomSignupForm.enterFrom
+      : defaultFormList
+  );
   const [previewFormModalVisible, setPreviewFormModalVisible] = useState(false);
 
   const closeModal = () => {
@@ -77,18 +82,14 @@ export const CustomSignupModal = () => {
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { img, link_type, linkInfo, dateRange, ...restParams } =
-        form.getFieldsValue();
-      const s_time = `${Math.floor(dateRange[0].valueOf() / 1000) * 1000}`;
-      const e_time = `${Math.floor(dateRange[1].valueOf() / 1000) * 1000}`;
+      const { dateRange, ...restParams } = form.getFieldsValue();
+      const start_time = `${Math.floor(dateRange[0].valueOf() / 1000) * 1000}`;
+      const end_time = `${Math.floor(dateRange[1].valueOf() / 1000) * 1000}`;
       const customSignupParams: CustomSignup = {
         id: editingCustomSignupId || "",
-        s_time,
-        e_time,
-        link_type,
-        customSignup_id: link_type === "1" ? linkInfo : "1",
-        redirect_url: link_type === "2" ? linkInfo : "",
-        img: img[0].url,
+        start_time,
+        end_time,
+        enter_from_json: JSON.stringify(formList),
         ...restParams,
       };
       await mutateAsync(customSignupParams);
@@ -97,7 +98,8 @@ export const CustomSignupModal = () => {
   };
 
   useEffect(() => {
-    editingCustomSignupForm && form.setFieldsValue(editingCustomSignupForm);
+    editingCustomSignupForm &&
+      form.setFieldsValue(editingCustomSignupForm.fieldsValue);
   }, [form, editingCustomSignupForm]);
 
   return (
@@ -185,30 +187,21 @@ const useEditingCustomSignupForm = (editingCustomSignupId: string) => {
         (item) => item.id === editingCustomSignupId
       )
     : undefined;
-  const formList = currentCustomSignup
-    ? JSON.parse(currentCustomSignup?.enter_from_json)
-    : [];
-  const list: string[][] = [];
-  formList.forEach((item: { title: string; name: string; value: string }) => {
-    list.push([item.name, item.value]);
-  });
-  const originForm = Object.fromEntries(list);
 
-  const license: { [key in string]: string }[] = [];
-  if (originForm.license) {
-    const imgs = originForm.license.split(",");
-    imgs.forEach((item: string) => {
-      license.push({ url: item });
-    });
+  let editingCustomSignupForm: CustomSignupForm | undefined = undefined;
+  if (currentCustomSignup) {
+    const { enter_from_json, start_time, end_time, ...restData } =
+      currentCustomSignup;
+    editingCustomSignupForm = {
+      enterFrom: JSON.parse(currentCustomSignup?.enter_from_json),
+      fieldsValue: {
+        ...restData,
+        dateRange: [
+          moment(Number(start_time) * 1000),
+          moment(Number(end_time) * 1000),
+        ],
+      },
+    };
   }
-
-  const editingCustomSignupForm: CustomSignupForm | undefined =
-    originForm.company_type
-      ? {
-          ...originForm,
-          license,
-          company_type: originForm.company_type.split(","),
-        }
-      : undefined;
   return editingCustomSignupForm;
 };

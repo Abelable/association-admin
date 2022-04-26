@@ -1,12 +1,12 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
-import {
+import type {
   CustomSignupsResult,
   CustomSignupsSearchParams,
-  CustomSignup,
   CustomSignupUsersResult,
   CustomSignupUsersSearchParams,
   CustomSignupUser,
+  CustomSignup,
 } from "types/custom-signup";
 import { useHttp } from "./http";
 import { useAddConfig, useEditConfig } from "./use-optimistic-options";
@@ -21,7 +21,7 @@ export const useCustomSignups = (params: CustomSignupsSearchParams) => {
 export const useAddCustomSignup = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<CustomSignup>) =>
+    (params: CustomSignup) =>
       client("/api/admin/class-room/author-save", {
         data: params,
         method: "POST",
@@ -33,7 +33,7 @@ export const useAddCustomSignup = (queryKey: QueryKey) => {
 export const useEditCustomSignup = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<CustomSignup>) =>
+    (params: CustomSignup) =>
       client("/api/admin/class-room/author-save", {
         data: params,
         method: "POST",
