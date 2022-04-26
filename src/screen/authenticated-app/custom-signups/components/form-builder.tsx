@@ -9,13 +9,16 @@ import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
 
+interface FormBuilderProps extends React.ComponentProps<typeof Table> {
+  formList: FormItem[];
+  setFormList: (list: FormItem[]) => void;
+}
+
 export const FormBuilder = ({
   formList,
   setFormList,
-}: {
-  formList: FormItem[];
-  setFormList: (list: FormItem[]) => void;
-}) => {
+  ...restProps
+}: FormBuilderProps) => {
   const typeOptions = [
     { id: 1, name: "单行文本框" },
     { id: 2, name: "多行文本框" },
