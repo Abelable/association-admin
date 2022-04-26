@@ -1,5 +1,10 @@
 import { Button, Input, Select, Switch, Table } from "antd";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from "react-sortable-hoc";
+import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
@@ -72,6 +77,13 @@ export const FormBuilder = () => {
         rowKey={"id"}
         columns={[
           {
+            title: "排序",
+            dataIndex: "sort",
+            className: "drag-visible",
+            render: () => <DragHandle />,
+            width: "6rem",
+          },
+          {
             title: "选择类型",
             dataIndex: "type",
             render: (value, item) => (
@@ -97,7 +109,7 @@ export const FormBuilder = () => {
             render: (value, item) => (
               <Input value={item.name} placeholder="请输入名称" />
             ),
-            width: "24rem",
+            width: "22rem",
           },
           {
             title: "填写提示文本",
@@ -105,7 +117,7 @@ export const FormBuilder = () => {
             render: (value, item) => (
               <Input value={item.tips} placeholder="请输入提示文本" />
             ),
-            width: "36rem",
+            width: "32rem",
           },
           {
             title: "添加选项",
@@ -147,6 +159,13 @@ export const FormBuilder = () => {
     </>
   );
 };
+
+const SortableItem = SortableElement((props: any) => <tr {...props} />);
+const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
+
+const DragHandle = SortableHandle(() => (
+  <MenuOutlined style={{ cursor: "grab", color: "#999" }} />
+));
 
 const Delete = styled(DeleteOutlined)`
   cursor: pointer;
