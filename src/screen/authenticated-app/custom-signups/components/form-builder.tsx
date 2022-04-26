@@ -152,6 +152,7 @@ export const FormBuilder = ({
               <Select
                 style={{ width: "100%" }}
                 defaultValue={value}
+                disabled={![4, 5].includes(item.type || 0)}
                 onChange={(value: string[]) =>
                   editFormList({ id: item.id, options: value })
                 }
