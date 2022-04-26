@@ -30,10 +30,14 @@ export interface CustomSignupsItem extends CustomSignup {
 }
 
 export interface CustomSignupFieldsValue
-  extends Omit<CustomSignup, "enter_from_json" | "start_time" | "end_time"> {
+  extends Omit<
+    CustomSignup,
+    "enter_from_json" | "start_time" | "end_time" | "remark"
+  > {
   dateRange: any[];
 }
 export interface CustomSignupForm {
+  remark: string;
   enterFrom: FormItem[];
   fieldsValue: CustomSignupFieldsValue;
 }

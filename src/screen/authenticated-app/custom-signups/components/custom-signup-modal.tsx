@@ -67,7 +67,9 @@ export const CustomSignupModal = () => {
   const { mutateAsync, error, isLoading } = useMutationCustomSignup(
     useCustomSignupsQueryKey()
   );
-  const [introduction, setIntroduction] = useState("");
+  const [remark, setRemark] = useState(
+    editingCustomSignupForm ? editingCustomSignupForm.remark : ""
+  );
   const [formList, setFormList] = useState(
     editingCustomSignupForm
       ? editingCustomSignupForm.enterFrom
@@ -89,6 +91,7 @@ export const CustomSignupModal = () => {
         id: editingCustomSignupId || "",
         start_time,
         end_time,
+        remark,
         enter_from_json: JSON.stringify(formList),
         ...restParams,
       };
@@ -156,10 +159,7 @@ export const CustomSignupModal = () => {
             </Col>
           </Row>
           <Form.Item label="报名备注" tooltip="排版自定义规则">
-            <RichTextEditor
-              content={introduction}
-              setContent={setIntroduction}
-            />
+            <RichTextEditor content={remark} setContent={setRemark} />
           </Form.Item>
         </Form>
         <Divider orientation="left">报名表单编辑</Divider>
@@ -190,10 +190,11 @@ const useEditingCustomSignupForm = (editingCustomSignupId: string) => {
 
   let editingCustomSignupForm: CustomSignupForm | undefined = undefined;
   if (currentCustomSignup) {
-    const { enter_from_json, start_time, end_time, ...restData } =
+    const { enter_from_json, start_time, end_time, remark, ...restData } =
       currentCustomSignup;
     editingCustomSignupForm = {
       enterFrom: JSON.parse(currentCustomSignup?.enter_from_json),
+      remark,
       fieldsValue: {
         ...restData,
         dateRange: [

@@ -22,8 +22,8 @@ export const useAddCustomSignup = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: CustomSignup) =>
-      client("/api/admin/class-room/author-save", {
-        data: params,
+      client("/api/admin/enter-form/custom-event-save", {
+        data: { ...params, status: 1 },
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -34,8 +34,8 @@ export const useEditCustomSignup = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: CustomSignup) =>
-      client("/api/admin/class-room/author-save", {
-        data: params,
+      client("/api/admin/enter-form/custom-event-save", {
+        data: { ...params, status: 1 },
         method: "POST",
       }),
     useEditConfig(queryKey)
