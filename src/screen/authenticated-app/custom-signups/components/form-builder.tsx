@@ -92,12 +92,14 @@ export const FormBuilder = ({
       <Table
         style={{ width: "100%" }}
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "排序",
             dataIndex: "sort",
             render: () => <DragHandle />,
             width: "6rem",
+            fixed: "left",
           },
           {
             title: "选择类型",
@@ -117,7 +119,7 @@ export const FormBuilder = ({
                 ))}
               </Select>
             ),
-            width: "16rem",
+            width: "12rem",
           },
           {
             title: "选择必填",
@@ -130,7 +132,7 @@ export const FormBuilder = ({
                 }
               />
             ),
-            width: "10rem",
+            width: "8rem",
           },
           {
             title: "填写名称",
@@ -144,7 +146,7 @@ export const FormBuilder = ({
                 placeholder="请输入名称"
               />
             ),
-            width: "22rem",
+            width: "18rem",
           },
           {
             title: "填写提示文本",
@@ -158,7 +160,7 @@ export const FormBuilder = ({
                 placeholder="请输入提示文本"
               />
             ),
-            width: "32rem",
+            width: "26rem",
           },
           {
             title: "添加选项",
@@ -174,6 +176,7 @@ export const FormBuilder = ({
                 placeholder="输入后回车添加选项"
               />
             ),
+            width: "30rem",
           },
           {
             render: (value, item) => (
@@ -188,6 +191,7 @@ export const FormBuilder = ({
               />
             ),
             width: "6rem",
+            fixed: "right",
           },
         ]}
         pagination={false}

@@ -85,8 +85,8 @@ export const CustomSignupModal = () => {
   const submit = () => {
     form.validateFields().then(async () => {
       const { dateRange, ...restParams } = form.getFieldsValue();
-      const start_time = `${Math.floor(dateRange[0].valueOf() / 1000) * 1000}`;
-      const end_time = `${Math.floor(dateRange[1].valueOf() / 1000) * 1000}`;
+      const start_time = `${Math.floor(dateRange[0].valueOf() / 1000)}`;
+      const end_time = `${Math.floor(dateRange[1].valueOf() / 1000)}`;
       const customSignupParams: CustomSignup = {
         id: editingCustomSignupId || "",
         start_time,

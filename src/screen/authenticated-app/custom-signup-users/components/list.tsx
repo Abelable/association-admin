@@ -1,14 +1,6 @@
 import styled from "@emotion/styled";
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Table,
-  TablePaginationConfig,
-  TableProps,
-} from "antd";
+import { Dropdown, Menu, Table, TablePaginationConfig, TableProps } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined } from "@ant-design/icons";
 import { CustomSignupUsersItem } from "types/custom-signup";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
@@ -33,8 +25,6 @@ export const List = ({
   exportCustomSignupUsers,
   ...restProps
 }: ListProps) => {
-  const { open } = useCustomSignupUserModal();
-
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -46,9 +36,6 @@ export const List = ({
     <Container>
       <Header between={true}>
         <h3>报名列表</h3>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
-        </Button>
       </Header>
       <ErrorBox error={error} />
       <Table
