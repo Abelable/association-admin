@@ -1,22 +1,17 @@
 import { Button, Input, Select, Switch, Table } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import styled from "@emotion/styled";
 
 export const FormBuilder = () => {
   interface FormItem {
+    id: number;
     type: number | undefined;
     required: boolean;
     name: string;
     tips: string;
     options: string[] | undefined;
   }
-
-  const defaultFormItem: FormItem = {
-    type: undefined,
-    required: false,
-    name: "",
-    tips: "",
-    options: undefined,
-  };
 
   const typeOptions = [
     { id: 1, name: "单行文本框" },
@@ -31,6 +26,7 @@ export const FormBuilder = () => {
 
   const defaultFormList: FormItem[] = [
     {
+      id: 1,
       type: 1,
       required: true,
       name: "姓名",
@@ -38,20 +34,36 @@ export const FormBuilder = () => {
       options: undefined,
     },
     {
-      type: 1,
-      required: true,
-      name: "手机号",
-      tips: "",
-      options: undefined,
-    },
-    {
+      id: 3,
       type: 1,
       required: true,
       name: "邮箱",
       tips: "",
       options: undefined,
     },
+    {
+      id: 2,
+      type: 1,
+      required: true,
+      name: "手机号",
+      tips: "",
+      options: undefined,
+    },
   ];
+
+  const [formList, setFormList] = useState(defaultFormList);
+
+  const addItem = () => {
+    const defaultFormItem: Omit<FormItem, "id"> = {
+      type: undefined,
+      required: false,
+      name: "",
+      tips: "",
+      options: undefined,
+    };
+    const id = formList.sort((a, b) => a.id - b.id)[formList.length - 1].id + 1;
+    setFormList([...formList, { id, ...defaultFormItem }]);
+  };
 
   return (
     <>
@@ -85,6 +97,7 @@ export const FormBuilder = () => {
             render: (value, item) => (
               <Input value={item.name} placeholder="请输入名称" />
             ),
+            width: "24rem",
           },
           {
             title: "填写提示文本",
@@ -92,21 +105,53 @@ export const FormBuilder = () => {
             render: (value, item) => (
               <Input value={item.tips} placeholder="请输入提示文本" />
             ),
+            width: "36rem",
           },
           {
             title: "添加选项",
             dataIndex: "options",
+            render: (value, item) => (
+              <Select
+                style={{ width: "100%" }}
+                value={item.options}
+                mode="tags"
+                placeholder="输入后回车添加选项"
+              />
+            ),
+          },
+          {
+            render: (value, item) => (
+              <Delete
+                onClick={() =>
+                  setFormList([
+                    ...formList.filter(
+                      (_item: FormItem) => _item.id !== item.id
+                    ),
+                  ])
+                }
+              />
+            ),
+            width: "6rem",
           },
         ]}
-        dataSource={defaultFormList}
+        dataSource={formList}
         pagination={false}
       />
       <Button
         style={{ marginTop: "2rem", width: "100%" }}
         icon={<PlusOutlined />}
+        onClick={() => addItem()}
       >
         添加表单元素
       </Button>
     </>
   );
 };
+
+const Delete = styled(DeleteOutlined)`
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: red;
+  }
+`;
