@@ -164,7 +164,7 @@ export const CustomSignups = () => {
           }}
           onChange={setPagination}
         />
-        <CustomSignupModal customSignups={data?.list || []} />
+        <CustomSignupModal />
       </Main>
     </Container>
   );
