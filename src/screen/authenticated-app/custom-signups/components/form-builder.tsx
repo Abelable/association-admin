@@ -30,8 +30,6 @@ export const FormBuilder = ({
     { id: 8, name: "富文本框" },
   ];
 
-  // const [tempFormList, setTempFormList] = useState(formList)
-
   const addItem = () => {
     const defaultFormItem: Omit<FormItem, "id"> = {
       type: undefined,
