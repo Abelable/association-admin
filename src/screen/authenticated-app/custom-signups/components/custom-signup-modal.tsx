@@ -8,6 +8,7 @@ import {
   Input,
   Row,
   Space,
+  Table,
 } from "antd";
 import { useCustomSignupModal, useCustomSignupsQueryKey } from "../util";
 import { useEffect, useState } from "react";
@@ -18,27 +19,65 @@ import {
   CustomSignupForm,
   CustomSignupsResult,
 } from "types/custom-signup";
+import { PlusOutlined } from "@ant-design/icons";
 import { useAddCustomSignup, useEditCustomSignup } from "service/custom-signup";
 import { useQueryClient } from "react-query";
 import { RichTextEditor } from "components/rich-text-editor";
 
 export const CustomSignupModal = () => {
   const [form] = useForm();
-
   const { customSignupModalOpen, editingCustomSignupId, close } =
     useCustomSignupModal();
   const editingCustomSignupForm = useEditingCustomSignupForm(
     editingCustomSignupId
   );
-
   const useMutationCustomSignup = editingCustomSignupId
     ? useEditCustomSignup
     : useAddCustomSignup;
   const { mutateAsync, error, isLoading } = useMutationCustomSignup(
     useCustomSignupsQueryKey()
   );
-
   const [introduction, setIntroduction] = useState("");
+
+  interface FormItem {
+    type: number;
+    required: boolean;
+    name: string;
+    tips: string;
+    options: string[] | undefined;
+  }
+
+  const defaultFormItem: FormItem = {
+    type: 0,
+    required: false,
+    name: "",
+    tips: "",
+    options: undefined,
+  };
+
+  const defaultFormList: FormItem[] = [
+    {
+      type: 1,
+      required: true,
+      name: "姓名",
+      tips: "请输入姓名",
+      options: undefined,
+    },
+    {
+      type: 1,
+      required: true,
+      name: "手机号",
+      tips: "请输入手机号",
+      options: undefined,
+    },
+    {
+      type: 1,
+      required: true,
+      name: "邮箱",
+      tips: "请输入邮箱",
+      options: undefined,
+    },
+  ];
 
   const closeModal = () => {
     form.resetFields();
@@ -123,6 +162,42 @@ export const CustomSignupModal = () => {
           <RichTextEditor content={introduction} setContent={setIntroduction} />
         </Form.Item>
       </Form>
+      <Divider orientation="left">报名表单编辑</Divider>
+      <Table
+        style={{ width: "100%" }}
+        rowKey={"id"}
+        columns={[
+          {
+            title: "选择类型",
+            dataIndex: "type",
+          },
+          {
+            title: "选择必填",
+            dataIndex: "required",
+          },
+          {
+            title: "填写名称",
+            dataIndex: "name",
+            render: () => <Input placeholder="请输入当前单行文本框的名称" />,
+          },
+          {
+            title: "填写提示文本",
+            dataIndex: "tips",
+          },
+          {
+            title: "添加选项",
+            dataIndex: "options",
+          },
+        ]}
+        dataSource={defaultFormList}
+        pagination={false}
+      />
+      <Button
+        style={{ marginTop: "2rem", width: "100%" }}
+        icon={<PlusOutlined />}
+      >
+        添加表单元素
+      </Button>
     </Drawer>
   );
 };
