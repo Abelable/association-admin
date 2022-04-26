@@ -41,8 +41,6 @@ export const CustomSignupUserModal = () => {
     imageFormIndexList,
   } = useEditingCustomSignupUserForm(editingCustomSignupUserId);
 
-  console.log("editingCustomSignupUserForm", editingCustomSignupUserForm);
-
   const useMutationCustomSignupUser = editingCustomSignupUserId
     ? useEditCustomSignupUser
     : useAddCustomSignupUser;
@@ -295,8 +293,6 @@ const useEditingCustomSignupUserForm = (editingCustomSignupUserId: string) => {
         (item) => item.id === editingCustomSignupUserId
       )
     : undefined;
-  // console.log("editingCustomSignupUserId", editingCustomSignupUserId)
-  // console.log("currentCustomSignupUser", currentCustomSignupUser)
 
   const formTypeList: FormItem[] = currentCustomSignupUser
     ? JSON.parse(currentCustomSignupUser.customEvent.enter_from_json)
@@ -312,7 +308,6 @@ const useEditingCustomSignupUserForm = (editingCustomSignupUserId: string) => {
   const formList = currentCustomSignupUser
     ? currentCustomSignupUser?.apply_content_json
     : [];
-  console.log("formList", formList);
   const list: string[][] = [];
   formList.forEach(
     (item: { title: string; name: string; value: string }, index: number) => {
@@ -332,9 +327,6 @@ const useEditingCustomSignupUserForm = (editingCustomSignupUserId: string) => {
   const editingCustomSignupUserForm: CustomSignupUserForm | undefined =
     originForm ? originForm : undefined;
 
-  console.log("formTypeList", formTypeList);
-
-  console.log("originForm", originForm);
   return {
     editingCustomSignupUserForm,
     formTypeList,
