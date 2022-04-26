@@ -13,7 +13,6 @@ import { useQueryClient } from "react-query";
 import type {
   CustomSignupUsersResult,
   CustomSignupUserForm,
-  CustomSignupUsersItem,
   FormItem,
 } from "types/custom-signup";
 import {
