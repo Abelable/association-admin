@@ -1,4 +1,4 @@
-import { Button, Input, Select, Switch, Table } from "antd";
+import { Button, Input, Select, Switch, Table, TableProps } from "antd";
 import {
   SortableContainer,
   SortableElement,
@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
 
-interface FormBuilderProps extends React.ComponentProps<typeof Table> {
+interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
   formList: FormItem[];
   setFormList: (list: FormItem[]) => void;
 }
@@ -152,7 +152,6 @@ export const FormBuilder = ({
             width: "6rem",
           },
         ]}
-        dataSource={formList}
         pagination={false}
         components={{
           body: {
@@ -160,6 +159,8 @@ export const FormBuilder = ({
             row: DraggableBodyRow,
           },
         }}
+        dataSource={formList}
+        {...restProps}
       />
       <Button
         style={{ marginTop: "2rem", width: "100%" }}
@@ -172,8 +173,8 @@ export const FormBuilder = ({
   );
 };
 
-const SortableItem = SortableElement((props: any) => <tr {...props} />);
 const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
+const SortableItem = SortableElement((props: any) => <tr {...props} />);
 
 const DragHandle = SortableHandle(() => (
   <MenuOutlined style={{ cursor: "grab", color: "#999" }} />
