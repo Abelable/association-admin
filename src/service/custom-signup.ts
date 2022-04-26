@@ -81,8 +81,8 @@ export const useAddCustomSignupUser = (queryKey: QueryKey) => {
         }
       >
     ) =>
-      client("/api/admin/class-room/author-save", {
-        data: params,
+      client("/api/admin/enter-form/registered-save", {
+        data: { ...params, status: 1 },
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -99,8 +99,8 @@ export const useEditCustomSignupUser = (queryKey: QueryKey) => {
         }
       >
     ) =>
-      client("/api/admin/class-room/author-save", {
-        data: params,
+      client("/api/admin/enter-form/registered-save", {
+        data: { ...params, status: 1 },
         method: "POST",
       }),
     useEditConfig(queryKey)

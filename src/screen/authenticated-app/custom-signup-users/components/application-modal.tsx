@@ -35,8 +35,12 @@ export const CustomSignupUserModal = () => {
 
   const { customSignupUserModalOpen, editingCustomSignupUserId, close } =
     useCustomSignupUserModal();
-  const { editingCustomSignupUserForm, formTypeList } =
-    useEditingCustomSignupUserForm(editingCustomSignupUserId);
+  const {
+    editingCustomSignupUserForm,
+    formTypeList,
+    tagsFormIndexList,
+    imageFormIndexList,
+  } = useEditingCustomSignupUserForm(editingCustomSignupUserId);
 
   console.log("editingCustomSignupUserForm", editingCustomSignupUserForm);
 
@@ -59,19 +63,63 @@ export const CustomSignupUserModal = () => {
 
   const submit = () => {
     form.validateFields().then(async () => {
-      // const {} = form.getFieldsValue();
-      // await mutateAsync(customSignupUserItem);
+      const fieldsValue = form.getFieldsValue();
+      tagsFormIndexList.forEach(
+        (item) => (fieldsValue[item] = fieldsValue[item].join())
+      );
+      imageFormIndexList.forEach(
+        (item) => (fieldsValue[item] = fieldsValue[item][0].url)
+      );
+      const applyContent: { title: string; name: string; value: string }[] = [];
+      formTypeList.forEach((item, index) => {
+        switch (item.name) {
+          case "姓名":
+            applyContent.push({
+              title: "姓名",
+              name: "name",
+              value: fieldsValue[index],
+            });
+            break;
+
+          case "邮箱":
+            applyContent.push({
+              title: "邮箱",
+              name: "email",
+              value: fieldsValue[index],
+            });
+            break;
+
+          case "手机号":
+            applyContent.push({
+              title: "手机号",
+              name: "mobile",
+              value: fieldsValue[index],
+            });
+            break;
+
+          default:
+            applyContent.push({
+              title: item.name,
+              name: "",
+              value: fieldsValue[index],
+            });
+            break;
+        }
+      });
+
+      const customSignupUserItem: { id?: string } = cleanObject({
+        id: editingCustomSignupUserId || undefined,
+        apply_content_json: JSON.stringify(applyContent),
+      });
+
+      await mutateAsync(customSignupUserItem);
       closeModal();
     });
   };
 
   useEffect(() => {
-    if (editingCustomSignupUserForm) {
-      console.log("editingCustomSignupUserForm", editingCustomSignupUserForm);
-      setTimeout(() => {
-        form.setFieldsValue(editingCustomSignupUserForm);
-      }, 2000);
-    }
+    editingCustomSignupUserForm &&
+      form.setFieldsValue(editingCustomSignupUserForm);
   }, [form, editingCustomSignupUserForm]);
 
   return (
@@ -222,6 +270,8 @@ export const CustomSignupUserModal = () => {
                           message: `请上传${item.name}`,
                         },
                       ]}
+                      valuePropName="fileList"
+                      getValueFromEvent={normFile}
                     >
                       <OssUpload maxCount={1} />
                     </Form.Item>
@@ -249,6 +299,17 @@ const useEditingCustomSignupUserForm = (editingCustomSignupUserId: string) => {
   // console.log("editingCustomSignupUserId", editingCustomSignupUserId)
   // console.log("currentCustomSignupUser", currentCustomSignupUser)
 
+  const formTypeList: FormItem[] = currentCustomSignupUser
+    ? JSON.parse(currentCustomSignupUser.customEvent.enter_from_json)
+    : [];
+
+  const tagsFormIndexList: number[] = [];
+  const imageFormIndexList: number[] = [];
+  formTypeList.forEach((item, index) => {
+    if (item.type === 5) tagsFormIndexList.push(index);
+    if (item.type === 6) imageFormIndexList.push(index);
+  });
+
   const formList = currentCustomSignupUser
     ? currentCustomSignupUser?.apply_content_json
     : [];
@@ -261,14 +322,24 @@ const useEditingCustomSignupUserForm = (editingCustomSignupUserId: string) => {
   );
   const originForm = Object.fromEntries(list);
 
+  tagsFormIndexList.forEach((item) => {
+    originForm[item] = originForm[item].split(",");
+  });
+
+  imageFormIndexList.forEach((item) => {
+    originForm[item] = [{ url: originForm[item] }];
+  });
+
   const editingCustomSignupUserForm: CustomSignupUserForm | undefined =
     originForm ? originForm : undefined;
 
-  const formTypeList: FormItem[] = currentCustomSignupUser
-    ? JSON.parse(currentCustomSignupUser.customEvent.enter_from_json)
-    : [];
   console.log("formTypeList", formTypeList);
 
   console.log("originForm", originForm);
-  return { editingCustomSignupUserForm, formTypeList };
+  return {
+    editingCustomSignupUserForm,
+    formTypeList,
+    tagsFormIndexList,
+    imageFormIndexList,
+  };
 };
