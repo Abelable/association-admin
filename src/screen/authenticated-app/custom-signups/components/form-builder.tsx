@@ -42,33 +42,32 @@ export const FormBuilder = ({
     setFormList([...formList, { id, ...defaultFormItem }]);
   };
 
-  const DraggableContainer = (props: any) => {
-    const onSortEnd = ({
-      oldIndex,
-      newIndex,
-    }: {
-      oldIndex: number;
-      newIndex: number;
-    }) => {
-      if (oldIndex !== newIndex) {
-        const newData = arrayMoveImmutable(
-          [...formList],
-          oldIndex,
-          newIndex
-        ).filter((el) => !!el);
-        setFormList([...newData]);
-      }
-    };
-    return (
-      <SortableBody
-        useDragHandle
-        disableAutoscroll
-        helperClass="row-dragging"
-        onSortEnd={onSortEnd}
-        {...props}
-      />
-    );
+  const onSortEnd = ({
+    oldIndex,
+    newIndex,
+  }: {
+    oldIndex: number;
+    newIndex: number;
+  }) => {
+    if (oldIndex !== newIndex) {
+      const newData = arrayMoveImmutable(
+        [...formList],
+        oldIndex,
+        newIndex
+      ).filter((el) => !!el);
+      setFormList([...newData]);
+    }
   };
+
+  const DraggableContainer = (props: any) => (
+    <SortableBody
+      useDragHandle
+      disableAutoscroll
+      helperClass="row-dragging"
+      onSortEnd={onSortEnd}
+      {...props}
+    />
+  );
 
   const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
     const index = formList.findIndex(
