@@ -306,7 +306,9 @@ const useEditingCustomSignupUserForm = (editingCustomSignupUserId: string) => {
   });
 
   const formList = currentCustomSignupUser
-    ? currentCustomSignupUser?.apply_content_json
+    ? typeof currentCustomSignupUser?.apply_content_json === "string"
+      ? JSON.parse(currentCustomSignupUser?.apply_content_json)
+      : currentCustomSignupUser?.apply_content_json
     : [];
   const list: string[][] = [];
   formList.forEach(
