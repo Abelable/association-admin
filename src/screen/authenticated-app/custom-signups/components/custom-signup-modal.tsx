@@ -2,17 +2,16 @@ import {
   Button,
   Col,
   DatePicker,
+  Divider,
   Drawer,
   Form,
   Input,
   Row,
-  Select,
   Space,
 } from "antd";
 import { useCustomSignupModal, useCustomSignupsQueryKey } from "../util";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
-import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import {
   CustomSignup,
@@ -21,6 +20,7 @@ import {
 } from "types/custom-signup";
 import { useAddCustomSignup, useEditCustomSignup } from "service/custom-signup";
 import { useQueryClient } from "react-query";
+import { RichTextEditor } from "components/rich-text-editor";
 
 export const CustomSignupModal = () => {
   const [form] = useForm();
@@ -38,10 +38,7 @@ export const CustomSignupModal = () => {
     useCustomSignupsQueryKey()
   );
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) return e;
-    return e && e.fileList;
-  };
+  const [introduction, setIntroduction] = useState("");
 
   const closeModal = () => {
     form.resetFields();
@@ -91,91 +88,39 @@ export const CustomSignupModal = () => {
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Divider orientation="left">活动信息</Divider>
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item
               name="title"
-              label="头图标题"
-              rules={[{ required: true, message: "请输入头图标题" }]}
+              label="标题"
+              rules={[{ required: true, message: "请输入标题" }]}
             >
-              <Input placeholder="请输入头图标题" />
+              <Input placeholder="请输入标题" />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="sort" label="头图排序">
-              <Input placeholder="请输入头图序号" />
+          <Col span={8}>
+            <Form.Item
+              name="enter_num"
+              label="报名人数"
+              tooltip="报名人数到达限制就自动关闭入口"
+              rules={[{ required: true, message: "请输入报名人数" }]}
+            >
+              <Input placeholder="请输入报名人数" />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item
               name="dateRange"
-              label="投放时间"
-              rules={[{ required: true, message: "请选择投放时间" }]}
+              label="活动日期"
+              rules={[{ required: true, message: "请选择活动日期" }]}
             >
               <DatePicker.RangePicker style={{ width: "100%" }} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              label="跳转信息"
-              name="linkInfo"
-              rules={[{ required: true, message: "请输入新闻编号或H5地址" }]}
-            >
-              <Input
-                addonBefore={
-                  <Form.Item
-                    name="link_type"
-                    noStyle
-                    rules={[{ required: true, message: "请选择跳转类型" }]}
-                  >
-                    <Select placeholder="请选择类型">
-                      {[
-                        { name: "跳转新闻", value: "1" },
-                        { name: "跳转H5", value: "2" },
-                      ].map((item, index) => (
-                        <Select.Option key={index} value={item.value}>
-                          {item.name}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                }
-                placeholder="请输入新闻编号或H5地址"
-              />
-            </Form.Item>
-          </Col>
         </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="is_show"
-              label="是否显示"
-              rules={[{ required: true, message: "请选择显示或隐藏" }]}
-            >
-              <Select placeholder="请选择显示或隐藏">
-                {[
-                  { name: "显示", value: "1" },
-                  { name: "隐藏", value: "0" },
-                ].map((item, index) => (
-                  <Select.Option key={index} value={item.value}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item
-          name="img"
-          label="分享图片"
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-          rules={[{ required: true, message: "请上传分享图片" }]}
-        >
-          <OssUpload maxCount={1} />
+        <Form.Item label="报名备注" tooltip="排版自定义规则">
+          <RichTextEditor content={introduction} setContent={setIntroduction} />
         </Form.Item>
       </Form>
     </Drawer>
