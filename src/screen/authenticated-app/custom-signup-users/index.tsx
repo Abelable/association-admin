@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useCustomSignupUsers } from "service/custom-signup";
 import { toNumber } from "utils";
 import { List } from "./components/list";
@@ -12,10 +13,17 @@ export const CustomSignupUsers = () => {
   const [params, setParams] = useCustomSignupUsersSearchParams();
   const { data, isLoading, error } = useCustomSignupUsers(params);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const location = useLocation();
+
   const exportCustomSignupUsers = (ids: string[]) => {
+    const custom_event_id =
+      location.state &&
+      (location.state as { custom_event_id: string }).custom_event_id
+        ? (location.state as { custom_event_id: string }).custom_event_id
+        : "";
     window.location.href = `${
       process.env.REACT_APP_API_URL
-    }/api/admin/enter-apply/export?ids=${ids.join()}`;
+    }/api/admin/enter-form/registered-export?ids=${ids.join()}&custom_event_id=${custom_event_id}`;
   };
 
   return (
