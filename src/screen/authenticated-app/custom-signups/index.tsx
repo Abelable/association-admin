@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Button, Dropdown, Menu, Table, TablePaginationConfig } from "antd";
+import {
+  Button,
+  Dropdown,
+  Menu,
+  Modal,
+  Table,
+  TablePaginationConfig,
+} from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import {
   useCustomSignups,
@@ -11,10 +18,12 @@ import {
   useCustomSignupModal,
   useCustomSignupsQueryKey,
 } from "./util";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, CopyOutlined } from "@ant-design/icons";
 import { CustomSignupModal } from "./components/custom-signup-modal";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import copy from "copy-to-clipboard";
 
 export const CustomSignups = () => {
   const navigate = useNavigate();
@@ -24,6 +33,7 @@ export const CustomSignups = () => {
   const { mutate: editCustomSignupStatus } = useEditCustomSignupStatus(
     useCustomSignupsQueryKey()
   );
+  const [linkUrl, setLinkUrl] = useState("");
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -34,6 +44,14 @@ export const CustomSignups = () => {
 
   const check = (custom_event_id: string) =>
     navigate("/custom_signups/enlist", { state: { custom_event_id } });
+
+  const checkLink = (id: string) => {
+    setLinkUrl(`http://wskt.zjseca.com/?id=${id}#/custom_activity`);
+  };
+  const copyUrl = () => {
+    copy(linkUrl);
+    setLinkUrl("");
+  };
 
   return (
     <Container>
@@ -143,7 +161,7 @@ export const CustomSignups = () => {
                         <></>
                       )}
                       <Menu.Item
-                        onClick={() => startEdit(signup.id)}
+                        onClick={() => checkLink(signup.id)}
                         key={"link"}
                       >
                         获取活动地址
@@ -165,6 +183,16 @@ export const CustomSignups = () => {
           onChange={setPagination}
         />
         <CustomSignupModal />
+        <Modal
+          title="活动地址"
+          visible={!!linkUrl}
+          okText={"复制"}
+          cancelText={"关闭"}
+          onOk={() => copyUrl()}
+          onCancel={() => setLinkUrl("")}
+        >
+          <p>{linkUrl}</p>
+        </Modal>
       </Main>
     </Container>
   );
