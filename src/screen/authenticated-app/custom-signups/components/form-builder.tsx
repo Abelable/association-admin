@@ -8,7 +8,6 @@ import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
-import { useEffect, useState } from "react";
 
 interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
   formList: FormItem[];
