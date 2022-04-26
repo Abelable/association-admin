@@ -25,9 +25,7 @@ export const FormBuilder = ({
     { id: 3, name: "数字输入框" },
     { id: 4, name: "单选按钮框" },
     { id: 5, name: "多选按钮框" },
-    { id: 6, name: "日期选择框" },
-    { id: 7, name: "图片上传框" },
-    { id: 8, name: "富文本框" },
+    { id: 6, name: "图片上传框" },
   ];
 
   const addItem = () => {

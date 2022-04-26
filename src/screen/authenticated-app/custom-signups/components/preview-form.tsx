@@ -1,12 +1,8 @@
 import { Col, DatePicker, Form, Input, InputNumber, Row, Select } from "antd";
 import { OssUpload } from "components/oss-upload";
-import { RichTextEditor } from "components/rich-text-editor";
-import { useState } from "react";
 import { FormItem } from "types/custom-signup";
 
 export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
-  const [content, setContent] = useState("");
-
   return (
     <Form layout="vertical">
       <Row gutter={16}>
@@ -133,26 +129,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
 
             case 6:
               formElem = (
-                <Col span={12}>
-                  <Form.Item
-                    name={item.id}
-                    label={item.name}
-                    tooltip={item.tips}
-                    rules={[
-                      {
-                        required: item.required,
-                        message: `请选择${item.name}`,
-                      },
-                    ]}
-                  >
-                    <DatePicker.RangePicker style={{ width: "100%" }} />
-                  </Form.Item>
-                </Col>
-              );
-              break;
-
-            case 7:
-              formElem = (
                 <Col span={24}>
                   <Form.Item
                     name={item.id}
@@ -166,26 +142,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                     ]}
                   >
                     <OssUpload maxCount={1} />
-                  </Form.Item>
-                </Col>
-              );
-              break;
-
-            case 8:
-              formElem = (
-                <Col span={24}>
-                  <Form.Item
-                    name={item.id}
-                    label={item.name}
-                    tooltip={item.tips}
-                    rules={[
-                      {
-                        required: item.required,
-                        message: `请填写${item.name}`,
-                      },
-                    ]}
-                  >
-                    <RichTextEditor content={content} setContent={setContent} />
                   </Form.Item>
                 </Col>
               );
