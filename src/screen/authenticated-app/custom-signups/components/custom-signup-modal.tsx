@@ -6,6 +6,7 @@ import {
   Drawer,
   Form,
   Input,
+  Modal,
   Row,
   Space,
 } from "antd";
@@ -23,6 +24,7 @@ import { useAddCustomSignup, useEditCustomSignup } from "service/custom-signup";
 import { useQueryClient } from "react-query";
 import { RichTextEditor } from "components/rich-text-editor";
 import { FormBuilder } from "./form-builder";
+import { PreviewForm } from "./preview-form";
 
 const defaultFormList: FormItem[] = [
   {
@@ -66,8 +68,7 @@ export const CustomSignupModal = () => {
   );
   const [introduction, setIntroduction] = useState("");
   const [formList, setFormList] = useState(defaultFormList);
-
-  const preview = () => {};
+  const [previewFormModalVisible, setPreviewFormModalVisible] = useState(false);
 
   const closeModal = () => {
     form.resetFields();
@@ -100,62 +101,78 @@ export const CustomSignupModal = () => {
   }, [form, editingCustomSignupForm]);
 
   return (
-    <Drawer
-      title={editingCustomSignupId ? "编辑自定义活动" : "新增自定义活动"}
-      width={"68%"}
-      forceRender={true}
-      onClose={closeModal}
-      visible={customSignupModalOpen}
-      bodyStyle={{ paddingBottom: 80 }}
-      extra={
-        <Space>
-          <Button onClick={preview}>预览</Button>
-          <Button onClick={submit} loading={isLoading} type="primary">
-            提交
-          </Button>
-        </Space>
-      }
-    >
-      <Form form={form} layout="vertical">
-        <ErrorBox error={error} />
-        <Divider orientation="left">活动信息</Divider>
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item
-              name="title"
-              label="标题"
-              rules={[{ required: true, message: "请输入标题" }]}
-            >
-              <Input placeholder="请输入标题" />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              name="enter_num"
-              label="报名人数"
-              tooltip="报名人数到达限制就自动关闭入口"
-              rules={[{ required: true, message: "请输入报名人数" }]}
-            >
-              <Input placeholder="请输入报名人数" />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              name="dateRange"
-              label="活动日期"
-              rules={[{ required: true, message: "请选择活动日期" }]}
-            >
-              <DatePicker.RangePicker style={{ width: "100%" }} />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item label="报名备注" tooltip="排版自定义规则">
-          <RichTextEditor content={introduction} setContent={setIntroduction} />
-        </Form.Item>
-      </Form>
-      <Divider orientation="left">报名表单编辑</Divider>
-      <FormBuilder formList={formList} setFormList={setFormList} />
-    </Drawer>
+    <>
+      <Drawer
+        title={editingCustomSignupId ? "编辑自定义活动" : "新增自定义活动"}
+        width={"68%"}
+        forceRender={true}
+        onClose={closeModal}
+        visible={customSignupModalOpen}
+        bodyStyle={{ paddingBottom: 80 }}
+        extra={
+          <Space>
+            <Button onClick={() => setPreviewFormModalVisible(true)}>
+              预览
+            </Button>
+            <Button onClick={submit} loading={isLoading} type="primary">
+              提交
+            </Button>
+          </Space>
+        }
+      >
+        <Form form={form} layout="vertical">
+          <ErrorBox error={error} />
+          <Divider orientation="left">活动信息</Divider>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item
+                name="title"
+                label="标题"
+                rules={[{ required: true, message: "请输入标题" }]}
+              >
+                <Input placeholder="请输入标题" />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                name="enter_num"
+                label="报名人数"
+                tooltip="报名人数到达限制就自动关闭入口"
+                rules={[{ required: true, message: "请输入报名人数" }]}
+              >
+                <Input placeholder="请输入报名人数" />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                name="dateRange"
+                label="活动日期"
+                rules={[{ required: true, message: "请选择活动日期" }]}
+              >
+                <DatePicker.RangePicker style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item label="报名备注" tooltip="排版自定义规则">
+            <RichTextEditor
+              content={introduction}
+              setContent={setIntroduction}
+            />
+          </Form.Item>
+        </Form>
+        <Divider orientation="left">报名表单编辑</Divider>
+        <FormBuilder formList={formList} setFormList={setFormList} />
+      </Drawer>
+      <Modal
+        width={"80rem"}
+        title="报名表单预览"
+        visible={previewFormModalVisible}
+        footer={null}
+        onCancel={() => setPreviewFormModalVisible(false)}
+      >
+        <PreviewForm formList={formList} />
+      </Modal>
+    </>
   );
 };
 
