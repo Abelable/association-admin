@@ -33,7 +33,6 @@ const defaultFormList: FormItem[] = [
     type: 1,
     required: true,
     name: "姓名",
-    tips: "",
     options: undefined,
   },
   {
@@ -41,7 +40,6 @@ const defaultFormList: FormItem[] = [
     type: 1,
     required: true,
     name: "邮箱",
-    tips: "",
     options: undefined,
   },
   {
@@ -49,7 +47,6 @@ const defaultFormList: FormItem[] = [
     type: 1,
     required: true,
     name: "手机号",
-    tips: "",
     options: undefined,
   },
 ];

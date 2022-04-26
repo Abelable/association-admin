@@ -33,7 +33,6 @@ export const FormBuilder = ({
       type: undefined,
       required: false,
       name: "",
-      tips: "",
       options: undefined,
     };
     const list = [...formList];
@@ -90,7 +89,7 @@ export const FormBuilder = ({
       <Table
         style={{ width: "100%" }}
         rowKey={"id"}
-        scroll={{ x: 1500 }}
+        scroll={{ x: 1000 }}
         columns={[
           {
             title: "排序",
@@ -145,20 +144,6 @@ export const FormBuilder = ({
               />
             ),
             width: "18rem",
-          },
-          {
-            title: "填写提示文本",
-            dataIndex: "tips",
-            render: (value, item) => (
-              <Input
-                defaultValue={value}
-                onChange={(e) =>
-                  editFormList({ id: item.id, tips: e.target.value })
-                }
-                placeholder="请输入提示文本"
-              />
-            ),
-            width: "26rem",
           },
           {
             title: "添加选项",

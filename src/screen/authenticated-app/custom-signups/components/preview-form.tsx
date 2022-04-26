@@ -15,7 +15,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                   <Form.Item
                     name={item.id}
                     label={item.name}
-                    tooltip={item.tips}
                     rules={[
                       {
                         required: item.required,
@@ -35,7 +34,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                   <Form.Item
                     name={item.id}
                     label={item.name}
-                    tooltip={item.tips}
                     rules={[
                       {
                         required: item.required,
@@ -58,7 +56,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                   <Form.Item
                     name={item.id}
                     label={item.name}
-                    tooltip={item.tips}
                     rules={[
                       {
                         required: item.required,
@@ -81,7 +78,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                   <Form.Item
                     name={item.id}
                     label={item.name}
-                    tooltip={item.tips}
                     rules={[
                       {
                         required: item.required,
@@ -105,7 +101,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                   <Form.Item
                     name={item.id}
                     label={item.name}
-                    tooltip={item.tips}
                     rules={[
                       {
                         required: item.required,
@@ -133,7 +128,6 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                   <Form.Item
                     name={item.id}
                     label={item.name}
-                    tooltip={item.tips || "照片大小不能超过10MB"}
                     rules={[
                       {
                         required: item.required,
