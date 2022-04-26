@@ -1,12 +1,13 @@
 import { Button, Input, Select, Switch, Table, TableProps } from "antd";
-import {
-  SortableContainer,
-  SortableElement,
-  SortableHandle,
-} from "react-sortable-hoc";
+// import {
+//   SortableContainer,
+//   SortableElement,
+//   SortableHandle,
+// } from "react-sortable-hoc";
+import { SortableHandle } from "react-sortable-hoc";
 import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
-import { arrayMoveImmutable } from "array-move";
+// import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
 
 interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
@@ -42,39 +43,40 @@ export const FormBuilder = ({
     setFormList([...formList, { id, ...defaultFormItem }]);
   };
 
-  const onSortEnd = ({
-    oldIndex,
-    newIndex,
-  }: {
-    oldIndex: number;
-    newIndex: number;
-  }) => {
-    if (oldIndex !== newIndex) {
-      const newData = arrayMoveImmutable(
-        [...formList],
-        oldIndex,
-        newIndex
-      ).filter((el) => !!el);
-      setFormList([...newData]);
-    }
-  };
+  // const onSortEnd = ({
+  //   oldIndex,
+  //   newIndex,
+  // }: {
+  //   oldIndex: number;
+  //   newIndex: number;
+  // }) => {
+  //   if (oldIndex !== newIndex) {
+  //     const newData = arrayMoveImmutable(
+  //       [...formList],
+  //       oldIndex,
+  //       newIndex
+  //     ).filter((el) => !!el);
+  //     console.log('Sorted items: ', newData);
+  //     setFormList([...newData]);
+  //   }
+  // };
 
-  const DraggableContainer = (props: any) => (
-    <SortableBody
-      useDragHandle
-      disableAutoscroll
-      helperClass="row-dragging"
-      onSortEnd={onSortEnd}
-      {...props}
-    />
-  );
+  // const DraggableContainer = (props: any) => (
+  //   <SortableBody
+  //     useDragHandle
+  //     disableAutoscroll
+  //     helperClass="row-dragging"
+  //     onSortEnd={onSortEnd}
+  //     {...props}
+  //   />
+  // );
 
-  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
-    const index = formList.findIndex(
-      (x: any) => x.index === restProps["data-row-key"]
-    );
-    return <SortableItem index={index} {...restProps} />;
-  };
+  // const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
+  //   const index = formList.findIndex(
+  //     (x: any) => x.index === restProps["data-row-key"]
+  //   );
+  //   return <SortableItem index={index} {...restProps} />;
+  // };
 
   return (
     <>
@@ -152,12 +154,12 @@ export const FormBuilder = ({
           },
         ]}
         pagination={false}
-        components={{
-          body: {
-            wrapper: DraggableContainer,
-            row: DraggableBodyRow,
-          },
-        }}
+        // components={{
+        //   body: {
+        //     wrapper: DraggableContainer,
+        //     row: DraggableBodyRow,
+        //   },
+        // }}
         dataSource={formList}
         {...restProps}
       />
@@ -172,8 +174,8 @@ export const FormBuilder = ({
   );
 };
 
-const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
-const SortableItem = SortableElement((props: any) => <tr {...props} />);
+// const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
+// const SortableItem = SortableElement((props: any) => <tr {...props} />);
 
 const DragHandle = SortableHandle(() => (
   <MenuOutlined style={{ cursor: "grab", color: "#999" }} />
