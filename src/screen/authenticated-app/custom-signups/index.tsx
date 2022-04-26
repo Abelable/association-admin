@@ -18,7 +18,7 @@ import {
   useCustomSignupModal,
   useCustomSignupsQueryKey,
 } from "./util";
-import { PlusOutlined, CopyOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { CustomSignupModal } from "./components/custom-signup-modal";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";

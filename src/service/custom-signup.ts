@@ -5,8 +5,8 @@ import type {
   CustomSignupsSearchParams,
   CustomSignupUsersResult,
   CustomSignupUsersSearchParams,
-  CustomSignupUser,
   CustomSignup,
+  CustomSignupUsersItem,
 } from "types/custom-signup";
 import { useHttp } from "./http";
 import { useAddConfig, useEditConfig } from "./use-optimistic-options";
@@ -74,7 +74,13 @@ export const useCustomSignupUsers = (
 export const useAddCustomSignupUser = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<CustomSignupUser>) =>
+    (
+      params: Partial<
+        Omit<CustomSignupUsersItem, "apply_content_json"> & {
+          apply_content_json: string;
+        }
+      >
+    ) =>
       client("/api/admin/class-room/author-save", {
         data: params,
         method: "POST",
@@ -86,7 +92,13 @@ export const useAddCustomSignupUser = (queryKey: QueryKey) => {
 export const useEditCustomSignupUser = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<CustomSignupUser>) =>
+    (
+      params: Partial<
+        Omit<CustomSignupUsersItem, "apply_content_json"> & {
+          apply_content_json: string;
+        }
+      >
+    ) =>
       client("/api/admin/class-room/author-save", {
         data: params,
         method: "POST",
