@@ -7,6 +7,7 @@ import {
 import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import styled from "@emotion/styled";
+import { arrayMoveImmutable } from "array-move";
 
 export const FormBuilder = () => {
   interface FormItem {
@@ -70,6 +71,41 @@ export const FormBuilder = () => {
     setFormList([...formList, { id, ...defaultFormItem }]);
   };
 
+  const DraggableContainer = (props: any) => {
+    const onSortEnd = ({
+      oldIndex,
+      newIndex,
+    }: {
+      oldIndex: number;
+      newIndex: number;
+    }) => {
+      if (oldIndex !== newIndex) {
+        const newData = arrayMoveImmutable(
+          [...formList],
+          oldIndex,
+          newIndex
+        ).filter((el) => !!el);
+        setFormList([...newData]);
+      }
+    };
+    return (
+      <SortableBody
+        useDragHandle
+        disableAutoscroll
+        helperClass="row-dragging"
+        onSortEnd={onSortEnd}
+        {...props}
+      />
+    );
+  };
+
+  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
+    const index = formList.findIndex(
+      (x: any) => x.index === restProps["data-row-key"]
+    );
+    return <SortableItem index={index} {...restProps} />;
+  };
+
   return (
     <>
       <Table
@@ -79,7 +115,6 @@ export const FormBuilder = () => {
           {
             title: "排序",
             dataIndex: "sort",
-            className: "drag-visible",
             render: () => <DragHandle />,
             width: "6rem",
           },
@@ -148,6 +183,12 @@ export const FormBuilder = () => {
         ]}
         dataSource={formList}
         pagination={false}
+        components={{
+          body: {
+            wrapper: DraggableContainer,
+            row: DraggableBodyRow,
+          },
+        }}
       />
       <Button
         style={{ marginTop: "2rem", width: "100%" }}
