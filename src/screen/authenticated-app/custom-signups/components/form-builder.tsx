@@ -1,14 +1,14 @@
 import { Button, Input, Select, Switch, Table, TableProps } from "antd";
-// import {
-//   SortableContainer,
-//   SortableElement,
-//   SortableHandle,
-// } from "react-sortable-hoc";
-import { SortableHandle } from "react-sortable-hoc";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from "react-sortable-hoc";
 import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
-// import { arrayMoveImmutable } from "array-move";
+import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
+import { useEffect, useState } from "react";
 
 interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
   formList: FormItem[];
@@ -31,6 +31,8 @@ export const FormBuilder = ({
     { id: 8, name: "富文本框" },
   ];
 
+  // const [tempFormList, setTempFormList] = useState(formList)
+
   const addItem = () => {
     const defaultFormItem: Omit<FormItem, "id"> = {
       type: undefined,
@@ -39,44 +41,54 @@ export const FormBuilder = ({
       tips: "",
       options: undefined,
     };
-    const id = formList.sort((a, b) => a.id - b.id)[formList.length - 1].id + 1;
+    const list = [...formList];
+    const id = list.sort((a, b) => a.id - b.id)[formList.length - 1].id + 1;
     setFormList([...formList, { id, ...defaultFormItem }]);
   };
 
-  // const onSortEnd = ({
-  //   oldIndex,
-  //   newIndex,
-  // }: {
-  //   oldIndex: number;
-  //   newIndex: number;
-  // }) => {
-  //   if (oldIndex !== newIndex) {
-  //     const newData = arrayMoveImmutable(
-  //       [...formList],
-  //       oldIndex,
-  //       newIndex
-  //     ).filter((el) => !!el);
-  //     console.log('Sorted items: ', newData);
-  //     setFormList([...newData]);
-  //   }
-  // };
+  const onSortEnd = ({
+    oldIndex,
+    newIndex,
+  }: {
+    oldIndex: number;
+    newIndex: number;
+  }) => {
+    if (oldIndex !== newIndex) {
+      const newData = arrayMoveImmutable(
+        [...formList],
+        oldIndex,
+        newIndex
+      ).filter((el) => !!el);
+      console.log("Sorted items: ", newData);
+      setFormList([...newData]);
+    }
+  };
 
-  // const DraggableContainer = (props: any) => (
-  //   <SortableBody
-  //     useDragHandle
-  //     disableAutoscroll
-  //     helperClass="row-dragging"
-  //     onSortEnd={onSortEnd}
-  //     {...props}
-  //   />
-  // );
+  const DraggableContainer = (props: any) => (
+    <SortableBody
+      useDragHandle
+      disableAutoscroll
+      helperClass="row-dragging"
+      onSortEnd={onSortEnd}
+      {...props}
+    />
+  );
 
-  // const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
-  //   const index = formList.findIndex(
-  //     (x: any) => x.index === restProps["data-row-key"]
-  //   );
-  //   return <SortableItem index={index} {...restProps} />;
-  // };
+  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
+    const index = formList.findIndex(
+      (x: any) => x.index === restProps["data-row-key"]
+    );
+    return <SortableItem index={index} {...restProps} />;
+  };
+
+  let timeout: any;
+  const editFormList = (pramas: Partial<FormItem>) => {
+    const list = formList.map((item: any) =>
+      item.id === pramas.id ? { ...item, ...pramas } : item
+    );
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => setFormList([...list]), 1200);
+  };
 
   return (
     <>
@@ -94,7 +106,13 @@ export const FormBuilder = ({
             title: "选择类型",
             dataIndex: "type",
             render: (value, item) => (
-              <Select value={item.type} placeholder="请选择类型">
+              <Select
+                defaultValue={value}
+                onChange={(value: number) =>
+                  editFormList({ id: item.id, type: value })
+                }
+                placeholder="请选择类型"
+              >
                 {typeOptions.map((option) => (
                   <Select.Option key={option.id} value={option.id}>
                     {option.name}
@@ -107,14 +125,27 @@ export const FormBuilder = ({
           {
             title: "选择必填",
             dataIndex: "required",
-            render: (value, item) => <Switch checked={item.required} />,
+            render: (value, item) => (
+              <Switch
+                defaultChecked={value}
+                onChange={(value: boolean) =>
+                  editFormList({ id: item.id, required: value })
+                }
+              />
+            ),
             width: "10rem",
           },
           {
             title: "填写名称",
             dataIndex: "name",
             render: (value, item) => (
-              <Input value={item.name} placeholder="请输入名称" />
+              <Input
+                defaultValue={value}
+                onChange={(e) =>
+                  editFormList({ id: item.id, name: e.target.value })
+                }
+                placeholder="请输入名称"
+              />
             ),
             width: "22rem",
           },
@@ -122,7 +153,13 @@ export const FormBuilder = ({
             title: "填写提示文本",
             dataIndex: "tips",
             render: (value, item) => (
-              <Input value={item.tips} placeholder="请输入提示文本" />
+              <Input
+                defaultValue={value}
+                onChange={(e) =>
+                  editFormList({ id: item.id, tips: e.target.value })
+                }
+                placeholder="请输入提示文本"
+              />
             ),
             width: "32rem",
           },
@@ -132,7 +169,10 @@ export const FormBuilder = ({
             render: (value, item) => (
               <Select
                 style={{ width: "100%" }}
-                value={item.options}
+                defaultValue={value}
+                onChange={(value: string[]) =>
+                  editFormList({ id: item.id, options: value })
+                }
                 mode="tags"
                 placeholder="输入后回车添加选项"
               />
@@ -154,13 +194,13 @@ export const FormBuilder = ({
           },
         ]}
         pagination={false}
-        // components={{
-        //   body: {
-        //     wrapper: DraggableContainer,
-        //     row: DraggableBodyRow,
-        //   },
-        // }}
         dataSource={formList}
+        components={{
+          body: {
+            wrapper: DraggableContainer,
+            row: DraggableBodyRow,
+          },
+        }}
         {...restProps}
       />
       <Button
@@ -174,8 +214,8 @@ export const FormBuilder = ({
   );
 };
 
-// const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
-// const SortableItem = SortableElement((props: any) => <tr {...props} />);
+const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
+const SortableItem = SortableElement((props: any) => <tr {...props} />);
 
 const DragHandle = SortableHandle(() => (
   <MenuOutlined style={{ cursor: "grab", color: "#999" }} />

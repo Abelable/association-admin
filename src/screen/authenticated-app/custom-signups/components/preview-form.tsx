@@ -178,6 +178,12 @@ export const PreviewForm = ({ formList }: { formList: FormItem[] }) => {
                     name={item.id}
                     label={item.name}
                     tooltip={item.tips}
+                    rules={[
+                      {
+                        required: item.required,
+                        message: `请填写${item.name}`,
+                      },
+                    ]}
                   >
                     <RichTextEditor content={content} setContent={setContent} />
                   </Form.Item>
