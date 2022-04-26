@@ -5,20 +5,17 @@ import {
   SortableHandle,
 } from "react-sortable-hoc";
 import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
+import { FormItem } from "types/custom-signup";
 
-export const FormBuilder = () => {
-  interface FormItem {
-    id: number;
-    type: number | undefined;
-    required: boolean;
-    name: string;
-    tips: string;
-    options: string[] | undefined;
-  }
-
+export const FormBuilder = ({
+  formList,
+  setFormList,
+}: {
+  formList: FormItem[];
+  setFormList: (list: FormItem[]) => void;
+}) => {
   const typeOptions = [
     { id: 1, name: "单行文本框" },
     { id: 2, name: "多行文本框" },
@@ -29,35 +26,6 @@ export const FormBuilder = () => {
     { id: 7, name: "图片上传框" },
     { id: 8, name: "富文本框" },
   ];
-
-  const defaultFormList: FormItem[] = [
-    {
-      id: 1,
-      type: 1,
-      required: true,
-      name: "姓名",
-      tips: "",
-      options: undefined,
-    },
-    {
-      id: 3,
-      type: 1,
-      required: true,
-      name: "邮箱",
-      tips: "",
-      options: undefined,
-    },
-    {
-      id: 2,
-      type: 1,
-      required: true,
-      name: "手机号",
-      tips: "",
-      options: undefined,
-    },
-  ];
-
-  const [formList, setFormList] = useState(defaultFormList);
 
   const addItem = () => {
     const defaultFormItem: Omit<FormItem, "id"> = {

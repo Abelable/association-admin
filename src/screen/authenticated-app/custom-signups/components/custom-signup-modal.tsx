@@ -13,15 +13,43 @@ import { useCustomSignupModal, useCustomSignupsQueryKey } from "../util";
 import { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import {
+import type {
   CustomSignup,
   CustomSignupForm,
   CustomSignupsResult,
+  FormItem,
 } from "types/custom-signup";
 import { useAddCustomSignup, useEditCustomSignup } from "service/custom-signup";
 import { useQueryClient } from "react-query";
 import { RichTextEditor } from "components/rich-text-editor";
 import { FormBuilder } from "./form-builder";
+
+const defaultFormList: FormItem[] = [
+  {
+    id: 1,
+    type: 1,
+    required: true,
+    name: "姓名",
+    tips: "",
+    options: undefined,
+  },
+  {
+    id: 3,
+    type: 1,
+    required: true,
+    name: "邮箱",
+    tips: "",
+    options: undefined,
+  },
+  {
+    id: 2,
+    type: 1,
+    required: true,
+    name: "手机号",
+    tips: "",
+    options: undefined,
+  },
+];
 
 export const CustomSignupModal = () => {
   const [form] = useForm();
@@ -37,9 +65,13 @@ export const CustomSignupModal = () => {
     useCustomSignupsQueryKey()
   );
   const [introduction, setIntroduction] = useState("");
+  const [formList, setFormList] = useState(defaultFormList);
+
+  const preview = () => {};
 
   const closeModal = () => {
     form.resetFields();
+    setFormList([...defaultFormList]);
     close();
   };
   const submit = () => {
@@ -77,7 +109,7 @@ export const CustomSignupModal = () => {
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
-          <Button onClick={closeModal}>取消</Button>
+          <Button onClick={preview}>预览</Button>
           <Button onClick={submit} loading={isLoading} type="primary">
             提交
           </Button>
@@ -122,7 +154,7 @@ export const CustomSignupModal = () => {
         </Form.Item>
       </Form>
       <Divider orientation="left">报名表单编辑</Divider>
-      <FormBuilder />
+      <FormBuilder formList={formList} setFormList={setFormList} />
     </Drawer>
   );
 };

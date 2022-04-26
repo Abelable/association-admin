@@ -1,3 +1,12 @@
+export interface FormItem {
+  id: number;
+  type: number | undefined;
+  required: boolean;
+  name: string;
+  tips: string;
+  options: string[] | undefined;
+}
+
 export interface CustomSignupsSearchParams {
   page: number;
   page_size: number;
