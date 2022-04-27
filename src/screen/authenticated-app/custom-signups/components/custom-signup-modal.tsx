@@ -64,14 +64,14 @@ export const CustomSignupModal = () => {
   const { mutateAsync, error, isLoading } = useMutationCustomSignup(
     useCustomSignupsQueryKey()
   );
-  const [remark, setRemark] = useState(
-    editingCustomSignupForm ? editingCustomSignupForm.remark : ""
-  );
-  const [formList, setFormList] = useState(
-    editingCustomSignupForm
-      ? editingCustomSignupForm.enterFrom
-      : defaultFormList
-  );
+  const [remark, setRemark] = useState("");
+  // const [formList, setFormList] = useState(
+  //   editingCustomSignupForm
+  //     ? editingCustomSignupForm.enterFrom
+  //     : defaultFormList
+  // );
+  const [formList, setFormList] = useState<FormItem[]>([]);
+
   const [previewFormModalVisible, setPreviewFormModalVisible] = useState(false);
 
   const closeModal = () => {
@@ -98,9 +98,14 @@ export const CustomSignupModal = () => {
   };
 
   useEffect(() => {
-    editingCustomSignupForm &&
+    if (editingCustomSignupForm) {
       form.setFieldsValue(editingCustomSignupForm.fieldsValue);
-  }, [form, editingCustomSignupForm]);
+      setRemark(editingCustomSignupForm.remark);
+      setFormList([...editingCustomSignupForm.enterFrom]);
+    } else {
+      setFormList([...defaultFormList]);
+    }
+  }, [editingCustomSignupForm, form]);
 
   return (
     <>

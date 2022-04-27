@@ -39,6 +39,37 @@ export const FormBuilder = ({
     const id = list.sort((a, b) => a.id - b.id)[formList.length - 1].id + 1;
     setFormList([...formList, { id, ...defaultFormItem }]);
   };
+  const selectType = (id: number) => (type: number) => {
+    const list = formList.map((item: any) =>
+      item.id === id ? { ...item, type } : item
+    );
+    setFormList([...list]);
+  };
+  const switchRequired = (id: number) => (required: boolean) => {
+    const list = formList.map((item: any) =>
+      item.id === id ? { ...item, required } : item
+    );
+    setFormList([...list]);
+  };
+  const setName = (id: number) => (e: any) => {
+    const list = formList.map((item: any) =>
+      item.id === id ? { ...item, name: e.target.value } : item
+    );
+    setFormList([...list]);
+  };
+  const setOptions = (id: number) => (options: string[]) => {
+    const list = formList.map((item: any) =>
+      item.id === id ? { ...item, options } : item
+    );
+    setFormList([...list]);
+  };
+
+  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
+    const index = formList.findIndex(
+      (x: any) => x.index === restProps["data-row-key"]
+    );
+    return <SortableItem index={index} {...restProps} />;
+  };
 
   const onSortEnd = ({
     oldIndex,
@@ -68,22 +99,6 @@ export const FormBuilder = ({
     />
   );
 
-  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
-    const index = formList.findIndex(
-      (x: any) => x.index === restProps["data-row-key"]
-    );
-    return <SortableItem index={index} {...restProps} />;
-  };
-
-  let timeout: any;
-  const editFormList = (pramas: Partial<FormItem>) => {
-    const list = formList.map((item: any) =>
-      item.id === pramas.id ? { ...item, ...pramas } : item
-    );
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => setFormList([...list]), 1200);
-  };
-
   return (
     <>
       <Table
@@ -104,9 +119,7 @@ export const FormBuilder = ({
             render: (value, item) => (
               <Select
                 defaultValue={value}
-                onChange={(value: number) =>
-                  editFormList({ id: item.id, type: value })
-                }
+                onChange={selectType(item.id)}
                 placeholder="请选择类型"
               >
                 {typeOptions.map((option) => (
@@ -124,9 +137,7 @@ export const FormBuilder = ({
             render: (value, item) => (
               <Switch
                 defaultChecked={value}
-                onChange={(value: boolean) =>
-                  editFormList({ id: item.id, required: value })
-                }
+                onChange={switchRequired(item.id)}
               />
             ),
             width: "8rem",
@@ -137,9 +148,7 @@ export const FormBuilder = ({
             render: (value, item) => (
               <Input
                 defaultValue={value}
-                onChange={(e) =>
-                  editFormList({ id: item.id, name: e.target.value })
-                }
+                onChange={setName(item.id)}
                 placeholder="请输入名称"
               />
             ),
@@ -153,9 +162,7 @@ export const FormBuilder = ({
                 style={{ width: "100%" }}
                 defaultValue={value}
                 disabled={![4, 5].includes(item.type || 0)}
-                onChange={(value: string[]) =>
-                  editFormList({ id: item.id, options: value })
-                }
+                onChange={setOptions(item.id)}
                 mode="tags"
                 placeholder="输入后回车添加选项"
               />
@@ -180,18 +187,18 @@ export const FormBuilder = ({
         ]}
         pagination={false}
         dataSource={formList}
-        components={{
-          body: {
-            wrapper: DraggableContainer,
-            row: DraggableBodyRow,
-          },
-        }}
+        // components={{
+        //   body: {
+        //     wrapper: DraggableContainer,
+        //     row: DraggableBodyRow,
+        //   },
+        // }}
         {...restProps}
       />
       <Button
         style={{ marginTop: "2rem", width: "100%" }}
         icon={<PlusOutlined />}
-        onClick={() => addItem()}
+        onClick={addItem}
       >
         添加表单元素
       </Button>
