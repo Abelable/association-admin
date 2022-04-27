@@ -17,7 +17,6 @@ import { ErrorBox } from "components/lib";
 import type {
   CustomSignup,
   CustomSignupFieldsValue,
-  CustomSignupForm,
   CustomSignupsResult,
   FormItem,
 } from "types/custom-signup";
@@ -56,9 +55,6 @@ export const CustomSignupModal = () => {
   const [form] = useForm();
   const { customSignupModalOpen, editingCustomSignupId, close } =
     useCustomSignupModal();
-  // const editingCustomSignupForm = useEditingCustomSignupForm(
-  //   editingCustomSignupId
-  // );
   const { enterFrom, formRemark, fieldsValue } = useEditingCustomSignupForm(
     editingCustomSignupId
   );
@@ -69,12 +65,6 @@ export const CustomSignupModal = () => {
     useCustomSignupsQueryKey()
   );
   const [remark, setRemark] = useState("");
-  // const [formList, setFormList] = useState(
-  //   editingCustomSignupForm
-  //     ? editingCustomSignupForm.enterFrom
-  //     : defaultFormList
-  // );
-  // const [formList, setFormList] = useState<FormItem[]>([]);
   const [formList, setFormList] = useState(defaultFormList);
 
   const [previewFormModalVisible, setPreviewFormModalVisible] = useState(false);
@@ -101,18 +91,6 @@ export const CustomSignupModal = () => {
       closeModal();
     });
   };
-
-  // useEffect(() => {
-  //   fieldsValue && form.setFieldsValue(fieldsValue);
-  //   // editingCustomSignupForm && form.setFieldsValue(editingCustomSignupForm.fieldsValue);
-  //   // if (editingCustomSignupForm) {
-  //   //   form.setFieldsValue(editingCustomSignupForm.fieldsValue);
-  //   //   setRemark(editingCustomSignupForm.remark);
-  //   //   setFormList([...editingCustomSignupForm.enterFrom]);
-  //   // } else {
-  //   //   setFormList([...defaultFormList]);
-  //   // }
-  // }, [fieldsValue, form]);
 
   useEffect(() => {
     fieldsValue && form.setFieldsValue(fieldsValue);
@@ -228,22 +206,4 @@ const useEditingCustomSignupForm = (editingCustomSignupId: string) => {
   }
 
   return { enterFrom, formRemark, fieldsValue };
-
-  // let editingCustomSignupForm: CustomSignupForm | undefined = undefined;
-  // if (currentCustomSignup) {
-  //   const { enter_from_json, start_time, end_time, remark, ...restData } =
-  //     currentCustomSignup;
-  //   editingCustomSignupForm = {
-  //     enterFrom: JSON.parse(currentCustomSignup?.enter_from_json),
-  //     remark,
-  //     fieldsValue: {
-  //       ...restData,
-  //       dateRange: [
-  //         moment(Number(start_time) * 1000),
-  //         moment(Number(end_time) * 1000),
-  //       ],
-  //     },
-  //   };
-  // }
-  // return editingCustomSignupForm;
 };
