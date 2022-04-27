@@ -8,18 +8,19 @@ import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
-// interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
-//   formList: FormItem[];
-//   setFormList: (list: FormItem[]) => void;
-// }
+
+import "../../../../assets/style/sortable.css";
+
+interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
+  formList: FormItem[];
+  setFormList: (list: FormItem[]) => void;
+}
 
 export const FormBuilder = ({
   formList,
   setFormList,
-}: {
-  formList: FormItem[];
-  setFormList: (list: FormItem[]) => void;
-}) => {
+  ...restProps
+}: FormBuilderProps) => {
   const typeOptions = [
     { id: 1, name: "单行文本框" },
     { id: 2, name: "多行文本框" },
@@ -113,7 +114,7 @@ export const FormBuilder = ({
             render: () => <DragHandle />,
             width: "6rem",
             fixed: "left",
-            className: "drag-visible",
+            className: "drag-transparent",
           },
           {
             title: "选择类型",
@@ -132,7 +133,6 @@ export const FormBuilder = ({
               </Select>
             ),
             width: "12rem",
-            className: "drag-visible",
           },
           {
             title: "选择必填",
@@ -144,7 +144,6 @@ export const FormBuilder = ({
               />
             ),
             width: "8rem",
-            className: "drag-visible",
           },
           {
             title: "填写名称",
@@ -157,7 +156,6 @@ export const FormBuilder = ({
               />
             ),
             width: "18rem",
-            className: "drag-visible",
           },
           {
             title: "添加选项",
@@ -173,7 +171,7 @@ export const FormBuilder = ({
               />
             ),
             width: "30rem",
-            className: "drag-visible",
+            className: "drag-options",
           },
           {
             render: (value, item) => (
@@ -189,7 +187,7 @@ export const FormBuilder = ({
             ),
             width: "6rem",
             fixed: "right",
-            className: "drag-visible",
+            className: "drag-transparent",
           },
         ]}
         pagination={false}
@@ -200,6 +198,7 @@ export const FormBuilder = ({
             row: DraggableBodyRow,
           },
         }}
+        {...restProps}
       />
       <Button
         style={{ marginTop: "2rem", width: "100%" }}
