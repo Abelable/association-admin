@@ -64,9 +64,12 @@ export const CustomSignupModal = () => {
   const { mutateAsync, error, isLoading } = useMutationCustomSignup(
     useCustomSignupsQueryKey()
   );
-  const [remark, setRemark] = useState(
-    editingCustomSignupForm ? editingCustomSignupForm.remark : ""
-  );
+  // const [remark, setRemark] = useState(
+  //   editingCustomSignupForm ? editingCustomSignupForm.remark : ""
+  // );
+  const [remark, setRemark] = useState("");
+  console.log("remark", remark);
+  console.log("editingCustomSignupForm", editingCustomSignupForm);
   const [formList, setFormList] = useState(
     editingCustomSignupForm
       ? editingCustomSignupForm.enterFrom

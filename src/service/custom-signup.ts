@@ -9,7 +9,11 @@ import type {
   CustomSignupUsersItem,
 } from "types/custom-signup";
 import { useHttp } from "./http";
-import { useAddConfig, useEditConfig } from "./use-optimistic-options";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "./use-optimistic-options";
 
 export const useCustomSignups = (params: CustomSignupsSearchParams) => {
   const client = useHttp();
@@ -39,6 +43,18 @@ export const useEditCustomSignup = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteCustomSignup = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: string) =>
+      client("/api/admin/enter-form/custom-event-save", {
+        data: { id, status: -1 },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
   );
 };
 

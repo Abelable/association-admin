@@ -10,6 +10,7 @@ import {
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import {
   useCustomSignups,
+  useDeleteCustomSignup,
   useEditCustomSignupStatus,
 } from "service/custom-signup";
 import { toNumber } from "utils";
@@ -33,6 +34,9 @@ export const CustomSignups = () => {
   const { mutate: editCustomSignupStatus } = useEditCustomSignupStatus(
     useCustomSignupsQueryKey()
   );
+  const { mutate: deleteCustomSignup } = useDeleteCustomSignup(
+    useCustomSignupsQueryKey()
+  );
   const [linkUrl, setLinkUrl] = useState("");
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -51,6 +55,15 @@ export const CustomSignups = () => {
   const copyUrl = () => {
     copy(linkUrl);
     setLinkUrl("");
+  };
+  const confirmCustomSignup = (id: string) => {
+    Modal.confirm({
+      title: "确定删除该入会申请吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => deleteCustomSignup(id),
+    });
   };
 
   return (
@@ -166,6 +179,16 @@ export const CustomSignups = () => {
                       >
                         获取活动地址
                       </Menu.Item>
+                      {signup.activity_status === 2 ? (
+                        <Menu.Item
+                          onClick={() => confirmCustomSignup(signup.id)}
+                          key={"delete"}
+                        >
+                          删除活动
+                        </Menu.Item>
+                      ) : (
+                        <></>
+                      )}
                     </Menu>
                   }
                 >
