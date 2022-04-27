@@ -46,7 +46,7 @@ export const CustomSignups = () => {
     navigate("/custom_signups/enlist", { state: { custom_event_id } });
 
   const checkLink = (id: string) => {
-    setLinkUrl(`http://wskt.zjseca.com/index.html/?id=${id}#/custom_activity`);
+    setLinkUrl(`http://wskt.zjseca.com/index.html?id=${id}#/custom_activity`);
   };
   const copyUrl = () => {
     copy(linkUrl);
