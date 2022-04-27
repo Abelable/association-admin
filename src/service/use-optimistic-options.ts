@@ -22,7 +22,10 @@ export const useConfig = (
 export const useAddConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
-    list: [{ id: `${Number(old.list[0].id) + 1}`, ...target }, ...old.list],
+    list: [
+      { id: old.list[0] ? `${Number(old.list[0].id) + 1}` : "1", ...target },
+      ...old.list,
+    ],
   }));
 
 export const useEditConfig = (queryKey: QueryKey) =>
