@@ -12,6 +12,7 @@ import {
 } from "antd";
 import { useCustomSignupModal, useCustomSignupsQueryKey } from "../util";
 import { useEffect, useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import type {
@@ -96,7 +97,7 @@ export const CustomSignupModal = () => {
     fieldsValue && form.setFieldsValue(fieldsValue);
   }, [fieldsValue, form]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     enterFrom.length && setFormList([...enterFrom]);
   }, [enterFrom]);
 
