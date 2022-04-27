@@ -16,6 +16,7 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import type {
   CustomSignup,
+  CustomSignupFieldsValue,
   CustomSignupForm,
   CustomSignupsResult,
   FormItem,
@@ -55,7 +56,10 @@ export const CustomSignupModal = () => {
   const [form] = useForm();
   const { customSignupModalOpen, editingCustomSignupId, close } =
     useCustomSignupModal();
-  const editingCustomSignupForm = useEditingCustomSignupForm(
+  // const editingCustomSignupForm = useEditingCustomSignupForm(
+  //   editingCustomSignupId
+  // );
+  const { enterFrom, formRemark, fieldsValue } = useEditingCustomSignupForm(
     editingCustomSignupId
   );
   const useMutationCustomSignup = editingCustomSignupId
@@ -70,13 +74,14 @@ export const CustomSignupModal = () => {
   //     ? editingCustomSignupForm.enterFrom
   //     : defaultFormList
   // );
-  const [formList, setFormList] = useState<FormItem[]>([]);
+  // const [formList, setFormList] = useState<FormItem[]>([]);
+  const [formList, setFormList] = useState(defaultFormList);
 
   const [previewFormModalVisible, setPreviewFormModalVisible] = useState(false);
 
   const closeModal = () => {
     form.resetFields();
-    setFormList([...defaultFormList]);
+    setFormList(defaultFormList);
     close();
   };
   const submit = () => {
@@ -97,15 +102,29 @@ export const CustomSignupModal = () => {
     });
   };
 
+  // useEffect(() => {
+  //   fieldsValue && form.setFieldsValue(fieldsValue);
+  //   // editingCustomSignupForm && form.setFieldsValue(editingCustomSignupForm.fieldsValue);
+  //   // if (editingCustomSignupForm) {
+  //   //   form.setFieldsValue(editingCustomSignupForm.fieldsValue);
+  //   //   setRemark(editingCustomSignupForm.remark);
+  //   //   setFormList([...editingCustomSignupForm.enterFrom]);
+  //   // } else {
+  //   //   setFormList([...defaultFormList]);
+  //   // }
+  // }, [fieldsValue, form]);
+
   useEffect(() => {
-    if (editingCustomSignupForm) {
-      form.setFieldsValue(editingCustomSignupForm.fieldsValue);
-      setRemark(editingCustomSignupForm.remark);
-      setFormList([...editingCustomSignupForm.enterFrom]);
-    } else {
-      setFormList([...defaultFormList]);
-    }
-  }, [editingCustomSignupForm, form]);
+    fieldsValue && form.setFieldsValue(fieldsValue);
+  }, [fieldsValue, form]);
+
+  useEffect(() => {
+    enterFrom.length && setFormList([...enterFrom]);
+  }, [enterFrom]);
+
+  useEffect(() => {
+    formRemark && setRemark(formRemark);
+  }, [formRemark]);
 
   return (
     <>
@@ -190,21 +209,41 @@ const useEditingCustomSignupForm = (editingCustomSignupId: string) => {
       )
     : undefined;
 
-  let editingCustomSignupForm: CustomSignupForm | undefined = undefined;
+  let enterFrom: FormItem[] = [];
+  let formRemark: string = "";
+  let fieldsValue: CustomSignupFieldsValue | undefined = undefined;
+
   if (currentCustomSignup) {
     const { enter_from_json, start_time, end_time, remark, ...restData } =
       currentCustomSignup;
-    editingCustomSignupForm = {
-      enterFrom: JSON.parse(currentCustomSignup?.enter_from_json),
-      remark,
-      fieldsValue: {
-        ...restData,
-        dateRange: [
-          moment(Number(start_time) * 1000),
-          moment(Number(end_time) * 1000),
-        ],
-      },
+    enterFrom = JSON.parse(currentCustomSignup?.enter_from_json);
+    formRemark = remark;
+    fieldsValue = {
+      ...restData,
+      dateRange: [
+        moment(Number(start_time) * 1000),
+        moment(Number(end_time) * 1000),
+      ],
     };
   }
-  return editingCustomSignupForm;
+
+  return { enterFrom, formRemark, fieldsValue };
+
+  // let editingCustomSignupForm: CustomSignupForm | undefined = undefined;
+  // if (currentCustomSignup) {
+  //   const { enter_from_json, start_time, end_time, remark, ...restData } =
+  //     currentCustomSignup;
+  //   editingCustomSignupForm = {
+  //     enterFrom: JSON.parse(currentCustomSignup?.enter_from_json),
+  //     remark,
+  //     fieldsValue: {
+  //       ...restData,
+  //       dateRange: [
+  //         moment(Number(start_time) * 1000),
+  //         moment(Number(end_time) * 1000),
+  //       ],
+  //     },
+  //   };
+  // }
+  // return editingCustomSignupForm;
 };
