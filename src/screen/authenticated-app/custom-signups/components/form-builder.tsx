@@ -8,16 +8,18 @@ import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
-interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
-  formList: FormItem[];
-  setFormList: (list: FormItem[]) => void;
-}
+// interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
+//   formList: FormItem[];
+//   setFormList: (list: FormItem[]) => void;
+// }
 
 export const FormBuilder = ({
   formList,
   setFormList,
-  ...restProps
-}: FormBuilderProps) => {
+}: {
+  formList: FormItem[];
+  setFormList: (list: FormItem[]) => void;
+}) => {
   const typeOptions = [
     { id: 1, name: "单行文本框" },
     { id: 2, name: "多行文本框" },
@@ -63,13 +65,6 @@ export const FormBuilder = ({
     setFormList([...list]);
   };
 
-  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
-    const index = formList.findIndex(
-      (x: any) => x.index === restProps["data-row-key"]
-    );
-    return <SortableItem index={index} {...restProps} />;
-  };
-
   const onSortEnd = ({
     oldIndex,
     newIndex,
@@ -98,11 +93,18 @@ export const FormBuilder = ({
     />
   );
 
+  const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
+    const index = formList.findIndex(
+      (x: any) => x.id === restProps["data-row-key"]
+    );
+    return <SortableItem index={index} {...restProps} />;
+  };
+
   return (
     <>
       <Table
         style={{ width: "100%" }}
-        rowKey={"id"}
+        rowKey="id"
         scroll={{ x: 1000 }}
         columns={[
           {
@@ -111,6 +113,7 @@ export const FormBuilder = ({
             render: () => <DragHandle />,
             width: "6rem",
             fixed: "left",
+            className: "drag-visible",
           },
           {
             title: "选择类型",
@@ -129,6 +132,7 @@ export const FormBuilder = ({
               </Select>
             ),
             width: "12rem",
+            className: "drag-visible",
           },
           {
             title: "选择必填",
@@ -140,6 +144,7 @@ export const FormBuilder = ({
               />
             ),
             width: "8rem",
+            className: "drag-visible",
           },
           {
             title: "填写名称",
@@ -152,6 +157,7 @@ export const FormBuilder = ({
               />
             ),
             width: "18rem",
+            className: "drag-visible",
           },
           {
             title: "添加选项",
@@ -167,6 +173,7 @@ export const FormBuilder = ({
               />
             ),
             width: "30rem",
+            className: "drag-visible",
           },
           {
             render: (value, item) => (
@@ -182,17 +189,17 @@ export const FormBuilder = ({
             ),
             width: "6rem",
             fixed: "right",
+            className: "drag-visible",
           },
         ]}
         pagination={false}
         dataSource={formList}
-        // components={{
-        //   body: {
-        //     wrapper: DraggableContainer,
-        //     row: DraggableBodyRow,
-        //   },
-        // }}
-        {...restProps}
+        components={{
+          body: {
+            wrapper: DraggableContainer,
+            row: DraggableBodyRow,
+          },
+        }}
       />
       <Button
         style={{ marginTop: "2rem", width: "100%" }}
@@ -207,7 +214,6 @@ export const FormBuilder = ({
 
 const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
 const SortableItem = SortableElement((props: any) => <tr {...props} />);
-
 const DragHandle = SortableHandle(() => (
   <MenuOutlined style={{ cursor: "grab", color: "#999" }} />
 ));
