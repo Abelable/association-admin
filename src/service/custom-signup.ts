@@ -49,9 +49,9 @@ export const useEditCustomSignup = (queryKey: QueryKey) => {
 export const useDeleteCustomSignup = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (id: string) =>
+    (params: CustomSignup) =>
       client("/api/admin/enter-form/custom-event-save", {
-        data: { id, status: -1 },
+        data: { ...params, status: -1 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)

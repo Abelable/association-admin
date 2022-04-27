@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import copy from "copy-to-clipboard";
+import { CustomSignup } from "types/custom-signup";
 
 export const CustomSignups = () => {
   const navigate = useNavigate();
@@ -56,13 +57,13 @@ export const CustomSignups = () => {
     copy(linkUrl);
     setLinkUrl("");
   };
-  const confirmCustomSignup = (id: string) => {
+  const confirmCustomSignup = (signup: CustomSignup) => {
     Modal.confirm({
-      title: "确定删除该入会申请吗？",
+      title: "确定删除该活动吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteCustomSignup(id),
+      onOk: () => deleteCustomSignup(signup),
     });
   };
 
@@ -181,7 +182,7 @@ export const CustomSignups = () => {
                       </Menu.Item>
                       {signup.activity_status === 2 ? (
                         <Menu.Item
-                          onClick={() => confirmCustomSignup(signup.id)}
+                          onClick={() => confirmCustomSignup(signup)}
                           key={"delete"}
                         >
                           删除活动
