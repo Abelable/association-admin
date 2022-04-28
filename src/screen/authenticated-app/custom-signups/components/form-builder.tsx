@@ -8,8 +8,8 @@ import { PlusOutlined, DeleteOutlined, MenuOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { arrayMoveImmutable } from "array-move";
 import { FormItem } from "types/custom-signup";
-
-import "../../../../assets/style/sortable.css";
+import _ from "lodash";
+import "assets/style/sortable.css";
 
 interface FormBuilderProps extends Omit<TableProps<FormItem>, "dataSource"> {
   formList: FormItem[];
@@ -41,24 +41,27 @@ export const FormBuilder = ({
     const id = list.sort((a, b) => a.id - b.id)[formList.length - 1].id + 1;
     setFormList([...formList, { id, ...defaultFormItem }]);
   };
+
   const selectType = (id: number) => (type: number) => {
     const list = formList.map((item: any) =>
       item.id === id ? { ...item, type } : item
     );
     setFormList([...list]);
   };
-  const switchRequired = (id: number) => (required: boolean) => {
-    const list = formList.map((item: any) =>
-      item.id === id ? { ...item, required } : item
-    );
-    setFormList([...list]);
-  };
-  const setName = (id: number) => (e: any) => {
-    const list = formList.map((item: any) =>
-      item.id === id ? { ...item, name: e.target.value } : item
-    );
-    setFormList([...list]);
-  };
+  const switchRequired = (id: number) =>
+    _.debounce((required: boolean) => {
+      const list = formList.map((item: any) =>
+        item.id === id ? { ...item, required } : item
+      );
+      setFormList([...list]);
+    }, 200);
+  const setName = (id: number) =>
+    _.debounce((e: any) => {
+      const list = formList.map((item: any) =>
+        item.id === id ? { ...item, name: e.target.value } : item
+      );
+      setFormList([...list]);
+    }, 1000);
   const setOptions = (id: number) => (options: string[]) => {
     const list = formList.map((item: any) =>
       item.id === id ? { ...item, options } : item
