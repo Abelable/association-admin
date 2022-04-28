@@ -61,7 +61,7 @@ export const List = ({
       title: "编号",
       dataIndex: "id",
       fixed: "left",
-      width: "8rem",
+      width: "10rem",
     },
     {
       title: "照片",

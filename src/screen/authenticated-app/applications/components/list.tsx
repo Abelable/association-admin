@@ -77,10 +77,7 @@ export const List = ({
         columns={[
           {
             title: "编号",
-            render: (value, application, index) =>
-              `${
-                index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
-              }`,
+            dataIndex: "id",
             fixed: "left",
             width: "8rem",
           },
