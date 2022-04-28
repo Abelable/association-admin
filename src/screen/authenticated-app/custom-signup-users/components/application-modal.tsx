@@ -19,7 +19,6 @@ import {
   useCustomSignupUserModal,
   useCustomSignupUsersQueryKey,
 } from "../util";
-import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import {
@@ -28,6 +27,7 @@ import {
 } from "service/custom-signup";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const CustomSignupUserModal = () => {
   const [form] = useForm();
@@ -114,7 +114,7 @@ export const CustomSignupUserModal = () => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     editingCustomSignupUserForm &&
       form.setFieldsValue(editingCustomSignupUserForm);
   }, [form, editingCustomSignupUserForm]);

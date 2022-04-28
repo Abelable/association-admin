@@ -17,12 +17,12 @@ import {
   ApplicationsItem,
 } from "types/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
-import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { useAddApplication, useEditApplication } from "service/application";
 import { ErrorBox } from "components/lib";
 import { cleanObject } from "utils";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const ApplicationModal = ({
   levelOptions,
@@ -131,7 +131,7 @@ export const ApplicationModal = ({
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     form.setFieldsValue(editingApplicationForm);
   }, [form, editingApplicationForm]);
 

@@ -2,9 +2,9 @@ import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { OssUpload } from "components/oss-upload";
-import { useEffect } from "react";
 import { useAddCourseAuthor, useEditCourseAuthor } from "service/course";
 import { CourseAuthor } from "types/course";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useCourseAuthorsQueryKey, useCourseAuthorModal } from "../util";
 
 export const CourseAuthorModal = ({
@@ -25,7 +25,7 @@ export const CourseAuthorModal = ({
     useCourseAuthorsQueryKey()
   );
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (courseAuthor) {
       const { head_img, ...restFieldsValue } = courseAuthor;
       form.setFieldsValue({

@@ -11,7 +11,6 @@ import {
 } from "antd";
 import { useQueryClient } from "react-query";
 import { useTalentModal, useTalentsQueryKey } from "../util";
-import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
@@ -25,6 +24,7 @@ import {
   TalentsResult,
 } from "types/talent";
 import { useAddTalent, useEditTalent } from "service/talents";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const TalentModal = ({
   genderOptions,
@@ -146,7 +146,7 @@ export const TalentModal = ({
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     form.setFieldsValue(editingTalentForm);
   }, [form, editingTalentForm]);
 

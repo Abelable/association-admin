@@ -2,9 +2,9 @@ import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { OssUpload } from "components/oss-upload";
-import { useEffect } from "react";
 import { useAddLegalCategory, useEditLegalCategory } from "service/legal";
 import { LegalCategory } from "types/legal";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useLegalCategoriesQueryKey, useLegalCategoryModal } from "../util";
 
 export const LegalCategoryModal = ({
@@ -25,7 +25,7 @@ export const LegalCategoryModal = ({
     useLegalCategoriesQueryKey()
   );
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (legalCategory) {
       const { image, ...restFieldsValue } = legalCategory;
       form.setFieldsValue({

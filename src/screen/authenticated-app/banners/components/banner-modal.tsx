@@ -10,12 +10,12 @@ import {
   Space,
 } from "antd";
 import { useBannerModal, useBannersQueryKey } from "../util";
-import { useEffect } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { Banner } from "types/banner";
 import { useAddBanner, useEditBanner } from "service/banner";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const BannerModal = ({
   linkTypeOptions,
@@ -62,7 +62,7 @@ export const BannerModal = ({
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     editingBannerForm && form.setFieldsValue(editingBannerForm);
   }, [form, editingBannerForm]);
 

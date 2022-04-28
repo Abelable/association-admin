@@ -1,6 +1,6 @@
 import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import { useLegalModal, useLegalsQueryKey } from "../util";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
@@ -9,6 +9,7 @@ import { useAddLegal, useEditLegal } from "service/legal";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
 import { LegalItem } from "../../../../types/legal";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const LegalModal = ({
   categoryList,
@@ -51,7 +52,7 @@ export const LegalModal = ({
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (editingLegalForm) {
       const { image, content, ...restFieldsValue } = editingLegalForm;
       form.setFieldsValue({

@@ -1,6 +1,6 @@
 import { Button, Col, Drawer, Form, Input, Row, Space } from "antd";
 import { useWisdomModal, useWisdomsQueryKey } from "../util";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
@@ -8,6 +8,7 @@ import { useAddWisdom, useEditWisdom } from "service/wisdom";
 import { RichTextEditor } from "components/rich-text-editor";
 import { WisdomForm, WisdomsResult } from "types/wisdom";
 import { useQueryClient } from "react-query";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const WisdomModal = () => {
   const [form] = useForm();
@@ -46,7 +47,7 @@ export const WisdomModal = () => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (editingWisdomForm) {
       const { head_img, content, ...restFieldsValue } = editingWisdomForm;
       form.setFieldsValue({

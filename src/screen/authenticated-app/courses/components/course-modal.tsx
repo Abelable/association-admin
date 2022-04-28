@@ -11,7 +11,7 @@ import {
   InputNumber,
 } from "antd";
 import { useCourseModal, useCoursesQueryKey } from "../util";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-video-upload";
 import { ErrorBox } from "components/lib";
@@ -19,6 +19,7 @@ import { CourseAuthor, CoursesResult, CourseItem } from "types/course";
 import { useAddCourse, useEditCourse } from "service/course";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
   const [form] = useForm();
@@ -63,7 +64,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (editingCourseForm) {
       const {
         title,

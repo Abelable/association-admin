@@ -93,7 +93,7 @@ export const CustomSignupModal = () => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     fieldsValue && form.setFieldsValue(fieldsValue);
   }, [fieldsValue, form]);
 

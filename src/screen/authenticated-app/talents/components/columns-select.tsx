@@ -1,10 +1,11 @@
-import { Dispatch, SetStateAction, useState, useEffect } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Checkbox, Popover, Tooltip } from "antd";
 import styled from "@emotion/styled";
 import { SettingOutlined } from "@ant-design/icons";
 
 import type { ColumnsType } from "antd/lib/table";
 import type { TalentListItem } from "types/talent";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const ColumnsSelect = ({
   defaultColumnTitleList,
@@ -25,7 +26,7 @@ export const ColumnsSelect = ({
     checkedList.length === defaultColumnTitleList.length
   );
 
-  useEffect(
+  useDeepCompareEffect(
     () => () =>
       window.localStorage.setItem(
         "talentColumnTitleList",
