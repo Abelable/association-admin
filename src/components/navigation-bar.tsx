@@ -10,7 +10,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/course/list": "课堂列表",
   "/legal": "法律汇编",
   "/legal/categories": "分类管理",
-  "/legal/list": "文章列表",
+  "/legal/legal_list": "文章列表",
   "/wisdoms": "网商智库",
   "/applications": "入会申请",
   "/talents": "人才管理",

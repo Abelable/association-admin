@@ -56,7 +56,7 @@ export const AuthenticatedApp = () => {
               <Route path="course/author" element={<CourseAuthors />} />
               <Route path="course/list" element={<Courses />} />
               <Route path="legal/categories" element={<LegalCategories />} />
-              <Route path="legal/list" element={<Legals />} />
+              <Route path="legal/legal_list" element={<Legals />} />
               <Route path="wisdoms" element={<Wisdoms />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
@@ -112,11 +112,11 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           icon={<HighlightOutlined />}
           title={"法律汇编"}
         >
-          <Menu.Item key="legal_categories" icon={<PartitionOutlined />}>
+          <Menu.Item key="categories" icon={<PartitionOutlined />}>
             <Link to={"legal/categories"}>分类管理</Link>
           </Menu.Item>
-          <Menu.Item key="legals" icon={<BarsOutlined />}>
-            <Link to={"legal/list"}>文章列表</Link>
+          <Menu.Item key="legal_list" icon={<BarsOutlined />}>
+            <Link to={"legal/legal_list"}>文章列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="wisdoms" icon={<BulbOutlined />}>
