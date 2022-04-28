@@ -48,7 +48,7 @@ export const CustomSignups = () => {
     });
 
   const check = (custom_event_id: string) =>
-    navigate("/custom_signups/enlist", { state: { custom_event_id } });
+    navigate(`/custom_signups/enlist?custom_event_id=${custom_event_id}`);
 
   const checkLink = (id: string) => {
     setLinkUrl(`https://wskt.zjseca.com/index.html?id=${id}#/custom_activity`);

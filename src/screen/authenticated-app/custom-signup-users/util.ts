@@ -1,14 +1,7 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useMemo, useCallback } from "react";
-import { useLocation } from "react-router-dom";
 
 export const useCustomSignupUsersSearchParams = () => {
-  const location = useLocation();
-  const custom_event_id =
-    location.state &&
-    (location.state as { custom_event_id: string }).custom_event_id
-      ? (location.state as { custom_event_id: string }).custom_event_id
-      : "";
   const [params, setParams] = useUrlQueryParams([
     "custom_event_id",
     "name",
@@ -22,12 +15,11 @@ export const useCustomSignupUsersSearchParams = () => {
   return [
     useMemo(
       () => ({
-        custom_event_id,
         page: Number(params.page) || 1,
         page_size: Number(params.page_size) || 10,
         ...params,
       }),
-      [custom_event_id, params]
+      [params]
     ),
     setParams,
   ] as const;

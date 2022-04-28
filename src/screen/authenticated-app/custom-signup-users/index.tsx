@@ -3,6 +3,7 @@ import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 import { useCustomSignupUsers } from "service/custom-signup";
+import { CustomSignupUsersSearchParams } from "types/custom-signup";
 import { toNumber } from "utils";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
@@ -17,7 +18,7 @@ export const CustomSignupUsers = () => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
     }/api/admin/enter-form/registered-export?ids=${ids.join()}&custom_event_id=${
-      params.custom_event_id
+      (params as CustomSignupUsersSearchParams).custom_event_id
     }`;
   };
 
