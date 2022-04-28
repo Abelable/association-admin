@@ -49,15 +49,18 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
             dataIndex: "id",
+            fixed: "left",
             width: "8rem",
           },
           {
             title: "标题",
             dataIndex: "title",
+            width: "30rem",
           },
           {
             title: "图片",
@@ -68,6 +71,7 @@ export const List = ({
                 alt=""
               />
             ),
+            width: "14rem",
           },
           {
             title: "排序",
@@ -84,6 +88,7 @@ export const List = ({
                 }
               </span>
             ),
+            width: "10rem",
           },
           {
             title: "创建时间",
@@ -94,6 +99,7 @@ export const List = ({
                 )}
               </span>
             ),
+            width: "12rem",
           },
           {
             title: "修改时间",
@@ -104,6 +110,7 @@ export const List = ({
                 )}
               </span>
             ),
+            width: "12rem",
           },
           {
             title: "操作",
@@ -111,6 +118,7 @@ export const List = ({
               return <More legal={legal} />;
             },
             width: "8rem",
+            fixed: "right",
           },
         ]}
         onChange={setPagination}
