@@ -17,9 +17,13 @@ export const useBanners = (params: Partial<BannersSearchParams>) => {
 export const useAddBanner = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<Banner>) =>
+    ({ s_time, e_time, ...params }: Partial<Banner>) =>
       client("/api/admin/banner/save", {
-        data: params,
+        data: {
+          s_time: `${Number(s_time) * 1000}`,
+          e_time: `${Number(e_time) * 1000}`,
+          ...params,
+        },
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -29,9 +33,13 @@ export const useAddBanner = (queryKey: QueryKey) => {
 export const useEditBanner = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<Banner>) =>
+    ({ s_time, e_time, ...params }: Partial<Banner>) =>
       client("/api/admin/banner/save", {
-        data: params,
+        data: {
+          s_time: `${Number(s_time) * 1000}`,
+          e_time: `${Number(e_time) * 1000}`,
+          ...params,
+        },
         method: "POST",
       }),
     useEditConfig(queryKey)

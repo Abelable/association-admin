@@ -45,8 +45,8 @@ export const BannerModal = ({
     form.validateFields().then(async () => {
       const { img, link_type, linkInfo, dateRange, ...restParams } =
         form.getFieldsValue();
-      const s_time = `${Math.floor(dateRange[0].valueOf() / 1000) * 1000}`;
-      const e_time = `${Math.floor(dateRange[1].valueOf() / 1000) * 1000}`;
+      const s_time = `${Math.floor(dateRange[0].valueOf() / 1000)}`;
+      const e_time = `${Math.floor(dateRange[1].valueOf() / 1000)}`;
       const bannerParams: Banner = {
         id: editingBannerId || "",
         s_time,
