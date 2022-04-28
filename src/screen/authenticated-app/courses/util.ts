@@ -3,8 +3,9 @@ import { useCallback, useMemo } from "react";
 
 export const useCoursesSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "category_id",
     "title",
+    "start_time",
+    "end_time",
     "page",
     "page_size",
   ]);

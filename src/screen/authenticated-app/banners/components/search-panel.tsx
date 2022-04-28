@@ -58,7 +58,7 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             onClear={clearLevel}
           >
             {[
-              { name: "显示", value: "1" },
+              { name: "展示", value: "1" },
               { name: "隐藏", value: "0" },
             ].map((item, index) => (
               <Select.Option key={index} value={item.value}>
