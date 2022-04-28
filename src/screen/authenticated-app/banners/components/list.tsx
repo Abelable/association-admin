@@ -96,9 +96,9 @@ export const List = ({
             title: "跳转链接",
             render: (value, banner) => (
               <span>
-                {banner.link_type === "1"
-                  ? `文章ID：${banner.article_id}`
-                  : banner.redirect_url}
+                {banner.link_type === "4"
+                  ? banner.redirect_url
+                  : `文章ID：${banner.article_id}`}
               </span>
             ),
             width: "42rem",
