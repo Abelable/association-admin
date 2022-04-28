@@ -6,6 +6,13 @@ import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useBannersSearchParams } from "./util";
 
+const linkTypeOptions = [
+  { name: "跳转网商课堂", value: "1" },
+  { name: "跳转法律汇编", value: "2" },
+  { name: "跳转网商智库", value: "3" },
+  { name: "跳转H5", value: "4" },
+];
+
 export const Banners = () => {
   const [params, setParams] = useBannersSearchParams();
   const { data, isLoading, error } = useBanners(params);
@@ -19,6 +26,7 @@ export const Banners = () => {
           params={params}
           setParams={setParams}
           loading={isLoading}
+          linkTypeOptions={linkTypeOptions}
           dataSource={data?.list}
           pagination={{
             current: toNumber(data?.page),
@@ -26,7 +34,7 @@ export const Banners = () => {
             total: toNumber(data?.total),
           }}
         />
-        <BannerModal />
+        <BannerModal linkTypeOptions={linkTypeOptions} />
       </Main>
     </Container>
   );

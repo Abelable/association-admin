@@ -17,10 +17,17 @@ import { Banner } from "types/banner";
 import { useDeleteBanner } from "service/banner";
 
 interface ListProps extends TableProps<Banner>, SearchPanelProps {
+  linkTypeOptions: { name: string; value: string }[];
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  error,
+  params,
+  setParams,
+  linkTypeOptions,
+  ...restProps
+}: ListProps) => {
   const { open } = useBannerModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -48,6 +55,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
               `${
                 index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
               }`,
+            width: "8rem",
           },
           {
             title: "标题",
@@ -62,18 +70,27 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 alt=""
               />
             ),
+            width: "20rem",
           },
           {
-            title: "展示",
+            title: "是否展示",
             render: (value, banner) => (
               <span>{banner.is_show === "1" ? "展示" : "隐藏"}</span>
             ),
+            width: "12rem",
           },
           {
             title: "跳转类型",
             render: (value, banner) => (
-              <span>{banner.link_type === "1" ? "文章" : "H5"}</span>
+              <span>
+                {
+                  linkTypeOptions.find(
+                    (item) => item.value === banner.link_type
+                  )?.name
+                }
+              </span>
             ),
+            width: "16rem",
           },
           {
             title: "跳转链接",
@@ -88,6 +105,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           {
             title: "排序",
             dataIndex: "sort",
+            width: "10rem",
           },
           {
             title: "时间",
@@ -107,12 +125,14 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 </div>
               </>
             ),
+            width: "24rem",
           },
           {
             title: "操作",
             render(value, banner) {
               return <More id={banner.id} />;
             },
+            width: "8rem",
           },
         ]}
         onChange={setPagination}

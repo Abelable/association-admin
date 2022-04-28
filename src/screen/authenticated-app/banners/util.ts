@@ -81,12 +81,12 @@ const useEditingBannerFrom = (id: string) => {
         title: editingBanner.title,
         is_show: editingBanner.is_show,
         img: [{ url: editingBanner.img }],
-        link_type: editingBanner.link_type === "0" ? "2" : "1",
+        link_type: editingBanner.link_type,
         sort: editingBanner.sort,
         linkInfo:
-          editingBanner.link_type === "1"
-            ? editingBanner.article_id
-            : editingBanner.redirect_url,
+          editingBanner.link_type === "4"
+            ? editingBanner.redirect_url
+            : editingBanner.article_id,
         dateRange: [
           moment(Number(editingBanner.s_time) * 1000),
           moment(Number(editingBanner.e_time) * 1000),

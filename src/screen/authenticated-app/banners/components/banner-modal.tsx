@@ -17,7 +17,11 @@ import { ErrorBox } from "components/lib";
 import { Banner } from "types/banner";
 import { useAddBanner, useEditBanner } from "service/banner";
 
-export const BannerModal = () => {
+export const BannerModal = ({
+  linkTypeOptions,
+}: {
+  linkTypeOptions: { name: string; value: string }[];
+}) => {
   const [form] = useForm();
 
   const { bannerModalOpen, editingBannerId, editingBannerForm, close } =
@@ -48,8 +52,8 @@ export const BannerModal = () => {
         s_time,
         e_time,
         link_type,
-        banner_id: link_type === "1" ? linkInfo : "1",
-        redirect_url: link_type === "2" ? linkInfo : "",
+        article_id: link_type !== "4" ? linkInfo : "1",
+        redirect_url: link_type === "4" ? linkInfo : "",
         img: img[0].url,
         ...restParams,
       };
@@ -111,7 +115,7 @@ export const BannerModal = () => {
             <Form.Item
               label="跳转信息"
               name="linkInfo"
-              rules={[{ required: true, message: "请输入新闻编号或H5地址" }]}
+              rules={[{ required: true, message: "请输入文章ID或H5地址" }]}
             >
               <Input
                 addonBefore={
@@ -121,10 +125,7 @@ export const BannerModal = () => {
                     rules={[{ required: true, message: "请选择跳转类型" }]}
                   >
                     <Select placeholder="请选择类型">
-                      {[
-                        { name: "跳转新闻", value: "1" },
-                        { name: "跳转H5", value: "2" },
-                      ].map((item, index) => (
+                      {linkTypeOptions.map((item, index) => (
                         <Select.Option key={index} value={item.value}>
                           {item.name}
                         </Select.Option>
@@ -132,7 +133,7 @@ export const BannerModal = () => {
                     </Select>
                   </Form.Item>
                 }
-                placeholder="请输入新闻编号或H5地址"
+                placeholder="请输入文章ID或H5地址"
               />
             </Form.Item>
           </Col>
