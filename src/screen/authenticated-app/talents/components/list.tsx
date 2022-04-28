@@ -59,8 +59,7 @@ export const List = ({
   const defaultColumns: ColumnsType<TalentListItem> = [
     {
       title: "编号",
-      render: (value, talent, index) =>
-        `${index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)}`,
+      dataIndex: "id",
       fixed: "left",
       width: "8rem",
     },
