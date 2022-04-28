@@ -142,12 +142,12 @@ export const BannerModal = ({
           <Col span={12}>
             <Form.Item
               name="is_show"
-              label="是否显示"
-              rules={[{ required: true, message: "请选择显示或隐藏" }]}
+              label="是否展示"
+              rules={[{ required: true, message: "请选择展示或隐藏" }]}
             >
-              <Select placeholder="请选择显示或隐藏">
+              <Select placeholder="请选择展示或隐藏">
                 {[
-                  { name: "显示", value: "1" },
+                  { name: "展示", value: "1" },
                   { name: "隐藏", value: "0" },
                 ].map((item, index) => (
                   <Select.Option key={index} value={item.value}>
