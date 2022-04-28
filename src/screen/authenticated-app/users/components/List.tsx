@@ -27,10 +27,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         columns={[
           {
             title: "编号",
-            render: (value, user, index) =>
-              `${
-                index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
-              }`,
+            dataIndex: "id",
           },
           {
             title: "微信头像",

@@ -48,18 +48,18 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
-            render: (value, banner, index) =>
-              `${
-                index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
-              }`,
+            dataIndex: "id",
+            fixed: "left",
             width: "8rem",
           },
           {
             title: "标题",
             dataIndex: "title",
+            width: "26rem",
           },
           {
             title: "头图",
@@ -70,14 +70,14 @@ export const List = ({
                 alt=""
               />
             ),
-            width: "20rem",
+            width: "16rem",
           },
           {
             title: "是否展示",
             render: (value, banner) => (
               <span>{banner.is_show === "1" ? "展示" : "隐藏"}</span>
             ),
-            width: "12rem",
+            width: "10rem",
           },
           {
             title: "跳转类型",
@@ -90,7 +90,7 @@ export const List = ({
                 }
               </span>
             ),
-            width: "16rem",
+            width: "13rem",
           },
           {
             title: "跳转链接",
@@ -101,6 +101,7 @@ export const List = ({
                   : banner.redirect_url}
               </span>
             ),
+            width: "42rem",
           },
           {
             title: "排序",
@@ -125,13 +126,14 @@ export const List = ({
                 </div>
               </>
             ),
-            width: "24rem",
+            width: "21rem",
           },
           {
             title: "操作",
             render(value, banner) {
               return <More id={banner.id} />;
             },
+            fixed: "right",
             width: "8rem",
           },
         ]}
