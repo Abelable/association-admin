@@ -84,12 +84,7 @@ export const CustomSignups = () => {
           columns={[
             {
               title: "编号",
-              render: (value, signup, index) =>
-                `${
-                  index +
-                  1 +
-                  ((params.page || 1) - 1) * (params.page_size || 10)
-                }`,
+              dataIndex: "id",
               width: "10rem",
             },
             {

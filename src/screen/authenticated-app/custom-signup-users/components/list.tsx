@@ -45,26 +45,19 @@ export const List = ({
             setSelectedRowKeys(selectedRowKeys as []),
         }}
         rowKey={"id"}
-        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
-            render: (value, application, index) =>
-              `${
-                index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
-              }`,
-            fixed: "left",
+            dataIndex: "id",
             width: "8rem",
           },
           {
             title: "姓名",
             dataIndex: "name",
-            width: "12rem",
           },
           {
             title: "手机号",
             dataIndex: "mobile",
-            width: "20rem",
           },
           {
             title: "报名时间",
@@ -77,7 +70,6 @@ export const List = ({
                   : "无"}
               </span>
             ),
-            width: "18rem",
           },
           {
             title: "操作",
@@ -89,7 +81,6 @@ export const List = ({
                 />
               );
             },
-            fixed: "right",
             width: "8rem",
           },
         ]}
