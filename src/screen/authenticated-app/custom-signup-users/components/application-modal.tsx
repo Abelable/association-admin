@@ -161,7 +161,8 @@ export const CustomSignupUserModal = () => {
                           ? [
                               {
                                 required: item.required,
-                                pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+                                pattern:
+                                  /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                                 message: "请输入正确的邮箱地址",
                               },
                             ]
