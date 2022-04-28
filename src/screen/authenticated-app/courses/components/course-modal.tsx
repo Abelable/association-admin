@@ -133,14 +133,16 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
             <Form.Item
               name="tags"
               label="视频标签"
-              rules={[{ required: true, message: "请输入视频标签" }]}
-              tooltip="最多可生成3个标签"
+              rules={[
+                {
+                  required: true,
+                  type: "array",
+                  max: 3,
+                  message: "请输入视频标签(最大数量为3个)",
+                },
+              ]}
             >
-              <Select
-                mode="tags"
-                maxTagCount={3}
-                placeholder="输入后回车生产标签"
-              />
+              <Select mode="tags" placeholder="输入后回车生产标签" />
             </Form.Item>
           </Col>
         </Row>
@@ -191,7 +193,13 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
               <Form.Item
                 label="观看密码"
                 name="password"
-                rules={[{ required: true, message: "请输入观看密码" }]}
+                rules={[
+                  {
+                    required: true,
+                    pattern: new RegExp(/^\d{6}$/, "g"),
+                    message: "请输入6位数字密码",
+                  },
+                ]}
               >
                 <Input placeholder="请输入6位数字密码" />
               </Form.Item>
