@@ -152,6 +152,7 @@ export const CustomSignupUserModal = () => {
                         item.name.includes("手机")
                           ? [
                               {
+                                required: item.required,
                                 pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
                                 message: "请输入正确的手机号",
                               },
@@ -159,6 +160,7 @@ export const CustomSignupUserModal = () => {
                           : item.name.includes("邮箱")
                           ? [
                               {
+                                required: item.required,
                                 pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
                                 message: "请输入正确的邮箱地址",
                               },
@@ -209,6 +211,7 @@ export const CustomSignupUserModal = () => {
                         item.name.includes("手机")
                           ? [
                               {
+                                required: item.required,
                                 pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
                                 message: "请输入正确的手机号",
                               },
