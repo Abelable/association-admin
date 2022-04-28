@@ -55,7 +55,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
         media_url: video[0].url,
         duration: video[0].duration,
         is_try: isTry ? 1 : 0,
-        tags: tags.join(),
+        tags: tags.length > 3 ? tags.slice(0, 3).join() : tags.join(),
         introduction,
         ...restFieldsValue,
       });
@@ -135,7 +135,11 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
               rules={[{ required: true, message: "请输入视频标签" }]}
               tooltip="最多可生成3个标签"
             >
-              <Select mode="tags" placeholder="输入后回车生产标签" />
+              <Select
+                mode="tags"
+                maxTagCount={3}
+                placeholder="输入后回车生产标签"
+              />
             </Form.Item>
           </Col>
         </Row>
