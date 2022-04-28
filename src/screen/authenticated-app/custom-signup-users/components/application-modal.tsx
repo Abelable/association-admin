@@ -148,12 +148,28 @@ export const CustomSignupUserModal = () => {
                     <Form.Item
                       name={`${index}`}
                       label={item.name}
-                      rules={[
-                        {
-                          required: item.required,
-                          message: `请输入${item.name}`,
-                        },
-                      ]}
+                      rules={
+                        item.name.includes("手机")
+                          ? [
+                              {
+                                pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+                                message: "请输入正确的手机号",
+                              },
+                            ]
+                          : item.name.includes("邮箱")
+                          ? [
+                              {
+                                pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+                                message: "请输入正确的邮箱地址",
+                              },
+                            ]
+                          : [
+                              {
+                                required: item.required,
+                                message: `请输入${item.name}`,
+                              },
+                            ]
+                      }
                     >
                       <Input placeholder={`请输入${item.name}`} />
                     </Form.Item>
@@ -189,12 +205,21 @@ export const CustomSignupUserModal = () => {
                     <Form.Item
                       name={`${index}`}
                       label={item.name}
-                      rules={[
-                        {
-                          required: item.required,
-                          message: `请输入${item.name}`,
-                        },
-                      ]}
+                      rules={
+                        item.name.includes("手机")
+                          ? [
+                              {
+                                pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+                                message: "请输入正确的手机号",
+                              },
+                            ]
+                          : [
+                              {
+                                required: item.required,
+                                message: `请输入${item.name}`,
+                              },
+                            ]
+                      }
                     >
                       <InputNumber
                         style={{ width: "100%" }}
