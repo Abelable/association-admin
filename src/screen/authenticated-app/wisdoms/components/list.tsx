@@ -43,13 +43,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
-            render: (value, wisdom, index) =>
-              `${
-                index + 1 + ((params.page || 1) - 1) * (params.page_size || 10)
-              }`,
+            dataIndex: "id",
+            fixed: "left",
             width: "8rem",
           },
           {
@@ -62,20 +61,22 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             render: (value, wisdom) => (
               <Avatar src={wisdom.head_img} icon={<UserOutlined />} />
             ),
-            width: "16rem",
+            width: "8rem",
           },
           {
             title: "排序",
             dataIndex: "sort",
-            width: "12rem",
+            width: "10rem",
           },
           {
             title: "曾获荣誉",
             dataIndex: "honor",
+            width: "26rem",
           },
           {
             title: "领域（简介）",
             dataIndex: "field",
+            width: "30rem",
           },
           {
             title: "修改时间",
@@ -86,7 +87,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 )}
               </span>
             ),
-            width: "18rem",
+            width: "16rem",
           },
           {
             title: "操作",
