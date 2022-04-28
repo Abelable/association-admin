@@ -51,10 +51,12 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
             dataIndex: "id",
+            fixed: "left",
             width: "8rem",
           },
           {
@@ -66,10 +68,12 @@ export const List = ({
                 alt=""
               />
             ),
+            width: "14rem",
           },
           {
             title: "标题",
             dataIndex: "title",
+            width: "26rem",
           },
           {
             title: "关联作者",
@@ -92,6 +96,7 @@ export const List = ({
                 </span>
               </Author>
             ),
+            width: "16rem",
           },
           {
             title: "视频标签",
@@ -102,10 +107,12 @@ export const List = ({
               else tags = course.tags;
               return tags.map((item, index) => <Tag key={index}>{item}</Tag>);
             },
+            width: "26rem",
           },
           {
             title: "密码",
             dataIndex: "password",
+            width: "12rem",
           },
           {
             title: "权重",
@@ -119,6 +126,7 @@ export const List = ({
                 {course.try_time ? `试看${course.try_time}分钟` : "免费"}
               </span>
             ),
+            width: "12rem",
           },
           {
             title: "创建时间",
@@ -129,12 +137,14 @@ export const List = ({
                 )}
               </span>
             ),
+            width: "18rem",
           },
           {
             title: "操作",
             render(value, course) {
               return <More course={course} />;
             },
+            fixed: "right",
             width: "8rem",
           },
         ]}
