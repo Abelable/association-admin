@@ -49,7 +49,7 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        scroll={{ x: 1500 }}
+        scroll={{ x: 2000 }}
         columns={[
           {
             title: "编号",
@@ -91,6 +91,38 @@ export const List = ({
             width: "10rem",
           },
           {
+            title: "生效时间",
+            render: (value, legal) =>
+              legal.effective_time ? (
+                <span>
+                  {dayjs(Number(legal.effective_time) * 1000).format(
+                    "YYYY-MM-DD HH:mm"
+                  )}
+                </span>
+              ) : (
+                <></>
+              ),
+            width: "12rem",
+            sorter: (a, b) =>
+              Number(a.effective_time) - Number(b.effective_time),
+          },
+          {
+            title: "颁布时间",
+            render: (value, legal) =>
+              legal.promulgation_time ? (
+                <span>
+                  {dayjs(Number(legal.promulgation_time) * 1000).format(
+                    "YYYY-MM-DD HH:mm"
+                  )}
+                </span>
+              ) : (
+                <></>
+              ),
+            width: "12rem",
+            sorter: (a, b) =>
+              Number(a.promulgation_time) - Number(b.promulgation_time),
+          },
+          {
             title: "创建时间",
             render: (value, legal) => (
               <span>
@@ -100,6 +132,7 @@ export const List = ({
               </span>
             ),
             width: "12rem",
+            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
           {
             title: "修改时间",
@@ -111,6 +144,7 @@ export const List = ({
               </span>
             ),
             width: "12rem",
+            sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
           },
           {
             title: "操作",

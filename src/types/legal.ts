@@ -34,6 +34,8 @@ export interface LegalItem {
   sort: number;
   image: string;
   content: string;
+  effective_time: string;
+  promulgation_time: string;
   created_at: string;
   updated_at: string;
 }
@@ -51,4 +53,6 @@ export interface LegalForm {
   sort: number;
   image: string;
   content: string;
+  effective_time: string;
+  promulgation_time: string;
 }

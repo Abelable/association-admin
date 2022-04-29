@@ -1,4 +1,14 @@
-import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import { useLegalModal, useLegalsQueryKey } from "../util";
 import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
@@ -10,6 +20,7 @@ import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
 import { LegalItem } from "../../../../types/legal";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import moment from "moment";
 
 export const LegalModal = ({
   categoryList,
@@ -41,11 +52,18 @@ export const LegalModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { image, ...restFieldsValue } = form.getFieldsValue();
+      const { image, effective_time, promulgation_time, ...restFieldsValue } =
+        form.getFieldsValue();
       await mutateAsync({
         id: editingLegalId || "",
         content,
         image: image.length ? image[0].url : "",
+        effective_time: effective_time
+          ? `${Math.floor(effective_time.valueOf() / 1000)}`
+          : "",
+        promulgation_time: promulgation_time
+          ? `${Math.floor(promulgation_time.valueOf() / 1000)}`
+          : "",
         ...restFieldsValue,
       });
       closeModal();
@@ -54,9 +72,21 @@ export const LegalModal = ({
 
   useDeepCompareEffect(() => {
     if (editingLegalForm) {
-      const { image, content, ...restFieldsValue } = editingLegalForm;
+      const {
+        image,
+        content,
+        effective_time,
+        promulgation_time,
+        ...restFieldsValue
+      } = editingLegalForm;
       form.setFieldsValue({
         image: [{ url: image }],
+        effective_time: effective_time
+          ? moment(Number(effective_time) * 1000)
+          : undefined,
+        promulgation_time: promulgation_time
+          ? moment(Number(promulgation_time) * 1000)
+          : undefined,
         ...restFieldsValue,
       });
       setContent(content);
@@ -108,6 +138,18 @@ export const LegalModal = ({
           <Col span={12}>
             <Form.Item label="文章排序" name="sort">
               <Input placeholder="请输入文章排序" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="生效时间" name="effective_time">
+              <DatePicker style={{ width: "100%" }} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item label="颁布时间" name="promulgation_time">
+              <DatePicker style={{ width: "100%" }} />
             </Form.Item>
           </Col>
         </Row>
