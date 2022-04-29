@@ -93,11 +93,7 @@ export const LegalModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="category_id"
-              label="文章分类"
-              rules={[{ required: true, message: "请选择文章分类" }]}
-            >
+            <Form.Item name="category_id" label="文章分类">
               <Select placeholder="请选择文章分类">
                 {categoryList?.map(({ id, name }) => (
                   <Select.Option key={id} value={id}>
