@@ -154,7 +154,7 @@ export const CustomSignupModal = () => {
                 label="活动日期"
                 rules={[{ required: true, message: "请选择活动日期" }]}
               >
-                <DatePicker.RangePicker style={{ width: "100%" }} />
+                <DatePicker.RangePicker showTime style={{ width: "100%" }} />
               </Form.Item>
             </Col>
           </Row>
