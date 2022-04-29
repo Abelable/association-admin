@@ -37,17 +37,17 @@ const defaultFormList: FormItem[] = [
     options: undefined,
   },
   {
-    id: 3,
-    type: 1,
-    required: true,
-    name: "邮箱",
-    options: undefined,
-  },
-  {
     id: 2,
     type: 1,
     required: true,
     name: "手机号",
+    options: undefined,
+  },
+  {
+    id: 3,
+    type: 1,
+    required: true,
+    name: "邮箱",
     options: undefined,
   },
 ];
