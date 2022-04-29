@@ -49,7 +49,7 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        scroll={{ x: 2000 }}
+        scroll={{ x: 1900 }}
         columns={[
           {
             title: "编号",
