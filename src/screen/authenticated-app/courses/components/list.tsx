@@ -51,7 +51,7 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        scroll={{ x: 1500 }}
+        scroll={{ x: 1820 }}
         columns={[
           {
             title: "编号",
@@ -110,14 +110,10 @@ export const List = ({
             width: "26rem",
           },
           {
-            title: "密码",
-            dataIndex: "password",
-            width: "12rem",
-          },
-          {
             title: "权重",
             dataIndex: "sort",
             width: "8rem",
+            sorter: (a, b) => a.sort - b.sort,
           },
           {
             title: "状态",
@@ -126,6 +122,16 @@ export const List = ({
                 {course.try_time ? `试看${course.try_time}分钟` : "免费"}
               </span>
             ),
+            width: "12rem",
+            filters: [
+              { text: "试看", value: true },
+              { text: "免费", value: false },
+            ],
+            onFilter: (value, course) => !!course.try_time === value,
+          },
+          {
+            title: "密码",
+            dataIndex: "password",
             width: "12rem",
           },
           {
@@ -138,6 +144,19 @@ export const List = ({
               </span>
             ),
             width: "18rem",
+            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
+          },
+          {
+            title: "修改时间",
+            render: (value, course) => (
+              <span>
+                {dayjs(Number(course.updated_at) * 1000).format(
+                  "YYYY-MM-DD HH:mm"
+                )}
+              </span>
+            ),
+            width: "18rem",
+            sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
           },
           {
             title: "操作",

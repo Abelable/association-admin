@@ -18,6 +18,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import { LegalCategoryModal } from "./components/legal-category-modal";
 import { LegalCategory } from "types/legal";
+import dayjs from "dayjs";
 
 export const LegalCategories = () => {
   const [params, setParams] = useLegalCategoriesSearchParams();
@@ -76,8 +77,35 @@ export const LegalCategories = () => {
               ),
             },
             {
-              title: "排序（越大越在前面）",
+              title: "排序",
               dataIndex: "sort",
+              sorter: (a, b) => Number(a.sort) - Number(b.sort),
+            },
+            {
+              title: "创建时间",
+              render: (value, category) => (
+                <span>
+                  {category.created_at
+                    ? dayjs(Number(category.created_at) * 1000).format(
+                        "YYYY-MM-DD HH:mm"
+                      )
+                    : "无"}
+                </span>
+              ),
+              sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
+            },
+            {
+              title: "修改时间",
+              render: (value, category) => (
+                <span>
+                  {category.updated_at
+                    ? dayjs(Number(category.updated_at) * 1000).format(
+                        "YYYY-MM-DD HH:mm"
+                      )
+                    : "无"}
+                </span>
+              ),
+              sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
             },
             {
               title: "操作",

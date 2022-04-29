@@ -70,6 +70,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                   : "无"}
               </span>
             ),
+            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
         ]}
         onChange={setPagination}

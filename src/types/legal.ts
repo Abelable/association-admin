@@ -9,6 +9,8 @@ export interface LegalCategory {
   description: string;
   image: string;
   sort: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface LegalCategoriesResult {
