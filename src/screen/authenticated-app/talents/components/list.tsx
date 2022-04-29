@@ -88,6 +88,20 @@ export const List = ({
       width: "8rem",
     },
     {
+      title: "年龄",
+      width: "8rem",
+      render: (value, talent) =>
+        talent.id_number ? (
+          <span>
+            {new Date().getFullYear() - Number(talent.id_number.slice(6, 10))}
+          </span>
+        ) : (
+          <></>
+        ),
+      sorter: (a, b) =>
+        Number(b.id_number.slice(6, 10)) - Number(a.id_number.slice(6, 10)),
+    },
+    {
       title: "身份证号",
       dataIndex: "id_number",
       width: "24rem",
@@ -221,6 +235,7 @@ export const List = ({
       title: "总评分",
       dataIndex: "score",
       width: "10rem",
+      sorter: (a, b) => Number(a.score) - Number(b.score),
     },
     {
       title: "报名时间",
@@ -232,6 +247,7 @@ export const List = ({
         </span>
       ),
       width: "18rem",
+      sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
     },
     {
       title: "操作",
@@ -248,6 +264,7 @@ export const List = ({
     "照片",
     "姓名",
     "性别",
+    "年龄",
     "身份证号",
     "政治面貌",
     "毕业院校",

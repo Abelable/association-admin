@@ -161,6 +161,7 @@ export const List = ({
               </span>
             ),
             width: "18rem",
+            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
           {
             title: "操作",

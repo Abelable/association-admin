@@ -67,6 +67,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             title: "排序",
             dataIndex: "sort",
             width: "10rem",
+            sorter: (a, b) => Number(a.sort) - Number(b.sort),
           },
           {
             title: "曾获荣誉",
@@ -88,6 +89,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
               </span>
             ),
             width: "16rem",
+            sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
           },
           {
             title: "操作",
