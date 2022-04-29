@@ -32,7 +32,7 @@ export const http = async (
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
       const result = await response.json();
-      if (result.code === "422") {
+      if (result.code === "420") {
         await auth.logout();
         window.location.reload();
         return Promise.reject({ message: "请重新登录" });
