@@ -88,7 +88,7 @@ export const List = ({
                 }
               </span>
             ),
-            width: "10rem",
+            width: "20rem",
           },
           {
             title: "生效时间",

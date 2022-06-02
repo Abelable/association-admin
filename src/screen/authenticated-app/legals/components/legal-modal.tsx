@@ -142,14 +142,24 @@ export const LegalModal = ({
           </Col>
           <Col span={12}>
             <Form.Item label="生效时间" name="effective_time">
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker
+                showTime={{ format: "HH:mm" }}
+                format="YYYY-MM-DD HH:mm"
+                style={{ width: "100%" }}
+                placeholder="请选择生效时间"
+              />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="颁布时间" name="promulgation_time">
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker
+                showTime={{ format: "HH:mm" }}
+                format="YYYY-MM-DD HH:mm"
+                style={{ width: "100%" }}
+                placeholder="请选择颁布时间"
+              />
             </Form.Item>
           </Col>
         </Row>
