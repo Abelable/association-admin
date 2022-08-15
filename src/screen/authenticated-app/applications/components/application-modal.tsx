@@ -1,3 +1,10 @@
+import { useQueryClient } from "react-query";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import { useForm } from "antd/lib/form/Form";
+import { cleanObject } from "utils";
+import { useAddApplication, useEditApplication } from "service/application";
+import { useApplicationModal, useApplicationsQueryKey } from "../util";
+
 import {
   Button,
   Col,
@@ -9,20 +16,16 @@ import {
   Select,
   Space,
 } from "antd";
-import { useQueryClient } from "react-query";
+import { OssUpload } from "components/oss-upload";
+import { ErrorBox } from "components/lib";
+import { Map } from "components/map";
+
 import {
   ApplicationsResult,
   LevelOption,
   ApplicationForm,
   ApplicationsItem,
 } from "types/application";
-import { useApplicationModal, useApplicationsQueryKey } from "../util";
-import { useForm } from "antd/lib/form/Form";
-import { OssUpload } from "components/oss-upload";
-import { useAddApplication, useEditApplication } from "service/application";
-import { ErrorBox } from "components/lib";
-import { cleanObject } from "utils";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const ApplicationModal = ({
   levelOptions,
@@ -270,6 +273,7 @@ export const ApplicationModal = ({
         >
           <OssUpload />
         </Form.Item>
+        <Map />
         <Divider orientation="left">负责人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>

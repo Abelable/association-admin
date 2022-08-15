@@ -154,6 +154,23 @@ export const SearchPanel = ({
           ))}
         </Select>
       </Item>
+      <Item>
+        <div>企业评价：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.is_deal}
+          placeholder="请选择企业评价"
+          allowClear={true}
+          onSelect={setStatus}
+          onClear={clearStatus}
+        >
+          {statusOptions?.map(({ id, value, name }) => (
+            <Select.Option key={id} value={value}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
