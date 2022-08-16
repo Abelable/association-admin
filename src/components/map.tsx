@@ -5,11 +5,17 @@ import { Input } from "antd";
 import _ from "lodash";
 
 export const Map = ({
+  company,
+  lng,
+  lat,
   setLng,
   setLat,
 }: {
-  setLng: (v: undefined | number) => void;
-  setLat: (v: undefined | number) => void;
+  company: string | undefined;
+  lng: number | undefined;
+  lat: number | undefined;
+  setLng: (v: number | undefined) => void;
+  setLat: (v: number | undefined) => void;
 }) => {
   const map = useRef();
   const makers = useRef<any[]>([]);
@@ -19,6 +25,19 @@ export const Map = ({
     map.current = new (window as any).AMap.Map("map", {
       resizeEnable: true,
     });
+
+    makers.current = [
+      new (window as any).AMap.Marker({
+        position: [lng, lat],
+        title: `${lng},${lat}`,
+        label: {
+          content: company,
+        },
+      }),
+    ];
+    (map.current as any).add(makers.current);
+    (map.current as any).setFitView();
+
     (window as any).AMap.plugin("AMap.PlaceSearch", () => {
       const placeSearch = new (window as any).AMap.PlaceSearch();
       address &&
@@ -49,7 +68,7 @@ export const Map = ({
           }
         });
     });
-  }, [address, makers, setLat, setLng]);
+  }, [address, company, lat, lng, makers, setLat, setLng]);
 
   return (
     <MapContainer>

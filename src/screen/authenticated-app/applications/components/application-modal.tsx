@@ -35,8 +35,8 @@ export const ApplicationModal = ({
 }) => {
   const [form] = useForm();
 
-  const [lng, setLng] = useState<undefined | number>(undefined);
-  const [lat, setLat] = useState<undefined | number>(undefined);
+  const [lng, setLng] = useState<undefined | number>(120.190609);
+  const [lat, setLat] = useState<undefined | number>(30.204255);
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -302,7 +302,13 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
         </Row>
-        <Map setLng={setLng} setLat={setLat} />
+        <Map
+          company={editingApplicationForm?.company_name}
+          lng={lng}
+          lat={lat}
+          setLng={setLng}
+          setLat={setLat}
+        />
 
         <Divider orientation="left">负责人信息</Divider>
         <Row gutter={16}>
