@@ -1,48 +1,65 @@
 import { useEffect, useRef, useState } from "react";
-import AMapLoader from "@amap/amap-jsapi-loader";
 import styled from "@emotion/styled";
-import { Button, Input } from "antd";
 
-export const Map = () => {
-  let map = useRef();
+import { Input } from "antd";
+import _ from "lodash";
 
-  const [address, setAddress] = useState();
-  const searchAddress = () => {
-    console.log(address);
-  };
+export const Map = ({
+  setLng,
+  setLat,
+}: {
+  setLng: (v: undefined | number) => void;
+  setLat: (v: undefined | number) => void;
+}) => {
+  const map = useRef();
+  const makers = useRef<any[]>([]);
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
-    AMapLoader.load({
-      key: "c7d234ca736e86cc74ec35d25b2400e4",
-      version: "2.0",
-    })
-      .then(() => {
-        map.current = new (window as any).AMap.Map("map", {
-          zoom: 15,
-          center: [120.025512, 30.278915],
+    map.current = new (window as any).AMap.Map("map", {
+      resizeEnable: true,
+    });
+    (window as any).AMap.plugin("AMap.PlaceSearch", () => {
+      const placeSearch = new (window as any).AMap.PlaceSearch();
+      address &&
+        placeSearch.search(address, (status: any, result: any) => {
+          if (status === "complete") {
+            makers.current?.length &&
+              (map.current as any).remove(makers.current);
+            if (result.poiList.pois.length) {
+              const pois = result.poiList.pois;
+              let makerList: any[] = [];
+              for (let i = 0; i < pois.length; i++) {
+                makerList[i] = new (window as any).AMap.Marker({
+                  position: pois[i].location,
+                  title: `${pois[i].location.lng},${pois[i].location.lat}`,
+                  label: {
+                    content: pois[i].name,
+                  },
+                });
+                makerList[i].on("click", (e: any) => {
+                  setLng(e.lnglat.getLng());
+                  setLat(e.lnglat.getLat());
+                });
+                (map.current as any).add(makerList[i]);
+              }
+              makers.current = makerList;
+              (map.current as any).setFitView();
+            }
+          }
         });
-        (map.current as any).add(
-          new (window as any).AMap.Marker({
-            position: new (window as any).AMap.LngLat(120.025512, 30.278915),
-          })
-        );
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+    });
+  }, [address, makers, setLat, setLng]);
 
   return (
     <MapContainer>
       <div id="map" style={{ height: "30rem" }} />
       <MapSearch>
         <Input
-          onChange={(e: any) => setAddress(e.target.value)}
-          placeholder="请输入地址"
+          style={{ width: "40rem" }}
+          onChange={_.debounce((e: any) => setAddress(e.target.value), 500)}
+          placeholder="请输入具体地址"
         />
-        <Button onClick={searchAddress} type="primary">
-          搜索
-        </Button>
       </MapSearch>
     </MapContainer>
   );

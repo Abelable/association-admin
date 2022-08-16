@@ -19,6 +19,7 @@ import {
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { Map } from "components/map";
+import { useState } from "react";
 
 import {
   ApplicationsResult,
@@ -33,6 +34,9 @@ export const ApplicationModal = ({
   levelOptions: LevelOption[];
 }) => {
   const [form] = useForm();
+
+  const [lng, setLng] = useState<undefined | number>(undefined);
+  const [lat, setLat] = useState<undefined | number>(undefined);
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -273,7 +277,33 @@ export const ApplicationModal = ({
         >
           <OssUpload />
         </Form.Item>
-        <Map />
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="license"
+              label="企业所在地区"
+              rules={[{ required: true, message: "请输入企业所在地区" }]}
+            >
+              <Input placeholder="请输入企业所在地区" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="license" label="企业所在经纬度">
+              <Input.Group>
+                <Row gutter={8}>
+                  <Col span={12}>
+                    <Input value={lng} placeholder="请输入经度" />
+                  </Col>
+                  <Col span={12}>
+                    <Input value={lat} placeholder="请输入纬度" />
+                  </Col>
+                </Row>
+              </Input.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Map setLng={setLng} setLat={setLat} />
+
         <Divider orientation="left">负责人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
