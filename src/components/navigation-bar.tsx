@@ -12,10 +12,10 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/legal/categories": "分类管理",
   "/legal/legal_list": "文章列表",
   "/wisdoms": "网商智库",
-  "/applications": "入会申请",
-  "/talents": "人才管理",
   "/member_service": "会员服务",
   "/industry_test": "行业检测",
+  "/applications": "入会申请",
+  "/talents": "人才管理",
   "/custom_signups": "自定义活动报名",
   "/custom_signups/enlist": "报名列表",
 };
