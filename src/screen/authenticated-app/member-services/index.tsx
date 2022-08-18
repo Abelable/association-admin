@@ -26,6 +26,7 @@ export const Services = () => {
         />
         <List
           error={error}
+          categoryOptions={categoryOptions}
           params={params}
           setParams={setParams}
           loading={isLoading}

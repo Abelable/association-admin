@@ -12,20 +12,28 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useServiceModal, useServicesQueryKey } from "../util";
-import {
+import type {
   ServiceForm,
   ServiceItem,
   ServicesSearchParams,
 } from "types/member-service";
+import type { SearchPanelProps } from "./search-panel";
+
 import { useDeleteService } from "service/member-service";
 
-interface ListProps extends TableProps<ServiceItem> {
+interface ListProps extends TableProps<ServiceItem>, SearchPanelProps {
   error: Error | unknown;
   params: Partial<ServicesSearchParams>;
   setParams: (params: Partial<ServicesSearchParams>) => void;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  error,
+  categoryOptions,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const { open } = useServiceModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -90,7 +98,15 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "关联标签",
-            dataIndex: "category_id",
+            render: (value, service) => (
+              <>
+                {
+                  categoryOptions.find(
+                    (item) => item.id === service.category_id
+                  )?.name
+                }
+              </>
+            ),
             width: "12rem",
           },
           {
