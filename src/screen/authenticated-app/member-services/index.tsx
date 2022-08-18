@@ -37,7 +37,7 @@ export const Services = () => {
             total: toNumber(data?.total),
           }}
         />
-        <ServiceModal />
+        <ServiceModal categoryOptions={categoryOptions} />
       </Main>
     </Container>
   );
