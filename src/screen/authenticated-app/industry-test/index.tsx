@@ -11,9 +11,10 @@ export const Tests = () => {
   const { data, isLoading, error } = useTests(params);
 
   const categoryOptions = [
-    { id: "1", name: "培训服务" },
-    { id: "2", name: "政企合作" },
-    { id: "3", name: "标准制定" },
+    { id: "1", name: "法律与政策" },
+    { id: "2", name: "监管动向" },
+    { id: "3", name: "舆情总览" },
+    { id: "4", name: "行业动态" },
   ];
 
   return (
