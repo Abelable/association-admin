@@ -2,7 +2,12 @@ export interface ServicesSearchParams {
   page: number;
   page_size: number;
   title: string;
-  category_id: number;
+  category_id: string;
+}
+
+export interface CategoryOption {
+  id: string;
+  name: string;
 }
 
 export interface ServiceItem {

@@ -1,37 +1,51 @@
 import { useState } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { WisdomsSearchParams } from "types/wisdom";
+import { CategoryOption, ServicesSearchParams } from "types/member-service";
 
 export interface SearchPanelProps {
-  params: Partial<WisdomsSearchParams>;
-  setParams: (params: Partial<WisdomsSearchParams>) => void;
+  categoryOptions: CategoryOption[];
+  params: Partial<ServicesSearchParams>;
+  setParams: (params: Partial<ServicesSearchParams>) => void;
 }
 
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  categoryOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
     name: "",
-  } as Partial<WisdomsSearchParams>;
+    category_id: undefined,
+  } as Partial<ServicesSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<WisdomsSearchParams>>(params);
+    useState<Partial<ServicesSearchParams>>(params);
 
-  const setName = (evt: any) => {
+  const setTitle = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        name: "",
+        title: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      name: evt.target.value,
+      title: evt.target.value,
     });
   };
+
+  const setCategory = (category_id: any) =>
+    setTemporaryParams({ ...temporaryParams, category_id });
+  const clearCategory = () =>
+    setTemporaryParams({
+      ...temporaryParams,
+      category_id: undefined,
+    });
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -42,14 +56,31 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
-          <div>人物名称：</div>
+          <div>标题：</div>
           <Input
             style={{ width: "20rem" }}
-            value={temporaryParams.name}
-            onChange={setName}
-            placeholder="请输入人物名称"
+            value={temporaryParams.title}
+            onChange={setTitle}
+            placeholder="请输入标题"
             allowClear={true}
           />
+        </Row>
+        <Row>
+          <div>标签筛选：</div>
+          <Select
+            style={{ width: "20rem" }}
+            value={temporaryParams.category_id}
+            placeholder="请选择关联标签"
+            allowClear={true}
+            onSelect={setCategory}
+            onClear={clearCategory}
+          >
+            {categoryOptions?.map(({ id, name }) => (
+              <Select.Option key={id} value={id}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
         </Row>
       </Row>
       <Row gap={true}>

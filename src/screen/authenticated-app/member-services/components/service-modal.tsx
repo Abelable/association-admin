@@ -60,7 +60,7 @@ export const ServiceModal = () => {
 
   return (
     <Drawer
-      title={editingServiceId ? "编辑智库文章" : "新增智库文章"}
+      title={editingServiceId ? "编辑会员服务" : "新增会员服务"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}

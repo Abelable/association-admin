@@ -2,7 +2,12 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useServicesSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["name", "page", "page_size"]);
+  const [params, setParams] = useUrlQueryParams([
+    "title",
+    "category_id",
+    "page",
+    "page_size",
+  ]);
   return [
     useMemo(
       () => ({

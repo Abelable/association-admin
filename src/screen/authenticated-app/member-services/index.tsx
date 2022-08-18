@@ -10,10 +10,20 @@ export const Services = () => {
   const [params, setParams] = useServicesSearchParams();
   const { data, isLoading, error } = useServices(params);
 
+  const categoryOptions = [
+    { id: "1", name: "培训服务" },
+    { id: "2", name: "政企合作" },
+    { id: "3", name: "标准制定" },
+  ];
+
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          categoryOptions={categoryOptions}
+          params={params}
+          setParams={setParams}
+        />
         <List
           error={error}
           params={params}
