@@ -16,6 +16,7 @@ import { Courses } from "./courses";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
 import { Services } from "./member-services/index";
+import { Tests } from "./industry-test";
 import { CustomSignups } from "./custom-signups";
 import { CustomSignupUsers } from "./custom-signup-users";
 
@@ -34,6 +35,7 @@ import {
   UserOutlined,
   StarOutlined,
   HeartOutlined,
+  MonitorOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -63,6 +65,7 @@ export const AuthenticatedApp = () => {
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
               <Route path="member_service" element={<Services />} />
+              <Route path="industry_test" element={<Tests />} />
               <Route path="custom_signups" element={<CustomSignups />} />
               <Route
                 path="custom_signups/enlist"
@@ -133,6 +136,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.Item>
         <Menu.Item key="member_service" icon={<HeartOutlined />}>
           <Link to={"member_service"}>会员服务</Link>
+        </Menu.Item>
+        <Menu.Item key="industry_test" icon={<MonitorOutlined />}>
+          <Link to={"industry_test"}>行业检测</Link>
         </Menu.Item>
         <Menu.Item key="custom_signups" icon={<StarOutlined />}>
           <Link to={"custom_signups"}>自定义活动报名</Link>

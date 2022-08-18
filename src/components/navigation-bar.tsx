@@ -15,6 +15,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/applications": "入会申请",
   "/talents": "人才管理",
   "/member_service": "会员服务",
+  "/industry_test": "行业检测",
   "/custom_signups": "自定义活动报名",
   "/custom_signups/enlist": "报名列表",
 };
