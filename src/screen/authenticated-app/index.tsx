@@ -62,10 +62,10 @@ export const AuthenticatedApp = () => {
               <Route path="legal/categories" element={<LegalCategories />} />
               <Route path="legal/legal_list" element={<Legals />} />
               <Route path="wisdoms" element={<Wisdoms />} />
-              <Route path="applications" element={<Applications />} />
-              <Route path="talents" element={<Talents />} />
               <Route path="member_service" element={<Services />} />
               <Route path="industry_test" element={<Tests />} />
+              <Route path="applications" element={<Applications />} />
+              <Route path="talents" element={<Talents />} />
               <Route path="custom_signups" element={<CustomSignups />} />
               <Route
                 path="custom_signups/enlist"
@@ -128,17 +128,17 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="wisdoms" icon={<BulbOutlined />}>
           <Link to={"wisdoms"}>网商智库</Link>
         </Menu.Item>
-        <Menu.Item key="applications" icon={<AuditOutlined />}>
-          <Link to={"applications"}>入会申请</Link>
-        </Menu.Item>
-        <Menu.Item key="talents" icon={<SolutionOutlined />}>
-          <Link to={"talents"}>人才管理</Link>
-        </Menu.Item>
         <Menu.Item key="member_service" icon={<HeartOutlined />}>
           <Link to={"member_service"}>会员服务</Link>
         </Menu.Item>
         <Menu.Item key="industry_test" icon={<MonitorOutlined />}>
           <Link to={"industry_test"}>行业检测</Link>
+        </Menu.Item>
+        <Menu.Item key="applications" icon={<AuditOutlined />}>
+          <Link to={"applications"}>入会申请</Link>
+        </Menu.Item>
+        <Menu.Item key="talents" icon={<SolutionOutlined />}>
+          <Link to={"talents"}>人才管理</Link>
         </Menu.Item>
         <Menu.Item key="custom_signups" icon={<StarOutlined />}>
           <Link to={"custom_signups"}>自定义活动报名</Link>
