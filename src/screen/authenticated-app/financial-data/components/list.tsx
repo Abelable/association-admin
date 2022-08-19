@@ -1,13 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Modal,
-  Table,
-  TablePaginationConfig,
-  TableProps,
-} from "antd";
+import { Button, Dropdown, Menu, Modal, Table, TableProps } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -20,25 +12,32 @@ import type {
 import { useDeleteFinancial } from "service/financial-data";
 
 interface ListProps extends TableProps<FinancialItem> {
+  type: string;
   error: Error | unknown;
   params: Partial<FinancialsSearchParams>;
   setParams: (params: Partial<FinancialsSearchParams>) => void;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  type,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const { open } = useFinancialModal();
-
-  const setPagination = (pagination: TablePaginationConfig) =>
-    setParams({
-      ...params,
-      page: pagination.current,
-      page_size: pagination.pageSize,
-    });
 
   return (
     <Container>
       <Header between={true}>
-        <h3>服务列表</h3>
+        <TitleWrap>
+          <h3>{type === "0" ? "收入表" : "支出表"}</h3>
+          {type === "0" ? (
+            <TotalRevenue>+¥1239.99</TotalRevenue>
+          ) : (
+            <TotalOutlays>-¥1239.99</TotalOutlays>
+          )}
+        </TitleWrap>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -46,7 +45,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -101,7 +99,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             width: "8rem",
           },
         ]}
-        onChange={setPagination}
         {...restProps}
       />
     </Container>
@@ -153,4 +150,21 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const TitleWrap = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
+const TotalRevenue = styled.div`
+  margin-left: 2rem;
+  color: red;
+  font-size: 1.4rem;
+  font-weight: bold;
+`;
+const TotalOutlays = styled.div`
+  margin-left: 2rem;
+  color: green;
+  font-size: 1.4rem;
+  font-weight: bold;
 `;

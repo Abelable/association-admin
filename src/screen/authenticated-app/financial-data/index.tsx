@@ -27,6 +27,7 @@ export const Financials = () => {
       <Main>
         <List
           error={error}
+          type={type}
           params={params}
           setParams={setParams}
           loading={isLoading}
