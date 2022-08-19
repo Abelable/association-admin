@@ -12,6 +12,9 @@ import { Row } from "components/lib";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
+  const [totalRevenue, setTotalRevenue] = useState("0.00");
+  const [totalOutlays, setTotalOutlays] = useState("0.00");
+
   const [params, setParams] = useFinancialsSearchParams();
   const { data, isLoading, error } = useFinancials(params);
   const [tableList, setTableList] = useState<TableItem[]>([]);
@@ -96,6 +99,7 @@ export const Financials = () => {
     ];
 
     if (data?.list) {
+      let revenue = 0;
       for (let i = 0; i < 12; i++) {
         if (data.list[i]) {
           const {
@@ -104,18 +108,20 @@ export const Financials = () => {
             service_income,
             other_income,
           } = data.list[i];
+          const totalIncome =
+            Number(member_income) +
+            Number(project_income) +
+            Number(service_income) +
+            Number(other_income);
           (defaultTableList[0] as any)[`${i + 1}`] = member_income;
           (defaultTableList[1] as any)[`${i + 1}`] = project_income;
           (defaultTableList[2] as any)[`${i + 1}`] = service_income;
           (defaultTableList[3] as any)[`${i + 1}`] = other_income;
-          (defaultTableList[4] as any)[`${i + 1}`] = `${(
-            Number(member_income) +
-            Number(project_income) +
-            Number(service_income) +
-            Number(other_income)
-          ).toFixed(2)}`;
+          (defaultTableList[4] as any)[`${i + 1}`] = totalIncome.toFixed(2);
+          revenue += totalIncome;
         }
       }
+      setTotalRevenue(revenue.toFixed(2));
       setTableList(defaultTableList);
     }
   }, [data?.list]);
@@ -137,9 +143,9 @@ export const Financials = () => {
           <TitleWrap>
             <h3>{type === "0" ? "收入表" : "支出表"}</h3>
             {type === "0" ? (
-              <TotalRevenue>+¥1239.99</TotalRevenue>
+              <TotalRevenue>+¥{totalRevenue}</TotalRevenue>
             ) : (
-              <TotalOutlays>-¥1239.99</TotalOutlays>
+              <TotalOutlays>-¥{totalOutlays}</TotalOutlays>
             )}
           </TitleWrap>
           <DatePicker
