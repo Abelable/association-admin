@@ -15,18 +15,18 @@ export interface FinancialItem {
 
 export interface TableItem {
   subject: string;
-  january_data: number;
-  february_data: number;
-  march_data: number;
-  april_data: number;
-  may_data: number;
-  june_data: number;
-  july_data: number;
-  august_data: number;
-  september_data: number;
-  october_data: number;
-  november_data: number;
-  december_data: number;
+  "1": string;
+  "2": string;
+  "3": string;
+  "4": string;
+  "5": string;
+  "6": string;
+  "7": string;
+  "8": string;
+  "9": string;
+  "10": string;
+  "11": string;
+  "12": string;
 }
 
 export interface FinancialsResult {

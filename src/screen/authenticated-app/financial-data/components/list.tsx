@@ -1,14 +1,11 @@
 import styled from "@emotion/styled";
-import { Button, Table, TableProps } from "antd";
+import { Button, InputNumber, Table, TableProps } from "antd";
 import { ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { useFinancialModal } from "../util";
-import type {
-  FinancialItem,
-  FinancialsSearchParams,
-} from "types/financial-data";
+import type { TableItem, FinancialsSearchParams } from "types/financial-data";
 
-interface ListProps extends TableProps<FinancialItem> {
+interface ListProps extends TableProps<TableItem> {
   type: string;
   error: Error | unknown;
   params: Partial<FinancialsSearchParams>;
@@ -41,21 +38,70 @@ export const List = ({
       </Header>
       <ErrorBox error={error} />
       <Table
-        rowKey={"id"}
+        rowKey={"subject"}
         columns={[
           {
-            title: "编号",
-            dataIndex: "id",
-            fixed: "left",
-            width: "8rem",
+            title: "科目",
+            dataIndex: "subject",
           },
           {
-            title: "标题",
-            dataIndex: "title",
-            width: "20rem",
+            title: `${params.select_year || new Date().getFullYear()}年1月`,
+            dataIndex: "1",
+            render: (value, item) => (
+              <InputNumber
+                defaultValue={Number(value)}
+                step="0.01"
+                bordered={false}
+              />
+            ),
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年2月`,
+            dataIndex: "2",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年3月`,
+            dataIndex: "3",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年4月`,
+            dataIndex: "4",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年5月`,
+            dataIndex: "5",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年6月`,
+            dataIndex: "6",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年7月`,
+            dataIndex: "7",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年8月`,
+            dataIndex: "8",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年9月`,
+            dataIndex: "9",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年10月`,
+            dataIndex: "10",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年11月`,
+            dataIndex: "11",
+          },
+          {
+            title: `${params.select_year || new Date().getFullYear()}年12月`,
+            dataIndex: "12",
           },
         ]}
         {...restProps}
+        bordered={true}
         pagination={false}
       />
     </Container>
