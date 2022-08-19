@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import moment from "moment";
 import { useFinancials } from "service/financial-data";
 import { useFinancialsSearchParams } from "./util";
 
-import { Menu } from "antd";
+import { DatePicker, Menu } from "antd";
 import { List } from "./components/list";
 
 import type { TableItem } from "types/financial-data";
+import { Row } from "components/lib";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
@@ -94,7 +96,6 @@ export const Financials = () => {
     ];
 
     if (data?.list) {
-      console.log(1);
       for (let i = 0; i < 12; i++) {
         if (data.list[i]) {
           const {
@@ -132,6 +133,24 @@ export const Financials = () => {
         </Menu>
       </TypeMenu>
       <Main>
+        <Header between={true}>
+          <TitleWrap>
+            <h3>{type === "0" ? "收入表" : "支出表"}</h3>
+            {type === "0" ? (
+              <TotalRevenue>+¥1239.99</TotalRevenue>
+            ) : (
+              <TotalOutlays>-¥1239.99</TotalOutlays>
+            )}
+          </TitleWrap>
+          <DatePicker
+            onChange={(date: any, dateString: string) =>
+              setParams({ ...params, select_year: dateString })
+            }
+            defaultValue={moment(params.select_year || "")}
+            disabledDate={(current: any) => current > moment()}
+            picker="year"
+          />
+        </Header>
         <List
           error={error}
           type={type}
@@ -155,7 +174,30 @@ const TypeMenu = styled.div`
 `;
 
 const Main = styled.div`
+  margin: 2.4rem;
   padding: 2.4rem;
   height: calc(100% - 4.6rem);
+  background: #fff;
   overflow: scroll;
+`;
+
+const Header = styled(Row)`
+  margin-bottom: 2.4rem;
+`;
+
+const TitleWrap = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
+const TotalRevenue = styled.div`
+  margin-left: 2rem;
+  color: red;
+  font-size: 1.4rem;
+  font-weight: bold;
+`;
+const TotalOutlays = styled.div`
+  margin-left: 2rem;
+  color: green;
+  font-size: 1.4rem;
+  font-weight: bold;
 `;

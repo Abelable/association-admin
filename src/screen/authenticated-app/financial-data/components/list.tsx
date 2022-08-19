@@ -1,8 +1,5 @@
-import moment from "moment";
-import styled from "@emotion/styled";
-
-import { DatePicker, Table, TableProps } from "antd";
-import { ErrorBox, Row } from "components/lib";
+import { Table, TableProps } from "antd";
+import { ErrorBox } from "components/lib";
 
 import type { TableItem, FinancialsSearchParams } from "types/financial-data";
 
@@ -20,26 +17,8 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const setYear = (date: any, dateString: string) =>
-    setParams({ ...params, select_year: dateString });
   return (
-    <Container>
-      <Header between={true}>
-        <TitleWrap>
-          <h3>{type === "0" ? "收入表" : "支出表"}</h3>
-          {type === "0" ? (
-            <TotalRevenue>+¥1239.99</TotalRevenue>
-          ) : (
-            <TotalOutlays>-¥1239.99</TotalOutlays>
-          )}
-        </TitleWrap>
-        <DatePicker
-          onChange={setYear}
-          defaultValue={moment(params.select_year || "")}
-          disabledDate={(current: any) => current > moment()}
-          picker="year"
-        />
-      </Header>
+    <>
       <ErrorBox error={error} />
       <Table
         rowKey={"subject"}
@@ -178,32 +157,6 @@ export const List = ({
         bordered={true}
         pagination={false}
       />
-    </Container>
+    </>
   );
 };
-
-const Container = styled.div`
-  padding: 2.4rem;
-  background: #fff;
-`;
-
-const Header = styled(Row)`
-  margin-bottom: 2.4rem;
-`;
-
-const TitleWrap = styled.div`
-  display: flex;
-  align-items: baseline;
-`;
-const TotalRevenue = styled.div`
-  margin-left: 2rem;
-  color: red;
-  font-size: 1.4rem;
-  font-weight: bold;
-`;
-const TotalOutlays = styled.div`
-  margin-left: 2rem;
-  color: green;
-  font-size: 1.4rem;
-  font-weight: bold;
-`;
