@@ -17,6 +17,7 @@ import { Applications } from "./applications";
 import { Talents } from "./talents";
 import { Services } from "./member-services/index";
 import { Tests } from "./industry-test";
+import { Portraits } from "./credit-portrait";
 import { CustomSignups } from "./custom-signups";
 import { CustomSignupUsers } from "./custom-signup-users";
 
@@ -36,6 +37,7 @@ import {
   StarOutlined,
   HeartOutlined,
   MonitorOutlined,
+  RadarChartOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -64,6 +66,7 @@ export const AuthenticatedApp = () => {
               <Route path="wisdoms" element={<Wisdoms />} />
               <Route path="member_service" element={<Services />} />
               <Route path="industry_test" element={<Tests />} />
+              <Route path="credit_portrait" element={<Portraits />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
               <Route path="custom_signups" element={<CustomSignups />} />
@@ -133,6 +136,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.Item>
         <Menu.Item key="industry_test" icon={<MonitorOutlined />}>
           <Link to={"industry_test"}>行业检测</Link>
+        </Menu.Item>
+        <Menu.Item key="credit_portrait" icon={<RadarChartOutlined />}>
+          <Link to={"credit_portrait"}>会员信用画像</Link>
         </Menu.Item>
         <Menu.Item key="applications" icon={<AuditOutlined />}>
           <Link to={"applications"}>入会申请</Link>

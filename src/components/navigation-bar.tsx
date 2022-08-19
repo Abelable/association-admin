@@ -14,6 +14,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/wisdoms": "网商智库",
   "/member_service": "会员服务",
   "/industry_test": "行业检测",
+  "/credit_portrait": "会员信用画像",
   "/applications": "入会申请",
   "/talents": "人才管理",
   "/custom_signups": "自定义活动报名",
@@ -33,12 +34,15 @@ export const NavigationBar = () => {
   });
   return (
     <Wrap>
+      <div>当前位置：</div>
       <Breadcrumb>{extraBreadcrumbItems}</Breadcrumb>
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
+  display: flex;
+  align-items: center;
   padding: 2.4rem;
   background: #fff;
 `;
