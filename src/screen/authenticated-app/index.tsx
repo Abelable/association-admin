@@ -64,9 +64,9 @@ export const AuthenticatedApp = () => {
               <Route path="legal/categories" element={<LegalCategories />} />
               <Route path="legal/legal_list" element={<Legals />} />
               <Route path="wisdoms" element={<Wisdoms />} />
+              <Route path="credit_portrait" element={<Portraits />} />
               <Route path="member_service" element={<Services />} />
               <Route path="industry_test" element={<Tests />} />
-              <Route path="credit_portrait" element={<Portraits />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
               <Route path="custom_signups" element={<CustomSignups />} />
@@ -131,14 +131,14 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="wisdoms" icon={<BulbOutlined />}>
           <Link to={"wisdoms"}>网商智库</Link>
         </Menu.Item>
+        <Menu.Item key="credit_portrait" icon={<PieChartOutlined />}>
+          <Link to={"credit_portrait"}>会员信用画像</Link>
+        </Menu.Item>
         <Menu.Item key="member_service" icon={<HeartOutlined />}>
           <Link to={"member_service"}>会员服务</Link>
         </Menu.Item>
         <Menu.Item key="industry_test" icon={<MonitorOutlined />}>
           <Link to={"industry_test"}>行业检测</Link>
-        </Menu.Item>
-        <Menu.Item key="credit_portrait" icon={<PieChartOutlined />}>
-          <Link to={"credit_portrait"}>会员信用画像</Link>
         </Menu.Item>
         <Menu.Item key="applications" icon={<AuditOutlined />}>
           <Link to={"applications"}>入会申请</Link>
