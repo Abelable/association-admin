@@ -94,15 +94,25 @@ export const Financials = () => {
     ];
 
     if (data?.list) {
+      console.log(1);
       for (let i = 0; i < 12; i++) {
         if (data.list[i]) {
-          (defaultTableList[0] as any)[`${i + 1}`] = data.list[i].member_income;
-          (defaultTableList[1] as any)[`${i + 1}`] =
-            data.list[i].project_income;
-          (defaultTableList[2] as any)[`${i + 1}`] =
-            data.list[i].service_income;
-          (defaultTableList[3] as any)[`${i + 1}`] = data.list[i].other_income;
-          (defaultTableList[4] as any)[`${i + 1}`] = data.list[i].total_income;
+          const {
+            member_income,
+            project_income,
+            service_income,
+            other_income,
+          } = data.list[i];
+          (defaultTableList[0] as any)[`${i + 1}`] = member_income;
+          (defaultTableList[1] as any)[`${i + 1}`] = project_income;
+          (defaultTableList[2] as any)[`${i + 1}`] = service_income;
+          (defaultTableList[3] as any)[`${i + 1}`] = other_income;
+          (defaultTableList[4] as any)[`${i + 1}`] = `${(
+            Number(member_income) +
+            Number(project_income) +
+            Number(service_income) +
+            Number(other_income)
+          ).toFixed(2)}`;
         }
       }
       setTableList(defaultTableList);

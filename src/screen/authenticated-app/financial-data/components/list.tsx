@@ -1,7 +1,7 @@
 import moment from "moment";
 import styled from "@emotion/styled";
 
-import { DatePicker, InputNumber, Table, TableProps } from "antd";
+import { DatePicker, Table, TableProps } from "antd";
 import { ErrorBox, Row } from "components/lib";
 
 import type { TableItem, FinancialsSearchParams } from "types/financial-data";
@@ -35,7 +35,7 @@ export const List = ({
         </TitleWrap>
         <DatePicker
           onChange={setYear}
-          defaultValue={moment()}
+          defaultValue={moment(params.select_year || "")}
           disabledDate={(current: any) => current > moment()}
           picker="year"
         />
@@ -51,13 +51,6 @@ export const List = ({
           {
             title: `${params.select_year || new Date().getFullYear()}年1月`,
             dataIndex: "1",
-            render: (value, item) => (
-              <InputNumber
-                defaultValue={Number(value)}
-                step="0.01"
-                bordered={false}
-              />
-            ),
           },
           {
             title: `${params.select_year || new Date().getFullYear()}年2月`,
@@ -67,11 +60,7 @@ export const List = ({
               new Date().getMonth() < 1 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -82,11 +71,7 @@ export const List = ({
               new Date().getMonth() < 2 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -97,11 +82,7 @@ export const List = ({
               new Date().getMonth() < 3 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -112,11 +93,7 @@ export const List = ({
               new Date().getMonth() < 4 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -127,11 +104,7 @@ export const List = ({
               new Date().getMonth() < 5 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -142,11 +115,7 @@ export const List = ({
               new Date().getMonth() < 6 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -157,11 +126,7 @@ export const List = ({
               new Date().getMonth() < 7 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -172,11 +137,7 @@ export const List = ({
               new Date().getMonth() < 8 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -187,11 +148,7 @@ export const List = ({
               new Date().getMonth() < 9 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -202,11 +159,7 @@ export const List = ({
               new Date().getMonth() < 10 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
           {
@@ -217,11 +170,7 @@ export const List = ({
               new Date().getMonth() < 11 ? (
                 <></>
               ) : (
-                <InputNumber
-                  defaultValue={Number(value)}
-                  step="0.01"
-                  bordered={false}
-                />
+                <>{value}</>
               ),
           },
         ]}
