@@ -37,7 +37,7 @@ import {
   StarOutlined,
   HeartOutlined,
   MonitorOutlined,
-  RadarChartOutlined,
+  PieChartOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -137,7 +137,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="industry_test" icon={<MonitorOutlined />}>
           <Link to={"industry_test"}>行业检测</Link>
         </Menu.Item>
-        <Menu.Item key="credit_portrait" icon={<RadarChartOutlined />}>
+        <Menu.Item key="credit_portrait" icon={<PieChartOutlined />}>
           <Link to={"credit_portrait"}>会员信用画像</Link>
         </Menu.Item>
         <Menu.Item key="applications" icon={<AuditOutlined />}>
