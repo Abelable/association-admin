@@ -6,7 +6,7 @@ export const useFinancialsSearchParams = () => {
   return [
     useMemo(
       () => ({
-        ...params,
+        select_year: params.select_year || `${new Date().getFullYear()}`,
       }),
       [params]
     ),

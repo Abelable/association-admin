@@ -22,9 +22,7 @@ export const useFinancials = (params: Partial<FinancialsSearchParams>) => {
   const client = useHttp();
   return useQuery<FinancialsResult>(["financials", params], () =>
     client("/api/admin/financial/financial-list", {
-      data: {
-        select_year: params.select_year || `${new Date().getFullYear()}`,
-      },
+      data: params,
     })
   );
 };
