@@ -1,12 +1,16 @@
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { usePortraits } from "service/credit-portrait";
 import { toNumber } from "utils";
+import { usePortraitsSearchParams } from "./util";
+
+import { Menu } from "antd";
 import { PortraitModal } from "./components/portrait-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
-import { usePortraitsSearchParams } from "./util";
 
 export const Portraits = () => {
+  const [type, setType] = useState("0");
   const [params, setParams] = usePortraitsSearchParams();
   const { data, isLoading, error } = usePortraits(params);
 
@@ -18,6 +22,16 @@ export const Portraits = () => {
 
   return (
     <Container>
+      <TypeMenu>
+        <Menu mode="horizontal" selectedKeys={[type]}>
+          <Menu.Item key="0">
+            <div onClick={() => setType("0")}>企业评价</div>
+          </Menu.Item>
+          <Menu.Item key="1">
+            <div onClick={() => setType("1")}>判决案例</div>
+          </Menu.Item>
+        </Menu>
+      </TypeMenu>
       <Main>
         <SearchPanel
           categoryOptions={categoryOptions}
@@ -48,8 +62,12 @@ const Container = styled.div`
   height: 100%;
 `;
 
+const TypeMenu = styled.div`
+  background: #fff;
+`;
+
 const Main = styled.div`
   padding: 2.4rem;
-  height: 100%;
+  height: calc(100% - 4.6rem);
   overflow: scroll;
 `;
