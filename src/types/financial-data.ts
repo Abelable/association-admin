@@ -13,6 +13,22 @@ export interface FinancialItem {
   total_income: string;
 }
 
+export interface TableItem {
+  subject: string;
+  january_data: number;
+  february_data: number;
+  march_data: number;
+  april_data: number;
+  may_data: number;
+  june_data: number;
+  july_data: number;
+  august_data: number;
+  september_data: number;
+  october_data: number;
+  november_data: number;
+  december_data: number;
+}
+
 export interface FinancialsResult {
   list: FinancialItem[];
 }

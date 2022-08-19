@@ -20,14 +20,13 @@ export const useRevenues = (params: Partial<FinancialsSearchParams>) => {
 
 export const useFinancials = (params: Partial<FinancialsSearchParams>) => {
   const client = useHttp();
-  return useQuery<FinancialsResult>(["financials", params], () => {
-    const data = client("/api/admin/financial/financial-list", {
+  return useQuery<FinancialsResult>(["financials", params], () =>
+    client("/api/admin/financial/financial-list", {
       data: {
         select_year: params.select_year || `${new Date().getFullYear()}`,
       },
-    });
-    return data;
-  });
+    })
+  );
 };
 
 export const useAddFinancial = (queryKey: QueryKey) => {
