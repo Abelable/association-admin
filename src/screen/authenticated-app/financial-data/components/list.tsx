@@ -1,15 +1,12 @@
 import styled from "@emotion/styled";
-import { Button, Dropdown, Menu, Modal, Table, TableProps } from "antd";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
+import { Button, Table, TableProps } from "antd";
+import { ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
-import { useFinancialModal, useFinancialsQueryKey } from "../util";
+import { useFinancialModal } from "../util";
 import type {
-  FinancialForm,
   FinancialItem,
   FinancialsSearchParams,
 } from "types/financial-data";
-import { useDeleteFinancial } from "service/financial-data";
 
 interface ListProps extends TableProps<FinancialItem> {
   type: string;
