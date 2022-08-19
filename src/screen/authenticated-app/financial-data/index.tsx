@@ -101,9 +101,6 @@ export const Financials = () => {
         (tableList[4] as any)[`${i + 1}`] = data.list[i].total_income;
       }
     }
-    // const tempList = [...data.list, ...(new Array(12 - data.list.length).fill({
-
-    // }))]
   }
 
   return (
