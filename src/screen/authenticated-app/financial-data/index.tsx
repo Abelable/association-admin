@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useFinancials } from "service/financial-data";
 import { useFinancialsSearchParams } from "./util";
@@ -12,96 +12,102 @@ export const Financials = () => {
   const [type, setType] = useState("0");
   const [params, setParams] = useFinancialsSearchParams();
   const { data, isLoading, error } = useFinancials(params);
+  const [tableList, setTableList] = useState<TableItem[]>([]);
 
-  const tableList: TableItem[] = [
-    {
-      subject: "会费收入",
-      "1": "0.00",
-      "2": "0.00",
-      "3": "0.00",
-      "4": "0.00",
-      "5": "0.00",
-      "6": "0.00",
-      "7": "0.00",
-      "8": "0.00",
-      "9": "0.00",
-      "10": "0.00",
-      "11": "0.00",
-      "12": "0.00",
-    },
-    {
-      subject: "项目收入",
-      "1": "0.00",
-      "2": "0.00",
-      "3": "0.00",
-      "4": "0.00",
-      "5": "0.00",
-      "6": "0.00",
-      "7": "0.00",
-      "8": "0.00",
-      "9": "0.00",
-      "10": "0.00",
-      "11": "0.00",
-      "12": "0.00",
-    },
-    {
-      subject: "服务收入",
-      "1": "0.00",
-      "2": "0.00",
-      "3": "0.00",
-      "4": "0.00",
-      "5": "0.00",
-      "6": "0.00",
-      "7": "0.00",
-      "8": "0.00",
-      "9": "0.00",
-      "10": "0.00",
-      "11": "0.00",
-      "12": "0.00",
-    },
-    {
-      subject: "其他收入",
-      "1": "0.00",
-      "2": "0.00",
-      "3": "0.00",
-      "4": "0.00",
-      "5": "0.00",
-      "6": "0.00",
-      "7": "0.00",
-      "8": "0.00",
-      "9": "0.00",
-      "10": "0.00",
-      "11": "0.00",
-      "12": "0.00",
-    },
-    {
-      subject: "总计收入",
-      "1": "0.00",
-      "2": "0.00",
-      "3": "0.00",
-      "4": "0.00",
-      "5": "0.00",
-      "6": "0.00",
-      "7": "0.00",
-      "8": "0.00",
-      "9": "0.00",
-      "10": "0.00",
-      "11": "0.00",
-      "12": "0.00",
-    },
-  ];
+  useEffect(() => {
+    const defaultTableList: TableItem[] = [
+      {
+        subject: "会费收入",
+        "1": "0.00",
+        "2": "0.00",
+        "3": "0.00",
+        "4": "0.00",
+        "5": "0.00",
+        "6": "0.00",
+        "7": "0.00",
+        "8": "0.00",
+        "9": "0.00",
+        "10": "0.00",
+        "11": "0.00",
+        "12": "0.00",
+      },
+      {
+        subject: "项目收入",
+        "1": "0.00",
+        "2": "0.00",
+        "3": "0.00",
+        "4": "0.00",
+        "5": "0.00",
+        "6": "0.00",
+        "7": "0.00",
+        "8": "0.00",
+        "9": "0.00",
+        "10": "0.00",
+        "11": "0.00",
+        "12": "0.00",
+      },
+      {
+        subject: "服务收入",
+        "1": "0.00",
+        "2": "0.00",
+        "3": "0.00",
+        "4": "0.00",
+        "5": "0.00",
+        "6": "0.00",
+        "7": "0.00",
+        "8": "0.00",
+        "9": "0.00",
+        "10": "0.00",
+        "11": "0.00",
+        "12": "0.00",
+      },
+      {
+        subject: "其他收入",
+        "1": "0.00",
+        "2": "0.00",
+        "3": "0.00",
+        "4": "0.00",
+        "5": "0.00",
+        "6": "0.00",
+        "7": "0.00",
+        "8": "0.00",
+        "9": "0.00",
+        "10": "0.00",
+        "11": "0.00",
+        "12": "0.00",
+      },
+      {
+        subject: "总计收入",
+        "1": "0.00",
+        "2": "0.00",
+        "3": "0.00",
+        "4": "0.00",
+        "5": "0.00",
+        "6": "0.00",
+        "7": "0.00",
+        "8": "0.00",
+        "9": "0.00",
+        "10": "0.00",
+        "11": "0.00",
+        "12": "0.00",
+      },
+    ];
 
-  if (data?.list) {
-    for (let i = 0; i < 12; i++) {
-      if (data.list[i]) {
-        (tableList[0] as any)[`${i + 1}`] = data.list[i].member_income;
-        (tableList[1] as any)[`${i + 1}`] = data.list[i].project_income;
-        (tableList[2] as any)[`${i + 1}`] = data.list[i].service_income;
-        (tableList[3] as any)[`${i + 1}`] = data.list[i].other_income;
-        (tableList[4] as any)[`${i + 1}`] = data.list[i].total_income;
+    if (data?.list) {
+      for (let i = 0; i < 12; i++) {
+        if (data.list[i]) {
+          (defaultTableList[0] as any)[`${i + 1}`] = data.list[i].member_income;
+          (defaultTableList[1] as any)[`${i + 1}`] =
+            data.list[i].project_income;
+          (defaultTableList[2] as any)[`${i + 1}`] =
+            data.list[i].service_income;
+          (defaultTableList[3] as any)[`${i + 1}`] = data.list[i].other_income;
+          (defaultTableList[4] as any)[`${i + 1}`] = data.list[i].total_income;
+        }
       }
+      setTableList(defaultTableList);
     }
-  }
+  }, [data?.list]);
 
   return (
     <Container>
