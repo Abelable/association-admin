@@ -97,34 +97,36 @@ export const Financials = () => {
           </Menu.Item>
         </Menu>
       </TypeMenu>
-      <Main>
-        <Header between={true}>
-          <TitleWrap>
-            <h3>{type === "0" ? "收入表" : "支出表"}</h3>
-            {type === "0" ? (
-              <TotalRevenue>+¥{totalRevenue}</TotalRevenue>
-            ) : (
-              <TotalOutlays>-¥{totalOutlays}</TotalOutlays>
-            )}
-          </TitleWrap>
-          <DatePicker
-            onChange={(date: any, dateString: string) =>
-              setParams({ ...params, select_year: dateString })
-            }
-            defaultValue={moment(params.select_year || "")}
-            disabledDate={(current: any) => current > moment()}
-            picker="year"
+      <MainWrap>
+        <Main style={{ overflow: "scroll" }}>
+          <Header between={true}>
+            <TitleWrap>
+              <h3>{type === "0" ? "收入表" : "支出表"}</h3>
+              {type === "0" ? (
+                <TotalRevenue>+¥{totalRevenue}</TotalRevenue>
+              ) : (
+                <TotalOutlays>-¥{totalOutlays}</TotalOutlays>
+              )}
+            </TitleWrap>
+            <DatePicker
+              onChange={(date: any, dateString: string) =>
+                setParams({ ...params, select_year: dateString })
+              }
+              defaultValue={moment(params.select_year || "")}
+              disabledDate={(current: any) => current > moment()}
+              picker="year"
+            />
+          </Header>
+          <List
+            error={error}
+            type={type}
+            params={params}
+            setParams={setParams}
+            loading={isLoading}
+            dataSource={tableList}
           />
-        </Header>
-        <List
-          error={error}
-          type={type}
-          params={params}
-          setParams={setParams}
-          loading={isLoading}
-          dataSource={tableList}
-        />
-      </Main>
+        </Main>
+      </MainWrap>
     </Container>
   );
 };
@@ -138,12 +140,15 @@ const TypeMenu = styled.div`
   background: #fff;
 `;
 
-const Main = styled.div`
-  margin: 2.4rem;
+const MainWrap = styled.div`
   padding: 2.4rem;
   height: calc(100% - 4.6rem);
-  background: #fff;
   overflow: scroll;
+`;
+
+const Main = styled.div`
+  padding: 2.4rem;
+  background: #fff;
 `;
 
 const Header = styled(Row)`

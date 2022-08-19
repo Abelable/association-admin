@@ -1,5 +1,7 @@
+import styled from "@emotion/styled";
 import { Table, TableProps } from "antd";
 import { ErrorBox } from "components/lib";
+import { EditOutlined } from "@ant-design/icons";
 
 import type { TableItem, FinancialsSearchParams } from "types/financial-data";
 
@@ -28,11 +30,29 @@ export const List = ({
             dataIndex: "subject",
           },
           {
-            title: `${params.select_year || new Date().getFullYear()}年1月`,
+            title: (
+              <Edit>
+                <span>{`${params.select_year}年1月`}</span>
+                <EditOutlined
+                  style={{ marginLeft: ".4rem", color: "#1890ff" }}
+                />
+              </Edit>
+            ),
             dataIndex: "1",
           },
           {
-            title: `${params.select_year || new Date().getFullYear()}年2月`,
+            title:
+              params.select_year === `${new Date().getFullYear()}` &&
+              new Date().getMonth() < 1 ? (
+                <Edit>
+                  <span>{`${params.select_year}年2月`}</span>
+                  <EditOutlined
+                    style={{ marginLeft: ".4rem", color: "#1890ff" }}
+                  />
+                </Edit>
+              ) : (
+                <>{`${params.select_year}年2月`}</>
+              ),
             dataIndex: "2",
             render: (value, item) =>
               params.select_year === `${new Date().getFullYear()}` &&
@@ -160,3 +180,7 @@ export const List = ({
     </>
   );
 };
+
+const Edit = styled.div`
+  cursor: pointer;
+`;
