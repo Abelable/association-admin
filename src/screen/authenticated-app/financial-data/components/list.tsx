@@ -1,3 +1,4 @@
+import moment from "moment";
 import styled from "@emotion/styled";
 
 import { DatePicker, InputNumber, Table, TableProps } from "antd";
@@ -29,7 +30,11 @@ export const List = ({
           <TotalOutlays>-¥1239.99</TotalOutlays>
         )}
       </TitleWrap>
-      <DatePicker picker="year" />
+      <DatePicker
+        defaultValue={moment()}
+        disabledDate={(current: any) => current > moment()}
+        picker="year"
+      />
     </Header>
     <ErrorBox error={error} />
     <Table
