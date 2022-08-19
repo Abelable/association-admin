@@ -11,10 +11,21 @@ import {
   useEditConfig,
 } from "./use-optimistic-options";
 
+export const useRevenues = (params: Partial<FinancialsSearchParams>) => {
+  const client = useHttp();
+  return useQuery<FinancialsResult>(["revenues", params], () =>
+    client("/api/admin/financial/financial-list", { data: params })
+  );
+};
+
 export const useFinancials = (params: Partial<FinancialsSearchParams>) => {
   const client = useHttp();
-  return useQuery<FinancialsResult>(["services", params], () =>
-    client("/api/admin/member-service/legal-list", { data: params })
+  return useQuery<FinancialsResult>(["financials", params], () =>
+    client("/api/admin/financial/financial-list", {
+      data: {
+        select_year: params.select_year || `${new Date().getFullYear()}`,
+      },
+    })
   );
 };
 

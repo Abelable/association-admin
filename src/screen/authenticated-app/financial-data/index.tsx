@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { useFinancials } from "service/financial-data";
-import { toNumber } from "utils";
 import { useFinancialsSearchParams } from "./util";
 
 import { Menu } from "antd";
@@ -32,11 +31,6 @@ export const Financials = () => {
           setParams={setParams}
           loading={isLoading}
           dataSource={data?.list}
-          pagination={{
-            current: toNumber(data?.page),
-            pageSize: toNumber(data?.page_size),
-            total: toNumber(data?.total),
-          }}
         />
       </Main>
     </Container>

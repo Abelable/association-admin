@@ -2,17 +2,10 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useFinancialsSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams([
-    "title",
-    "category_id",
-    "page",
-    "page_size",
-  ]);
+  const [params, setParams] = useUrlQueryParams(["select_year"]);
   return [
     useMemo(
       () => ({
-        page: Number(params.page) || 1,
-        page_size: Number(params.page_size) || 10,
         ...params,
       }),
       [params]
