@@ -11,7 +11,7 @@ import { IncomeModal } from "./components/income-modal";
 import { DetailedChart } from "./components/detailed-chart";
 import { MonthlyChart } from "./components/monthly-chart";
 
-export const Incomes = () => {
+export const Financials = () => {
   const [type, setType] = useState("0");
 
   const [totalIncome, setTotalIncome] = useState("0.00");
