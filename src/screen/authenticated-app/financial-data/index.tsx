@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import moment from "moment";
 import { useFinancials } from "service/financial-data";
@@ -11,82 +11,14 @@ import { FinancialModal } from "./components/financial-modal";
 import { DetailedChart } from "./components/detailed-chart";
 import { MonthlyChart } from "./components/monthly-chart";
 
-import type { TableItem } from "types/financial-data";
-
 export const Financials = () => {
   const [type, setType] = useState("0");
-  const [totalRevenue, setTotalRevenue] = useState("0.00");
+
+  const [totalIncome, setTotalIncome] = useState("0.00");
   const [totalOutlays, setTotalOutlays] = useState("0.00");
 
   const [params, setParams] = useFinancialsSearchParams();
   const { data, isLoading, error } = useFinancials(params);
-  const [tableList, setTableList] = useState<TableItem[]>([]);
-
-  useEffect(() => {
-    const dataItem = {
-      "1": "0.00",
-      "2": "0.00",
-      "3": "0.00",
-      "4": "0.00",
-      "5": "0.00",
-      "6": "0.00",
-      "7": "0.00",
-      "8": "0.00",
-      "9": "0.00",
-      "10": "0.00",
-      "11": "0.00",
-      "12": "0.00",
-    };
-    const defaultTableList: TableItem[] = [
-      {
-        subject: "会费收入",
-        ...dataItem,
-      },
-      {
-        subject: "项目收入",
-        ...dataItem,
-      },
-      {
-        subject: "服务收入",
-        ...dataItem,
-      },
-      {
-        subject: "其他收入",
-        ...dataItem,
-      },
-      {
-        subject: "总计收入",
-        ...dataItem,
-      },
-    ];
-
-    if (data?.list) {
-      let revenue = 0;
-      for (let i = 0; i < 12; i++) {
-        if (data.list[i]) {
-          const {
-            member_income,
-            project_income,
-            service_income,
-            other_income,
-          } = data.list[i];
-          const totalIncome =
-            Number(member_income) +
-            Number(project_income) +
-            Number(service_income) +
-            Number(other_income);
-          (defaultTableList[0] as any)[`${i + 1}`] = member_income;
-          (defaultTableList[1] as any)[`${i + 1}`] = project_income;
-          (defaultTableList[2] as any)[`${i + 1}`] = service_income;
-          (defaultTableList[3] as any)[`${i + 1}`] = other_income;
-          (defaultTableList[4] as any)[`${i + 1}`] = totalIncome.toFixed(2);
-          revenue += totalIncome;
-        }
-      }
-      setTotalRevenue(revenue.toFixed(2));
-      setTableList(defaultTableList);
-    }
-  }, [data?.list]);
 
   return (
     <Container>
@@ -104,12 +36,8 @@ export const Financials = () => {
         <Main style={{ overflow: "scroll" }}>
           <Header between={true}>
             <TitleWrap>
-              <h3>{type === "0" ? "收入表" : "支出表"}</h3>
-              {type === "0" ? (
-                <TotalRevenue>+¥{totalRevenue}</TotalRevenue>
-              ) : (
-                <TotalOutlays>-¥{totalOutlays}</TotalOutlays>
-              )}
+              <h3>收入表</h3>
+              <TotalIncome>+¥{totalIncome}</TotalIncome>
             </TitleWrap>
             <DatePicker
               onChange={(date: any, dateString: string) =>
@@ -126,7 +54,8 @@ export const Financials = () => {
             params={params}
             setParams={setParams}
             loading={isLoading}
-            dataSource={tableList}
+            setTotalIncome={setTotalIncome}
+            financials={data?.list}
           />
           <ChartWrap>
             <DetailedChart financials={data?.list} />
@@ -171,7 +100,7 @@ const TitleWrap = styled.div`
   display: flex;
   align-items: baseline;
 `;
-const TotalRevenue = styled.div`
+const TotalIncome = styled.div`
   margin-left: 2rem;
   color: red;
   font-size: 1.4rem;

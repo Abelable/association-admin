@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useFinancialModal } from "../util";
 
@@ -5,13 +6,19 @@ import { Table, TableProps } from "antd";
 import { ErrorBox } from "components/lib";
 import { EditOutlined } from "@ant-design/icons";
 
-import type { TableItem, FinancialsSearchParams } from "types/financial-data";
+import type {
+  TableItem,
+  FinancialsSearchParams,
+  FinancialItem,
+} from "types/financial-data";
 
 interface ListProps extends TableProps<TableItem> {
   type: string;
   error: Error | unknown;
   params: Partial<FinancialsSearchParams>;
   setParams: (params: Partial<FinancialsSearchParams>) => void;
+  setTotalIncome: (income: string) => void;
+  financials: FinancialItem[] | undefined;
 }
 
 export const List = ({
@@ -19,9 +26,78 @@ export const List = ({
   error,
   params,
   setParams,
+  setTotalIncome,
+  financials,
   ...restProps
 }: ListProps) => {
+  const [tableList, setTableList] = useState<TableItem[]>([]);
   const { startEdit } = useFinancialModal();
+
+  useEffect(() => {
+    const dataItem = {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00",
+      "5": "0.00",
+      "6": "0.00",
+      "7": "0.00",
+      "8": "0.00",
+      "9": "0.00",
+      "10": "0.00",
+      "11": "0.00",
+      "12": "0.00",
+    };
+    const defaultTableList: TableItem[] = [
+      {
+        subject: "会费收入",
+        ...dataItem,
+      },
+      {
+        subject: "项目收入",
+        ...dataItem,
+      },
+      {
+        subject: "服务收入",
+        ...dataItem,
+      },
+      {
+        subject: "其他收入",
+        ...dataItem,
+      },
+      {
+        subject: "总计收入",
+        ...dataItem,
+      },
+    ];
+
+    if (financials) {
+      let income = 0;
+      for (let i = 0; i < 12; i++) {
+        if (financials[i]) {
+          const {
+            member_income,
+            project_income,
+            service_income,
+            other_income,
+          } = financials[i];
+          const totalIncome =
+            Number(member_income) +
+            Number(project_income) +
+            Number(service_income) +
+            Number(other_income);
+          (defaultTableList[0] as any)[`${i + 1}`] = member_income;
+          (defaultTableList[1] as any)[`${i + 1}`] = project_income;
+          (defaultTableList[2] as any)[`${i + 1}`] = service_income;
+          (defaultTableList[3] as any)[`${i + 1}`] = other_income;
+          (defaultTableList[4] as any)[`${i + 1}`] = totalIncome.toFixed(2);
+          income += totalIncome;
+        }
+      }
+      setTotalIncome(income.toFixed(2));
+      setTableList(defaultTableList);
+    }
+  }, [financials, setTotalIncome]);
 
   return (
     <>
@@ -288,6 +364,7 @@ export const List = ({
           },
         ]}
         {...restProps}
+        dataSource={tableList}
         bordered={true}
         pagination={false}
       />
