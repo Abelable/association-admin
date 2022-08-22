@@ -7,12 +7,12 @@ import { ErrorBox } from "components/lib";
 import { EditOutlined } from "@ant-design/icons";
 
 import type {
-  TableItem,
+  IncomeTableItem,
   IncomesSearchParams,
   IncomeItem,
 } from "types/financial-data";
 
-interface ListProps extends TableProps<TableItem> {
+interface ListProps extends TableProps<IncomeTableItem> {
   error: Error | unknown;
   params: Partial<IncomesSearchParams>;
   setParams: (params: Partial<IncomesSearchParams>) => void;
@@ -28,7 +28,7 @@ export const IncomeList = ({
   financials,
   ...restProps
 }: ListProps) => {
-  const [tableList, setTableList] = useState<TableItem[]>([]);
+  const [tableList, setTableList] = useState<IncomeTableItem[]>([]);
   const { startEdit } = useIncomeModal();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export const IncomeList = ({
       "11": "0.00",
       "12": "0.00",
     };
-    const defaultTableList: TableItem[] = [
+    const defaultTableList: IncomeTableItem[] = [
       {
         subject: "会费收入",
         ...dataItem,

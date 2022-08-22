@@ -13,7 +13,7 @@ export interface IncomeItem {
   total_income: string;
 }
 
-export interface TableItem {
+export interface IncomeTableItem {
   subject: string;
   "1": string;
   "2": string;
