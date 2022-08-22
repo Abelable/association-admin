@@ -1,5 +1,5 @@
 export interface IncomesSearchParams {
-  income_year: string;
+  select_year: string;
 }
 
 export interface IncomeItem {
@@ -38,7 +38,7 @@ export interface IncomeForm {
 }
 
 export interface ExpendsSearchParams {
-  expend_year: string;
+  select_year: string;
 }
 
 export interface ExpendItem {

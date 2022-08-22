@@ -1,12 +1,12 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useIncomesSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["income_year"]);
+export const useFinancialsSearchParams = () => {
+  const [params, setParams] = useUrlQueryParams(["select_year"]);
   return [
     useMemo(
       () => ({
-        income_year: params.income_year || `${new Date().getFullYear()}`,
+        select_year: params.select_year || `${new Date().getFullYear()}`,
       }),
       [params]
     ),
@@ -15,7 +15,7 @@ export const useIncomesSearchParams = () => {
 };
 
 export const useIncomesQueryKey = () => {
-  const [params] = useIncomesSearchParams();
+  const [params] = useFinancialsSearchParams();
   return ["incomes", params];
 };
 
@@ -42,21 +42,8 @@ export const useIncomeModal = () => {
   };
 };
 
-export const useExpendsSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["expend_year"]);
-  return [
-    useMemo(
-      () => ({
-        expend_year: params.expend_year || `${new Date().getFullYear()}`,
-      }),
-      [params]
-    ),
-    setParams,
-  ] as const;
-};
-
 export const useExpendsQueryKey = () => {
-  const [params] = useExpendsSearchParams();
+  const [params] = useFinancialsSearchParams();
   return ["expends", params];
 };
 

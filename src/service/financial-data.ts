@@ -14,7 +14,7 @@ export const useIncomes = (params: Partial<IncomesSearchParams>) => {
   const client = useHttp();
   return useQuery<IncomesResult>(["incomes", params], () =>
     client("/api/admin/financial/financial-list", {
-      data: { select_year: params.income_year },
+      data: params,
     })
   );
 };
@@ -35,7 +35,7 @@ export const useExpends = (params: Partial<ExpendsSearchParams>) => {
   const client = useHttp();
   return useQuery<ExpendsResult>(["expends", params], () =>
     client("/api/admin/financial/financial-out-list", {
-      data: { select_year: params.expend_year },
+      data: params,
     })
   );
 };

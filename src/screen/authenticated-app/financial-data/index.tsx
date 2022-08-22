@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import moment from "moment";
 import { useExpends, useIncomes } from "service/financial-data";
-import { useExpendsSearchParams, useIncomesSearchParams } from "./util";
+import { useFinancialsSearchParams } from "./util";
 
 import { DatePicker, Menu } from "antd";
 import { Row } from "components/lib";
@@ -21,15 +21,14 @@ export const Financials = () => {
   const [totalIncome, setTotalIncome] = useState("0.00");
   const [totalExpend, setTotalExpend] = useState("0.00");
 
-  const [incomeParams, setIncomeParams] = useIncomesSearchParams();
-  const { data: incomeData, isLoading, error } = useIncomes(incomeParams);
+  const [params, setParams] = useFinancialsSearchParams();
+  const { data: incomeData, isLoading, error } = useIncomes(params);
 
-  const [expendParams, setExpendParams] = useExpendsSearchParams();
   const {
     data: expendData,
     isLoading: expendLoading,
     error: expendError,
-  } = useExpends(expendParams);
+  } = useExpends(params);
 
   return (
     <Container>
@@ -54,20 +53,20 @@ export const Financials = () => {
                 </TitleWrap>
                 <DatePicker
                   onChange={(date: any, dateString: string) =>
-                    setIncomeParams({
-                      ...incomeParams,
-                      income_year: dateString,
+                    setParams({
+                      ...params,
+                      select_year: dateString,
                     })
                   }
-                  defaultValue={moment(incomeParams.income_year || "")}
+                  defaultValue={moment(params.select_year || "")}
                   disabledDate={(current: any) => current > moment()}
                   picker="year"
                 />
               </Header>
               <IncomeList
                 error={error}
-                params={incomeParams}
-                setParams={setIncomeParams}
+                params={params}
+                setParams={setParams}
                 loading={isLoading}
                 setTotalIncome={setTotalIncome}
                 financials={incomeData?.list}
@@ -86,20 +85,20 @@ export const Financials = () => {
                 </TitleWrap>
                 <DatePicker
                   onChange={(date: any, dateString: string) =>
-                    setExpendParams({
-                      ...expendParams,
-                      expend_year: dateString,
+                    setParams({
+                      ...params,
+                      select_year: dateString,
                     })
                   }
-                  defaultValue={moment(expendParams.expend_year || "")}
+                  defaultValue={moment(params.select_year || "")}
                   disabledDate={(current: any) => current > moment()}
                   picker="year"
                 />
               </Header>
               <ExpendList
                 error={expendError}
-                params={expendParams}
-                setParams={setExpendParams}
+                params={params}
+                setParams={setParams}
                 loading={expendLoading}
                 setTotalExpend={setTotalExpend}
                 financials={expendData?.list}
@@ -112,14 +111,8 @@ export const Financials = () => {
           )}
         </Main>
       </MainWrap>
-      <IncomeModal
-        year={incomeParams.income_year}
-        financials={incomeData?.list}
-      />
-      <ExpendModal
-        year={expendParams.expend_year}
-        financials={expendData?.list}
-      />
+      <IncomeModal year={params.select_year} financials={incomeData?.list} />
+      <ExpendModal year={params.select_year} financials={expendData?.list} />
     </Container>
   );
 };
