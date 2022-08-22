@@ -34,6 +34,7 @@ interface ListProps extends TableProps<ApplicationsItem>, SearchPanelProps {
 
 export const List = ({
   error,
+  evaluationOptions,
   levelOptions,
   params,
   setParams,
@@ -114,6 +115,41 @@ export const List = ({
                   onClick={(e) => e.preventDefault()}
                 >
                   {application.level_name || "选择等级名称"}
+                  <DownOutlined />
+                </ButtonNoPadding>
+              </Dropdown>
+            ),
+            width: "18rem",
+          },
+          {
+            title: "企业评价",
+            render: (value, application) => (
+              <Dropdown
+                trigger={["click"]}
+                overlay={
+                  <Menu>
+                    {evaluationOptions.map((option) => (
+                      <Menu.Item
+                        key={option.value}
+                        onClick={() =>
+                          editApplicationLevel({
+                            id: application.id,
+                            level_id: `${option.value}`,
+                          })
+                        }
+                      >
+                        {option.name}
+                      </Menu.Item>
+                    ))}
+                  </Menu>
+                }
+              >
+                <ButtonNoPadding
+                  style={{ color: application.evaluation ? "#1890ff" : "#999" }}
+                  type={"link"}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {application.evaluation || "选择企业评价"}
                   <DownOutlined />
                 </ButtonNoPadding>
               </Dropdown>

@@ -10,6 +10,11 @@ export interface StatusOption {
   name: string;
 }
 
+export interface EvaluationOption {
+  name: string;
+  value: string;
+}
+
 export interface ApplicationsSearchParams {
   page: number;
   page_size: number;
@@ -17,6 +22,7 @@ export interface ApplicationsSearchParams {
   mobile: string;
   email: string;
   member_level: number;
+  evaluation: string;
   is_deal: string;
   s_time: string;
   e_time: string;
@@ -52,6 +58,7 @@ export interface ApplicationsItem {
   company_name: string;
   level_id: string;
   level_name: string;
+  evaluation: string;
   name: string;
   mobile: string;
   email: string;

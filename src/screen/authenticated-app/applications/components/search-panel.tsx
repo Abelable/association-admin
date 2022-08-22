@@ -1,15 +1,19 @@
+import { useState } from "react";
+import moment from "moment";
 import styled from "@emotion/styled";
+
 import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
-import {
+
+import type {
   ApplicationsSearchParams,
+  EvaluationOption,
   LevelOption,
   StatusOption,
 } from "types/application";
-import { useState } from "react";
-import moment from "moment";
 export interface SearchPanelProps {
   statusOptions: StatusOption[];
+  evaluationOptions: EvaluationOption[];
   levelOptions: LevelOption[];
   params: Partial<ApplicationsSearchParams>;
   setParams: (params: Partial<ApplicationsSearchParams>) => void;
@@ -17,6 +21,7 @@ export interface SearchPanelProps {
 
 export const SearchPanel = ({
   statusOptions,
+  evaluationOptions,
   levelOptions,
   params,
   setParams,
@@ -78,10 +83,16 @@ export const SearchPanel = ({
   const clearLevel = () =>
     setTemporaryParams({ ...temporaryParams, member_level: undefined });
 
+  const setEvaluation = (evaluation: any) =>
+    setTemporaryParams({ ...temporaryParams, evaluation });
+  const clearEvaluation = () =>
+    setTemporaryParams({ ...temporaryParams, evaluation: undefined });
+
   const setStatus = (is_deal: any) =>
     setTemporaryParams({ ...temporaryParams, is_deal });
   const clearStatus = () =>
     setTemporaryParams({ ...temporaryParams, is_deal: undefined });
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -158,14 +169,14 @@ export const SearchPanel = ({
         <div>企业评价：</div>
         <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.is_deal}
+          value={temporaryParams.evaluation}
           placeholder="请选择企业评价"
           allowClear={true}
-          onSelect={setStatus}
-          onClear={clearStatus}
+          onSelect={setEvaluation}
+          onClear={clearEvaluation}
         >
-          {statusOptions?.map(({ id, value, name }) => (
-            <Select.Option key={id} value={value}>
+          {evaluationOptions?.map(({ value, name }) => (
+            <Select.Option key={value} value={value}>
               {name}
             </Select.Option>
           ))}

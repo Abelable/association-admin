@@ -18,6 +18,11 @@ export const Applications = () => {
     { id: 2, name: "已处理", value: "1" },
     { id: 3, name: "已驳回", value: "2" },
   ];
+  const evaluationOptions = [
+    { name: "上市", value: "1" },
+    { name: "荣誉", value: "2" },
+    { name: "独角兽", value: "3" },
+  ];
 
   const [params, setParams] = useApplicationsSearchParams();
   const { data, isLoading, error } = useApplications(params);
@@ -37,6 +42,7 @@ export const Applications = () => {
       <Main>
         <SearchPanel
           statusOptions={statusOptions}
+          evaluationOptions={evaluationOptions}
           levelOptions={levelOptions || []}
           params={params}
           setParams={setParams}
@@ -44,6 +50,7 @@ export const Applications = () => {
         <List
           error={error}
           statusOptions={statusOptions}
+          evaluationOptions={evaluationOptions}
           levelOptions={levelOptions || []}
           params={params}
           setParams={setParams}
