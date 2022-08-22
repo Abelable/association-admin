@@ -104,7 +104,11 @@ export const ExpendList = ({
             Number(entertain_expend).toFixed(2);
           (defaultTableList[3] as any)[`${i + 1}`] =
             Number(meeting_expend).toFixed(2);
-          (defaultTableList[4] as any)[`${i + 1}`] = totalExpend.toFixed(2);
+          (defaultTableList[4] as any)[`${i + 1}`] =
+            Number(travel_expend).toFixed(2);
+          (defaultTableList[5] as any)[`${i + 1}`] =
+            Number(other_expend).toFixed(2);
+          (defaultTableList[6] as any)[`${i + 1}`] = totalExpend.toFixed(2);
           expend += totalExpend;
         }
       }
