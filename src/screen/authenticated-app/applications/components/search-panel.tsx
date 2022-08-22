@@ -32,6 +32,7 @@ export const SearchPanel = ({
     name: "",
     mobile: "",
     member_level: undefined,
+    evaluation: undefined,
     is_deal: undefined,
   } as Partial<ApplicationsSearchParams>;
 
