@@ -5,11 +5,13 @@ import { useFinancials } from "service/financial-data";
 import { useFinancialsSearchParams } from "./util";
 
 import { DatePicker, Menu } from "antd";
+import { Row } from "components/lib";
 import { List } from "./components/list";
+import { FinancialModal } from "./components/financial-modal";
+import { DetailedChart } from "./components/detailed-chart";
+import { MonthlyChart } from "./components/monthly-chart";
 
 import type { TableItem } from "types/financial-data";
-import { Row } from "components/lib";
-import { FinancialModal } from "./components/financial-modal";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
@@ -126,6 +128,10 @@ export const Financials = () => {
             loading={isLoading}
             dataSource={tableList}
           />
+          <ChartWrap>
+            <DetailedChart />
+            <MonthlyChart />
+          </ChartWrap>
         </Main>
       </MainWrap>
       <FinancialModal
@@ -176,4 +182,10 @@ const TotalOutlays = styled.div`
   color: green;
   font-size: 1.4rem;
   font-weight: bold;
+`;
+
+const ChartWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.4rem;
 `;
