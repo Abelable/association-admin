@@ -35,7 +35,7 @@ export const useIncomeModal = () => {
   );
 
   return {
-    financialModalOpen: !!editingIncomeIndex,
+    incomeModalOpen: !!editingIncomeIndex,
     editingIncomeIndex,
     startEdit,
     close,
@@ -76,7 +76,7 @@ export const useExpendModal = () => {
   );
 
   return {
-    financialModalOpen: !!editingExpendIndex,
+    expendModalOpen: !!editingExpendIndex,
     editingExpendIndex,
     startEdit,
     close,

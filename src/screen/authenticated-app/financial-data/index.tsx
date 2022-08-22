@@ -11,6 +11,7 @@ import { IncomeModal } from "./components/income-modal";
 import { IncomeDetailedChart } from "./components/income-detailed-chart";
 import { IncomeMonthlyChart } from "./components/income-monthly-chart";
 import { ExpendList } from "./components/expend-list";
+import { ExpendModal } from "./components/expend-modal";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
@@ -112,6 +113,10 @@ export const Financials = () => {
       <IncomeModal
         year={incomeParams.income_year}
         financials={incomeData?.list}
+      />
+      <ExpendModal
+        year={expendParams.expend_year}
+        financials={expendData?.list}
       />
     </Container>
   );

@@ -14,7 +14,7 @@ export const IncomeModal = ({
   financials: IncomeItem[] | undefined;
 }) => {
   const [form] = useForm();
-  const { financialModalOpen, editingIncomeIndex, close } = useIncomeModal();
+  const { incomeModalOpen, editingIncomeIndex, close } = useIncomeModal();
   const financial = financials
     ? financials[Number(editingIncomeIndex)]
     : undefined;
@@ -94,7 +94,7 @@ export const IncomeModal = ({
   return (
     <Modal
       title={`编辑${year}年${Number(editingIncomeIndex) + 1}月收入数据`}
-      visible={financialModalOpen}
+      visible={incomeModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
