@@ -7,7 +7,7 @@ import { useIncomesSearchParams } from "./util";
 import { DatePicker, Menu } from "antd";
 import { Row } from "components/lib";
 import { List } from "./components/list";
-import { IncomeModal } from "./components/financial-modal";
+import { IncomeModal } from "./components/income-modal";
 import { DetailedChart } from "./components/detailed-chart";
 import { MonthlyChart } from "./components/monthly-chart";
 
