@@ -1,29 +1,26 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditFinancial } from "service/financial-data";
-import { FinancialItem } from "types/financial-data";
+import { useEditIncome } from "service/financial-data";
+import { IncomeItem } from "types/financial-data";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useFinancialsQueryKey, useFinancialModal } from "../util";
+import { useIncomesQueryKey, useIncomeModal } from "../util";
 
-export const FinancialModal = ({
+export const IncomeModal = ({
   type,
   year,
   financials,
 }: {
   type: string;
   year: string;
-  financials: FinancialItem[] | undefined;
+  financials: IncomeItem[] | undefined;
 }) => {
   const [form] = useForm();
-  const { financialModalOpen, editingFinancialIndex, close } =
-    useFinancialModal();
+  const { financialModalOpen, editingIncomeIndex, close } = useIncomeModal();
   const financial = financials
-    ? financials[Number(editingFinancialIndex)]
+    ? financials[Number(editingIncomeIndex)]
     : undefined;
-  const { mutateAsync, isLoading, error } = useEditFinancial(
-    useFinancialsQueryKey()
-  );
+  const { mutateAsync, isLoading, error } = useEditIncome(useIncomesQueryKey());
 
   useDeepCompareEffect(() => {
     if (financial) {
@@ -35,7 +32,7 @@ export const FinancialModal = ({
     form.validateFields().then(async () => {
       const { head_img, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
-        id: editingFinancialIndex || "",
+        id: editingIncomeIndex || "",
         head_img: head_img[0].url,
         ...restFieldsValue,
       });
@@ -50,7 +47,7 @@ export const FinancialModal = ({
 
   return (
     <Modal
-      title={`编辑${year}年${Number(editingFinancialIndex) + 1}月${
+      title={`编辑${year}年${Number(editingIncomeIndex) + 1}月${
         type === "0" ? "收入" : "支出"
       }数据`}
       visible={financialModalOpen}

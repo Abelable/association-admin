@@ -1,7 +1,7 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useFinancialsSearchParams = () => {
+export const useIncomesSearchParams = () => {
   const [params, setParams] = useUrlQueryParams(["select_year"]);
   return [
     useMemo(
@@ -14,29 +14,29 @@ export const useFinancialsSearchParams = () => {
   ] as const;
 };
 
-export const useFinancialsQueryKey = () => {
-  const [params] = useFinancialsSearchParams();
+export const useIncomesQueryKey = () => {
+  const [params] = useIncomesSearchParams();
   return ["financials", params];
 };
 
-export const useFinancialModal = () => {
-  const [{ editingFinancialIndex }, setEditingFinancialId] = useUrlQueryParams([
-    "editingFinancialIndex",
+export const useIncomeModal = () => {
+  const [{ editingIncomeIndex }, setEditingIncomeId] = useUrlQueryParams([
+    "editingIncomeIndex",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const startEdit = useCallback(
-    (index: string) => setEditingFinancialId({ editingFinancialIndex: index }),
-    [setEditingFinancialId]
+    (index: string) => setEditingIncomeId({ editingIncomeIndex: index }),
+    [setEditingIncomeId]
   );
   const close = useCallback(
-    () => setUrlParams({ editingFinancialIndex: "" }),
+    () => setUrlParams({ editingIncomeIndex: "" }),
     [setUrlParams]
   );
 
   return {
-    financialModalOpen: !!editingFinancialIndex,
-    editingFinancialIndex,
+    financialModalOpen: !!editingIncomeIndex,
+    editingIncomeIndex,
     startEdit,
     close,
   };

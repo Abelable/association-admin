@@ -4,12 +4,12 @@ import styled from "@emotion/styled";
 import { Card } from "antd";
 import EChartsReact from "echarts-for-react";
 
-import type { FinancialItem } from "types/financial-data";
+import type { IncomeItem } from "types/financial-data";
 
 export const DetailedChart = ({
   financials,
 }: {
-  financials: FinancialItem[] | undefined;
+  financials: IncomeItem[] | undefined;
 }) => {
   const [source, setSource] = useState<(string | number)[][]>([]);
 

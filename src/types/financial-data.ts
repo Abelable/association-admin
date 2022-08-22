@@ -1,8 +1,8 @@
-export interface FinancialsSearchParams {
+export interface IncomesSearchParams {
   select_year: string;
 }
 
-export interface FinancialItem {
+export interface IncomeItem {
   id: string;
   year: string;
   month: string;
@@ -29,11 +29,11 @@ export interface TableItem {
   "12": string;
 }
 
-export interface FinancialsResult {
-  list: FinancialItem[];
+export interface IncomesResult {
+  list: IncomeItem[];
 }
 
-export interface FinancialForm {
+export interface IncomeForm {
   id: string;
   title: string;
   image: string;

@@ -1,8 +1,8 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import {
-  FinancialForm,
-  FinancialsResult,
-  FinancialsSearchParams,
+  IncomeForm,
+  IncomesResult,
+  IncomesSearchParams,
 } from "types/financial-data";
 import { useHttp } from "./http";
 import {
@@ -11,26 +11,26 @@ import {
   useEditConfig,
 } from "./use-optimistic-options";
 
-export const useRevenues = (params: Partial<FinancialsSearchParams>) => {
+export const useRevenues = (params: Partial<IncomesSearchParams>) => {
   const client = useHttp();
-  return useQuery<FinancialsResult>(["revenues", params], () =>
+  return useQuery<IncomesResult>(["revenues", params], () =>
     client("/api/admin/financial/financial-list", { data: params })
   );
 };
 
-export const useFinancials = (params: Partial<FinancialsSearchParams>) => {
+export const useIncomes = (params: Partial<IncomesSearchParams>) => {
   const client = useHttp();
-  return useQuery<FinancialsResult>(["financials", params], () =>
+  return useQuery<IncomesResult>(["financials", params], () =>
     client("/api/admin/financial/financial-list", {
       data: params,
     })
   );
 };
 
-export const useAddFinancial = (queryKey: QueryKey) => {
+export const useAddIncome = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<FinancialForm>) =>
+    (params: Partial<IncomeForm>) =>
       client("/api/admin/service-library/article-save", {
         data: params,
         method: "POST",
@@ -39,10 +39,10 @@ export const useAddFinancial = (queryKey: QueryKey) => {
   );
 };
 
-export const useEditFinancial = (queryKey: QueryKey) => {
+export const useEditIncome = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<FinancialForm>) =>
+    (params: Partial<IncomeForm>) =>
       client("/api/admin/service-library/article-save", {
         data: params,
         method: "POST",
@@ -51,10 +51,10 @@ export const useEditFinancial = (queryKey: QueryKey) => {
   );
 };
 
-export const useDeleteFinancial = (queryKey: QueryKey) => {
+export const useDeleteIncome = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<FinancialForm>) =>
+    (params: Partial<IncomeForm>) =>
       client("/api/admin/service-library/article-save", {
         data: { ...params, status: -1 },
         method: "POST",

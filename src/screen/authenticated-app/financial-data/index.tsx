@@ -1,24 +1,24 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import moment from "moment";
-import { useFinancials } from "service/financial-data";
-import { useFinancialsSearchParams } from "./util";
+import { useIncomes } from "service/financial-data";
+import { useIncomesSearchParams } from "./util";
 
 import { DatePicker, Menu } from "antd";
 import { Row } from "components/lib";
 import { List } from "./components/list";
-import { FinancialModal } from "./components/financial-modal";
+import { IncomeModal } from "./components/financial-modal";
 import { DetailedChart } from "./components/detailed-chart";
 import { MonthlyChart } from "./components/monthly-chart";
 
-export const Financials = () => {
+export const Incomes = () => {
   const [type, setType] = useState("0");
 
   const [totalIncome, setTotalIncome] = useState("0.00");
   const [totalOutlays, setTotalOutlays] = useState("0.00");
 
-  const [params, setParams] = useFinancialsSearchParams();
-  const { data, isLoading, error } = useFinancials(params);
+  const [params, setParams] = useIncomesSearchParams();
+  const { data, isLoading, error } = useIncomes(params);
 
   return (
     <Container>
@@ -63,7 +63,7 @@ export const Financials = () => {
           </ChartWrap>
         </Main>
       </MainWrap>
-      <FinancialModal
+      <IncomeModal
         type={type}
         year={params.select_year}
         financials={data?.list}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useFinancialModal } from "../util";
+import { useIncomeModal } from "../util";
 
 import { Table, TableProps } from "antd";
 import { ErrorBox } from "components/lib";
@@ -8,17 +8,17 @@ import { EditOutlined } from "@ant-design/icons";
 
 import type {
   TableItem,
-  FinancialsSearchParams,
-  FinancialItem,
+  IncomesSearchParams,
+  IncomeItem,
 } from "types/financial-data";
 
 interface ListProps extends TableProps<TableItem> {
   type: string;
   error: Error | unknown;
-  params: Partial<FinancialsSearchParams>;
-  setParams: (params: Partial<FinancialsSearchParams>) => void;
+  params: Partial<IncomesSearchParams>;
+  setParams: (params: Partial<IncomesSearchParams>) => void;
   setTotalIncome: (income: string) => void;
-  financials: FinancialItem[] | undefined;
+  financials: IncomeItem[] | undefined;
 }
 
 export const List = ({
@@ -31,7 +31,7 @@ export const List = ({
   ...restProps
 }: ListProps) => {
   const [tableList, setTableList] = useState<TableItem[]>([]);
-  const { startEdit } = useFinancialModal();
+  const { startEdit } = useIncomeModal();
 
   useEffect(() => {
     const dataItem = {

@@ -2,12 +2,12 @@ import { Card } from "antd";
 import EChartsReact from "echarts-for-react";
 import { useState, useEffect } from "react";
 
-import type { FinancialItem } from "types/financial-data";
+import type { IncomeItem } from "types/financial-data";
 
 export const MonthlyChart = ({
   financials,
 }: {
-  financials: FinancialItem[] | undefined;
+  financials: IncomeItem[] | undefined;
 }) => {
   const [source, setSource] = useState<number[]>([]);
 
