@@ -12,6 +12,8 @@ import { IncomeDetailedChart } from "./components/income-detailed-chart";
 import { IncomeMonthlyChart } from "./components/income-monthly-chart";
 import { ExpendList } from "./components/expend-list";
 import { ExpendModal } from "./components/expend-modal";
+import { ExpendDetailedChart } from "./components/expend-detailed-chart";
+import { ExpendMonthlyChart } from "./components/expend-monthly-chart";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
@@ -103,8 +105,8 @@ export const Financials = () => {
                 financials={expendData?.list}
               />
               <ChartWrap>
-                <IncomeDetailedChart financials={incomeData?.list} />
-                <IncomeMonthlyChart financials={incomeData?.list} />
+                <ExpendDetailedChart financials={expendData?.list} />
+                <ExpendMonthlyChart financials={expendData?.list} />
               </ChartWrap>
             </>
           )}
