@@ -21,7 +21,7 @@ interface ListProps extends TableProps<TableItem> {
   financials: IncomeItem[] | undefined;
 }
 
-export const List = ({
+export const IncomeList = ({
   type,
   error,
   params,
