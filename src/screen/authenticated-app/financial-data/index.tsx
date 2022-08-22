@@ -41,9 +41,9 @@ export const Financials = () => {
             </TitleWrap>
             <DatePicker
               onChange={(date: any, dateString: string) =>
-                setIncomeParams({ ...incomeParams, select_year: dateString })
+                setIncomeParams({ ...incomeParams, income_year: dateString })
               }
-              defaultValue={moment(incomeParams.select_year || "")}
+              defaultValue={moment(incomeParams.income_year || "")}
               disabledDate={(current: any) => current > moment()}
               picker="year"
             />
@@ -63,7 +63,7 @@ export const Financials = () => {
         </Main>
       </MainWrap>
       <IncomeModal
-        year={incomeParams.select_year}
+        year={incomeParams.income_year}
         financials={incomeData?.list}
       />
     </Container>

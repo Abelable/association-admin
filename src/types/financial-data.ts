@@ -1,5 +1,5 @@
 export interface IncomesSearchParams {
-  select_year: string;
+  income_year: string;
 }
 
 export interface IncomeItem {

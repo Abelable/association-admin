@@ -2,11 +2,11 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useIncomesSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["select_year"]);
+  const [params, setParams] = useUrlQueryParams(["income_year"]);
   return [
     useMemo(
       () => ({
-        select_year: params.select_year || `${new Date().getFullYear()}`,
+        income_year: params.income_year || `${new Date().getFullYear()}`,
       }),
       [params]
     ),
@@ -16,18 +16,18 @@ export const useIncomesSearchParams = () => {
 
 export const useIncomesQueryKey = () => {
   const [params] = useIncomesSearchParams();
-  return ["financials", params];
+  return ["incomes", params];
 };
 
 export const useIncomeModal = () => {
-  const [{ editingIncomeIndex }, setEditingIncomeId] = useUrlQueryParams([
+  const [{ editingIncomeIndex }, setEditingIncomeIndex] = useUrlQueryParams([
     "editingIncomeIndex",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const startEdit = useCallback(
-    (index: string) => setEditingIncomeId({ editingIncomeIndex: index }),
-    [setEditingIncomeId]
+    (index: string) => setEditingIncomeIndex({ editingIncomeIndex: index }),
+    [setEditingIncomeIndex]
   );
   const close = useCallback(
     () => setUrlParams({ editingIncomeIndex: "" }),
