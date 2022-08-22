@@ -2,27 +2,60 @@ import styled from "@emotion/styled";
 
 import { Card } from "antd";
 import EChartsReact from "echarts-for-react";
+import { FinancialItem } from "types/financial-data";
+import { useState, useEffect } from "react";
 
-export const DetailedChart = () => {
+export const DetailedChart = ({
+  financials,
+}: {
+  financials: FinancialItem[] | undefined;
+}) => {
+  const [source, setSource] = useState<(string | number)[][]>([]);
+
+  useEffect(() => {
+    if (financials) {
+      const list = [];
+      for (let i = 0; i < 12; i++) {
+        if (financials[i]) {
+          list.push([
+            `${i + 1}月`,
+            Number(financials[i].member_income),
+            Number(financials[i].project_income),
+            Number(financials[i].service_income),
+            Number(financials[i].other_income),
+          ]);
+        } else {
+          list.push([`${i + 1}月`, 0, 0, 0, 0]);
+        }
+      }
+      setSource(list);
+    }
+  }, [financials]);
+
   return (
     <Wrap style={{ flex: 1 }} title="各收入情况对比">
       <EChartsReact
-        style={{ height: "400px" }}
+        style={{
+          width: "100%",
+          height: "400px",
+        }}
         option={{
           legend: {},
           tooltip: {},
           dataset: {
             source: [
-              ["product", "2015", "2016", "2017"],
-              ["Matcha Latte", 43.3, 85.8, 93.7],
-              ["Milk Tea", 83.1, 73.4, 55.1],
-              ["Cheese Cocoa", 86.4, 65.2, 82.5],
-              ["Walnut Brownie", 72.4, 53.9, 39.1],
+              ["product", "会费收入", "项目收入", "服务收入", "其他收入"],
+              ...source,
             ],
           },
           xAxis: { type: "category" },
           yAxis: {},
-          series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+          series: [
+            { type: "bar" },
+            { type: "bar" },
+            { type: "bar" },
+            { type: "bar" },
+          ],
         }}
       />
     </Wrap>

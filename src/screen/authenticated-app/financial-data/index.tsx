@@ -129,7 +129,7 @@ export const Financials = () => {
             dataSource={tableList}
           />
           <ChartWrap>
-            <DetailedChart />
+            <DetailedChart financials={data?.list} />
             <MonthlyChart />
           </ChartWrap>
         </Main>
