@@ -9,6 +9,7 @@ import { List } from "./components/list";
 
 import type { TableItem } from "types/financial-data";
 import { Row } from "components/lib";
+import { FinancialModal } from "./components/financial-modal";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
@@ -127,6 +128,11 @@ export const Financials = () => {
           />
         </Main>
       </MainWrap>
+      <FinancialModal
+        type={type}
+        year={params.select_year}
+        financials={data?.list}
+      />
     </Container>
   );
 };

@@ -16,35 +16,27 @@ export const useFinancialsSearchParams = () => {
 
 export const useFinancialsQueryKey = () => {
   const [params] = useFinancialsSearchParams();
-  return ["services", params];
+  return ["financials", params];
 };
 
 export const useFinancialModal = () => {
-  const [{ serviceCreate }, setFinancialModalOpen] = useUrlQueryParams([
-    "serviceCreate",
-  ]);
-  const [{ editingFinancialId }, setEditingFinancialId] = useUrlQueryParams([
-    "editingFinancialId",
+  const [{ editingFinancialIndex }, setEditingFinancialId] = useUrlQueryParams([
+    "editingFinancialIndex",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
-  const open = useCallback(
-    () => setFinancialModalOpen({ serviceCreate: true }),
-    [setFinancialModalOpen]
-  );
   const startEdit = useCallback(
-    (id: string) => setEditingFinancialId({ editingFinancialId: id }),
+    (index: string) => setEditingFinancialId({ editingFinancialIndex: index }),
     [setEditingFinancialId]
   );
   const close = useCallback(
-    () => setUrlParams({ serviceCreate: "", editingFinancialId: "" }),
+    () => setUrlParams({ editingFinancialIndex: "" }),
     [setUrlParams]
   );
 
   return {
-    serviceModalOpen: serviceCreate === "true" || !!editingFinancialId,
-    editingFinancialId,
-    open,
+    financialModalOpen: !!editingFinancialIndex,
+    editingFinancialIndex,
     startEdit,
     close,
   };

@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { useFinancialModal } from "../util";
+
 import { Table, TableProps } from "antd";
 import { ErrorBox } from "components/lib";
 import { EditOutlined } from "@ant-design/icons";
@@ -19,6 +21,8 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const { startEdit } = useFinancialModal();
+
   return (
     <>
       <ErrorBox error={error} />
@@ -31,7 +35,7 @@ export const List = ({
           },
           {
             title: (
-              <Edit>
+              <Edit onClick={() => startEdit("0")}>
                 <span>{`${params.select_year}年1月`}</span>
                 <EditOutlined
                   style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -46,7 +50,7 @@ export const List = ({
               new Date().getMonth() < 1 ? (
                 `${params.select_year}年2月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("1")}>
                   <span>{`${params.select_year}年2月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -68,7 +72,7 @@ export const List = ({
               new Date().getMonth() < 2 ? (
                 `${params.select_year}年3月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("2")}>
                   <span>{`${params.select_year}年3月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -90,7 +94,7 @@ export const List = ({
               new Date().getMonth() < 3 ? (
                 `${params.select_year}年4月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("3")}>
                   <span>{`${params.select_year}年4月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -112,7 +116,7 @@ export const List = ({
               new Date().getMonth() < 4 ? (
                 `${params.select_year}年5月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("4")}>
                   <span>{`${params.select_year}年5月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -134,7 +138,7 @@ export const List = ({
               new Date().getMonth() < 5 ? (
                 `${params.select_year}年6月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("5")}>
                   <span>{`${params.select_year}年6月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -156,7 +160,7 @@ export const List = ({
               new Date().getMonth() < 6 ? (
                 `${params.select_year}年7月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("6")}>
                   <span>{`${params.select_year}年7月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -178,7 +182,7 @@ export const List = ({
               new Date().getMonth() < 7 ? (
                 `${params.select_year}年8月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("7")}>
                   <span>{`${params.select_year}年8月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -200,7 +204,7 @@ export const List = ({
               new Date().getMonth() < 8 ? (
                 `${params.select_year}年9月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("8")}>
                   <span>{`${params.select_year}年9月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -222,7 +226,7 @@ export const List = ({
               new Date().getMonth() < 9 ? (
                 `${params.select_year}年10月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("9")}>
                   <span>{`${params.select_year}年10月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -244,7 +248,7 @@ export const List = ({
               new Date().getMonth() < 10 ? (
                 `${params.select_year}年11月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("10")}>
                   <span>{`${params.select_year}年11月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -266,7 +270,7 @@ export const List = ({
               new Date().getMonth() < 11 ? (
                 `${params.select_year}年12月`
               ) : (
-                <Edit>
+                <Edit onClick={() => startEdit("11")}>
                   <span>{`${params.select_year}年12月`}</span>
                   <EditOutlined
                     style={{ marginLeft: ".4rem", color: "#1890ff" }}
