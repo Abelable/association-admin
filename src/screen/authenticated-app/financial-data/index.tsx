@@ -15,7 +15,7 @@ export const Financials = () => {
   const [type, setType] = useState("0");
 
   const [totalIncome, setTotalIncome] = useState("0.00");
-  const [totalOutlays, setTotalOutlays] = useState("0.00");
+  const [totalOutlay, setTotalOutlay] = useState("0.00");
 
   const [incomeParams, setIncomeParams] = useIncomesSearchParams();
   const { data: incomeData, isLoading, error } = useIncomes(incomeParams);
@@ -104,7 +104,7 @@ const TotalIncome = styled.div`
   font-size: 1.4rem;
   font-weight: bold;
 `;
-const TotalOutlays = styled.div`
+const TotalOutlay = styled.div`
   margin-left: 2rem;
   color: green;
   font-size: 1.4rem;
