@@ -7,11 +7,9 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { useIncomesQueryKey, useIncomeModal } from "../util";
 
 export const IncomeModal = ({
-  type,
   year,
   financials,
 }: {
-  type: string;
   year: string;
   financials: IncomeItem[] | undefined;
 }) => {
@@ -47,9 +45,7 @@ export const IncomeModal = ({
 
   return (
     <Modal
-      title={`编辑${year}年${Number(editingIncomeIndex) + 1}月${
-        type === "0" ? "收入" : "支出"
-      }数据`}
+      title={`编辑${year}年${Number(editingIncomeIndex) + 1}月收入数据`}
       visible={financialModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}

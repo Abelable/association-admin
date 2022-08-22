@@ -6,7 +6,7 @@ import EChartsReact from "echarts-for-react";
 
 import type { IncomeItem } from "types/financial-data";
 
-export const DetailedChart = ({
+export const IncomeDetailedChart = ({
   financials,
 }: {
   financials: IncomeItem[] | undefined;

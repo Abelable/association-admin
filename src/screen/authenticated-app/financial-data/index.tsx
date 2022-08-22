@@ -8,8 +8,8 @@ import { DatePicker, Menu } from "antd";
 import { Row } from "components/lib";
 import { IncomeList } from "./components/income-list";
 import { IncomeModal } from "./components/income-modal";
-import { DetailedChart } from "./components/detailed-chart";
-import { MonthlyChart } from "./components/monthly-chart";
+import { IncomeDetailedChart } from "./components/income-detailed-chart";
+import { IncomeMonthlyChart } from "./components/income-monthly-chart";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
@@ -17,8 +17,8 @@ export const Financials = () => {
   const [totalIncome, setTotalIncome] = useState("0.00");
   const [totalOutlays, setTotalOutlays] = useState("0.00");
 
-  const [params, setParams] = useIncomesSearchParams();
-  const { data, isLoading, error } = useIncomes(params);
+  const [incomeParams, setIncomeParams] = useIncomesSearchParams();
+  const { data: incomeData, isLoading, error } = useIncomes(incomeParams);
 
   return (
     <Container>
@@ -41,32 +41,30 @@ export const Financials = () => {
             </TitleWrap>
             <DatePicker
               onChange={(date: any, dateString: string) =>
-                setParams({ ...params, select_year: dateString })
+                setIncomeParams({ ...incomeParams, select_year: dateString })
               }
-              defaultValue={moment(params.select_year || "")}
+              defaultValue={moment(incomeParams.select_year || "")}
               disabledDate={(current: any) => current > moment()}
               picker="year"
             />
           </Header>
           <IncomeList
             error={error}
-            type={type}
-            params={params}
-            setParams={setParams}
+            params={incomeParams}
+            setParams={setIncomeParams}
             loading={isLoading}
             setTotalIncome={setTotalIncome}
-            financials={data?.list}
+            financials={incomeData?.list}
           />
           <ChartWrap>
-            <DetailedChart financials={data?.list} />
-            <MonthlyChart financials={data?.list} />
+            <IncomeDetailedChart financials={incomeData?.list} />
+            <IncomeMonthlyChart financials={incomeData?.list} />
           </ChartWrap>
         </Main>
       </MainWrap>
       <IncomeModal
-        type={type}
-        year={params.select_year}
-        financials={data?.list}
+        year={incomeParams.select_year}
+        financials={incomeData?.list}
       />
     </Container>
   );

@@ -13,7 +13,6 @@ import type {
 } from "types/financial-data";
 
 interface ListProps extends TableProps<TableItem> {
-  type: string;
   error: Error | unknown;
   params: Partial<IncomesSearchParams>;
   setParams: (params: Partial<IncomesSearchParams>) => void;
@@ -22,7 +21,6 @@ interface ListProps extends TableProps<TableItem> {
 }
 
 export const IncomeList = ({
-  type,
   error,
   params,
   setParams,

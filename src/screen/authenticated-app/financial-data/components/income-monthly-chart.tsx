@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import type { IncomeItem } from "types/financial-data";
 
-export const MonthlyChart = ({
+export const IncomeMonthlyChart = ({
   financials,
 }: {
   financials: IncomeItem[] | undefined;
