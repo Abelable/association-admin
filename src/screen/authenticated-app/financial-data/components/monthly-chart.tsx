@@ -34,7 +34,6 @@ export const MonthlyChart = ({
     <Card style={{ flex: 1 }} title="月度收入情况">
       <EChartsReact
         style={{
-          width: "100%",
           height: "400px",
         }}
         option={{

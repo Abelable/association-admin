@@ -37,7 +37,6 @@ export const DetailedChart = ({
     <Wrap style={{ flex: 1 }} title="各收入情况对比">
       <EChartsReact
         style={{
-          width: "100%",
           height: "400px",
         }}
         option={{
