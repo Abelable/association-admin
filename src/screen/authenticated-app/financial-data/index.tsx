@@ -130,7 +130,7 @@ export const Financials = () => {
           />
           <ChartWrap>
             <DetailedChart financials={data?.list} />
-            <MonthlyChart />
+            <MonthlyChart financials={data?.list} />
           </ChartWrap>
         </Main>
       </MainWrap>

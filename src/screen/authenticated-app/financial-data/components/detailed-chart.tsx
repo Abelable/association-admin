@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
 import { Card } from "antd";
 import EChartsReact from "echarts-for-react";
-import { FinancialItem } from "types/financial-data";
-import { useState, useEffect } from "react";
+
+import type { FinancialItem } from "types/financial-data";
 
 export const DetailedChart = ({
   financials,
