@@ -41,3 +41,44 @@ export const useIncomeModal = () => {
     close,
   };
 };
+
+export const useExpendsSearchParams = () => {
+  const [params, setParams] = useUrlQueryParams(["expend_year"]);
+  return [
+    useMemo(
+      () => ({
+        expend_year: params.expend_year || `${new Date().getFullYear()}`,
+      }),
+      [params]
+    ),
+    setParams,
+  ] as const;
+};
+
+export const useExpendsQueryKey = () => {
+  const [params] = useExpendsSearchParams();
+  return ["expends", params];
+};
+
+export const useExpendModal = () => {
+  const [{ editingExpendIndex }, setEditingExpendIndex] = useUrlQueryParams([
+    "editingExpendIndex",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const startEdit = useCallback(
+    (index: string) => setEditingExpendIndex({ editingExpendIndex: index }),
+    [setEditingExpendIndex]
+  );
+  const close = useCallback(
+    () => setUrlParams({ editingExpendIndex: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    financialModalOpen: !!editingExpendIndex,
+    editingExpendIndex,
+    startEdit,
+    close,
+  };
+};

@@ -1,5 +1,8 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import {
+  ExpendForm,
+  ExpendsResult,
+  ExpendsSearchParams,
   IncomeForm,
   IncomesResult,
   IncomesSearchParams,
@@ -21,6 +24,27 @@ export const useEditIncome = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<IncomeForm>) =>
       client("/api/admin/financial/financial-save", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useExpends = (params: Partial<ExpendsSearchParams>) => {
+  const client = useHttp();
+  return useQuery<ExpendsResult>(["expends", params], () =>
+    client("/api/admin/financial/financial-out-list", {
+      data: { select_year: params.expend_year },
+    })
+  );
+};
+
+export const useEditExpend = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<ExpendForm>) =>
+      client("/api/admin/financial/financial-out-save", {
         data: params,
         method: "POST",
       }),
