@@ -14,21 +14,16 @@ import { ExpendList } from "./components/expend-list";
 import { ExpendModal } from "./components/expend-modal";
 import { ExpendDetailedChart } from "./components/expend-detailed-chart";
 import { ExpendMonthlyChart } from "./components/expend-monthly-chart";
+import { ExpendItem, IncomeItem } from "types/financial-data";
 
 export const Financials = () => {
   const [type, setType] = useState("0");
-
   const [totalIncome, setTotalIncome] = useState("0.00");
   const [totalExpend, setTotalExpend] = useState("0.00");
-
   const [params, setParams] = useFinancialsSearchParams();
-  const { data: incomeData, isLoading, error } = useIncomes(params);
 
-  const {
-    data: expendData,
-    isLoading: expendLoading,
-    error: expendError,
-  } = useExpends(params);
+  const useFinancials = type === "0" ? useIncomes : useExpends;
+  const { data, isLoading, error } = useFinancials(params);
 
   return (
     <Container>
@@ -44,75 +39,70 @@ export const Financials = () => {
       </TypeMenu>
       <MainWrap>
         <Main style={{ overflow: "scroll" }}>
+          <Header between={true}>
+            <TitleWrap>
+              <h3>{type === "0" ? "收入表" : "支出表"}</h3>
+              {type === "0" ? (
+                <TotalIncome>+¥{totalIncome}</TotalIncome>
+              ) : (
+                <TotalExpend>-¥{totalExpend}</TotalExpend>
+              )}
+            </TitleWrap>
+            <DatePicker
+              onChange={(date: any, dateString: string) =>
+                setParams({
+                  ...params,
+                  select_year: dateString,
+                })
+              }
+              defaultValue={moment(params.select_year || "")}
+              disabledDate={(current: any) => current > moment()}
+              picker="year"
+            />
+          </Header>
           {type === "0" ? (
-            <>
-              <Header between={true}>
-                <TitleWrap>
-                  <h3>收入表</h3>
-                  <TotalIncome>+¥{totalIncome}</TotalIncome>
-                </TitleWrap>
-                <DatePicker
-                  onChange={(date: any, dateString: string) =>
-                    setParams({
-                      ...params,
-                      select_year: dateString,
-                    })
-                  }
-                  defaultValue={moment(params.select_year || "")}
-                  disabledDate={(current: any) => current > moment()}
-                  picker="year"
-                />
-              </Header>
-              <IncomeList
-                error={error}
-                params={params}
-                setParams={setParams}
-                loading={isLoading}
-                setTotalIncome={setTotalIncome}
-                financials={incomeData?.list}
-              />
-              <ChartWrap>
-                <IncomeDetailedChart financials={incomeData?.list} />
-                <IncomeMonthlyChart financials={incomeData?.list} />
-              </ChartWrap>
-            </>
+            <IncomeList
+              error={error}
+              params={params}
+              setParams={setParams}
+              loading={isLoading}
+              setTotalIncome={setTotalIncome}
+              financials={data?.list as IncomeItem[]}
+            />
           ) : (
-            <>
-              <Header between={true}>
-                <TitleWrap>
-                  <h3>支出表</h3>
-                  <TotalExpend>-¥{totalExpend}</TotalExpend>
-                </TitleWrap>
-                <DatePicker
-                  onChange={(date: any, dateString: string) =>
-                    setParams({
-                      ...params,
-                      select_year: dateString,
-                    })
-                  }
-                  defaultValue={moment(params.select_year || "")}
-                  disabledDate={(current: any) => current > moment()}
-                  picker="year"
-                />
-              </Header>
-              <ExpendList
-                error={expendError}
-                params={params}
-                setParams={setParams}
-                loading={expendLoading}
-                setTotalExpend={setTotalExpend}
-                financials={expendData?.list}
-              />
-              <ChartWrap>
-                <ExpendDetailedChart financials={expendData?.list} />
-                <ExpendMonthlyChart financials={expendData?.list} />
-              </ChartWrap>
-            </>
+            <ExpendList
+              error={error}
+              params={params}
+              setParams={setParams}
+              loading={isLoading}
+              setTotalExpend={setTotalExpend}
+              financials={data?.list as ExpendItem[]}
+            />
           )}
+
+          <ChartWrap>
+            {type === "0" ? (
+              <>
+                <IncomeDetailedChart financials={data?.list as IncomeItem[]} />
+                <IncomeMonthlyChart financials={data?.list as IncomeItem[]} />
+              </>
+            ) : (
+              <>
+                <ExpendDetailedChart financials={data?.list as ExpendItem[]} />
+                <ExpendMonthlyChart financials={data?.list as ExpendItem[]} />
+              </>
+            )}
+          </ChartWrap>
         </Main>
       </MainWrap>
-      <IncomeModal year={params.select_year} financials={incomeData?.list} />
-      <ExpendModal year={params.select_year} financials={expendData?.list} />
+      <IncomeModal
+        year={params.select_year}
+        financials={data?.list as IncomeItem[]}
+      />
+      <ExpendModal
+        year={params.select_year}
+        financials={data?.list as ExpendItem[]}
+      />
     </Container>
   );
 };
