@@ -34,13 +34,5 @@ export interface IncomesResult {
 }
 
 export interface IncomeForm {
-  id: string;
-  title: string;
-  image: string;
-  sort: number;
-  status: number;
-  category_id: string;
-  brief: string;
-  content: string;
-  is_show: string;
+  apply_content_json: string;
 }

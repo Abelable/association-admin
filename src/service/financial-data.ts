@@ -11,7 +11,7 @@ export const useIncomes = (params: Partial<IncomesSearchParams>) => {
   const client = useHttp();
   return useQuery<IncomesResult>(["incomes", params], () =>
     client("/api/admin/financial/financial-list", {
-      data: { income_year: params.income_year },
+      data: { select_year: params.income_year },
     })
   );
 };
@@ -20,7 +20,7 @@ export const useEditIncome = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<IncomeForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/financial/financial-save", {
         data: params,
         method: "POST",
       }),

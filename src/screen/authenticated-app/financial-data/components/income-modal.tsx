@@ -28,11 +28,59 @@ export const IncomeModal = ({
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { head_img, ...restFieldsValue } = form.getFieldsValue();
+      const { member_income, project_income, service_income, other_income } =
+        form.getFieldsValue();
+      const list: Partial<IncomeItem>[] = [];
+      for (let i = 0; i < 12; i++) {
+        if (i === Number(editingIncomeIndex)) {
+          if (financials && financials[i]) {
+            list.push({
+              ...financials[i],
+              member_income: Number(member_income).toFixed(2),
+              project_income: Number(project_income).toFixed(2),
+              service_income: Number(service_income).toFixed(2),
+              other_income: Number(other_income).toFixed(2),
+              total_income: (
+                Number(member_income) +
+                Number(project_income) +
+                Number(service_income) +
+                Number(other_income)
+              ).toFixed(2),
+            });
+          } else {
+            list.push({
+              year,
+              month: String(i + 1).length === 1 ? `0${i + 1}` : `0${i + 1}`,
+              member_income: Number(member_income).toFixed(2),
+              project_income: Number(project_income).toFixed(2),
+              service_income: Number(service_income).toFixed(2),
+              other_income: Number(other_income).toFixed(2),
+              total_income: (
+                Number(member_income) +
+                Number(project_income) +
+                Number(service_income) +
+                Number(other_income)
+              ).toFixed(2),
+            });
+          }
+        } else {
+          if (financials && financials[i]) {
+            list.push(financials[i]);
+          } else {
+            list.push({
+              year,
+              month: String(i + 1).length === 1 ? `0${i + 1}` : `${i + 1}`,
+              member_income: "0.00",
+              project_income: "0.00",
+              service_income: "0.00",
+              other_income: "0.00",
+              total_income: "0.00",
+            });
+          }
+        }
+      }
       await mutateAsync({
-        id: editingIncomeIndex || "",
-        head_img: head_img[0].url,
-        ...restFieldsValue,
+        apply_content_json: JSON.stringify(list),
       });
       closeModal();
     });

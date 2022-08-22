@@ -84,10 +84,14 @@ export const IncomeList = ({
             Number(project_income) +
             Number(service_income) +
             Number(other_income);
-          (defaultTableList[0] as any)[`${i + 1}`] = member_income;
-          (defaultTableList[1] as any)[`${i + 1}`] = project_income;
-          (defaultTableList[2] as any)[`${i + 1}`] = service_income;
-          (defaultTableList[3] as any)[`${i + 1}`] = other_income;
+          (defaultTableList[0] as any)[`${i + 1}`] =
+            Number(member_income).toFixed(2);
+          (defaultTableList[1] as any)[`${i + 1}`] =
+            Number(project_income).toFixed(2);
+          (defaultTableList[2] as any)[`${i + 1}`] =
+            Number(service_income).toFixed(2);
+          (defaultTableList[3] as any)[`${i + 1}`] =
+            Number(other_income).toFixed(2);
           (defaultTableList[4] as any)[`${i + 1}`] = totalIncome.toFixed(2);
           income += totalIncome;
         }
