@@ -20,6 +20,12 @@ export const Portraits = () => {
     { id: "3", name: "标准制定" },
   ];
 
+  const evaluationOptions = [
+    { id: "1", name: "独角兽" },
+    { id: "2", name: "上市" },
+    { id: "3", name: "荣誉" },
+  ];
+
   return (
     <Container>
       <TypeMenu>
@@ -35,7 +41,7 @@ export const Portraits = () => {
       <Main>
         <SearchPanel params={params} setParams={setParams} />
         <List
-          categoryOptions={categoryOptions}
+          categoryOptions={evaluationOptions}
           error={error}
           params={params}
           setParams={setParams}

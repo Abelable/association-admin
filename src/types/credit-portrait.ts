@@ -20,7 +20,7 @@ export interface PortraitItem {
   image: string;
   sort: number;
   status: number;
-  category_id: string;
+  evaluation: string;
   brief: string;
   content: string;
   is_show: string;
@@ -40,7 +40,7 @@ export interface PortraitForm {
   image: string;
   sort: number;
   status: number;
-  category_id: string;
+  evaluation: string;
   brief: string;
   content: string;
   is_show: string;

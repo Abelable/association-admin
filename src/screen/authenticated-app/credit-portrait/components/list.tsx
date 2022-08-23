@@ -48,7 +48,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>服务列表</h3>
+        <h3>企业评价列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -70,15 +70,9 @@ export const List = ({
             width: "20rem",
           },
           {
-            title: "图片",
-            render: (value, service) => (
-              <img
-                style={{ width: "8.8rem", height: "6.2rem" }}
-                src={service.image}
-                alt=""
-              />
-            ),
-            width: "12rem",
+            title: "企业名称",
+            dataIndex: "company_name",
+            width: "20rem",
           },
           {
             title: "排序",
@@ -88,9 +82,9 @@ export const List = ({
           },
           {
             title: "创建时间",
-            render: (value, service) => (
+            render: (value, portrait) => (
               <span>
-                {dayjs(Number(service.created_at) * 1000).format(
+                {dayjs(Number(portrait.created_at) * 1000).format(
                   "YYYY-MM-DD HH:mm"
                 )}
               </span>
@@ -99,12 +93,12 @@ export const List = ({
             sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
           {
-            title: "关联标签",
-            render: (value, service) => (
+            title: "企业评价",
+            render: (value, portrait) => (
               <>
                 {
                   categoryOptions.find(
-                    (item) => item.id === service.category_id
+                    (item) => item.id === portrait.evaluation
                   )?.name
                 }
               </>
@@ -118,8 +112,8 @@ export const List = ({
           },
           {
             title: "操作",
-            render(value, service) {
-              return <More service={service} />;
+            render(value, portrait) {
+              return <More portrait={portrait} />;
             },
             width: "8rem",
           },
@@ -131,7 +125,7 @@ export const List = ({
   );
 };
 
-const More = ({ service }: { service: PortraitForm }) => {
+const More = ({ portrait }: { portrait: PortraitForm }) => {
   const { mutate: deletePortrait } = useDeletePortrait(usePortraitsQueryKey());
 
   const { startEdit } = usePortraitModal();
@@ -142,7 +136,7 @@ const More = ({ service }: { service: PortraitForm }) => {
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deletePortrait(service),
+      onOk: () => deletePortrait(portrait),
     });
   };
 
@@ -150,11 +144,11 @@ const More = ({ service }: { service: PortraitForm }) => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item onClick={() => startEdit(service.id)} key={"edit"}>
+          <Menu.Item onClick={() => startEdit(portrait.id)} key={"edit"}>
             编辑
           </Menu.Item>
           <Menu.Item
-            onClick={() => confirmDeletePortrait(service.id)}
+            onClick={() => confirmDeletePortrait(portrait.id)}
             key={"delete"}
           >
             删除

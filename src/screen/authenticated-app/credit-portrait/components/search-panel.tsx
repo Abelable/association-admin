@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Input } from "antd";
+import { Button, DatePicker, Input } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import { PortraitsSearchParams } from "types/credit-portrait";
+import moment from "moment";
 
 export interface SearchPanelProps {
   params: Partial<PortraitsSearchParams>;
@@ -54,6 +55,20 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
+  const setTriggerDates = (dates: any, formatString: [string, string]) =>
+    setTemporaryParams({
+      ...temporaryParams,
+      s_time: formatString[0],
+      e_time: formatString[1],
+    });
+
+  const setAddDates = (dates: any, formatString: [string, string]) =>
+    setTemporaryParams({
+      ...temporaryParams,
+      ps_time: formatString[0],
+      pe_time: formatString[1],
+    });
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -80,6 +95,34 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             onChange={setName}
             placeholder="请输入企业名称"
             allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>触发时间：</div>
+          <DatePicker.RangePicker
+            value={
+              temporaryParams.s_time
+                ? [
+                    moment(temporaryParams.s_time),
+                    moment(temporaryParams.e_time),
+                  ]
+                : undefined
+            }
+            onChange={setTriggerDates}
+          />
+        </Row>
+        <Row>
+          <div>触发时间：</div>
+          <DatePicker.RangePicker
+            value={
+              temporaryParams.ps_time
+                ? [
+                    moment(temporaryParams.ps_time),
+                    moment(temporaryParams.pe_time),
+                  ]
+                : undefined
+            }
+            onChange={setAddDates}
           />
         </Row>
       </Row>
