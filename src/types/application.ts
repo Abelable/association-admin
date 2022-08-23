@@ -66,16 +66,22 @@ export interface ApplicationsItem {
   company_name: string;
   level_id: string;
   level_name: string;
-  evaluation: string;
   name: string;
   mobile: string;
   email: string;
   is_deal: string;
   reject_mark: string;
-  created_at: string;
+  short_name: string;
+  address: string;
+  longitude: number;
+  latitude: number;
+  registration_time: string;
+  evaluation: string;
+  introduction: string;
+  logo: string;
   apply_content_json: string;
+  created_at: string;
 }
-
 export interface ApplicationsResult {
   list: ApplicationsItem[];
   page: string;

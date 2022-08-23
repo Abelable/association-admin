@@ -473,6 +473,7 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
   const currentApplication = applicationsResult
     ? applicationsResult.list.find((item) => item.id === editingApplicationId)
     : undefined;
+
   const formList = currentApplication
     ? JSON.parse(currentApplication?.apply_content_json)
     : [];
