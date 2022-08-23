@@ -2,26 +2,25 @@ import { useState } from "react";
 import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { CategoryOption, ServicesSearchParams } from "types/member-service";
+import { PortraitsSearchParams } from "types/credit-portrait";
 
 export interface SearchPanelProps {
-  categoryOptions: CategoryOption[];
-  params: Partial<ServicesSearchParams>;
-  setParams: (params: Partial<ServicesSearchParams>) => void;
+  params: Partial<PortraitsSearchParams>;
+  setParams: (params: Partial<PortraitsSearchParams>) => void;
 }
 
-export const SearchPanel = ({
-  categoryOptions,
-  params,
-  setParams,
-}: SearchPanelProps) => {
+export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
     name: "",
-    category_id: undefined,
-  } as Partial<ServicesSearchParams>;
+    company_name: undefined,
+    s_time: undefined,
+    e_time: undefined,
+    ps_time: undefined,
+    pe_time: undefined,
+  } as Partial<PortraitsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<ServicesSearchParams>>(params);
+    useState<Partial<PortraitsSearchParams>>(params);
 
   const setTitle = (evt: any) => {
     // onInputClear
@@ -39,13 +38,21 @@ export const SearchPanel = ({
     });
   };
 
-  const setCategory = (category_id: any) =>
-    setTemporaryParams({ ...temporaryParams, category_id });
-  const clearCategory = () =>
+  const setName = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        company_name: "",
+      });
+      return;
+    }
+
     setTemporaryParams({
       ...temporaryParams,
-      category_id: undefined,
+      company_name: evt.target.value,
     });
+  };
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -66,21 +73,14 @@ export const SearchPanel = ({
           />
         </Row>
         <Row>
-          <div>标签筛选：</div>
-          <Select
+          <div>企业名称：</div>
+          <Input
             style={{ width: "20rem" }}
-            value={temporaryParams.category_id}
-            placeholder="请选择关联标签"
+            value={temporaryParams.company_name}
+            onChange={setName}
+            placeholder="请输入企业名称"
             allowClear={true}
-            onSelect={setCategory}
-            onClear={clearCategory}
-          >
-            {categoryOptions?.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
+          />
         </Row>
       </Row>
       <Row gap={true}>

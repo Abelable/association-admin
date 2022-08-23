@@ -1,8 +1,12 @@
 export interface PortraitsSearchParams {
+  title: string;
+  company_name: string;
+  s_time: string;
+  e_time: string;
+  ps_time: string;
+  pe_time: string;
   page: number;
   page_size: number;
-  title: string;
-  category_id: string;
 }
 
 export interface CategoryOption {

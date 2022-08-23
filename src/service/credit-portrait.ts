@@ -11,10 +11,12 @@ import {
   useEditConfig,
 } from "./use-optimistic-options";
 
-export const usePortraits = (params: Partial<PortraitsSearchParams>) => {
+export const useEvaluations = (params: Partial<PortraitsSearchParams>) => {
   const client = useHttp();
-  return useQuery<PortraitsResult>(["services", params], () =>
-    client("/api/admin/member-service/legal-list", { data: params })
+  return useQuery<PortraitsResult>(["evaluations", params], () =>
+    client("/api/admin/company-evaluation/company-evaluation-list", {
+      data: params,
+    })
   );
 };
 

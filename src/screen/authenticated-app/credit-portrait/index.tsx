@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
-import { usePortraits } from "service/credit-portrait";
+import { useEvaluations } from "service/credit-portrait";
 import { toNumber } from "utils";
 import { usePortraitsSearchParams } from "./util";
 
@@ -12,7 +12,7 @@ import { SearchPanel } from "./components/search-panel";
 export const Portraits = () => {
   const [type, setType] = useState("0");
   const [params, setParams] = usePortraitsSearchParams();
-  const { data, isLoading, error } = usePortraits(params);
+  const { data, isLoading, error } = useEvaluations(params);
 
   const categoryOptions = [
     { id: "1", name: "培训服务" },
@@ -33,14 +33,10 @@ export const Portraits = () => {
         </Menu>
       </TypeMenu>
       <Main>
-        <SearchPanel
-          categoryOptions={categoryOptions}
-          params={params}
-          setParams={setParams}
-        />
+        <SearchPanel params={params} setParams={setParams} />
         <List
-          error={error}
           categoryOptions={categoryOptions}
+          error={error}
           params={params}
           setParams={setParams}
           loading={isLoading}

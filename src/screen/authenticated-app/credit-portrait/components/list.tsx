@@ -13,6 +13,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { usePortraitModal, usePortraitsQueryKey } from "../util";
 import type {
+  CategoryOption,
   PortraitForm,
   PortraitItem,
   PortraitsSearchParams,
@@ -22,6 +23,7 @@ import type { SearchPanelProps } from "./search-panel";
 import { useDeletePortrait } from "service/credit-portrait";
 
 interface ListProps extends TableProps<PortraitItem>, SearchPanelProps {
+  categoryOptions: CategoryOption[];
   error: Error | unknown;
   params: Partial<PortraitsSearchParams>;
   setParams: (params: Partial<PortraitsSearchParams>) => void;
