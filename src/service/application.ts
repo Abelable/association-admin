@@ -44,7 +44,7 @@ export const useAddApplication = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<ApplicationsItem>) =>
       client("/api/admin/enter-apply/store", {
-        data: { apply_content_json: params.apply_content_json },
+        data: params,
         method: "POST",
       }),
     useAddApplicationConfig(queryKey)
@@ -56,7 +56,7 @@ export const useEditApplication = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<ApplicationsItem>) =>
       client("/api/admin/enter-apply/store", {
-        data: { id: params.id, apply_content_json: params.apply_content_json },
+        data: params,
         method: "POST",
       }),
     useEditConfig(queryKey)

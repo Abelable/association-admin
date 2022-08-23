@@ -148,7 +148,9 @@ export const List = ({
                   type={"link"}
                   onClick={(e) => e.preventDefault()}
                 >
-                  {application.evaluation || "选择企业评价"}
+                  {evaluationOptions.find(
+                    (item) => item.value === application.evaluation
+                  )?.name || "选择企业评价"}
                   <DownOutlined />
                 </ButtonNoPadding>
               </Dropdown>

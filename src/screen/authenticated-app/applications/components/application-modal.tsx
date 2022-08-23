@@ -158,13 +158,12 @@ export const ApplicationModal = ({
 
       const applicationItem: Partial<ApplicationsItem> = cleanObject({
         id: editingApplicationId || undefined,
-        company_name,
         level_id: `${member_level}`,
         name: _name,
         mobile: _mobile,
         apply_content_json: JSON.stringify(applyContent),
         logo: logo[0].url,
-        registration_time: moment(registration_time).unix(),
+        registration_time: `${moment(registration_time).unix()}`,
         address,
         ...rest,
       });
