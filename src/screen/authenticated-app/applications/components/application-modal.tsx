@@ -171,6 +171,19 @@ export const ApplicationModal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
+              name="logo"
+              label="企业logo"
+              tooltip="图片大小不能超过10MB"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <OssUpload maxCount={1} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
               name="company_name"
               label="企业名称"
               rules={[{ required: true, message: "请输入企业名称" }]}
@@ -200,26 +213,6 @@ export const ApplicationModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="website_url"
-              label="网站（app）名称"
-              rules={[{ required: true, message: "请输入网站(app)名称" }]}
-            >
-              <Input placeholder="请输入网站(app)名称" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="ICP"
-              label="ICP备案号"
-              rules={[{ required: true, message: "请输入ICP备案号" }]}
-            >
-              <Input placeholder="请输入ICP备案号" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
               name="company_type"
               label="企业类型（可多选）"
               rules={[{ required: true, message: "请选择企业类型" }]}
@@ -237,6 +230,26 @@ export const ApplicationModal = ({
                   <Select.Option key={item}>{item}</Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="website_url"
+              label="网站（app）名称"
+              rules={[{ required: true, message: "请输入网站(app)名称" }]}
+            >
+              <Input placeholder="请输入网站(app)名称" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="ICP"
+              label="ICP备案号"
+              rules={[{ required: true, message: "请输入ICP备案号" }]}
+            >
+              <Input placeholder="请输入ICP备案号" />
             </Form.Item>
           </Col>
         </Row>
@@ -323,7 +336,7 @@ export const ApplicationModal = ({
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={24}>
             <Form.Item
               name="license"
               label="企业营业执照或副本"
@@ -332,18 +345,7 @@ export const ApplicationModal = ({
               getValueFromEvent={normFile}
               rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
             >
-              <OssUpload maxCount={3} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="logo"
-              label="企业logo"
-              tooltip="图片大小不能超过10MB"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-            >
-              <OssUpload maxCount={1} />
+              <OssUpload />
             </Form.Item>
           </Col>
         </Row>
