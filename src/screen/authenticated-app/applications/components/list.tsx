@@ -19,7 +19,6 @@ import {
   useEditApplicationLevel,
 } from "service/application";
 import { useApplicationsQueryKey, useApplicationModal } from "../util";
-import { ApplicationModal } from "./application-modal";
 import { useState } from "react";
 import { RejectApplicationModal } from "./reject-application-modal";
 
@@ -191,7 +190,7 @@ export const List = ({
               <span>
                 {application.created_at
                   ? dayjs(Number(application.created_at) * 1000).format(
-                      "YYYY-MM-DD HH:mm"
+                      "YYYY-MM-DD HH:mm:ss"
                     )
                   : "无"}
               </span>
@@ -218,7 +217,6 @@ export const List = ({
         onChange={setPagination}
         {...restProps}
       />
-      <ApplicationModal levelOptions={levelOptions} />
       <RejectApplicationModal
         rejectingApplicationId={rejectingApplicationId}
         onCancel={() => setRejectingApplicationId("")}

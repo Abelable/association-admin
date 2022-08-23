@@ -26,17 +26,20 @@ import {
   LevelOption,
   ApplicationForm,
   ApplicationsItem,
+  EvaluationOption,
 } from "types/application";
 
 export const ApplicationModal = ({
   levelOptions,
+  evaluationOptions,
 }: {
   levelOptions: LevelOption[];
+  evaluationOptions: EvaluationOption[];
 }) => {
   const [form] = useForm();
 
-  const [lng, setLng] = useState<undefined | number>(120.190609);
-  const [lat, setLat] = useState<undefined | number>(30.204255);
+  const [lng, setLng] = useState<undefined | number>();
+  const [lat, setLat] = useState<undefined | number>();
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -266,6 +269,17 @@ export const ApplicationModal = ({
               </Select>
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item name="evaluation" label="企业评价">
+              <Select placeholder="请选择企业评价">
+                {evaluationOptions.map(({ name, value }) => (
+                  <Select.Option key={value} value={value}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
         </Row>
         <Form.Item
           name="license"
@@ -309,7 +323,6 @@ export const ApplicationModal = ({
           setLng={setLng}
           setLat={setLat}
         />
-
         <Divider orientation="left">负责人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>

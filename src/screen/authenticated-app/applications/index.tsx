@@ -8,6 +8,7 @@ import {
   useLevelOptions,
 } from "service/application";
 import { toNumber } from "utils";
+import { ApplicationModal } from "./components/application-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useApplicationsQueryKey, useApplicationsSearchParams } from "./util";
@@ -66,6 +67,10 @@ export const Applications = () => {
           }}
         />
       </Main>
+      <ApplicationModal
+        levelOptions={levelOptions || []}
+        evaluationOptions={evaluationOptions}
+      />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}

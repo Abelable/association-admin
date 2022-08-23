@@ -51,6 +51,14 @@ export interface ApplicationForm {
   member_count: string;
   operator_count: string;
   member_level: number;
+  short_name: string;
+  address: string;
+  longitude: number;
+  latitude: number;
+  registration_time: string;
+  evaluation: string;
+  introduction: string;
+  logo: string;
 }
 
 export interface ApplicationsItem {
