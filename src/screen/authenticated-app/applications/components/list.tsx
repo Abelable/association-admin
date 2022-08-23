@@ -16,6 +16,7 @@ import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
 import {
   useDeleteApplication,
+  useEditApplicationEvaluation,
   useEditApplicationLevel,
 } from "service/application";
 import { useApplicationsQueryKey, useApplicationModal } from "../util";
@@ -45,6 +46,9 @@ export const List = ({
   const { open } = useApplicationModal();
 
   const { mutate: editApplicationLevel } = useEditApplicationLevel(
+    useApplicationsQueryKey()
+  );
+  const { mutate: editApplicationEvaluation } = useEditApplicationEvaluation(
     useApplicationsQueryKey()
   );
 
@@ -131,9 +135,9 @@ export const List = ({
                       <Menu.Item
                         key={option.value}
                         onClick={() =>
-                          editApplicationLevel({
+                          editApplicationEvaluation({
                             id: application.id,
-                            level_id: `${option.value}`,
+                            evaluation: `${option.value}`,
                           })
                         }
                       >

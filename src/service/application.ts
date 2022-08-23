@@ -75,6 +75,18 @@ export const useEditApplicationLevel = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditApplicationEvaluation = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, evaluation }: Partial<ApplicationsItem>) =>
+      client("/api/admin/enter-apply/evaluation-store", {
+        data: { id, evaluation },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useDealApplications = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
