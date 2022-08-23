@@ -25,6 +25,7 @@ export interface PortraitItem {
   content: string;
   is_show: string;
   created_at: string;
+  promulgation_time: string;
 }
 
 export interface PortraitsResult {

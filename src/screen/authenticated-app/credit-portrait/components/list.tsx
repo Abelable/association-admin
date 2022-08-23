@@ -77,7 +77,7 @@ export const List = ({
           {
             title: "排序",
             dataIndex: "sort",
-            width: "10rem",
+            width: "8rem",
             sorter: (a, b) => Number(a.sort) - Number(b.sort),
           },
           {
@@ -85,7 +85,7 @@ export const List = ({
             render: (value, portrait) => (
               <span>
                 {dayjs(Number(portrait.created_at) * 1000).format(
-                  "YYYY-MM-DD HH:mm"
+                  "YYYY-MM-DD HH:mm:ss"
                 )}
               </span>
             ),
@@ -103,12 +103,26 @@ export const List = ({
                 }
               </>
             ),
-            width: "12rem",
+            width: "10rem",
+          },
+          {
+            title: "触发时间",
+            render: (value, portrait) => (
+              <span>
+                {dayjs(Number(portrait.promulgation_time) * 1000).format(
+                  "YYYY-MM-DD"
+                )}
+              </span>
+            ),
+            width: "10rem",
+            sorter: (a, b) =>
+              Number(a.promulgation_time) - Number(b.promulgation_time),
           },
           {
             title: "是否展示",
-            dataIndex: "is_show",
+            dataIndex: "status",
             width: "8rem",
+            render: (value, portrait) => <>{value === "1" ? "是" : "否"}</>,
           },
           {
             title: "操作",
