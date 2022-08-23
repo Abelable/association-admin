@@ -89,12 +89,12 @@ export const TalentModal = ({
         fax,
         wechat,
         QQ,
-        address: _address,
+        address,
         region,
         registration_time,
       } = form.getFieldsValue();
 
-      let address = "";
+      let new_address = "";
       if (region) {
         const province = options.find(
           (item: Region) => item.value === region[0]
@@ -102,7 +102,7 @@ export const TalentModal = ({
         const city = province?.children.find(
           (item: Region) => item.value === region[1]
         );
-        address = JSON.stringify({
+        new_address = JSON.stringify({
           province: province?.label,
           city: city?.label,
           region,
@@ -158,13 +158,13 @@ export const TalentModal = ({
         { title: "传真", name: "fax", value: fax },
         { title: "微信号", name: "wechat", value: wechat },
         { title: "QQ", name: "QQ", value: QQ },
-        { title: "通讯地址", name: "address", value: _address },
+        { title: "通讯地址", name: "address", value: address },
       ];
 
       const talentItem: Partial<TalentItem> = cleanObject({
         id: editingTalentId || undefined,
         apply_content_json: JSON.stringify(applyContent),
-        address,
+        new_address,
         registration_time: `${moment(registration_time).unix()}`,
       });
       await mutateAsync(talentItem);
@@ -391,7 +391,7 @@ const useEditingTalentForm = (editingTalentId: string) => {
       apply_content_json,
       talent_classification,
       registration_time,
-      address,
+      new_address,
       created_at,
     } = currentTalent;
 
@@ -425,7 +425,10 @@ const useEditingTalentForm = (editingTalentId: string) => {
           ? Number(registration_time) * 1000
           : Number(created_at) * 1000
       ),
-      region: address ? JSON.parse(address).region : undefined,
+      region:
+        new_address && new_address[1] === "{"
+          ? JSON.parse(new_address).region
+          : undefined,
     };
   }
 
