@@ -2,6 +2,7 @@ import { useQueryClient } from "react-query";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useForm } from "antd/lib/form/Form";
 import { cleanObject } from "utils";
+import moment from "moment";
 import { useAddApplication, useEditApplication } from "service/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
 
@@ -474,34 +475,45 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     ? applicationsResult.list.find((item) => item.id === editingApplicationId)
     : undefined;
 
-  const formList = currentApplication
-    ? JSON.parse(currentApplication?.apply_content_json)
-    : [];
-  const list: string[][] = [];
-  formList.forEach((item: { title: string; name: string; value: string }) => {
-    list.push([item.name, item.value]);
-  });
-  const originForm = Object.fromEntries(list);
+  let editingApplicationForm: ApplicationForm | undefined;
 
-  const license: { [key in string]: string }[] = [];
-  if (originForm.license) {
-    const imgs = originForm.license.split(",");
-    imgs.forEach((item: string) => {
-      license.push({ url: item });
+  if (currentApplication) {
+    const {
+      apply_content_json,
+      logo,
+      level_id,
+      registration_time,
+      created_at,
+      evaluation,
+      ...rest
+    } = currentApplication;
+
+    const formList = JSON.parse(apply_content_json);
+    const list: string[][] = [];
+    formList.forEach((item: { title: string; name: string; value: string }) => {
+      list.push([item.name, item.value]);
     });
+    const originForm = Object.fromEntries(list);
+
+    const license: { [key in string]: string }[] = [];
+    if (originForm.license) {
+      const imgs = originForm.license.split(",");
+      imgs.forEach((item: string) => {
+        license.push({ url: item });
+      });
+    }
+
+    editingApplicationForm = {
+      ...originForm,
+      ...rest,
+      license,
+      company_type: originForm.company_type.split(","),
+      logo: logo ? [{ url: logo }] : [],
+      member_level: Number(level_id) || undefined,
+      registration_time: moment(registration_time || Number(created_at) * 1000),
+      evaluation: evaluation || undefined,
+    };
   }
 
-  const editingApplicationForm: ApplicationForm | undefined =
-    originForm.company_type
-      ? {
-          ...originForm,
-          license,
-          company_type: originForm.company_type.split(","),
-          member_level:
-            Number(currentApplication?.level_id) === 0
-              ? undefined
-              : Number(currentApplication?.level_id),
-        }
-      : undefined;
   return editingApplicationForm;
 };
