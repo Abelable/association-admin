@@ -15,11 +15,13 @@ import {
   Row,
   Select,
   Space,
+  Cascader,
 } from "antd";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { Map } from "components/map";
 import { useState } from "react";
+import options from "utils/cascader-address-options";
 
 import {
   ApplicationsResult,
@@ -38,8 +40,8 @@ export const ApplicationModal = ({
 }) => {
   const [form] = useForm();
 
-  const [lng, setLng] = useState<undefined | number>();
-  const [lat, setLat] = useState<undefined | number>();
+  const [lng, setLng] = useState<undefined | number>(120);
+  const [lat, setLat] = useState<undefined | number>(30);
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -177,6 +179,26 @@ export const ApplicationModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
+              name="short_name"
+              label="企业简称"
+              rules={[{ required: true, message: "请输入企业简称" }]}
+            >
+              <Input placeholder="请输入企业简称" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="region"
+              label="企业所在地区"
+              rules={[{ required: true, message: "请选择企业所在地区" }]}
+            >
+              <Cascader options={options} placeholder="请选择企业所在地区" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
               name="website_url"
               label="网站（app）名称"
               rules={[{ required: true, message: "请输入网站(app)名称" }]}
@@ -281,35 +303,53 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item
-          name="license"
-          label="企业营业执照或副本"
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-          rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
-        >
-          <OssUpload />
-        </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="license"
-              label="企业所在地区"
-              rules={[{ required: true, message: "请输入企业所在地区" }]}
+              label="企业营业执照或副本"
+              tooltip="图片大小不能超过10MB"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
             >
-              <Input placeholder="请输入企业所在地区" />
+              <OssUpload maxCount={3} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="license" label="企业所在经纬度">
+            <Form.Item
+              name="logo"
+              label="企业logo"
+              tooltip="图片大小不能超过10MB"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <OssUpload maxCount={1} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item label="企业所在经纬度" required>
               <Input.Group>
                 <Row gutter={8}>
                   <Col span={12}>
-                    <Input value={lng} placeholder="请输入经度" />
+                    <Form.Item
+                      style={{ marginBottom: 0 }}
+                      name="longitude"
+                      rules={[{ required: true, message: "请输入经度" }]}
+                    >
+                      <Input placeholder="请输入经度" />
+                    </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Input value={lat} placeholder="请输入纬度" />
+                    <Form.Item
+                      style={{ marginBottom: 0 }}
+                      name="latitude"
+                      rules={[{ required: true, message: "请输入纬度" }]}
+                    >
+                      <Input placeholder="请输入纬度" />
+                    </Form.Item>
                   </Col>
                 </Row>
               </Input.Group>

@@ -26,19 +26,19 @@ export const Map = ({
       resizeEnable: true,
     });
 
-    // if (lng && lat) {
-    //   makers.current = [
-    //     new (window as any).AMap.Marker({
-    //       position: [lng, lat],
-    //       title: `${lng},${lat}`,
-    //       label: {
-    //         content: company,
-    //       },
-    //     }),
-    //   ];
-    //   (map.current as any).add(makers.current);
-    //   (map.current as any).setFitView();
-    // }
+    if (lng && lat) {
+      makers.current = [
+        new (window as any).AMap.Marker({
+          position: [lng, lat],
+          title: `${lng},${lat}`,
+          label: {
+            content: company,
+          },
+        }),
+      ];
+      (map.current as any).add(makers.current);
+      (map.current as any).setFitView();
+    }
 
     (window as any).AMap.plugin("AMap.PlaceSearch", () => {
       const placeSearch = new (window as any).AMap.PlaceSearch();
