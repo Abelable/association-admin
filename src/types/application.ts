@@ -88,3 +88,9 @@ export interface ApplicationsResult {
   page_size: string;
   total: string;
 }
+
+export interface Region {
+  label: string;
+  value: string;
+  children?: Region[];
+}

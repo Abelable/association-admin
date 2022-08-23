@@ -10,6 +10,7 @@ import {
   Button,
   Cascader,
   Col,
+  DatePicker,
   Divider,
   Drawer,
   Form,
@@ -29,6 +30,8 @@ import type {
   TalentItem,
   TalentsResult,
 } from "types/talent";
+import { Region } from "types/application";
+import moment from "moment";
 
 export const TalentModal = ({
   genderOptions,
@@ -86,8 +89,20 @@ export const TalentModal = ({
         fax,
         wechat,
         QQ,
-        address,
+        address: _address,
+        region,
+        registration_time,
       } = form.getFieldsValue();
+
+      const province = options.find((item: Region) => item.value === region[0]);
+      const city = province?.children.find(
+        (item: Region) => item.value === region[1]
+      );
+      const address = JSON.stringify({
+        province: province?.label,
+        city: city?.label,
+        region,
+      });
 
       const imageList: any[] = [];
       image && image.forEach((item: any) => imageList.push(item.url));
@@ -138,12 +153,14 @@ export const TalentModal = ({
         { title: "传真", name: "fax", value: fax },
         { title: "微信号", name: "wechat", value: wechat },
         { title: "QQ", name: "QQ", value: QQ },
-        { title: "通讯地址", name: "address", value: address },
+        { title: "通讯地址", name: "address", value: _address },
       ];
 
       const talentItem: Partial<TalentItem> = cleanObject({
         id: editingTalentId || undefined,
         apply_content_json: JSON.stringify(applyContent),
+        address,
+        registration_time: `${moment(registration_time).unix()}`,
       });
       await mutateAsync(talentItem);
       closeModal();
@@ -240,6 +257,17 @@ export const TalentModal = ({
           <Col span={12}>
             <Form.Item name="region" label="所在地区">
               <Cascader options={options} placeholder="请选择所在地区" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="registration_time" label="报名时间">
+              <DatePicker
+                style={{ width: "100%" }}
+                showTime
+                placeholder="请选择报名时间"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -351,35 +379,50 @@ const useEditingTalentForm = (editingTalentId: string) => {
     ? talentsResult.list.find((item) => item.id === editingTalentId)
     : undefined;
 
-  const formList = currentTalent
-    ? JSON.parse(currentTalent?.apply_content_json)
-    : [];
-  const list: string[][] = [];
-  formList.forEach((item: { title: string; name: string; value: string }) => {
-    list.push([item.name, item.value]);
-  });
-  const originForm = Object.fromEntries(list);
+  let editingTalentForm: TalentForm | undefined;
 
-  const image: { [key in string]: string }[] = [];
-  if (originForm.image) {
-    const imgs = originForm.image.split(",");
-    imgs.forEach((item: string) => {
-      image.push({ url: item });
+  if (currentTalent) {
+    const {
+      apply_content_json,
+      talent_classification,
+      registration_time,
+      address,
+      created_at,
+    } = currentTalent;
+
+    const formList = JSON.parse(apply_content_json);
+    const list: string[][] = [];
+    formList.forEach((item: { title: string; name: string; value: string }) => {
+      list.push([item.name, item.value]);
     });
+    const originForm = Object.fromEntries(list);
+
+    const image: { [key in string]: string }[] = [];
+    if (originForm.image) {
+      const imgs = originForm.image.split(",");
+      imgs.forEach((item: string) => {
+        image.push({ url: item });
+      });
+    }
+
+    editingTalentForm = {
+      ...originForm,
+      image,
+      expert_intent_id: originForm.expert_intent_id
+        ? originForm.expert_intent_id.split(",")
+        : [],
+      sex: originForm.sex ? `${originForm.sex}` : undefined,
+      talent_classification: talent_classification
+        ? `${talent_classification}`
+        : undefined,
+      registration_time: moment(
+        registration_time
+          ? Number(registration_time) * 1000
+          : Number(created_at) * 1000
+      ),
+      region: address ? JSON.parse(address).region : undefined,
+    };
   }
 
-  const editingTalentForm: TalentForm | undefined = currentTalent
-    ? {
-        ...originForm,
-        image,
-        expert_intent_id: originForm.expert_intent_id
-          ? originForm.expert_intent_id.split(",")
-          : [],
-        sex: `${originForm.sex || undefined}`,
-        talent_classification: `${
-          currentTalent?.talent_classification || undefined
-        }`,
-      }
-    : undefined;
   return editingTalentForm;
 };

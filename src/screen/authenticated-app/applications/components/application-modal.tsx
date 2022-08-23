@@ -31,13 +31,8 @@ import {
   ApplicationForm,
   ApplicationsItem,
   EvaluationOption,
+  Region,
 } from "types/application";
-
-interface Region {
-  label: string;
-  value: string;
-  children?: Region[];
-}
 
 export const ApplicationModal = ({
   levelOptions,
