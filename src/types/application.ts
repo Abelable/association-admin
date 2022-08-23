@@ -52,7 +52,7 @@ export interface ApplicationForm {
   operator_count: string;
   member_level: number;
   short_name: string;
-  address: string;
+  region: string[];
   longitude: number;
   latitude: number;
   registration_time: string;

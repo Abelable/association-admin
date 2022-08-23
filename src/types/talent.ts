@@ -50,6 +50,8 @@ export interface TalentForm {
   wechat: string;
   QQ: string;
   address: string;
+  region: string[];
+  registration_time: string;
 }
 
 export interface TalentListItem
@@ -75,6 +77,8 @@ export interface TalentItem {
   talent_classification: string;
   expert_intent_id: string;
   apply_content_json: string;
+  address: string;
+  registration_time: string;
   created_at: string;
 }
 

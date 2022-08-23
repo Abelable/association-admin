@@ -1,5 +1,14 @@
+import { useQueryClient } from "react-query";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import { useForm } from "antd/lib/form/Form";
+import { useAddTalent, useEditTalent } from "service/talents";
+import options from "utils/region-options-without-area";
+import { cleanObject } from "utils";
+import { useTalentModal, useTalentsQueryKey } from "../util";
+
 import {
   Button,
+  Cascader,
   Col,
   Divider,
   Drawer,
@@ -9,13 +18,10 @@ import {
   Select,
   Space,
 } from "antd";
-import { useQueryClient } from "react-query";
-import { useTalentModal, useTalentsQueryKey } from "../util";
-import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { cleanObject } from "utils";
-import {
+
+import type {
   CategoryOption,
   ExpertOption,
   GenderOption,
@@ -23,8 +29,6 @@ import {
   TalentItem,
   TalentsResult,
 } from "types/talent";
-import { useAddTalent, useEditTalent } from "service/talents";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const TalentModal = ({
   genderOptions,
@@ -231,6 +235,11 @@ export const TalentModal = ({
                   <Select.Option key={item.id}>{item.title}</Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="region" label="所在地区">
+              <Cascader options={options} placeholder="请选择所在地区" />
             </Form.Item>
           </Col>
         </Row>
