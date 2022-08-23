@@ -23,7 +23,7 @@ import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { Map } from "components/map";
 import { useState } from "react";
-import options from "utils/cascader-address-options";
+import options from "utils/region-options";
 
 import {
   ApplicationsResult,
@@ -32,6 +32,12 @@ import {
   ApplicationsItem,
   EvaluationOption,
 } from "types/application";
+
+interface Region {
+  label: string;
+  value: string;
+  children?: Region[];
+}
 
 export const ApplicationModal = ({
   levelOptions,
@@ -87,7 +93,25 @@ export const ApplicationModal = ({
         contacter_mobile,
         license,
         member_level,
+        logo,
+        region,
+        registration_time,
+        ...rest
       } = form.getFieldsValue();
+
+      const province = options.find((item: Region) => item.value === region[0]);
+      const city = province?.children.find(
+        (item: Region) => item.value === region[1]
+      );
+      const area = city?.children.find(
+        (item: Region) => item.value === region[1]
+      );
+      const address = JSON.stringify({
+        province: province?.label,
+        city: city?.label,
+        area: area?.label,
+        region,
+      });
 
       const licenseList: any[] = [];
       license.forEach((item: any) => licenseList.push(item.url));
@@ -139,6 +163,10 @@ export const ApplicationModal = ({
         name: _name,
         mobile: _mobile,
         apply_content_json: JSON.stringify(applyContent),
+        logo: logo[0].url,
+        registration_time: moment(registration_time).unix(),
+        address,
+        ...rest,
       });
       await mutateAsync(applicationItem);
       closeModal();
@@ -485,6 +513,7 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       registration_time,
       created_at,
       evaluation,
+      address,
       ...rest
     } = currentApplication;
 
@@ -510,7 +539,12 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       company_type: originForm.company_type.split(","),
       logo: logo ? [{ url: logo }] : [],
       member_level: Number(level_id) || undefined,
-      registration_time: moment(registration_time || Number(created_at) * 1000),
+      registration_time: moment(
+        registration_time
+          ? Number(registration_time) * 1000
+          : Number(created_at) * 1000
+      ),
+      region: address ? JSON.parse(address).region : undefined,
       evaluation: evaluation || undefined,
     };
   }
