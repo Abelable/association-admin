@@ -16,6 +16,7 @@ import {
   Select,
   Space,
   Cascader,
+  DatePicker,
 } from "antd";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
@@ -40,8 +41,8 @@ export const ApplicationModal = ({
 }) => {
   const [form] = useForm();
 
-  const [lng, setLng] = useState<undefined | number>(120);
-  const [lat, setLat] = useState<undefined | number>(30);
+  const [lng, setLng] = useState<undefined | number>();
+  const [lat, setLat] = useState<undefined | number>();
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -300,6 +301,24 @@ export const ApplicationModal = ({
                   </Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="registration_time" label="企业报名时间">
+              <DatePicker
+                style={{ width: "100%" }}
+                showTime
+                placeholder="请选择企业报名时间"
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={24}>
+            <Form.Item name="introduction" label="企业简介">
+              <Input.TextArea rows={4} placeholder="请输入企业简介" />
             </Form.Item>
           </Col>
         </Row>
