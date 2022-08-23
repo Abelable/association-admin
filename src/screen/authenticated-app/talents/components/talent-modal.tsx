@@ -94,15 +94,20 @@ export const TalentModal = ({
         registration_time,
       } = form.getFieldsValue();
 
-      const province = options.find((item: Region) => item.value === region[0]);
-      const city = province?.children.find(
-        (item: Region) => item.value === region[1]
-      );
-      const address = JSON.stringify({
-        province: province?.label,
-        city: city?.label,
-        region,
-      });
+      let address = "";
+      if (region) {
+        const province = options.find(
+          (item: Region) => item.value === region[0]
+        );
+        const city = province?.children.find(
+          (item: Region) => item.value === region[1]
+        );
+        address = JSON.stringify({
+          province: province?.label,
+          city: city?.label,
+          region,
+        });
+      }
 
       const imageList: any[] = [];
       image && image.forEach((item: any) => imageList.push(item.url));
