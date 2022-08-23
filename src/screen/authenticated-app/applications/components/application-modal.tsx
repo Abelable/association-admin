@@ -22,7 +22,7 @@ import {
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { Map } from "components/map";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import options from "utils/region-options";
 
 import {
@@ -72,6 +72,15 @@ export const ApplicationModal = ({
     form.resetFields();
     close();
   };
+
+  useEffect(() => {
+    if (lng && lat) {
+      form.setFieldsValue({
+        longitude: `${lng}`,
+        latitude: `${lat}`,
+      });
+    }
+  }, [form, lat, lng]);
 
   const submit = () => {
     form.validateFields().then(async () => {
