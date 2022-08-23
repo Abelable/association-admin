@@ -425,10 +425,7 @@ const useEditingTalentForm = (editingTalentId: string) => {
           ? Number(registration_time) * 1000
           : Number(created_at) * 1000
       ),
-      region:
-        new_address && new_address[1] === "{"
-          ? JSON.parse(new_address).region
-          : undefined,
+      region: new_address ? JSON.parse(new_address).region : undefined,
     };
   }
 
