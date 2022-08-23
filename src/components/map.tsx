@@ -88,6 +88,7 @@ export const Map = ({
 
 const MapContainer = styled.div`
   position: relative;
+  margin-bottom: 4.2rem;
   height: 30rem;
 `;
 

@@ -180,6 +180,18 @@ export const ApplicationModal = ({
               <OssUpload maxCount={1} />
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item
+              name="license"
+              label="企业营业执照或副本"
+              tooltip="图片大小不能超过10MB"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
+            >
+              <OssUpload />
+            </Form.Item>
+          </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
@@ -318,17 +330,6 @@ export const ApplicationModal = ({
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="registration_time" label="企业报名时间">
-              <DatePicker
-                style={{ width: "100%" }}
-                showTime
-                placeholder="请选择企业报名时间"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={24}>
             <Form.Item name="introduction" label="企业简介">
               <Input.TextArea rows={4} placeholder="请输入企业简介" />
@@ -336,16 +337,13 @@ export const ApplicationModal = ({
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={24}>
-            <Form.Item
-              name="license"
-              label="企业营业执照或副本"
-              tooltip="图片大小不能超过10MB"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
-            >
-              <OssUpload />
+          <Col span={12}>
+            <Form.Item name="registration_time" label="企业报名时间">
+              <DatePicker
+                style={{ width: "100%" }}
+                showTime
+                placeholder="请选择企业报名时间"
+              />
             </Form.Item>
           </Col>
         </Row>
