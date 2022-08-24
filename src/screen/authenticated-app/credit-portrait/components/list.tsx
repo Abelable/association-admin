@@ -20,7 +20,7 @@ import type {
 } from "types/credit-portrait";
 import type { SearchPanelProps } from "./search-panel";
 
-import { useDeletePortrait } from "service/credit-portrait";
+import { useDeleteEvaluation } from "service/credit-portrait";
 
 interface ListProps extends TableProps<PortraitItem>, SearchPanelProps {
   categoryOptions: CategoryOption[];
@@ -140,7 +140,9 @@ export const List = ({
 };
 
 const More = ({ portrait }: { portrait: PortraitForm }) => {
-  const { mutate: deletePortrait } = useDeletePortrait(usePortraitsQueryKey());
+  const { mutate: deletePortrait } = useDeleteEvaluation(
+    usePortraitsQueryKey()
+  );
 
   const { startEdit } = usePortraitModal();
 

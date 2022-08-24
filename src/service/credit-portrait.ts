@@ -13,18 +13,18 @@ import {
 
 export const useEvaluations = (params: Partial<PortraitsSearchParams>) => {
   const client = useHttp();
-  return useQuery<PortraitsResult>(["evaluations", params], () =>
+  return useQuery<PortraitsResult>(["portraits", params], () =>
     client("/api/admin/company-evaluation/company-evaluation-list", {
       data: params,
     })
   );
 };
 
-export const useAddPortrait = (queryKey: QueryKey) => {
+export const useAddEvaluation = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<PortraitForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/company-evaluation/company-evaluation-save", {
         data: params,
         method: "POST",
       }),
@@ -32,11 +32,11 @@ export const useAddPortrait = (queryKey: QueryKey) => {
   );
 };
 
-export const useEditPortrait = (queryKey: QueryKey) => {
+export const useEditEvaluation = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<PortraitForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/company-evaluation/company-evaluation-save", {
         data: params,
         method: "POST",
       }),
@@ -44,11 +44,56 @@ export const useEditPortrait = (queryKey: QueryKey) => {
   );
 };
 
-export const useDeletePortrait = (queryKey: QueryKey) => {
+export const useDeleteEvaluation = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<PortraitForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/company-evaluation/company-evaluation-save", {
+        data: { ...params, status: -1 },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
+export const useSentences = (params: Partial<PortraitsSearchParams>) => {
+  const client = useHttp();
+  return useQuery<PortraitsResult>(["portraits", params], () =>
+    client("/api/admin/company-evaluation/company-sentence-list", {
+      data: params,
+    })
+  );
+};
+
+export const useAddSentence = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<PortraitForm>) =>
+      client("/api/admin/company-evaluation/company-sentence-save", {
+        data: params,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
+  );
+};
+
+export const useEditSentence = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<PortraitForm>) =>
+      client("/api/admin/company-evaluation/company-sentence-save", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteSentence = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<PortraitForm>) =>
+      client("/api/admin/company-evaluation/company-sentence-save", {
         data: { ...params, status: -1 },
         method: "POST",
       }),

@@ -4,7 +4,11 @@ import { useCallback, useMemo } from "react";
 export const usePortraitsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "title",
-    "category_id",
+    "company_name",
+    "s_time",
+    "e_time",
+    "ps_time",
+    "pe_time",
     "page",
     "page_size",
   ]);

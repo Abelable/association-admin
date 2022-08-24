@@ -1,3 +1,7 @@
+export interface CategoryOption {
+  id: string;
+  name: string;
+}
 export interface PortraitsSearchParams {
   title: string;
   company_name: string;
@@ -8,12 +12,6 @@ export interface PortraitsSearchParams {
   page: number;
   page_size: number;
 }
-
-export interface CategoryOption {
-  id: string;
-  name: string;
-}
-
 export interface PortraitItem {
   id: string;
   title: string;

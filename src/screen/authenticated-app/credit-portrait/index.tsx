@@ -14,16 +14,19 @@ export const Portraits = () => {
   const [params, setParams] = usePortraitsSearchParams();
   const { data, isLoading, error } = useEvaluations(params);
 
-  const categoryOptions = [
-    { id: "1", name: "培训服务" },
-    { id: "2", name: "政企合作" },
-    { id: "3", name: "标准制定" },
-  ];
-
   const evaluationOptions = [
     { id: "1", name: "独角兽" },
     { id: "2", name: "上市" },
     { id: "3", name: "荣誉" },
+  ];
+
+  const sentenceOptions = [
+    { id: "1", name: "处罚" },
+    { id: "2", name: "舆情" },
+    { id: "3", name: "投诉" },
+    { id: "4", name: "违法线索" },
+    { id: "5", name: "投诉举报" },
+    { id: "6", name: "负面舆情" },
   ];
 
   return (
@@ -53,7 +56,7 @@ export const Portraits = () => {
             total: toNumber(data?.total),
           }}
         />
-        <PortraitModal categoryOptions={categoryOptions} />
+        <PortraitModal categoryOptions={evaluationOptions} />
       </Main>
     </Container>
   );

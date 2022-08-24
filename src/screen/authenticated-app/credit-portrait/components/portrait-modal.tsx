@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
-import { useAddPortrait, useEditPortrait } from "service/credit-portrait";
+import { useAddEvaluation, useEditEvaluation } from "service/credit-portrait";
 import { RichTextEditor } from "components/rich-text-editor";
 import {
   CategoryOption,
@@ -24,8 +24,8 @@ export const PortraitModal = ({
   const { portraitModalOpen, editingPortraitId, close } = usePortraitModal();
 
   const useMutationPortrait = editingPortraitId
-    ? useEditPortrait
-    : useAddPortrait;
+    ? useEditEvaluation
+    : useAddEvaluation;
   const {
     mutateAsync,
     error,
@@ -119,7 +119,7 @@ export const PortraitModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="is_show"
+              name="status"
               label="是否展示"
               rules={[{ required: true, message: "请选择展示或隐藏" }]}
             >
@@ -173,11 +173,11 @@ export const PortraitModal = ({
 
 const useEditingPortraitForm = (editingPortraitId: string) => {
   const queryClient = useQueryClient();
-  const servicesResult: PortraitsResult | undefined = queryClient.getQueryData(
+  const portraitsResult: PortraitsResult | undefined = queryClient.getQueryData(
     usePortraitsQueryKey()
   );
-  const currentPortrait = servicesResult
-    ? servicesResult.list.find((item) => item.id === editingPortraitId)
+  const currentPortrait = portraitsResult
+    ? portraitsResult.list.find((item) => item.id === editingPortraitId)
     : undefined;
 
   const editingPortraitForm: PortraitForm | undefined = currentPortrait?.image
