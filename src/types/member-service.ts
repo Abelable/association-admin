@@ -19,7 +19,6 @@ export interface ServiceItem {
   category_id: string;
   brief: string;
   content: string;
-  is_show: string;
   created_at: string;
 }
 
@@ -39,5 +38,4 @@ export interface ServiceForm {
   category_id: string;
   brief: string;
   content: string;
-  is_show: string;
 }

@@ -117,7 +117,7 @@ export const ServiceModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="is_show"
+              name="status"
               label="是否展示"
               rules={[{ required: true, message: "请选择展示或隐藏" }]}
             >
