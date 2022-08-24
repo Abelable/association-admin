@@ -19,7 +19,7 @@ export interface PortraitItem {
   sort: number;
   status: number;
   evaluation: string;
-  brief: string;
+  introduction: string;
   content: string;
   created_at: string;
   promulgation_time: string;
@@ -39,7 +39,7 @@ export interface PortraitForm {
   sort: number;
   status: number;
   evaluation: string;
-  brief: string;
+  introduction: string;
   content: string;
   promulgation_time: any;
 }
