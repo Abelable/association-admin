@@ -21,7 +21,6 @@ export interface PortraitItem {
   evaluation: string;
   brief: string;
   content: string;
-  is_show: string;
   created_at: string;
   promulgation_time: string;
 }
@@ -42,5 +41,5 @@ export interface PortraitForm {
   evaluation: string;
   brief: string;
   content: string;
-  is_show: string;
+  promulgation_time: any;
 }

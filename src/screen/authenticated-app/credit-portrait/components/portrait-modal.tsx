@@ -1,18 +1,30 @@
-import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
-import { usePortraitModal, usePortraitsQueryKey } from "../util";
 import { useState } from "react";
+import { useQueryClient } from "react-query";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import moment from "moment";
 import { useForm } from "antd/lib/form/Form";
-import { OssUpload } from "components/oss-upload";
-import { ErrorBox } from "components/lib";
 import { useAddEvaluation, useEditEvaluation } from "service/credit-portrait";
-import { RichTextEditor } from "components/rich-text-editor";
+import { usePortraitModal, usePortraitsQueryKey } from "../util";
+
 import {
+  Button,
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+} from "antd";
+import { ErrorBox } from "components/lib";
+import { RichTextEditor } from "components/rich-text-editor";
+
+import type {
   CategoryOption,
   PortraitForm,
   PortraitsResult,
 } from "types/credit-portrait";
-import { useQueryClient } from "react-query";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const PortraitModal = ({
   categoryOptions,
@@ -34,11 +46,6 @@ export const PortraitModal = ({
   const editingPortraitForm = useEditingPortraitForm(editingPortraitId);
   const [content, setContent] = useState("");
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) return e;
-    return e && e.fileList;
-  };
-
   const closeModal = () => {
     form.resetFields();
     setContent("");
@@ -46,11 +53,13 @@ export const PortraitModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { image, ...restFieldsValue } = form.getFieldsValue();
+      const { image, promulgation_time, ...restFieldsValue } =
+        form.getFieldsValue();
       await mutateAsync({
         id: editingPortraitId || "",
         content,
         image: image[0].url,
+        promulgation_time: `${moment(promulgation_time).unix()}`,
         ...restFieldsValue,
       });
       closeModal();
@@ -98,23 +107,22 @@ export const PortraitModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="category_id"
-              label="文章分类"
-              rules={[{ required: true, message: "请选择文章分类" }]}
-            >
-              <Select placeholder="请选择文章分类">
-                {categoryOptions.map(({ id, name }) => (
-                  <Select.Option key={id}>{name}</Select.Option>
-                ))}
-              </Select>
+            <Form.Item label="文章排序" name="sort">
+              <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
-              <Input placeholder="请输入文章排序" />
+            <Form.Item
+              name="promulgation_time"
+              label="触发时间"
+              rules={[{ required: true, message: "请选择触发时间" }]}
+            >
+              <DatePicker
+                style={{ width: "100%" }}
+                placeholder="请选择触发时间"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -137,6 +145,22 @@ export const PortraitModal = ({
           </Col>
         </Row>
         <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="company_name" label="关联企业">
+              <Input placeholder="请输入关联企业" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="evaluation" label="企业评价">
+              <Select placeholder="请选择企业评价">
+                {categoryOptions.map(({ id, name }) => (
+                  <Select.Option key={id}>{name}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={24}>
             <Form.Item
               name="brief"
@@ -152,17 +176,6 @@ export const PortraitModal = ({
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item
-          name="image"
-          label="图片"
-          rules={[{ required: true, message: "请上传图片" }]}
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <OssUpload maxCount={1} />
-        </Form.Item>
         <Form.Item label="文章内容" tooltip="排版自定义规则">
           <RichTextEditor content={content} setContent={setContent} />
         </Form.Item>
@@ -180,8 +193,18 @@ const useEditingPortraitForm = (editingPortraitId: string) => {
     ? portraitsResult.list.find((item) => item.id === editingPortraitId)
     : undefined;
 
-  const editingPortraitForm: PortraitForm | undefined = currentPortrait?.image
-    ? currentPortrait
-    : undefined;
+  let editingPortraitForm: PortraitForm | undefined;
+
+  if (currentPortrait) {
+    const { promulgation_time, ...rest } = currentPortrait;
+
+    editingPortraitForm = {
+      promulgation_time: promulgation_time
+        ? moment(Number(promulgation_time) * 1000)
+        : undefined,
+      ...rest,
+    };
+  }
+
   return editingPortraitForm;
 };

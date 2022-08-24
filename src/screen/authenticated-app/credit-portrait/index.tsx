@@ -44,7 +44,7 @@ export const Portraits = () => {
       <Main>
         <SearchPanel params={params} setParams={setParams} />
         <List
-          categoryOptions={evaluationOptions}
+          categoryOptions={type === "0" ? evaluationOptions : sentenceOptions}
           error={error}
           params={params}
           setParams={setParams}
@@ -56,7 +56,9 @@ export const Portraits = () => {
             total: toNumber(data?.total),
           }}
         />
-        <PortraitModal categoryOptions={evaluationOptions} />
+        <PortraitModal
+          categoryOptions={type === "0" ? evaluationOptions : sentenceOptions}
+        />
       </Main>
     </Container>
   );
