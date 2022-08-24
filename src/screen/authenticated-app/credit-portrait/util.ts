@@ -23,12 +23,12 @@ export const usePortraitsSearchParams = () => {
 
 export const usePortraitsQueryKey = () => {
   const [params] = usePortraitsSearchParams();
-  return ["services", params];
+  return ["portraits", params];
 };
 
 export const usePortraitModal = () => {
-  const [{ serviceCreate }, setPortraitModalOpen] = useUrlQueryParams([
-    "serviceCreate",
+  const [{ portraitCreate }, setPortraitModalOpen] = useUrlQueryParams([
+    "portraitCreate",
   ]);
   const [{ editingPortraitId }, setEditingPortraitId] = useUrlQueryParams([
     "editingPortraitId",
@@ -36,7 +36,7 @@ export const usePortraitModal = () => {
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setPortraitModalOpen({ serviceCreate: true }),
+    () => setPortraitModalOpen({ portraitCreate: true }),
     [setPortraitModalOpen]
   );
   const startEdit = useCallback(
@@ -44,12 +44,12 @@ export const usePortraitModal = () => {
     [setEditingPortraitId]
   );
   const close = useCallback(
-    () => setUrlParams({ serviceCreate: "", editingPortraitId: "" }),
+    () => setUrlParams({ portraitCreate: "", editingPortraitId: "" }),
     [setUrlParams]
   );
 
   return {
-    serviceModalOpen: serviceCreate === "true" || !!editingPortraitId,
+    portraitModalOpen: portraitCreate === "true" || !!editingPortraitId,
     editingPortraitId,
     open,
     startEdit,

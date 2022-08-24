@@ -21,7 +21,7 @@ export const PortraitModal = ({
 }) => {
   const [form] = useForm();
 
-  const { serviceModalOpen, editingPortraitId, close } = usePortraitModal();
+  const { portraitModalOpen, editingPortraitId, close } = usePortraitModal();
 
   const useMutationPortrait = editingPortraitId
     ? useEditPortrait
@@ -70,11 +70,11 @@ export const PortraitModal = ({
 
   return (
     <Drawer
-      title={editingPortraitId ? "编辑会员服务" : "新增会员服务"}
+      title={editingPortraitId ? "编辑企业评价" : "新增企业评价"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
-      visible={serviceModalOpen}
+      visible={portraitModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
