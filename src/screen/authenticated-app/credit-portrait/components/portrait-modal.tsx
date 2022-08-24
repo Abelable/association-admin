@@ -71,12 +71,11 @@ export const PortraitModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { image, promulgation_time, ...restFieldsValue } =
-        form.getFieldsValue();
+      const { promulgation_time, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingPortraitId || "",
+        image: "123",
         content,
-        image: image[0].url,
         promulgation_time: `${moment(promulgation_time).unix()}`,
         ...restFieldsValue,
       });
@@ -169,8 +168,15 @@ export const PortraitModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="evaluation" label="企业评价">
-              <Select placeholder="请选择企业评价">
+            <Form.Item
+              name="evaluation"
+              label={`${type === "0" ? "企业评价" : "判决情况"}`}
+            >
+              <Select
+                placeholder={`${
+                  type === "0" ? "请选择企业评价" : "请选择判决情况"
+                }`}
+              >
                 {categoryOptions.map(({ id, name }) => (
                   <Select.Option key={id}>{name}</Select.Option>
                 ))}
@@ -217,7 +223,6 @@ const useEditingPortraitForm = (type: string, editingPortraitId: string) => {
 
   if (currentPortrait) {
     const { promulgation_time, ...rest } = currentPortrait;
-
     editingPortraitForm = {
       promulgation_time: promulgation_time
         ? moment(Number(promulgation_time) * 1000)

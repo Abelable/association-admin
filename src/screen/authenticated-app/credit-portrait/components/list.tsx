@@ -155,7 +155,7 @@ const More = ({ type, portrait }: { type: string; portrait: PortraitForm }) => {
 
   const confirmDeletePortrait = (id: string) => {
     Modal.confirm({
-      title: "确定删除该智库文章吗？",
+      title: "确定删除该文章吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
