@@ -18,7 +18,7 @@ export const useAddTest = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<TestForm>) =>
-      client("/api/admin/test-library/article-save", {
+      client("/api/admin/detection/legal-save", {
         data: params,
         method: "POST",
       }),
@@ -30,7 +30,7 @@ export const useEditTest = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<TestForm>) =>
-      client("/api/admin/test-library/article-save", {
+      client("/api/admin/detection/legal-save", {
         data: params,
         method: "POST",
       }),
@@ -42,7 +42,7 @@ export const useDeleteTest = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<TestForm>) =>
-      client("/api/admin/test-library/article-save", {
+      client("/api/admin/detection/legal-save", {
         data: { ...params, status: -1 },
         method: "POST",
       }),

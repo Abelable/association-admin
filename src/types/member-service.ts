@@ -17,7 +17,7 @@ export interface ServiceItem {
   sort: number;
   status: number;
   category_id: string;
-  brief: string;
+  introductions: string;
   content: string;
   created_at: string;
 }
@@ -36,6 +36,6 @@ export interface ServiceForm {
   sort: number;
   status: number;
   category_id: string;
-  brief: string;
+  introductions: string;
   content: string;
 }

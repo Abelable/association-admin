@@ -17,7 +17,7 @@ export interface TestItem {
   sort: number;
   status: number;
   category_id: string;
-  brief: string;
+  introduction: string;
   content: string;
   is_show: string;
   created_at: string;
@@ -37,7 +37,7 @@ export interface TestForm {
   sort: number;
   status: number;
   category_id: string;
-  brief: string;
+  introduction: string;
   content: string;
   is_show: string;
 }

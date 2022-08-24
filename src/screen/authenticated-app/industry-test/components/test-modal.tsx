@@ -133,7 +133,7 @@ export const TestModal = ({
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
-              name="brief"
+              name="introduction"
               label="文章简介"
               rules={[
                 {

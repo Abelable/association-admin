@@ -22,7 +22,7 @@ export const useAddService = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<ServiceForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/member-service/legal-save", {
         data: params,
         method: "POST",
       }),
@@ -34,7 +34,7 @@ export const useEditService = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<ServiceForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/member-service/legal-save", {
         data: params,
         method: "POST",
       }),
@@ -46,7 +46,7 @@ export const useDeleteService = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<ServiceForm>) =>
-      client("/api/admin/service-library/article-save", {
+      client("/api/admin/member-service/legal-save", {
         data: { ...params, status: -1 },
         method: "POST",
       }),
