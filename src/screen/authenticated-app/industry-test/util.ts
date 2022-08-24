@@ -23,7 +23,7 @@ export const useTestsSearchParams = () => {
 
 export const useTestsQueryKey = () => {
   const [params] = useTestsSearchParams();
-  return ["services", params];
+  return ["tests", params];
 };
 
 export const useTestModal = () => {
