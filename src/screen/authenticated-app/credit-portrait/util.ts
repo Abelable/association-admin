@@ -25,9 +25,14 @@ export const usePortraitsSearchParams = () => {
   ] as const;
 };
 
-export const usePortraitsQueryKey = () => {
+export const useEvaluationsQueryKey = () => {
   const [params] = usePortraitsSearchParams();
-  return ["portraits", params];
+  return ["evaluations", params];
+};
+
+export const useSentencesQueryKey = () => {
+  const [params] = usePortraitsSearchParams();
+  return ["sentences", params];
 };
 
 export const usePortraitModal = () => {

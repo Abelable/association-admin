@@ -3,8 +3,17 @@ import { useQueryClient } from "react-query";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import moment from "moment";
 import { useForm } from "antd/lib/form/Form";
-import { useAddEvaluation, useEditEvaluation } from "service/credit-portrait";
-import { usePortraitModal, usePortraitsQueryKey } from "../util";
+import {
+  useAddEvaluation,
+  useEditEvaluation,
+  useAddSentence,
+  useEditSentence,
+} from "service/credit-portrait";
+import {
+  usePortraitModal,
+  useEvaluationsQueryKey,
+  useSentencesQueryKey,
+} from "../util";
 
 import {
   Button,
@@ -38,14 +47,21 @@ export const PortraitModal = ({
   const { portraitModalOpen, editingPortraitId, close } = usePortraitModal();
 
   const useMutationPortrait = editingPortraitId
-    ? useEditEvaluation
-    : useAddEvaluation;
+    ? type === "0"
+      ? useEditEvaluation
+      : useEditSentence
+    : type === "0"
+    ? useAddEvaluation
+    : useAddSentence;
+  const usePortraitsQueryKey =
+    type === "0" ? useEvaluationsQueryKey : useSentencesQueryKey;
   const {
     mutateAsync,
     error,
     isLoading: mutateLoading,
   } = useMutationPortrait(usePortraitsQueryKey());
-  const editingPortraitForm = useEditingPortraitForm(editingPortraitId);
+
+  const editingPortraitForm = useEditingPortraitForm(type, editingPortraitId);
   const [content, setContent] = useState("");
 
   const closeModal = () => {
@@ -186,8 +202,10 @@ export const PortraitModal = ({
   );
 };
 
-const useEditingPortraitForm = (editingPortraitId: string) => {
+const useEditingPortraitForm = (type: string, editingPortraitId: string) => {
   const queryClient = useQueryClient();
+  const usePortraitsQueryKey =
+    type === "0" ? useEvaluationsQueryKey : useSentencesQueryKey;
   const portraitsResult: PortraitsResult | undefined = queryClient.getQueryData(
     usePortraitsQueryKey()
   );

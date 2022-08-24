@@ -11,7 +11,11 @@ import {
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { usePortraitModal, usePortraitsQueryKey } from "../util";
+import {
+  usePortraitModal,
+  useEvaluationsQueryKey,
+  useSentencesQueryKey,
+} from "../util";
 import type {
   CategoryOption,
   PortraitForm,
@@ -129,7 +133,7 @@ export const List = ({
           {
             title: "操作",
             render(value, portrait) {
-              return <More portrait={portrait} />;
+              return <More type={type} portrait={portrait} />;
             },
             width: "8rem",
           },
@@ -141,11 +145,12 @@ export const List = ({
   );
 };
 
-const More = ({ portrait }: { portrait: PortraitForm }) => {
+const More = ({ type, portrait }: { type: string; portrait: PortraitForm }) => {
+  const usePortraitsQueryKey =
+    type === "0" ? useEvaluationsQueryKey : useSentencesQueryKey;
   const { mutate: deletePortrait } = useDeleteEvaluation(
     usePortraitsQueryKey()
   );
-
   const { startEdit } = usePortraitModal();
 
   const confirmDeletePortrait = (id: string) => {

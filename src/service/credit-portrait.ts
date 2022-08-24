@@ -13,7 +13,7 @@ import {
 
 export const useEvaluations = (params: Partial<PortraitsSearchParams>) => {
   const client = useHttp();
-  return useQuery<PortraitsResult>(["portraits", params], () =>
+  return useQuery<PortraitsResult>(["evaluations", params], () =>
     client("/api/admin/company-evaluation/company-evaluation-list", {
       data: params,
     })
@@ -58,7 +58,7 @@ export const useDeleteEvaluation = (queryKey: QueryKey) => {
 
 export const useSentences = (params: Partial<PortraitsSearchParams>) => {
   const client = useHttp();
-  return useQuery<PortraitsResult>(["portraits", params], () =>
+  return useQuery<PortraitsResult>(["sentences", params], () =>
     client("/api/admin/company-evaluation/company-sentence-list", {
       data: params,
     })
