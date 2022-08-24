@@ -23,6 +23,7 @@ import type { SearchPanelProps } from "./search-panel";
 import { useDeleteEvaluation } from "service/credit-portrait";
 
 interface ListProps extends TableProps<PortraitItem>, SearchPanelProps {
+  type: string;
   categoryOptions: CategoryOption[];
   error: Error | unknown;
   params: Partial<PortraitsSearchParams>;
@@ -30,6 +31,7 @@ interface ListProps extends TableProps<PortraitItem>, SearchPanelProps {
 }
 
 export const List = ({
+  type,
   error,
   categoryOptions,
   params,
@@ -93,7 +95,7 @@ export const List = ({
             sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
           {
-            title: "企业评价",
+            title: `${type === "0" ? "企业评价" : "判决情况"}`,
             render: (value, portrait) => (
               <>
                 {

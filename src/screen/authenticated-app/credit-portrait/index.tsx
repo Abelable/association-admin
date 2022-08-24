@@ -8,11 +8,14 @@ import { Menu } from "antd";
 import { PortraitModal } from "./components/portrait-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
+import { useSentences } from "../../../service/credit-portrait";
 
 export const Portraits = () => {
   const [type, setType] = useState("0");
   const [params, setParams] = usePortraitsSearchParams();
-  const { data, isLoading, error } = useEvaluations(params);
+
+  const usePortraits = type === "0" ? useEvaluations : useSentences;
+  const { data, isLoading, error } = usePortraits(params);
 
   const evaluationOptions = [
     { id: "1", name: "独角兽" },
@@ -44,6 +47,7 @@ export const Portraits = () => {
       <Main>
         <SearchPanel params={params} setParams={setParams} />
         <List
+          type={type}
           categoryOptions={type === "0" ? evaluationOptions : sentenceOptions}
           error={error}
           params={params}
@@ -57,6 +61,7 @@ export const Portraits = () => {
           }}
         />
         <PortraitModal
+          type={type}
           categoryOptions={type === "0" ? evaluationOptions : sentenceOptions}
         />
       </Main>

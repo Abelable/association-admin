@@ -27,8 +27,10 @@ import type {
 } from "types/credit-portrait";
 
 export const PortraitModal = ({
+  type,
   categoryOptions,
 }: {
+  type: string;
   categoryOptions: CategoryOption[];
 }) => {
   const [form] = useForm();
