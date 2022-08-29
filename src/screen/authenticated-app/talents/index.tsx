@@ -24,6 +24,7 @@ export const Talents = () => {
           score,
           created_at,
           apply_content_json,
+          new_address,
         } = item;
         const jsonDataList = JSON.parse(apply_content_json);
         const list: (string | string[])[][] = [];
@@ -55,6 +56,7 @@ export const Talents = () => {
           id,
           sex,
           score,
+          new_address,
           talent_classification: Number(talent_classification),
           created_at,
           ...restData,
