@@ -15,6 +15,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/credit_portrait": "会员信用画像",
   "/member_service": "会员服务",
   "/industry_test": "行业检测",
+  "/secretary_trends": "秘书处动态",
   "/financial_data": "财务数据",
   "/applications": "入会申请",
   "/talents": "人才管理",
