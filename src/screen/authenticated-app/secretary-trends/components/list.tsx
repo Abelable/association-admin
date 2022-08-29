@@ -81,8 +81,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "是否展示",
-            dataIndex: "is_show",
+            dataIndex: "status",
             width: "8rem",
+            render: (value, portrait) => <>{value === "1" ? "是" : "否"}</>,
           },
           {
             title: "操作",

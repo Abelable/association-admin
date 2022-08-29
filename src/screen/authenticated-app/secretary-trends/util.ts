@@ -22,8 +22,8 @@ export const useTrendsQueryKey = () => {
 };
 
 export const useTrendModal = () => {
-  const [{ serviceCreate }, setTrendModalOpen] = useUrlQueryParams([
-    "serviceCreate",
+  const [{ trendCreate }, setTrendModalOpen] = useUrlQueryParams([
+    "trendCreate",
   ]);
   const [{ editingTrendId }, setEditingTrendId] = useUrlQueryParams([
     "editingTrendId",
@@ -31,7 +31,7 @@ export const useTrendModal = () => {
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setTrendModalOpen({ serviceCreate: true }),
+    () => setTrendModalOpen({ trendCreate: true }),
     [setTrendModalOpen]
   );
   const startEdit = useCallback(
@@ -39,12 +39,12 @@ export const useTrendModal = () => {
     [setEditingTrendId]
   );
   const close = useCallback(
-    () => setUrlParams({ serviceCreate: "", editingTrendId: "" }),
+    () => setUrlParams({ trendCreate: "", editingTrendId: "" }),
     [setUrlParams]
   );
 
   return {
-    serviceModalOpen: serviceCreate === "true" || !!editingTrendId,
+    trendModalOpen: trendCreate === "true" || !!editingTrendId,
     editingTrendId,
     open,
     startEdit,

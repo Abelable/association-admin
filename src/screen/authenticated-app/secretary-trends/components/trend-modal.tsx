@@ -1,19 +1,16 @@
 import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import { useTrendModal, useTrendsQueryKey } from "../util";
-import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
-import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { useAddTrend, useEditTrend } from "service/secretary-trends";
-import { RichTextEditor } from "components/rich-text-editor";
-import { TrendForm, TrendsResult } from "types/secretary-trends";
+import { TrendsResult } from "types/secretary-trends";
 import { useQueryClient } from "react-query";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 export const TrendModal = () => {
   const [form] = useForm();
 
-  const { serviceModalOpen, editingTrendId, close } = useTrendModal();
+  const { trendModalOpen, editingTrendId, close } = useTrendModal();
 
   const useMutationTrend = editingTrendId ? useEditTrend : useAddTrend;
   const {
@@ -22,26 +19,16 @@ export const TrendModal = () => {
     isLoading: mutateLoading,
   } = useMutationTrend(useTrendsQueryKey());
   const editingTrendForm = useEditingTrendForm(editingTrendId);
-  const [content, setContent] = useState("");
-
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) return e;
-    return e && e.fileList;
-  };
 
   const closeModal = () => {
     form.resetFields();
-    setContent("");
     close();
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { image, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingTrendId || "",
-        content,
-        image: image[0].url,
-        ...restFieldsValue,
+        ...form.getFieldsValue(),
       });
       closeModal();
     });
@@ -49,11 +36,7 @@ export const TrendModal = () => {
 
   useDeepCompareEffect(() => {
     if (editingTrendForm) {
-      const { content, ...restFieldsValue } = editingTrendForm;
-      form.setFieldsValue({
-        ...restFieldsValue,
-      });
-      setContent(content);
+      form.setFieldsValue(editingTrendForm);
     }
   }, [form, editingTrendForm]);
 
@@ -63,7 +46,7 @@ export const TrendModal = () => {
       size={"large"}
       forceRender={true}
       onClose={closeModal}
-      visible={serviceModalOpen}
+      visible={trendModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
@@ -86,16 +69,9 @@ export const TrendModal = () => {
               <Input placeholder="请输入文章标题" />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
-              <Input placeholder="请输入文章排序" />
-            </Form.Item>
-          </Col>
           <Col span={12}>
             <Form.Item
-              name="is_show"
+              name="status"
               label="是否展示"
               rules={[{ required: true, message: "请选择展示或隐藏" }]}
             >
@@ -113,35 +89,28 @@ export const TrendModal = () => {
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={24}>
-            <Form.Item
-              name="introduction"
-              label="文章简介"
-              rules={[
-                {
-                  required: true,
-                  message: "请输入文章简介",
-                },
-              ]}
-            >
-              <Input.TextArea rows={4} placeholder="请输入文章简介" />
+          <Col span={12}>
+            <Form.Item label="文章排序" name="sort">
+              <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item
-          name="image"
-          label="图片"
-          rules={[{ required: true, message: "请上传图片" }]}
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <OssUpload maxCount={1} />
-        </Form.Item>
-        <Form.Item label="文章内容" tooltip="排版自定义规则">
-          <RichTextEditor content={content} setContent={setContent} />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={24}>
+            <Form.Item
+              name="content"
+              label="文章内容"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入文章内容",
+                },
+              ]}
+            >
+              <Input.TextArea rows={20} placeholder="请输入文章内容" />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Drawer>
   );
@@ -155,7 +124,5 @@ const useEditingTrendForm = (editingTrendId: string) => {
   const currentTrend = servicesResult
     ? servicesResult.list.find((item) => item.id === editingTrendId)
     : undefined;
-
-  const editingTrendForm: TrendForm | undefined = currentTrend;
-  return editingTrendForm;
+  return currentTrend;
 };

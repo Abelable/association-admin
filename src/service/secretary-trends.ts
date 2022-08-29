@@ -23,7 +23,7 @@ export const useAddTrend = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<TrendForm>) =>
       client("/api/admin/dynamic/legal-save", {
-        data: params,
+        data: { image: "1", ...params },
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -35,7 +35,7 @@ export const useEditTrend = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<TrendForm>) =>
       client("/api/admin/dynamic/legal-save", {
-        data: params,
+        data: { image: "1", ...params },
         method: "POST",
       }),
     useEditConfig(queryKey)
@@ -47,7 +47,7 @@ export const useDeleteTrend = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<TrendForm>) =>
       client("/api/admin/dynamic/legal-save", {
-        data: { ...params, status: -1 },
+        data: { image: "1", ...params, status: -1 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)
