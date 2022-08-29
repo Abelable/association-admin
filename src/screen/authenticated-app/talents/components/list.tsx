@@ -143,6 +143,20 @@ export const List = ({
       width: "22rem",
     },
     {
+      title: "所在地区",
+      dataIndex: "new_address",
+      width: "24rem",
+      render: (value, talent) => (
+        <>
+          {talent.new_address
+            ? `${JSON.parse(talent.new_address).province}${
+                JSON.parse(talent.new_address).city
+              }`
+            : ""}
+        </>
+      ),
+    },
+    {
       title: "工作单位",
       dataIndex: "employer",
       width: "30rem",
@@ -270,6 +284,7 @@ export const List = ({
     "毕业院校",
     "学历及专业",
     "专家库意向",
+    "所在地区",
     "工作单位",
     "具体工作部门或所",
     "现任职务",

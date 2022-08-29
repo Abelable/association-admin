@@ -61,6 +61,7 @@ export interface TalentListItem
   > {
   id: string;
   image: string;
+  new_address: string;
   created_at: string;
   expert_intent_id: string[];
   talent_classification: number;
