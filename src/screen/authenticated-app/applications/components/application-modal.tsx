@@ -219,7 +219,6 @@ export const ApplicationModal = ({
               tooltip="图片大小不能超过10MB"
               valuePropName="fileList"
               getValueFromEvent={normFile}
-              rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
             >
               <OssUpload />
             </Form.Item>
@@ -301,7 +300,7 @@ export const ApplicationModal = ({
           <Col span={12}>
             <Form.Item
               name="trade_amount"
-              label="上年度GMV（元）"
+              label="上年度GMV（亿元）"
               rules={[{ required: true, message: "请输入上年度GMV" }]}
             >
               <Input placeholder="请输入上年度GMV" />
@@ -310,7 +309,7 @@ export const ApplicationModal = ({
           <Col span={12}>
             <Form.Item
               name="revenue"
-              label="上年度营收（元）"
+              label="上年度营收（亿元）"
               rules={[{ required: true, message: "请输入上年度营收" }]}
             >
               <Input placeholder="请输入上年度营收" />
@@ -364,13 +363,20 @@ export const ApplicationModal = ({
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item name="introduction" label="企业简介">
-              <Input.TextArea rows={4} placeholder="请输入企业简介" />
+              <Input.TextArea
+                rows={4}
+                placeholder="100字内，主营业务、市场分布、所获荣誉等"
+              />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="registration_time" label="企业报名时间">
+            <Form.Item
+              name="registration_time"
+              label="企业报名时间"
+              rules={[{ required: true, message: "请选择报名时间" }]}
+            >
               <DatePicker
                 style={{ width: "100%" }}
                 showTime
