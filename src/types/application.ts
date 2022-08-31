@@ -43,7 +43,6 @@ export interface ApplicationForm {
   job_title: string;
   political_status: string;
   _mobile: string;
-  _email: string;
   contacter_name: string;
   contacter_job_title: string;
   contacter_mobile: string;

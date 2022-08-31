@@ -1,7 +1,6 @@
 import { useQueryClient } from "react-query";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useForm } from "antd/lib/form/Form";
-import { cleanObject } from "utils";
 import moment from "moment";
 import { useAddApplication, useEditApplication } from "service/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
@@ -118,7 +117,7 @@ export const ApplicationModal = ({
       });
 
       const licenseList: any[] = [];
-      license.forEach((item: any) => licenseList.push(item.url));
+      license && license.forEach((item: any) => licenseList.push(item.url));
 
       const applyContent = [
         { title: "企业名称", name: "company_name", value: company_name },
@@ -160,17 +159,17 @@ export const ApplicationModal = ({
         { title: "等级名称", name: "member_level", value: member_level || "" },
       ];
 
-      const applicationItem: Partial<ApplicationsItem> = cleanObject({
+      const applicationItem: Partial<ApplicationsItem> = {
         id: editingApplicationId || undefined,
         level_id: `${member_level}`,
         name: _name,
         mobile: _mobile,
         apply_content_json: JSON.stringify(applyContent),
-        logo: logo[0].url,
+        logo: logo && logo.length ? logo[0].url : "",
         registration_time: `${moment(registration_time).unix()}`,
         address,
         ...rest,
-      });
+      };
       await mutateAsync(applicationItem);
       closeModal();
     });
