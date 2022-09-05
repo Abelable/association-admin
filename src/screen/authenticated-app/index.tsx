@@ -42,6 +42,7 @@ import {
   PieChartOutlined,
   AccountBookOutlined,
   RiseOutlined,
+  DashboardOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -160,6 +161,17 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.Item>
         <Menu.Item key="custom_signups" icon={<StarOutlined />}>
           <Link to={"custom_signups"}>自定义活动报名</Link>
+        </Menu.Item>
+        <Menu.Item key="data-view" icon={<DashboardOutlined />}>
+          <div
+            onClick={() =>
+              window.open(
+                "https://datav.aliyuncs.com/share/c88a657cdccd1660b869b98d9917cee4"
+              )
+            }
+          >
+            数据大屏
+          </div>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
