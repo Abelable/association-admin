@@ -122,7 +122,7 @@ export const ApplicationModal = ({
       const applyContent = [
         { title: "企业名称", name: "company_name", value: company_name },
         { title: "网站（app）名称", name: "website_url", value: website_url },
-        { title: "ICP备案号", name: "ICP", value: ICP },
+        { title: "信用代码", name: "ICP", value: ICP },
         { title: "企业类型", name: "company_type", value: company_type.join() },
         { title: "上年度GMV", name: "trade_amount", value: trade_amount },
         { title: "上年度营收", name: "revenue", value: revenue },
@@ -288,10 +288,10 @@ export const ApplicationModal = ({
           <Col span={12}>
             <Form.Item
               name="ICP"
-              label="ICP备案号"
-              rules={[{ required: true, message: "请输入ICP备案号" }]}
+              label="信用代码"
+              rules={[{ required: true, message: "请输入信用代码" }]}
             >
-              <Input placeholder="请输入ICP备案号" />
+              <Input placeholder="请输入信用代码" />
             </Form.Item>
           </Col>
         </Row>
