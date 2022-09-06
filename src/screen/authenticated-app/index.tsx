@@ -166,7 +166,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <div
             onClick={() =>
               window.open(
-                "https://datav.aliyuncs.com/share/c88a657cdccd1660b869b98d9917cee4"
+                "https://datav.aliyuncs.com/share/affdc3921c1cece7b420dbf2c9e414d9"
               )
             }
           >
