@@ -5,8 +5,7 @@ export const useApplicationsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "s_time",
     "e_time",
-    "name",
-    "mobile",
+    "company_name",
     "email",
     "member_level",
     "is_deal",

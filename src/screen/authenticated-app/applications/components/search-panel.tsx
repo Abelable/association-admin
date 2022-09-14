@@ -29,8 +29,7 @@ export const SearchPanel = ({
   const defaultParams = {
     s_time: "",
     e_time: "",
-    name: "",
-    mobile: "",
+    company_name: "",
     member_level: undefined,
     evaluation: undefined,
     is_deal: undefined,
@@ -47,35 +46,19 @@ export const SearchPanel = ({
       e_time: formatString[1],
     });
 
-  const setName = (evt: any) => {
+  const setCompanyName = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        name: "",
+        company_name: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      name: evt.target.value,
-    });
-  };
-
-  const setMobile = (evt: any) => {
-    // onInputClear
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        mobile: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      mobile: evt.target.value,
+      company_name: evt.target.value,
     });
   };
 
@@ -113,22 +96,12 @@ export const SearchPanel = ({
         />
       </Item>
       <Item>
-        <div>姓名：</div>
+        <div>企业名称：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.name}
-          onChange={setName}
-          placeholder="请输入姓名"
-          allowClear={true}
-        />
-      </Item>
-      <Item>
-        <div>手机号：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.mobile}
-          onChange={setMobile}
-          placeholder="请输入手机号"
+          value={temporaryParams.company_name}
+          onChange={setCompanyName}
+          placeholder="请输入企业名称"
           allowClear={true}
         />
       </Item>

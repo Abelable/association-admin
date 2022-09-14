@@ -18,8 +18,7 @@ export interface EvaluationOption {
 export interface ApplicationsSearchParams {
   page: number;
   page_size: number;
-  name: string;
-  mobile: string;
+  company_name: string;
   email: string;
   member_level: number;
   evaluation: string;
