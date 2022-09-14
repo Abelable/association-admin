@@ -364,6 +364,7 @@ export const ApplicationModal = ({
             <Form.Item name="introduction" label="企业简介">
               <Input.TextArea
                 rows={4}
+                maxLength={100}
                 placeholder="100字内，主营业务、市场分布、所获荣誉等"
               />
             </Form.Item>
