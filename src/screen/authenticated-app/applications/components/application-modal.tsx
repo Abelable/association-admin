@@ -90,7 +90,6 @@ export const ApplicationModal = ({
         _name,
         job_title,
         political_status,
-        _mobile,
         contacter_name,
         contacter_job_title,
         contacter_mobile,
@@ -135,7 +134,6 @@ export const ApplicationModal = ({
           name: "political_status",
           value: political_status,
         },
-        { title: "手机号", name: "_mobile", value: _mobile },
         {
           title: "协会联系人姓名",
           name: "contacter_name",
@@ -163,7 +161,6 @@ export const ApplicationModal = ({
         id: editingApplicationId || undefined,
         level_id: `${member_level}`,
         name: _name,
-        mobile: _mobile,
         apply_content_json: JSON.stringify(applyContent),
         logo: logo && logo.length ? logo[0].url : "",
         registration_time: `${moment(registration_time).unix()}`,
@@ -451,21 +448,6 @@ export const ApplicationModal = ({
               <Input placeholder="请输入负责人政治面貌" />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              name="_mobile"
-              label="手机"
-              rules={[
-                {
-                  pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-                  message: "请输入正确的手机号",
-                },
-                { required: true, message: "请输入负责人手机号" },
-              ]}
-            >
-              <Input placeholder="请输入负责人手机号" />
-            </Form.Item>
-          </Col>
         </Row>
         <Divider orientation="left">联系人信息</Divider>
         <Row gutter={16}>
@@ -492,10 +474,10 @@ export const ApplicationModal = ({
           <Col span={12}>
             <Form.Item
               name="contacter_mobile"
-              label="手机"
-              rules={[{ required: true, message: "请输入联系人手机号" }]}
+              label="工作联系方式"
+              rules={[{ required: true, message: "请输入工作联系方式" }]}
             >
-              <Input placeholder="请输入联系人手机号" />
+              <Input placeholder="请输入工作联系方式" />
             </Form.Item>
           </Col>
         </Row>

@@ -167,8 +167,8 @@ export const List = ({
             width: "12rem",
           },
           {
-            title: "手机号",
-            dataIndex: "mobile",
+            title: "工作联系方式",
+            dataIndex: "contacter_mobile",
             width: "20rem",
           },
           {

@@ -65,7 +65,7 @@ export interface ApplicationsItem {
   level_id: string;
   level_name: string;
   name: string;
-  mobile: string;
+  contacter_mobile: string;
   email: string;
   is_deal: string;
   reject_mark: string;
