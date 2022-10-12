@@ -80,6 +80,7 @@ export const ApplicationModal = ({
     form.validateFields().then(async () => {
       const {
         company_name,
+        short_name,
         website_url,
         ICP,
         company_type,
@@ -120,6 +121,7 @@ export const ApplicationModal = ({
 
       const applyContent = [
         { title: "企业名称", name: "company_name", value: company_name },
+        { title: "企业简称", name: "short_name", value: short_name },
         { title: "网站（app）名称", name: "website_url", value: website_url },
         { title: "信用代码", name: "ICP", value: ICP },
         { title: "企业类型", name: "company_type", value: company_type.join() },
