@@ -107,7 +107,7 @@ export const ApplicationModal = ({
         (item: Region) => item.value === region[1]
       );
       const area = city?.children.find(
-        (item: Region) => item.value === region[1]
+        (item: Region) => item.value === region[2]
       );
       const address = JSON.stringify({
         province: province?.label,
@@ -526,8 +526,8 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     }
 
     editingApplicationForm = {
-      ...originForm,
       ...rest,
+      ...originForm,
       license,
       company_type: originForm.company_type.split(","),
       logo: logo ? [{ url: logo }] : [],
@@ -537,7 +537,11 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
           ? Number(registration_time) * 1000
           : Number(created_at) * 1000
       ),
-      region: address ? JSON.parse(address).region : undefined,
+      region: address
+        ? JSON.parse(address).region
+        : originForm.address
+        ? JSON.parse(originForm.address).region
+        : undefined,
       evaluation: evaluation || undefined,
     };
   }
