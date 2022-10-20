@@ -165,9 +165,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="data-view" icon={<DashboardOutlined />}>
           <div
             onClick={() =>
-              window.open(
-                "http://datav.aliyuncs.com/share/e89ac1b2ce4441ccc543fb59de29c04e"
-              )
+              window.open("https://datav.aliyun.com/screen/905081#/")
             }
           >
             数据大屏
