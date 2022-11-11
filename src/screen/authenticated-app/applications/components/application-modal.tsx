@@ -2,7 +2,11 @@ import { useQueryClient } from "react-query";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useForm } from "antd/lib/form/Form";
 import moment from "moment";
-import { useAddApplication, useEditApplication } from "service/application";
+import {
+  useAddApplication,
+  useEditApplication,
+  useGetNumberApplication,
+} from "service/application";
 import { useApplicationModal, useApplicationsQueryKey } from "../util";
 
 import {
@@ -56,7 +60,7 @@ export const ApplicationModal = ({
   const { mutateAsync, error, isLoading } = useMutationApplication(
     useApplicationsQueryKey()
   );
-
+  const { mutate: getCode, data } = useGetNumberApplication();
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
     return e && e.fileList;
@@ -74,11 +78,17 @@ export const ApplicationModal = ({
         latitude: `${lat}`,
       });
     }
-  }, [form, lat, lng]);
+    if (data) {
+      form.setFieldsValue({
+        number: ("00000" + (data as { number: string }).number).slice(-3),
+      });
+    }
+  }, [form, lat, lng, data]);
 
   const submit = () => {
     form.validateFields().then(async () => {
       const {
+        number,
         company_name,
         short_name,
         website_url,
@@ -120,6 +130,7 @@ export const ApplicationModal = ({
       license && license.forEach((item: any) => licenseList.push(item.url));
 
       const applyContent = [
+        { title: "企业入会编号", name: "number", value: number },
         { title: "企业名称", name: "company_name", value: company_name },
         { title: "企业简称", name: "short_name", value: short_name },
         { title: "网站（app）名称", name: "website_url", value: website_url },
@@ -167,6 +178,7 @@ export const ApplicationModal = ({
         logo: logo && logo.length ? logo[0].url : "",
         registration_time: `${moment(registration_time).unix()}`,
         address,
+        number,
         ...rest,
       };
       await mutateAsync(applicationItem);
@@ -197,6 +209,36 @@ export const ApplicationModal = ({
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Row gutter={16}>
+          <Col span={24}>
+            <div style={{ textAlign: "right" }}>
+              <Form.Item
+                name="number"
+                style={{
+                  marginBottom: "0",
+                  display: "inline-block",
+                  textAlign: "left",
+                }}
+                rules={[
+                  { required: true, message: "请输入企业入会编号" },
+                  {
+                    pattern: /^\d{3}$/,
+                    message: "请输入正确的入会编号(001-999)",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="请输入企业入会编号"
+                  maxLength={3}
+                  style={{ width: "200px" }}
+                />
+              </Form.Item>
+              <Button type="link" onClick={() => getCode()}>
+                顺位
+              </Button>
+            </div>
+          </Col>
+        </Row>
         <Divider orientation="left">企业信息</Divider>
         <Row gutter={16}>
           <Col span={12}>

@@ -8,6 +8,7 @@ import {
   TablePaginationConfig,
   TableProps,
   Tooltip,
+  Image,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownOutlined } from "@ant-design/icons";
@@ -30,6 +31,7 @@ interface ListProps extends TableProps<ApplicationsItem>, SearchPanelProps {
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   dealApplications: DealApplications;
   exportApplications: ExportApplications;
+  editCode: Function;
 }
 
 export const List = ({
@@ -41,6 +43,7 @@ export const List = ({
   setSelectedRowKeys,
   dealApplications,
   exportApplications,
+  editCode,
   ...restProps
 }: ListProps) => {
   const { open } = useApplicationModal();
@@ -205,10 +208,28 @@ export const List = ({
             sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
           {
+            title: "编号",
+            dataIndex: "number",
+            width: "6rem",
+          },
+          {
+            title: "会员证图片",
+            render: (value, application) =>
+              application.url ? (
+                <Image
+                  style={{ width: "8.8rem", height: "12rem" }}
+                  src={application.url}
+                  alt=""
+                />
+              ) : null,
+            width: "11rem",
+          },
+          {
             title: "操作",
             render(value, application) {
               return (
                 <More
+                  editCode={editCode}
                   application={application}
                   dealApplications={dealApplications}
                   exportApplications={exportApplications}
@@ -236,11 +257,13 @@ const More = ({
   dealApplications,
   exportApplications,
   setRejectingApplicationId,
+  editCode,
 }: {
   application: ApplicationsItem;
   dealApplications: DealApplications;
   exportApplications: ExportApplications;
   setRejectingApplicationId: (id: string) => void;
+  editCode: Function;
 }) => {
   const { mutate: deleteApplication } = useDeleteApplication(
     useApplicationsQueryKey()
@@ -256,6 +279,28 @@ const More = ({
       cancelText: "取消",
       onOk: () => deleteApplication(id),
     });
+  };
+
+  const codeCreate = (id: string, number: string, company_name: string) => {
+    if (number === "") {
+      Modal.info({
+        title: "此企业暂无编号",
+        content: "此企业暂无编号,请输入编号后重新生成",
+        onOk() {
+          startEdit(id);
+        },
+      });
+      return false;
+    }
+    editCode({ id, number, company_name, certificate_status: "1" });
+  };
+
+  const codeUpdate = (id: string, number: string, company_name: string) => {
+    editCode({ id, number, company_name, certificate_status: "1" });
+  };
+
+  const codeDelete = (id: string) => {
+    editCode({ id, number: "", company_name: "", certificate_status: "-1" });
   };
 
   return (
@@ -293,6 +338,45 @@ const More = ({
           >
             删除
           </Menu.Item>
+          {application.certificate_status === "0" ||
+          application.certificate_status === "-1" ? (
+            <Menu.Item
+              onClick={() =>
+                codeCreate(
+                  application.id,
+                  application.number,
+                  application.company_name
+                )
+              }
+              key={"code_create"}
+            >
+              生成会员证
+            </Menu.Item>
+          ) : null}
+          {application.number !== "" &&
+          application.certificate_status === "1" ? (
+            <Menu.Item
+              onClick={() =>
+                codeUpdate(
+                  application.id,
+                  application.number,
+                  application.company_name
+                )
+              }
+              key={"code_update"}
+            >
+              更新会员证
+            </Menu.Item>
+          ) : null}
+          {application.number !== "" &&
+          application.certificate_status === "1" ? (
+            <Menu.Item
+              onClick={() => codeDelete(application.id)}
+              key={"code_delete"}
+            >
+              取消会员证
+            </Menu.Item>
+          ) : null}
         </Menu>
       }
     >

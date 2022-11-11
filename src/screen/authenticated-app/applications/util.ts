@@ -3,6 +3,7 @@ import { useMemo, useCallback } from "react";
 
 export const useApplicationsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
+    "company_code",
     "s_time",
     "e_time",
     "company_name",

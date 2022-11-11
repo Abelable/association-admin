@@ -79,6 +79,9 @@ export interface ApplicationsItem {
   logo: string;
   apply_content_json: string;
   created_at: string;
+  url: string;
+  number: string;
+  certificate_status: string;
 }
 export interface ApplicationsResult {
   list: ApplicationsItem[];

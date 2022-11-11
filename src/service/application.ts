@@ -1,5 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
-import { useHttp } from "./http";
+import { useHttp, http } from "./http";
+import * as auth from "./auth";
 import dayjs from "dayjs";
 import { cleanObject } from "utils";
 import {
@@ -120,5 +121,36 @@ export const useDeleteApplication = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useDeleteConfig(queryKey)
+  );
+};
+
+export const getNumberApplication = async (data: any) => {
+  const res = await http("/api/admin/enter-apply/get-certificate-number", {
+    method: "POST",
+    data: data,
+    token: auth.getToken() || "",
+  });
+  return res;
+};
+
+export const useGetNumberApplication = () => {
+  const client = useHttp();
+  return useMutation(() =>
+    client("/api/admin/enter-apply/get-certificate-number", {
+      data: {},
+      method: "POST",
+    })
+  );
+};
+
+export const useCreateCertificate = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, url, certificate_status }: Partial<ApplicationsItem>) =>
+      client("/api/admin/enter-apply/save-certificate", {
+        data: { id, url, certificate_status },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
   );
 };
