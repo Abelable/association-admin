@@ -64,7 +64,7 @@ export const TestModal = ({
 
   return (
     <Drawer
-      title={editingTestId ? "编辑行业检测" : "新增行业检测"}
+      title={editingTestId ? "编辑行业监测" : "新增行业监测"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}

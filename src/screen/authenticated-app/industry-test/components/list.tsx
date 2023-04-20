@@ -46,7 +46,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>行业检测列表</h3>
+        <h3>行业监测列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>

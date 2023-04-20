@@ -139,13 +139,13 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Link to={"wisdoms"}>网商智库</Link>
         </Menu.Item>
         <Menu.Item key="credit_portrait" icon={<PieChartOutlined />}>
-          <Link to={"credit_portrait"}>会员信用画像</Link>
+          <Link to={"credit_portrait"}>会员信用</Link>
         </Menu.Item>
         <Menu.Item key="member_service" icon={<HeartOutlined />}>
           <Link to={"member_service"}>会员服务</Link>
         </Menu.Item>
         <Menu.Item key="industry_test" icon={<MonitorOutlined />}>
-          <Link to={"industry_test"}>行业检测</Link>
+          <Link to={"industry_test"}>行业监测</Link>
         </Menu.Item>
         <Menu.Item key="secretary_trends" icon={<RiseOutlined />}>
           <Link to={"secretary_trends"}>秘书处动态</Link>
@@ -160,7 +160,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Link to={"talents"}>人才管理</Link>
         </Menu.Item>
         <Menu.Item key="custom_signups" icon={<StarOutlined />}>
-          <Link to={"custom_signups"}>自定义活动报名</Link>
+          <Link to={"custom_signups"}>活动报名</Link>
         </Menu.Item>
         <Menu.Item key="data-view" icon={<DashboardOutlined />}>
           <div
