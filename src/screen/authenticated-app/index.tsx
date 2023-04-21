@@ -154,7 +154,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Link to={"financial_data"}>财务数据</Link>
         </Menu.Item>
         <Menu.Item key="applications" icon={<AuditOutlined />}>
-          <Link to={"applications"}>入会申请</Link>
+          <Link to={"applications"}>会员管理</Link>
         </Menu.Item>
         <Menu.Item key="talents" icon={<SolutionOutlined />}>
           <Link to={"talents"}>人才管理</Link>

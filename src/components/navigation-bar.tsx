@@ -17,7 +17,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/industry_test": "行业监测",
   "/secretary_trends": "秘书处动态",
   "/financial_data": "财务数据",
-  "/applications": "入会申请",
+  "/applications": "会员管理",
   "/talents": "人才管理",
   "/custom_signups": "活动报名",
   "/custom_signups/enlist": "报名列表",

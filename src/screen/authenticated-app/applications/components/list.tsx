@@ -273,7 +273,7 @@ const More = ({
 
   const confirmDeleteProject = (id: string) => {
     Modal.confirm({
-      title: "确定删除该入会申请吗？",
+      title: "确定删除该会员管理吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",

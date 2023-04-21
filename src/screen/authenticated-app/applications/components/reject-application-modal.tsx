@@ -33,7 +33,7 @@ export const RejectApplicationModal = ({
 
   return (
     <Modal
-      title="确定驳回该入会申请吗？"
+      title="确定驳回该会员管理吗？"
       visible={!!rejectingApplicationId}
       confirmLoading={isLoading}
       onOk={reject}
