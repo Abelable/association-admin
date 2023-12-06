@@ -166,7 +166,7 @@ export const List = ({
           },
           {
             title: "姓名",
-            dataIndex: "name",
+            dataIndex: "contacter_name",
             width: "12rem",
           },
           {

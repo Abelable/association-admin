@@ -38,9 +38,6 @@ export interface ApplicationForm {
   trade_commodity: string;
   trade_count: string;
   trade_amount: string;
-  _name: string;
-  job_title: string;
-  political_status: string;
   _mobile: string;
   contacter_name: string;
   contacter_job_title: string;
@@ -64,7 +61,7 @@ export interface ApplicationsItem {
   company_name: string;
   level_id: string;
   level_name: string;
-  name: string;
+  contacter_name: string;
   contacter_mobile: string;
   email: string;
   is_deal: string;

@@ -98,9 +98,6 @@ export const ApplicationModal = ({
         gang_count,
         revenue,
         trade_amount,
-        _name,
-        job_title,
-        political_status,
         contacter_name,
         contacter_job_title,
         contacter_mobile,
@@ -140,13 +137,6 @@ export const ApplicationModal = ({
         { title: "上年度营收", name: "revenue", value: revenue },
         { title: "员工人数", name: "staff_count", value: staff_count },
         { title: "党员人数", name: "gang_count", value: gang_count },
-        { title: "负责人姓名", name: "_name", value: _name },
-        { title: "职务", name: "job_title", value: job_title },
-        {
-          title: "政治面貌",
-          name: "political_status",
-          value: political_status,
-        },
         {
           title: "协会联系人姓名",
           name: "contacter_name",
@@ -173,7 +163,6 @@ export const ApplicationModal = ({
       const applicationItem: Partial<ApplicationsItem> = {
         id: editingApplicationId || undefined,
         level_id: `${member_level}`,
-        name: _name,
         apply_content_json: JSON.stringify(applyContent),
         logo: logo && logo.length ? logo[0].url : "",
         registration_time: `${moment(registration_time).unix()}`,
@@ -461,38 +450,6 @@ export const ApplicationModal = ({
           setLng={setLng}
           setLat={setLat}
         />
-        <Divider orientation="left">负责人信息</Divider>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="_name"
-              label="姓名"
-              rules={[{ required: true, message: "请输入负责人姓名" }]}
-            >
-              <Input placeholder="请输入负责人姓名" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="job_title"
-              label="职务"
-              rules={[{ required: true, message: "请输入负责人职务" }]}
-            >
-              <Input placeholder="请输入负责人职务" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="political_status"
-              label="政治面貌"
-              rules={[{ required: true, message: "请输入负责人政治面貌" }]}
-            >
-              <Input placeholder="请输入负责人政治面貌" />
-            </Form.Item>
-          </Col>
-        </Row>
         <Divider orientation="left">联系人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
