@@ -57,7 +57,7 @@ export const List = ({
         scroll={{ x: 1500 }}
         columns={[
           {
-            title: "编号",
+            title: "服务id",
             dataIndex: "id",
             fixed: "left",
             width: "8rem",

@@ -59,7 +59,7 @@ export const LegalCategoryModal = ({
 
   return (
     <Modal
-      title={editingLegalCategoryId ? "编辑法律汇编分类" : "新增法律汇编分类"}
+      title={editingLegalCategoryId ? "编辑政策指南分类" : "新增政策指南分类"}
       visible={legalCategoryModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}

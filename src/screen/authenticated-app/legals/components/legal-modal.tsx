@@ -95,7 +95,7 @@ export const LegalModal = ({
 
   return (
     <Drawer
-      title={editingLegalId ? "编辑文章" : "新增文章"}
+      title={editingLegalId ? "编辑政策" : "新增政策"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
@@ -116,15 +116,19 @@ export const LegalModal = ({
           <Col span={12}>
             <Form.Item
               name="title"
-              label="文章标题"
-              rules={[{ required: true, message: "请输入文章标题" }]}
+              label="政策标题"
+              rules={[{ required: true, message: "请输入政策标题" }]}
             >
-              <Input placeholder="请输入文章标题" />
+              <Input placeholder="请输入政策标题" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="category_id" label="文章分类">
-              <Select placeholder="请选择文章分类">
+            <Form.Item
+              name="category_id"
+              label="政策分类"
+              rules={[{ required: true, message: "请选择政策分类" }]}
+            >
+              <Select placeholder="请选择政策分类">
                 {categoryList?.map(({ id, name }) => (
                   <Select.Option key={id} value={id}>
                     {name}
@@ -136,29 +140,24 @@ export const LegalModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
-              <Input placeholder="请输入文章排序" />
+            <Form.Item
+              label="发布机构"
+              name="sort"
+              rules={[{ required: true, message: "请输入发布机构" }]}
+            >
+              <Input placeholder="请输入发布机构" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="生效时间" name="effective_time">
+            <Form.Item
+              label="发布日期"
+              name="promulgation_time"
+              rules={[{ required: true, message: "请选择发布日期" }]}
+            >
               <DatePicker
-                showTime={{ format: "HH:mm" }}
-                format="YYYY-MM-DD HH:mm"
+                format="YYYY-MM-DD"
                 style={{ width: "100%" }}
-                placeholder="请选择生效时间"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="颁布时间" name="promulgation_time">
-              <DatePicker
-                showTime={{ format: "HH:mm" }}
-                format="YYYY-MM-DD HH:mm"
-                style={{ width: "100%" }}
-                placeholder="请选择颁布时间"
+                placeholder="请选择发布日期"
               />
             </Form.Item>
           </Col>
@@ -173,7 +172,7 @@ export const LegalModal = ({
         >
           <OssUpload maxCount={1} />
         </Form.Item>
-        <Form.Item label="文章内容" tooltip="排版自定义规则">
+        <Form.Item label="政策内容" tooltip="排版自定义规则">
           <RichTextEditor content={content} setContent={setContent} />
         </Form.Item>
       </Form>

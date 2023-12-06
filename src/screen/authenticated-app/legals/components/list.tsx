@@ -41,7 +41,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>文章列表</h3>
+        <h3>政策列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -52,7 +52,7 @@ export const List = ({
         scroll={{ x: 1900 }}
         columns={[
           {
-            title: "编号",
+            title: "政策id",
             dataIndex: "id",
             fixed: "left",
             width: "8rem",

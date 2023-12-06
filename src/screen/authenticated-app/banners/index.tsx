@@ -8,7 +8,7 @@ import { useBannersSearchParams } from "./util";
 
 const linkTypeOptions = [
   { name: "跳转网商课堂", value: "1" },
-  { name: "跳转法律汇编", value: "2" },
+  { name: "跳转政策指南", value: "2" },
   { name: "跳转网商智库", value: "3" },
   { name: "跳转H5", value: "4" },
 ];

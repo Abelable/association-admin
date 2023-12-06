@@ -126,13 +126,13 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.SubMenu
           key={"legal"}
           icon={<HighlightOutlined />}
-          title={"法律汇编"}
+          title={"政策指南"}
         >
           <Menu.Item key="categories" icon={<PartitionOutlined />}>
             <Link to={"legal/categories"}>分类管理</Link>
           </Menu.Item>
           <Menu.Item key="legal_list" icon={<BarsOutlined />}>
-            <Link to={"legal/legal_list"}>文章列表</Link>
+            <Link to={"legal/legal_list"}>政策列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="wisdoms" icon={<BulbOutlined />}>

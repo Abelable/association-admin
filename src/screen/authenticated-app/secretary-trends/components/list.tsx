@@ -51,7 +51,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         scroll={{ x: 1500 }}
         columns={[
           {
-            title: "编号",
+            title: "动态id",
             dataIndex: "id",
             fixed: "left",
             width: "8rem",

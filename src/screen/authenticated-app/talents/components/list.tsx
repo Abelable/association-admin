@@ -58,7 +58,7 @@ export const List = ({
 
   const defaultColumns: ColumnsType<TalentListItem> = [
     {
-      title: "编号",
+      title: "人才id",
       dataIndex: "id",
       fixed: "left",
       width: "10rem",
@@ -274,7 +274,7 @@ export const List = ({
   ];
 
   const defaultColumnTitleList = [
-    "编号",
+    "人才id",
     "照片",
     "姓名",
     "性别",

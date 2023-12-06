@@ -26,7 +26,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         rowKey={"id"}
         columns={[
           {
-            title: "编号",
+            title: "用户id",
             dataIndex: "id",
           },
           {

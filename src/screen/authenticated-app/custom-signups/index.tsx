@@ -83,7 +83,7 @@ export const CustomSignups = () => {
           loading={isLoading}
           columns={[
             {
-              title: "编号",
+              title: "活动id",
               dataIndex: "id",
               width: "10rem",
             },

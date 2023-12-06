@@ -29,7 +29,7 @@ export const LegalCategories = () => {
   );
   const confirmDeleteLegalCategory = (category: LegalCategory) => {
     Modal.confirm({
-      title: "确定删除该法律汇编分类吗？",
+      title: "确定删除该政策指南分类吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
@@ -59,7 +59,7 @@ export const LegalCategories = () => {
           loading={isLoading}
           columns={[
             {
-              title: "编号",
+              title: "分类id",
               dataIndex: "id",
             },
             {

@@ -44,7 +44,7 @@ export const CourseAuthors = () => {
           loading={isLoading}
           columns={[
             {
-              title: "编号",
+              title: "作者id",
               dataIndex: "id",
             },
             {
