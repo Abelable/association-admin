@@ -5,7 +5,7 @@ import { getVideoDuration } from "utils";
 
 interface OssUploadProps extends React.ComponentProps<typeof Upload> {}
 
-export const OssUpload = (props: OssUploadProps) => {
+export const OssVideoUpload = (props: OssUploadProps) => {
   const { data: ossConfig } = useOssConfig();
   const getExtraData = (file: any) => {
     return {

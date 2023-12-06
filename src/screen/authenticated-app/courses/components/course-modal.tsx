@@ -13,7 +13,8 @@ import {
 import { useCourseModal, useCoursesQueryKey } from "../util";
 import { useState } from "react";
 import { useForm } from "antd/lib/form/Form";
-import { OssUpload } from "components/oss-video-upload";
+import { OssUpload } from "components/oss-upload";
+import { OssVideoUpload } from "components/oss-video-upload";
 import { ErrorBox } from "components/lib";
 import { CourseAuthor, CoursesResult, CourseItem } from "types/course";
 import { useAddCourse, useEditCourse } from "service/course";
@@ -49,10 +50,11 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
 
   const submit = () => {
     form.validateFields().then(async () => {
-      const { video, tags, ...restFieldsValue } = form.getFieldsValue();
+      const { cover_img, video, tags, ...restFieldsValue } =
+        form.getFieldsValue();
       await mutateAsync({
         id: editingCourseId || "",
-        cover_img: video[0].cover,
+        cover_img: cover_img[0].url,
         media_url: video[0].url,
         duration: video[0].duration,
         is_try: isTry ? 1 : 0,
@@ -117,7 +119,17 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
           valuePropName="fileList"
           getValueFromEvent={normFile}
         >
-          <OssUpload />
+          <OssVideoUpload />
+        </Form.Item>
+        <Form.Item
+          name="cover_img"
+          label="视频封面"
+          tooltip="图片大小不能超过10MB"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+          rules={[{ required: true, message: "请上传视频封面" }]}
+        >
+          <OssUpload maxCount={1} />
         </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
