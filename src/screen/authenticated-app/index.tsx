@@ -33,7 +33,6 @@ import {
   AuditOutlined,
   SolutionOutlined,
   BulbOutlined,
-  HighlightOutlined,
   PlayCircleOutlined,
   UserOutlined,
   StarOutlined,
@@ -43,6 +42,7 @@ import {
   AccountBookOutlined,
   RiseOutlined,
   DashboardOutlined,
+  ReadOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -123,11 +123,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
             <Link to={"course/list"}>课堂列表</Link>
           </Menu.Item>
         </Menu.SubMenu>
-        <Menu.SubMenu
-          key={"legal"}
-          icon={<HighlightOutlined />}
-          title={"政策指南"}
-        >
+        <Menu.SubMenu key={"legal"} icon={<ReadOutlined />} title={"政策指南"}>
           <Menu.Item key="categories" icon={<PartitionOutlined />}>
             <Link to={"legal/categories"}>分类管理</Link>
           </Menu.Item>
