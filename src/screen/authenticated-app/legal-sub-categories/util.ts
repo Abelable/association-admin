@@ -2,11 +2,17 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useLegalCategoriesSearchParams = () => {
-  const [params, setParmas] = useUrlQueryParams(["page", "page_size"]);
+  const [params, setParmas] = useUrlQueryParams([
+    "parent_category_id",
+    "parent_category_name",
+    "page",
+    "page_size",
+  ]);
   return [
     useMemo(
       () => ({
-        pid: 0,
+        parent_category_name: params.parent_category_name,
+        pid: params.parent_category_id,
         page: Number(params.page) || 1,
         page_size: Number(params.page_size) || 10,
       }),

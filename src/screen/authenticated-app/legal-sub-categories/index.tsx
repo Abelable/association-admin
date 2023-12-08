@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import {
   Button,
   Dropdown,
@@ -6,13 +7,7 @@ import {
   Table,
   TablePaginationConfig,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { LegalCategoryModal } from "./components/legal-category-modal";
-
-import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
 import { useLegalCategories, useDeleteLegalCategory } from "service/legal";
 import { toNumber } from "utils";
 import {
@@ -20,11 +15,12 @@ import {
   useLegalCategoriesSearchParams,
   useLegalCategoryModal,
 } from "./util";
+import { PlusOutlined } from "@ant-design/icons";
+import { LegalCategoryModal } from "./components/legal-category-modal";
+import { LegalCategory } from "types/legal";
+import dayjs from "dayjs";
 
-import type { LegalCategory } from "types/legal";
-
-export const LegalCategories = () => {
-  const navigate = useNavigate();
+export const LegalSubCategories = () => {
   const [params, setParams] = useLegalCategoriesSearchParams();
   const { data, isLoading, error } = useLegalCategories(params);
   const { startEdit, open } = useLegalCategoryModal();
@@ -33,7 +29,7 @@ export const LegalCategories = () => {
   );
   const confirmDeleteLegalCategory = (category: LegalCategory) => {
     Modal.confirm({
-      title: "确定删除该政策指南分类吗？",
+      title: "确定删除该分类吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
@@ -46,19 +42,12 @@ export const LegalCategories = () => {
       page: pagination.current,
       page_size: pagination.pageSize,
     });
-  const checkSubCategory = (
-    parent_category_id: string,
-    parent_category_name: string
-  ) =>
-    navigate(
-      `/legal/categories/sub_categories?parent_category_id=${parent_category_id}&parent_category_name=${parent_category_name}`
-    );
 
   return (
     <Container>
       <Main>
         <Header between={true}>
-          <h3>分类列表</h3>
+          <h3>二级分类列表（{params.parent_category_name}）</h3>
           <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
             新增
           </Button>
@@ -74,7 +63,7 @@ export const LegalCategories = () => {
               dataIndex: "id",
             },
             {
-              title: "分类名称",
+              title: "分类",
               dataIndex: "name",
             },
             {
@@ -125,14 +114,6 @@ export const LegalCategories = () => {
                   overlay={
                     <Menu>
                       <Menu.Item
-                        onClick={() =>
-                          checkSubCategory(category.id, category.name)
-                        }
-                        key={"check"}
-                      >
-                        二级分类
-                      </Menu.Item>
-                      <Menu.Item
                         onClick={() => startEdit(category.id)}
                         key={"edit"}
                       >
@@ -159,7 +140,10 @@ export const LegalCategories = () => {
           }}
           onChange={setPagination}
         />
-        <LegalCategoryModal legalCategories={data?.list || []} />
+        <LegalCategoryModal
+          parentCategoryId={params.pid}
+          legalCategories={data?.list || []}
+        />
       </Main>
     </Container>
   );

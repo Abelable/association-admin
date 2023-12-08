@@ -10,6 +10,7 @@ import { Users } from "./users";
 import { Banners } from "./banners";
 import { Wisdoms } from "./wisdoms";
 import { LegalCategories } from "./legal-categories/index";
+import { LegalSubCategories } from "./legal-sub-categories";
 import { Legals } from "./legals";
 import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
@@ -67,6 +68,10 @@ export const AuthenticatedApp = () => {
               <Route path="course/author" element={<CourseAuthors />} />
               <Route path="course/list" element={<Courses />} />
               <Route path="legal/categories" element={<LegalCategories />} />
+              <Route
+                path="legal/categories/sub_categories"
+                element={<LegalSubCategories />}
+              />
               <Route path="legal/legal_list" element={<Legals />} />
               <Route path="wisdoms" element={<Wisdoms />} />
               <Route path="credit_portrait" element={<Portraits />} />

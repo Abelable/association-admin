@@ -4,6 +4,7 @@ export interface LegalCategoriesSearchParams {
 }
 
 export interface LegalCategory {
+  pid: string;
   id: string;
   name: string;
   description: string;
