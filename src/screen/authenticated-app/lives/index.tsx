@@ -1,17 +1,10 @@
 import styled from "@emotion/styled";
-import { useLives } from "service/banner";
+import { useLives } from "service/live";
 import { toNumber } from "utils";
-import { BannerModal } from "./components/banner-modal";
+import { LiveModal } from "./components/live-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useLivesSearchParams } from "./util";
-
-const linkTypeOptions = [
-  { name: "跳转网商课堂", value: "1" },
-  { name: "跳转政策指南", value: "2" },
-  { name: "跳转网商智库", value: "3" },
-  { name: "跳转H5", value: "4" },
-];
 
 export const Lives = () => {
   const [params, setParams] = useLivesSearchParams();
@@ -26,7 +19,6 @@ export const Lives = () => {
           params={params}
           setParams={setParams}
           loading={isLoading}
-          linkTypeOptions={linkTypeOptions}
           dataSource={data?.list}
           pagination={{
             current: toNumber(data?.page),
@@ -34,7 +26,7 @@ export const Lives = () => {
             total: toNumber(data?.total),
           }}
         />
-        <BannerModal linkTypeOptions={linkTypeOptions} />
+        <LiveModal />
       </Main>
     </Container>
   );

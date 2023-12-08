@@ -81,6 +81,7 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
       } = editingCourseForm;
       form.setFieldsValue({
         title,
+        cover_img: [{ url: cover_img }],
         video: [
           { name: `${title}.mp4`, url: media_url, cover: cover_img, duration },
         ],

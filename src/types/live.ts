@@ -12,8 +12,6 @@ export interface Live {
   company_name: string;
   platform: string;
   sort: string;
-  s_time: string;
-  e_time: string;
 }
 
 export interface LivesResult {

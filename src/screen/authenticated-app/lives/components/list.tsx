@@ -11,24 +11,17 @@ import {
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
-import dayjs from "dayjs";
-import { useBannersQueryKey, useBannerModal } from "../util";
-import { Banner } from "types/banner";
-import { useDeleteBanner } from "service/banner";
+import { useLivesQueryKey, useLiveModal } from "../util";
+import { useDeleteLive } from "service/live";
 
-interface ListProps extends TableProps<Banner>, SearchPanelProps {
-  linkTypeOptions: { name: string; value: string }[];
+import type { Live } from "types/live";
+
+interface ListProps extends TableProps<Live>, SearchPanelProps {
   error: Error | unknown;
 }
 
-export const List = ({
-  error,
-  params,
-  setParams,
-  linkTypeOptions,
-  ...restProps
-}: ListProps) => {
-  const { open } = useBannerModal();
+export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+  const { open } = useLiveModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -40,7 +33,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>头图列表</h3>
+        <h3>直播列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -51,10 +44,22 @@ export const List = ({
         scroll={{ x: 1500 }}
         columns={[
           {
-            title: "头图id",
+            title: "直播id",
             dataIndex: "id",
             fixed: "left",
             width: "8rem",
+          },
+          {
+            title: "封面",
+            dataIndex: "cover",
+            render: (value) => (
+              <img
+                style={{ width: "11.5rem", height: "5rem" }}
+                src={value}
+                alt=""
+              />
+            ),
+            width: "16rem",
           },
           {
             title: "标题",
@@ -62,46 +67,19 @@ export const List = ({
             width: "26rem",
           },
           {
-            title: "头图",
-            render: (value, banner) => (
-              <img
-                style={{ width: "11.5rem", height: "5rem" }}
-                src={banner.img}
-                alt=""
-              />
-            ),
-            width: "16rem",
+            title: "平台",
+            dataIndex: "title",
+            width: "26rem",
           },
           {
-            title: "是否展示",
-            render: (value, banner) => (
-              <span>{banner.is_show === "1" ? "展示" : "隐藏"}</span>
-            ),
-            width: "10rem",
+            title: "公司",
+            dataIndex: "title",
+            width: "26rem",
           },
           {
-            title: "跳转类型",
-            render: (value, banner) => (
-              <span>
-                {
-                  linkTypeOptions.find(
-                    (item) => item.value === banner.link_type
-                  )?.name
-                }
-              </span>
-            ),
-            width: "13rem",
-          },
-          {
-            title: "跳转链接",
-            render: (value, banner) => (
-              <span>
-                {banner.link_type === "4"
-                  ? banner.redirect_url
-                  : `文章ID：${banner.article_id}`}
-              </span>
-            ),
-            width: "42rem",
+            title: "地址",
+            dataIndex: "title",
+            width: "26rem",
           },
           {
             title: "排序",
@@ -109,29 +87,9 @@ export const List = ({
             width: "10rem",
           },
           {
-            title: "时间",
-            render: (value, banner) => (
-              <>
-                <div>
-                  开始：
-                  {dayjs(Number(banner.s_time) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
-                  )}
-                </div>
-                <div>
-                  结束：
-                  {dayjs(Number(banner.e_time) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
-                  )}
-                </div>
-              </>
-            ),
-            width: "21rem",
-          },
-          {
             title: "操作",
-            render(value, banner) {
-              return <More id={banner.id} />;
+            render(value, live) {
+              return <More id={live.id} />;
             },
             fixed: "right",
             width: "8rem",
@@ -145,17 +103,17 @@ export const List = ({
 };
 
 const More = ({ id }: { id: string }) => {
-  const { mutate: deleteBanner } = useDeleteBanner(useBannersQueryKey());
+  const { mutate: deleteLive } = useDeleteLive(useLivesQueryKey());
 
-  const { startEdit } = useBannerModal();
+  const { startEdit } = useLiveModal();
 
-  const confirmDeleteBanner = (id: string) => {
+  const confirmDeleteLive = (id: string) => {
     Modal.confirm({
       title: "确定删除该头图吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteBanner(id),
+      onOk: () => deleteLive(id),
     });
   };
 
@@ -166,7 +124,7 @@ const More = ({ id }: { id: string }) => {
           <Menu.Item onClick={() => startEdit(id)} key={"edit"}>
             编辑
           </Menu.Item>
-          <Menu.Item onClick={() => confirmDeleteBanner(id)} key={"delete"}>
+          <Menu.Item onClick={() => confirmDeleteLive(id)} key={"delete"}>
             删除
           </Menu.Item>
         </Menu>
