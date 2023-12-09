@@ -76,10 +76,8 @@ export const Applications = () => {
         { text: "综合类", value: 3 },
       ],
     },
-
-    { text: "金融服务类", value: 2, subOptions: [{}] },
-    { text: "社交娱乐类", value: 3, subOptions: [{}] },
-    { text: "信息资讯类", value: 6, subOptions: [{}] },
+    { text: "金融服务类", value: 2 },
+    { text: "信息资讯类", value: 6 },
     { text: "其他类", value: 7 },
   ];
   const evaluationOptions = [
