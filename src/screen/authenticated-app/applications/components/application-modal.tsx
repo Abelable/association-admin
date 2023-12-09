@@ -56,13 +56,6 @@ export const ApplicationModal = ({
 
   const [lng, setLng] = useState<undefined | number>();
   const [lat, setLat] = useState<undefined | number>();
-  // const [subCategoryOptions, setSubCategoryOptions] = useState<undefined | CategoryOption[]>();
-
-  console.log("company_type", form.getFieldValue("company_type"));
-  const subCategoryOptions = categoryOptions.find(
-    (item) => item.value === Number(form.getFieldValue("company_type"))
-  )?.subOptions;
-  console.log("subCategoryOptions", subCategoryOptions);
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -85,13 +78,6 @@ export const ApplicationModal = ({
     form.resetFields();
     close();
   };
-
-  // useEffect(() => {
-  //   console.log('company_type', form.getFieldsValue())
-
-  //   console.log('subCategoryOptions', subCategoryOptions)
-  //   setSubCategoryOptions(subCategoryOptions);
-  // }, [form, categoryOptions]);
 
   useEffect(() => {
     if (lng && lat) {
@@ -289,33 +275,45 @@ export const ApplicationModal = ({
               </Select>
             </Form.Item>
           </Col>
-          {categoryOptions.find(
-            (item) => item.value === Number(form.getFieldValue("company_type"))
-          )?.subOptions ? (
-            <Col span={12}>
-              <Form.Item
-                name="company_sub_type"
-                label="企业二级类型（可多选）"
-                rules={[{ required: true, message: "请选择企业二级类型" }]}
-              >
-                <Select placeholder="请选择企业二级类型" mode="tags" showArrow>
-                  {categoryOptions
-                    .find(
-                      (item) =>
-                        item.value ===
-                        Number(form.getFieldValue("company_type"))
-                    )
-                    ?.subOptions?.map((item) => (
-                      <Select.Option key={item.value}>
-                        {item.text}
-                      </Select.Option>
-                    ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          ) : (
-            <></>
-          )}
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.status !== currentValues.status
+            }
+          >
+            {({ getFieldValue }) =>
+              categoryOptions.find(
+                (item) => item.value === Number(getFieldValue("company_type"))
+              )?.subOptions ? (
+                <Col span={12}>
+                  <Form.Item
+                    name="company_sub_type"
+                    label="企业二级类型（可多选）"
+                    rules={[{ required: true, message: "请选择企业二级类型" }]}
+                  >
+                    <Select
+                      placeholder="请选择企业二级类型"
+                      mode="tags"
+                      showArrow
+                    >
+                      {categoryOptions
+                        .find(
+                          (item) =>
+                            item.value === Number(getFieldValue("company_type"))
+                        )
+                        ?.subOptions?.map((item) => (
+                          <Select.Option key={item.value}>
+                            {item.text}
+                          </Select.Option>
+                        ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+              ) : (
+                <></>
+              )
+            }
+          </Form.Item>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
