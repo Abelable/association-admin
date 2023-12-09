@@ -275,20 +275,20 @@ export const ApplicationModal = ({
               </Select>
             </Form.Item>
           </Col>
-          <Form.Item
-            noStyle
-            shouldUpdate={(prevValues, currentValues) =>
-              prevValues.status !== currentValues.status
-            }
-          >
-            {({ getFieldValue }) => {
-              const subCategoryOptions = categoryOptions.find(
-                (item) => item.value === Number(getFieldValue("company_type"))
-              )?.subOptions;
-              console.log("subCategoryOptions", subCategoryOptions);
-              if (subCategoryOptions) {
-                return (
-                  <Col span={12}>
+          <Col span={12}>
+            <Form.Item
+              noStyle
+              shouldUpdate={(prevValues, currentValues) =>
+                prevValues.status !== currentValues.status
+              }
+            >
+              {({ getFieldValue }) => {
+                const subCategoryOptions = categoryOptions.find(
+                  (item) => item.value === Number(getFieldValue("company_type"))
+                )?.subOptions;
+                console.log("subCategoryOptions", subCategoryOptions);
+                if (subCategoryOptions) {
+                  return (
                     <Form.Item
                       name="company_sub_type"
                       label="企业二级类型（可多选）"
@@ -314,13 +314,13 @@ export const ApplicationModal = ({
                           ))}
                       </Select>
                     </Form.Item>
-                  </Col>
-                );
-              } else {
-                return <></>;
-              }
-            }}
-          </Form.Item>
+                  );
+                } else {
+                  return <></>;
+                }
+              }}
+            </Form.Item>
+          </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
