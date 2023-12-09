@@ -22,6 +22,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/talents": "人才管理",
   "/custom_signups": "活动报名",
   "/custom_signups/enlist": "报名列表",
+  "/lives": "直播监控",
 };
 
 export const NavigationBar = () => {

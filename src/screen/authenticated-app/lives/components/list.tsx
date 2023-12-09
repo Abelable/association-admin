@@ -10,13 +10,14 @@ import {
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import { SearchPanelProps } from "./search-panel";
 import { useLivesQueryKey, useLiveModal } from "../util";
 import { useDeleteLive } from "service/live";
 
-import type { Live } from "types/live";
+import type { Live, LivesSearchParams } from "types/live";
 
-interface ListProps extends TableProps<Live>, SearchPanelProps {
+interface ListProps extends TableProps<Live> {
+  params: Partial<LivesSearchParams>;
+  setParams: (params: Partial<LivesSearchParams>) => void;
   error: Error | unknown;
 }
 

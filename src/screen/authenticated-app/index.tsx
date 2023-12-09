@@ -23,6 +23,7 @@ import { Portraits } from "./credit-portrait";
 import { Financials } from "./financial-data";
 import { CustomSignups } from "./custom-signups";
 import { CustomSignupUsers } from "./custom-signup-users";
+import { Lives } from "./lives";
 
 import {
   MenuUnfoldOutlined,
@@ -81,6 +82,7 @@ export const AuthenticatedApp = () => {
               <Route path="financial_data" element={<Financials />} />
               <Route path="applications" element={<Applications />} />
               <Route path="talents" element={<Talents />} />
+              <Route path="lives" element={<Lives />} />
               <Route path="custom_signups" element={<CustomSignups />} />
               <Route
                 path="custom_signups/enlist"
@@ -102,7 +104,12 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   const routeType = useRouteType();
 
   return (
-    <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout.Sider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      style={{ overflowY: "scroll" }}
+    >
       <Link to={"/"}>
         <Logo collapsed={collapsed}>
           <LogoImg src={logo} />
@@ -162,6 +169,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.Item>
         <Menu.Item key="custom_signups" icon={<StarOutlined />}>
           <Link to={"custom_signups"}>活动报名</Link>
+        </Menu.Item>
+        <Menu.Item key="lives" icon={<PictureOutlined />}>
+          <Link to={"lives"}>直播监控</Link>
         </Menu.Item>
         <Menu.Item key="data-view" icon={<DashboardOutlined />}>
           <div

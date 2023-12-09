@@ -3,7 +3,6 @@ import { useLives } from "service/live";
 import { toNumber } from "utils";
 import { LiveModal } from "./components/live-modal";
 import { List } from "./components/list";
-import { SearchPanel } from "./components/search-panel";
 import { useLivesSearchParams } from "./util";
 
 export const Lives = () => {
@@ -13,7 +12,6 @@ export const Lives = () => {
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
         <List
           error={error}
           params={params}

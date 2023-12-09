@@ -16,8 +16,12 @@ export const useLives = (params: Partial<LivesSearchParams>) => {
 
 export const useLive = (id: string) => {
   const client = useHttp();
-  return useQuery<Live>(["live", { id }], () =>
-    client("/api/admin/live-monitor/detail", { data: { id } })
+  return useQuery<Live>(
+    ["live", { id }],
+    () => client("/api/admin/live-monitor/detail", { data: { id } }),
+    {
+      enabled: !!id,
+    }
   );
 };
 
