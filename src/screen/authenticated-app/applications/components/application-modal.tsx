@@ -281,38 +281,45 @@ export const ApplicationModal = ({
               prevValues.status !== currentValues.status
             }
           >
-            {({ getFieldValue }) =>
-              categoryOptions.find(
+            {({ getFieldValue }) => {
+              const subCategoryOptions = categoryOptions.find(
                 (item) => item.value === Number(getFieldValue("company_type"))
-              )?.subOptions ? (
-                <Col span={12}>
-                  <Form.Item
-                    name="company_sub_type"
-                    label="企业二级类型（可多选）"
-                    rules={[{ required: true, message: "请选择企业二级类型" }]}
-                  >
-                    <Select
-                      placeholder="请选择企业二级类型"
-                      mode="tags"
-                      showArrow
+              )?.subOptions;
+              console.log("subCategoryOptions", subCategoryOptions);
+              if (subCategoryOptions) {
+                return (
+                  <Col span={12}>
+                    <Form.Item
+                      name="company_sub_type"
+                      label="企业二级类型（可多选）"
+                      rules={[
+                        { required: true, message: "请选择企业二级类型" },
+                      ]}
                     >
-                      {categoryOptions
-                        .find(
-                          (item) =>
-                            item.value === Number(getFieldValue("company_type"))
-                        )
-                        ?.subOptions?.map((item) => (
-                          <Select.Option key={item.value}>
-                            {item.text}
-                          </Select.Option>
-                        ))}
-                    </Select>
-                  </Form.Item>
-                </Col>
-              ) : (
-                <></>
-              )
-            }
+                      <Select
+                        placeholder="请选择企业二级类型"
+                        mode="tags"
+                        showArrow
+                      >
+                        {categoryOptions
+                          .find(
+                            (item) =>
+                              item.value ===
+                              Number(getFieldValue("company_type"))
+                          )
+                          ?.subOptions?.map((item) => (
+                            <Select.Option key={item.value}>
+                              {item.text}
+                            </Select.Option>
+                          ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                );
+              } else {
+                return <></>;
+              }
+            }}
           </Form.Item>
         </Row>
         <Row gutter={16}>
