@@ -37,10 +37,18 @@ import {
   Region,
 } from "types/application";
 
+interface CategoryOption {
+  text: string;
+  value: number;
+  subOptions?: CategoryOption[];
+}
+
 export const ApplicationModal = ({
+  categoryOptions,
   levelOptions,
   evaluationOptions,
 }: {
+  categoryOptions: CategoryOption[];
   levelOptions: LevelOption[];
   evaluationOptions: EvaluationOption[];
 }) => {
@@ -48,6 +56,10 @@ export const ApplicationModal = ({
 
   const [lng, setLng] = useState<undefined | number>();
   const [lat, setLat] = useState<undefined | number>();
+
+  const subCategoryOptions = categoryOptions.find(
+    (item) => item.value === form.getFieldsValue().company_type
+  )?.subOptions;
 
   const { applicationModalOpen, editingApplicationId, close } =
     useApplicationModal();
@@ -256,6 +268,38 @@ export const ApplicationModal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
+              name="company_type"
+              label="企业类型"
+              rules={[{ required: true, message: "请选择企业类型" }]}
+            >
+              <Select placeholder="请选择企业类型" showArrow>
+                {categoryOptions.map((item) => (
+                  <Select.Option key={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          {subCategoryOptions ? (
+            <Col span={12}>
+              <Form.Item
+                name="company_sub_type"
+                label="企业二级类型（可多选）"
+                rules={[{ required: true, message: "请选择企业二级类型" }]}
+              >
+                <Select placeholder="请选择企业二级类型" mode="tags" showArrow>
+                  {subCategoryOptions.map((item) => (
+                    <Select.Option key={item.value}>{item.text}</Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          ) : (
+            <></>
+          )}
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
               name="company_name"
               label="企业名称"
               rules={[{ required: true, message: "请输入企业名称" }]}
@@ -285,29 +329,6 @@ export const ApplicationModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="company_type"
-              label="企业类型（可多选）"
-              rules={[{ required: true, message: "请选择企业类型" }]}
-            >
-              <Select placeholder="请选择企业类型" mode="tags" showArrow>
-                {[
-                  "网络销售类平台",
-                  "生活服务类平台",
-                  "社交娱乐类平台",
-                  "信息资讯类平台",
-                  "金融服务类平台",
-                  "计算机应用类平台",
-                  "其它类",
-                ].map((item) => (
-                  <Select.Option key={item}>{item}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
               name="website_url"
               label="网站（app）名称"
               rules={[{ required: true, message: "请输入网站(app)名称" }]}
@@ -315,6 +336,8 @@ export const ApplicationModal = ({
               <Input placeholder="请输入网站(app)名称" />
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="ICP"
@@ -324,8 +347,6 @@ export const ApplicationModal = ({
               <Input placeholder="请输入信用代码" />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="trade_amount"
@@ -335,6 +356,8 @@ export const ApplicationModal = ({
               <Input placeholder="请输入上年度GMV" />
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="revenue"
@@ -344,8 +367,6 @@ export const ApplicationModal = ({
               <Input placeholder="请输入上年度营收" />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="staff_count"
@@ -355,6 +376,8 @@ export const ApplicationModal = ({
               <Input placeholder="请输入员工人数" />
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="gang_count"
@@ -364,8 +387,6 @@ export const ApplicationModal = ({
               <Input placeholder="请输入党员人数" />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item name="member_level" label="企业等级名称">
               <Select placeholder="请选择企业等级名称">
@@ -375,6 +396,21 @@ export const ApplicationModal = ({
                   </Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="registration_time"
+              label="企业报名时间"
+              rules={[{ required: true, message: "请选择报名时间" }]}
+            >
+              <DatePicker
+                style={{ width: "100%" }}
+                showTime
+                placeholder="请选择企业报名时间"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -396,21 +432,6 @@ export const ApplicationModal = ({
                 rows={4}
                 maxLength={100}
                 placeholder="100字内，主营业务、市场分布、所获荣誉等"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="registration_time"
-              label="企业报名时间"
-              rules={[{ required: true, message: "请选择报名时间" }]}
-            >
-              <DatePicker
-                style={{ width: "100%" }}
-                showTime
-                placeholder="请选择企业报名时间"
               />
             </Form.Item>
           </Col>

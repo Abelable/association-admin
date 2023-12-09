@@ -354,6 +354,7 @@ export const Applications = () => {
         />
       </Main>
       <ApplicationModal
+        categoryOptions={categoryOptions}
         levelOptions={levelOptions || []}
         evaluationOptions={evaluationOptions}
       />
