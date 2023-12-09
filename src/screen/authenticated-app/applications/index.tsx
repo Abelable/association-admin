@@ -23,6 +23,25 @@ export const Applications = () => {
     { id: 2, name: "已处理", value: "1" },
     { id: 3, name: "已驳回", value: "2" },
   ];
+  const categoryOptions = [
+    {
+      text: "计算应用类",
+      value: 1,
+      subOptions: [
+        { text: "SAAS系统", value: 1 },
+        { text: "SAAS系统", value: 1 },
+        { text: "SAAS系统", value: 1 },
+        { text: "SAAS系统", value: 1 },
+        { text: "SAAS系统", value: 1 },
+      ],
+    },
+    { text: "金融服务类", value: 2, subOptions: [{}] },
+    { text: "社交娱乐类", value: 3, subOptions: [{}] },
+    { text: "生活服务类", value: 4, subOptions: [{}] },
+    { text: "网络销售类", value: 5, subOptions: [{}] },
+    { text: "信息资讯类", value: 6, subOptions: [{}] },
+    { text: "其他类", value: 7 },
+  ];
   const evaluationOptions = [
     { name: "上市", value: "1" },
     { name: "荣誉", value: "2" },
