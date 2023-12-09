@@ -9,7 +9,11 @@ import { useLegalsSearchParams } from "./util";
 export const Legals = () => {
   const [params, setParams] = useLegalsSearchParams();
   const { data, isLoading, error } = useLegals(params);
-  const { data: category } = useLegalCategories({ page: 1, page_size: 30 });
+  const { data: category } = useLegalCategories({
+    pid: 0,
+    page: 1,
+    page_size: 1000,
+  });
 
   return (
     <Container>

@@ -11,7 +11,7 @@ export const LegalCategoryModal = ({
   parentCategoryId,
   legalCategories,
 }: {
-  parentCategoryId: string;
+  parentCategoryId: number;
   legalCategories: LegalCategory[];
 }) => {
   const [form] = useForm();

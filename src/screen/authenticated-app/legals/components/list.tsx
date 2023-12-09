@@ -91,28 +91,17 @@ export const List = ({
             width: "20rem",
           },
           {
-            title: "生效时间",
-            render: (value, legal) =>
-              legal.effective_time ? (
-                <span>
-                  {dayjs(Number(legal.effective_time) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
-                  )}
-                </span>
-              ) : (
-                <></>
-              ),
-            width: "12rem",
-            sorter: (a, b) =>
-              Number(a.effective_time) - Number(b.effective_time),
+            title: "发布机构",
+            dataIndex: "effective_from",
+            width: "30rem",
           },
           {
-            title: "颁布时间",
+            title: "发布日期",
             render: (value, legal) =>
               legal.promulgation_time ? (
                 <span>
                   {dayjs(Number(legal.promulgation_time) * 1000).format(
-                    "YYYY-MM-DD HH:mm"
+                    "YYYY-MM-DD"
                   )}
                 </span>
               ) : (

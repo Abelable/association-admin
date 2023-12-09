@@ -12,7 +12,7 @@ export const useLegalCategoriesSearchParams = () => {
     useMemo(
       () => ({
         parent_category_name: params.parent_category_name,
-        pid: params.parent_category_id,
+        pid: Number(params.parent_category_id),
         page: Number(params.page) || 1,
         page_size: Number(params.page_size) || 10,
       }),

@@ -15,7 +15,7 @@ import { useForm } from "antd/lib/form/Form";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 import { LegalCategory, LegalsResult } from "types/legal";
-import { useAddLegal, useEditLegal } from "service/legal";
+import { useAddLegal, useEditLegal, useLegalCategories } from "service/legal";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
 import { LegalItem } from "../../../../types/legal";
@@ -28,6 +28,11 @@ export const LegalModal = ({
   categoryList: LegalCategory[];
 }) => {
   const [form] = useForm();
+  const { data: subCategory } = useLegalCategories({
+    pid: form.getFieldsValue().category_id,
+    page: 1,
+    page_size: 1000,
+  });
 
   const { legalModalOpen, editingLegalId, close } = useLegalModal();
 
@@ -72,18 +77,10 @@ export const LegalModal = ({
 
   useDeepCompareEffect(() => {
     if (editingLegalForm) {
-      const {
-        image,
-        content,
-        effective_time,
-        promulgation_time,
-        ...restFieldsValue
-      } = editingLegalForm;
+      const { image, content, promulgation_time, ...restFieldsValue } =
+        editingLegalForm;
       form.setFieldsValue({
         image: [{ url: image }],
-        effective_time: effective_time
-          ? moment(Number(effective_time) * 1000)
-          : undefined,
         promulgation_time: promulgation_time
           ? moment(Number(promulgation_time) * 1000)
           : undefined,
@@ -124,6 +121,17 @@ export const LegalModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
+              label="发布机构"
+              name="effective_from"
+              rules={[{ required: true, message: "请输入发布机构" }]}
+            >
+              <Input placeholder="请输入发布机构" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
               name="category_id"
               label="政策分类"
               rules={[{ required: true, message: "请选择政策分类" }]}
@@ -137,17 +145,23 @@ export const LegalModal = ({
               </Select>
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              label="发布机构"
-              name="sort"
-              rules={[{ required: true, message: "请输入发布机构" }]}
+              name="sub_category_id"
+              label="政策二级分类"
+              rules={[{ required: true, message: "请选择政策二级分类" }]}
             >
-              <Input placeholder="请输入发布机构" />
+              <Select placeholder="请选择政策分类">
+                {subCategory?.list.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               label="发布日期"
@@ -159,6 +173,11 @@ export const LegalModal = ({
                 style={{ width: "100%" }}
                 placeholder="请选择发布日期"
               />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="文章排序" name="sort">
+              <Input placeholder="请输入文章排序" />
             </Form.Item>
           </Col>
         </Row>
