@@ -206,16 +206,13 @@ export const ApplicationModal = ({
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Divider orientation="left">企业管理</Divider>
         <Row gutter={16}>
-          <Col span={24}>
-            <div style={{ textAlign: "right" }}>
+          <Col span={12}>
+            <Input.Group compact>
               <Form.Item
                 name="number"
-                style={{
-                  marginBottom: "0",
-                  display: "inline-block",
-                  textAlign: "left",
-                }}
+                label="企业入会编号"
                 rules={[
                   { required: true, message: "请输入企业入会编号" },
                   {
@@ -225,15 +222,96 @@ export const ApplicationModal = ({
                 ]}
               >
                 <Input
+                  style={{ width: "272px" }}
                   placeholder="请输入企业入会编号"
-                  maxLength={3}
-                  style={{ width: "200px" }}
                 />
               </Form.Item>
-              <Button type="link" onClick={() => getCode()}>
+              <Button
+                style={{ marginTop: "30px" }}
+                type="primary"
+                onClick={() => getCode()}
+              >
                 顺位
               </Button>
-            </div>
+            </Input.Group>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="registration_time"
+              label="企业报名时间"
+              rules={[{ required: true, message: "请选择报名时间" }]}
+            >
+              <DatePicker
+                style={{ width: "100%" }}
+                showTime
+                placeholder="请选择企业报名时间"
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="member_level" label="企业等级名称">
+              <Select placeholder="请选择企业等级名称">
+                {levelOptions.map(({ id, level, name }) => (
+                  <Select.Option key={id} value={level}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="evaluation"
+              label="企业评价"
+              rules={[{ required: true, message: "请选择企业评价" }]}
+            >
+              <Select placeholder="请选择企业评价">
+                {evaluationOptions.map(({ name, value }) => (
+                  <Select.Option key={value} value={value}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              noStyle
+              shouldUpdate={(prevValues, currentValues) =>
+                prevValues.evaluation !== currentValues.evaluation
+              }
+            >
+              {({ getFieldValue }) => {
+                const subOptions = evaluationOptions.find(
+                  (item) => item.value === getFieldValue("evaluation")
+                )?.subOptions;
+                return subOptions ? (
+                  <Form.Item
+                    name="sub_evaluation"
+                    label="补充企业评价"
+                    rules={[{ required: true, message: "请选择补充类型" }]}
+                  >
+                    <Select placeholder="请选择补充类型">
+                      {evaluationOptions
+                        .find(
+                          (item) => item.value === getFieldValue("evaluation")
+                        )
+                        ?.subOptions?.map((item) => (
+                          <Select.Option key={item.value}>
+                            {item.name}
+                          </Select.Option>
+                        ))}
+                    </Select>
+                  </Form.Item>
+                ) : (
+                  <></>
+                );
+              }}
+            </Form.Item>
           </Col>
         </Row>
         <Divider orientation="left">企业信息</Divider>
@@ -373,88 +451,6 @@ export const ApplicationModal = ({
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={24}>
-            <Form.Item name="introduction" label="企业简介">
-              <Input.TextArea
-                rows={4}
-                maxLength={100}
-                placeholder="100字内，主营业务、市场分布、所获荣誉等"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="region"
-              label="企业所在地区"
-              rules={[{ required: true, message: "请选择企业所在地区" }]}
-            >
-              <Cascader options={options} placeholder="请选择企业所在地区" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="企业所在经纬度" required>
-              <Input.Group>
-                <Row gutter={8}>
-                  <Col span={12}>
-                    <Form.Item
-                      style={{ marginBottom: 0 }}
-                      name="longitude"
-                      rules={[{ required: true, message: "请输入经度" }]}
-                    >
-                      <Input placeholder="请输入经度" />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      style={{ marginBottom: 0 }}
-                      name="latitude"
-                      rules={[{ required: true, message: "请输入纬度" }]}
-                    >
-                      <Input placeholder="请输入纬度" />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Input.Group>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Map
-          company={editingApplicationForm?.company_name}
-          lng={lng}
-          lat={lat}
-          setLng={setLng}
-          setLat={setLat}
-        />
-        <Divider orientation="left">企业描述</Divider>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="member_level" label="企业等级名称">
-              <Select placeholder="请选择企业等级名称">
-                {levelOptions.map(({ id, level, name }) => (
-                  <Select.Option key={id} value={level}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="registration_time"
-              label="企业报名时间"
-              rules={[{ required: true, message: "请选择报名时间" }]}
-            >
-              <DatePicker
-                style={{ width: "100%" }}
-                showTime
-                placeholder="请选择企业报名时间"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="company_type"
@@ -510,57 +506,61 @@ export const ApplicationModal = ({
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="evaluation"
-              label="企业评价"
-              rules={[{ required: true, message: "请选择企业评价" }]}
-            >
-              <Select placeholder="请选择企业评价">
-                {evaluationOptions.map(({ name, value }) => (
-                  <Select.Option key={value} value={value}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              noStyle
-              shouldUpdate={(prevValues, currentValues) =>
-                prevValues.evaluation !== currentValues.evaluation
-              }
-            >
-              {({ getFieldValue }) => {
-                const subOptions = evaluationOptions.find(
-                  (item) => item.value === getFieldValue("evaluation")
-                )?.subOptions;
-                return subOptions ? (
-                  <Form.Item
-                    name="sub_evaluation"
-                    label="补充企业评价"
-                    rules={[{ required: true, message: "请选择补充类型" }]}
-                  >
-                    <Select placeholder="请选择补充类型">
-                      {evaluationOptions
-                        .find(
-                          (item) => item.value === getFieldValue("evaluation")
-                        )
-                        ?.subOptions?.map((item) => (
-                          <Select.Option key={item.value}>
-                            {item.name}
-                          </Select.Option>
-                        ))}
-                    </Select>
-                  </Form.Item>
-                ) : (
-                  <></>
-                );
-              }}
+          <Col span={24}>
+            <Form.Item name="introduction" label="企业简介">
+              <Input.TextArea
+                rows={4}
+                maxLength={100}
+                placeholder="100字内，主营业务、市场分布、所获荣誉等"
+              />
             </Form.Item>
           </Col>
         </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="region"
+              label="企业所在地区"
+              rules={[{ required: true, message: "请选择企业所在地区" }]}
+            >
+              <Cascader options={options} placeholder="请选择企业所在地区" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="企业所在经纬度" required>
+              <Input.Group>
+                <Row gutter={8}>
+                  <Col span={12}>
+                    <Form.Item
+                      style={{ marginBottom: 0 }}
+                      name="longitude"
+                      rules={[{ required: true, message: "请输入经度" }]}
+                    >
+                      <Input placeholder="请输入经度" />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      style={{ marginBottom: 0 }}
+                      name="latitude"
+                      rules={[{ required: true, message: "请输入纬度" }]}
+                    >
+                      <Input placeholder="请输入纬度" />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Input.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Map
+          company={editingApplicationForm?.company_name}
+          lng={lng}
+          lat={lat}
+          setLng={setLng}
+          setLat={setLat}
+        />
+
         <Divider orientation="left">联系人信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
