@@ -156,10 +156,12 @@ export const ApplicationModal = ({
         logo,
         region,
         registration_time,
+        sub_evaluation,
         quarter_valuation_1,
         quarter_valuation_2,
         quarter_valuation_3,
         quarter_valuation_4,
+        company_sub_type,
         ...rest
       } = form.getFieldsValue();
 
@@ -216,17 +218,29 @@ export const ApplicationModal = ({
         },
         { title: "等级名称", name: "member_level", value: member_level || "" },
         {
+          title: "企业评价补充信息",
+          name: "sub_evaluation",
+          value: sub_evaluation,
+        },
+        {
           title: "季度估值",
           name: "quarter_valuation",
-          value: quarterOptions.map((item, index) => ({
-            ...item,
-            value: [
-              quarter_valuation_1,
-              quarter_valuation_2,
-              quarter_valuation_3,
-              quarter_valuation_4,
-            ][index],
-          })),
+          value: JSON.stringify(
+            quarterOptions.map((item, index) => ({
+              ...item,
+              value: [
+                quarter_valuation_1,
+                quarter_valuation_2,
+                quarter_valuation_3,
+                quarter_valuation_4,
+              ][index],
+            }))
+          ),
+        },
+        {
+          title: "企业二级类型",
+          name: "company_sub_type",
+          value: company_sub_type,
         },
       ];
 
@@ -337,11 +351,7 @@ export const ApplicationModal = ({
                   (item) => item.value === getFieldValue("evaluation")
                 )?.subOptions;
                 return subOptions ? (
-                  <Form.Item
-                    name="sub_evaluation"
-                    label="补充企业评价"
-                    rules={[{ required: true, message: "请选择补充类型" }]}
-                  >
+                  <Form.Item name="sub_evaluation" label="补充企业评价">
                     <Select placeholder="请选择补充类型">
                       {evaluationOptions
                         .find(
@@ -752,7 +762,9 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       ...rest
     } = currentApplication;
 
-    const formList = JSON.parse(apply_content_json);
+    const { quarter_valuation, ...formList } = JSON.parse(apply_content_json);
+    const quarterValuation = JSON.parse(quarter_valuation);
+
     const list: string[][] = [];
     formList.forEach((item: { title: string; name: string; value: string }) => {
       list.push([item.name, item.value]);
@@ -785,6 +797,26 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
         ? JSON.parse(originForm.address).region
         : undefined,
       evaluation: evaluation || undefined,
+      quarter_valuation_1:
+        quarterValuation[0].year === quarterOptions[0].year &&
+        quarterValuation[0].quarter === quarterOptions[0].quarter
+          ? quarterValuation[0].value
+          : undefined,
+      quarter_valuation_2:
+        quarterValuation[1].year === quarterOptions[1].year &&
+        quarterValuation[1].quarter === quarterOptions[1].quarter
+          ? quarterValuation[1].value
+          : undefined,
+      quarter_valuation_3:
+        quarterValuation[2].year === quarterOptions[2].year &&
+        quarterValuation[2].quarter === quarterOptions[2].quarter
+          ? quarterValuation[2].value
+          : undefined,
+      quarter_valuation_4:
+        quarterValuation[3].year === quarterOptions[3].year &&
+        quarterValuation[3].quarter === quarterOptions[3].quarter
+          ? quarterValuation[3].value
+          : undefined,
     };
   }
 
