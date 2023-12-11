@@ -762,8 +762,35 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       ...rest
     } = currentApplication;
 
-    const { quarter_valuation, ...formList } = JSON.parse(apply_content_json);
-    const quarterValuation = JSON.parse(quarter_valuation);
+    const { quarter_valuation, ...formList } =
+      JSON.parse(apply_content_json) || {};
+
+    let quarterValuationFormData = {};
+    if (quarter_valuation) {
+      const quarterValuation = JSON.parse(quarter_valuation);
+      quarterValuationFormData = {
+        quarter_valuation_1:
+          quarterValuation[0].year === quarterOptions[0].year &&
+          quarterValuation[0].quarter === quarterOptions[0].quarter
+            ? quarterValuation[0].value
+            : undefined,
+        quarter_valuation_2:
+          quarterValuation[1].year === quarterOptions[1].year &&
+          quarterValuation[1].quarter === quarterOptions[1].quarter
+            ? quarterValuation[1].value
+            : undefined,
+        quarter_valuation_3:
+          quarterValuation[2].year === quarterOptions[2].year &&
+          quarterValuation[2].quarter === quarterOptions[2].quarter
+            ? quarterValuation[2].value
+            : undefined,
+        quarter_valuation_4:
+          quarterValuation[3].year === quarterOptions[3].year &&
+          quarterValuation[3].quarter === quarterOptions[3].quarter
+            ? quarterValuation[3].value
+            : undefined,
+      };
+    }
 
     const list: string[][] = [];
     formList.forEach((item: { title: string; name: string; value: string }) => {
@@ -782,6 +809,7 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     editingApplicationForm = {
       ...rest,
       ...originForm,
+      ...quarterValuationFormData,
       license,
       company_type: originForm.company_type.split(","),
       logo: logo ? [{ url: logo }] : [],
@@ -797,26 +825,6 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
         ? JSON.parse(originForm.address).region
         : undefined,
       evaluation: evaluation || undefined,
-      quarter_valuation_1:
-        quarterValuation[0].year === quarterOptions[0].year &&
-        quarterValuation[0].quarter === quarterOptions[0].quarter
-          ? quarterValuation[0].value
-          : undefined,
-      quarter_valuation_2:
-        quarterValuation[1].year === quarterOptions[1].year &&
-        quarterValuation[1].quarter === quarterOptions[1].quarter
-          ? quarterValuation[1].value
-          : undefined,
-      quarter_valuation_3:
-        quarterValuation[2].year === quarterOptions[2].year &&
-        quarterValuation[2].quarter === quarterOptions[2].quarter
-          ? quarterValuation[2].value
-          : undefined,
-      quarter_valuation_4:
-        quarterValuation[3].year === quarterOptions[3].year &&
-        quarterValuation[3].quarter === quarterOptions[3].quarter
-          ? quarterValuation[3].value
-          : undefined,
     };
   }
 
