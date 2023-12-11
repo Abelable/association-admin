@@ -80,7 +80,6 @@ if ([1, 2, 3].includes(month)) {
     { year, quarter: 4 },
   ];
 }
-console.log("quarterOptions", quarterOptions);
 
 export const ApplicationModal = ({
   categoryOptions,
@@ -290,7 +289,6 @@ export const ApplicationModal = ({
                 name="number"
                 label="企业入会编号"
                 rules={[
-                  { required: true, message: "请输入企业入会编号" },
                   {
                     pattern: /^\d{3}$/,
                     message: "请输入正确的入会编号(001-999)",
