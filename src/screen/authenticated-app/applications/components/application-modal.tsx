@@ -156,6 +156,10 @@ export const ApplicationModal = ({
         logo,
         region,
         registration_time,
+        quarter_valuation_1,
+        quarter_valuation_2,
+        quarter_valuation_3,
+        quarter_valuation_4,
         ...rest
       } = form.getFieldsValue();
 
@@ -211,6 +215,19 @@ export const ApplicationModal = ({
           value: licenseList.join(),
         },
         { title: "等级名称", name: "member_level", value: member_level || "" },
+        {
+          title: "季度估值",
+          name: "quarter_valuation",
+          value: quarterOptions.map((item, index) => ({
+            ...item,
+            value: [
+              quarter_valuation_1,
+              quarter_valuation_2,
+              quarter_valuation_3,
+              quarter_valuation_4,
+            ][index],
+          })),
+        },
       ];
 
       const applicationItem: Partial<ApplicationsItem> = {
