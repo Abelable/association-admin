@@ -44,6 +44,7 @@ import {
   AccountBookOutlined,
   RiseOutlined,
   DashboardOutlined,
+  VideoCameraOutlined,
   ReadOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
@@ -170,7 +171,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="custom_signups" icon={<StarOutlined />}>
           <Link to={"custom_signups"}>活动报名</Link>
         </Menu.Item>
-        <Menu.Item key="lives" icon={<PictureOutlined />}>
+        <Menu.Item key="lives" icon={<VideoCameraOutlined />}>
           <Link to={"lives"}>直播监控</Link>
         </Menu.Item>
         <Menu.Item key="data-view" icon={<DashboardOutlined />}>

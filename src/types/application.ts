@@ -13,6 +13,7 @@ export interface StatusOption {
 export interface EvaluationOption {
   name: string;
   value: string;
+  subOptions?: EvaluationOption[];
 }
 
 export interface ApplicationsSearchParams {

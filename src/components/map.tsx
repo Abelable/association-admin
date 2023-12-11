@@ -79,7 +79,7 @@ export const Map = ({
         <Input
           style={{ width: "40rem" }}
           onChange={_.debounce((e: any) => setAddress(e.target.value), 500)}
-          placeholder="请输入具体地址"
+          placeholder="请输入具体地址获取经纬度"
         />
       </MapSearch>
     </MapContainer>

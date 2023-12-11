@@ -81,9 +81,24 @@ export const Applications = () => {
     { text: "其他类", value: 7 },
   ];
   const evaluationOptions = [
-    { name: "上市", value: "1" },
+    {
+      name: "上市",
+      value: "1",
+      subOptions: [
+        { name: "美股", value: "11" },
+        { name: "港股", value: "12" },
+        { name: "A股", value: "13" },
+      ],
+    },
     { name: "荣誉", value: "2" },
-    { name: "独角兽", value: "3" },
+    {
+      name: "独角兽",
+      value: "3",
+      subOptions: [
+        { name: "独角兽", value: "31" },
+        { name: "准独角兽", value: "32" },
+      ],
+    },
   ];
   const [params, setParams] = useApplicationsSearchParams();
   const { data, isLoading, error } = useApplications(params);
