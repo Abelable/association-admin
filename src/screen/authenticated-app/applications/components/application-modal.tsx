@@ -141,6 +141,7 @@ export const ApplicationModal = ({
         website_url,
         ICP,
         company_type,
+        company_sub_type,
         staff_count,
         gang_count,
         user_count,
@@ -161,7 +162,6 @@ export const ApplicationModal = ({
         quarter_valuation_2,
         quarter_valuation_3,
         quarter_valuation_4,
-        company_sub_type,
         ...rest
       } = form.getFieldsValue();
 
@@ -188,7 +188,12 @@ export const ApplicationModal = ({
         { title: "企业简称", name: "short_name", value: short_name },
         { title: "网站（app）名称", name: "website_url", value: website_url },
         { title: "信用代码", name: "ICP", value: ICP },
-        { title: "企业类型", name: "company_type", value: company_type.join() },
+        { title: "企业类型", name: "company_type", value: company_type },
+        {
+          title: "企业二级类型",
+          name: "company_sub_type",
+          value: company_sub_type.join(),
+        },
         { title: "上年度GMV", name: "trade_amount", value: trade_amount },
         { title: "上年度营收", name: "revenue", value: revenue },
         { title: "上年度纳税额", name: "tax_amount", value: tax_amount },
@@ -236,11 +241,6 @@ export const ApplicationModal = ({
               ][index],
             }))
           ),
-        },
-        {
-          title: "企业二级类型",
-          name: "company_sub_type",
-          value: company_sub_type,
         },
       ];
 
@@ -810,7 +810,12 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       ...originForm,
       ...quarterValuationFormData,
       license,
-      company_type: originForm.company_type.split(","),
+      company_type: originForm.company_type.includes(",")
+        ? originForm.company_type.split(",")[0]
+        : originForm.company_type,
+      company_sub_type: originForm.company_sub_type
+        ? originForm.company_sub_type.split(",")
+        : undefined,
       logo: logo ? [{ url: logo }] : [],
       member_level: Number(level_id) || undefined,
       registration_time: moment(
