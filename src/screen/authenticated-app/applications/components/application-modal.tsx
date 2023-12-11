@@ -762,12 +762,25 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       ...rest
     } = currentApplication;
 
-    const { quarter_valuation, ...formList } =
-      JSON.parse(apply_content_json) || {};
+    const formList = JSON.parse(apply_content_json);
+
+    const list: string[][] = [];
+    formList.forEach((item: { title: string; name: string; value: string }) => {
+      list.push([item.name, item.value]);
+    });
+    const originForm = Object.fromEntries(list);
+
+    const license: { [key in string]: string }[] = [];
+    if (originForm.license) {
+      const imgs = originForm.license.split(",");
+      imgs.forEach((item: string) => {
+        license.push({ url: item });
+      });
+    }
 
     let quarterValuationFormData = {};
-    if (quarter_valuation) {
-      const quarterValuation = JSON.parse(quarter_valuation);
+    if (originForm.quarter_valuation) {
+      const quarterValuation = JSON.parse(originForm.quarter_valuation);
       quarterValuationFormData = {
         quarter_valuation_1:
           quarterValuation[0].year === quarterOptions[0].year &&
@@ -790,20 +803,6 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
             ? quarterValuation[3].value
             : undefined,
       };
-    }
-
-    const list: string[][] = [];
-    formList.forEach((item: { title: string; name: string; value: string }) => {
-      list.push([item.name, item.value]);
-    });
-    const originForm = Object.fromEntries(list);
-
-    const license: { [key in string]: string }[] = [];
-    if (originForm.license) {
-      const imgs = originForm.license.split(",");
-      imgs.forEach((item: string) => {
-        license.push({ url: item });
-      });
     }
 
     editingApplicationForm = {
