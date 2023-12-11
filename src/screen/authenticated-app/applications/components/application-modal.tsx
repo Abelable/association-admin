@@ -42,6 +42,45 @@ interface CategoryOption {
   value: number;
   subOptions?: CategoryOption[];
 }
+interface QuarterOptions {
+  year: number;
+  quarter: number;
+}
+
+let quarterOptions: QuarterOptions[] = [];
+const date = new Date();
+const year = date.getFullYear();
+const month = date.getMonth() + 1;
+if ([1, 2, 3].includes(month)) {
+  quarterOptions = [
+    { year: year - 1, quarter: 2 },
+    { year: year - 1, quarter: 3 },
+    { year: year - 1, quarter: 4 },
+    { year, quarter: 1 },
+  ];
+} else if ([4, 5, 6].includes(month)) {
+  quarterOptions = [
+    { year: year - 1, quarter: 3 },
+    { year: year - 1, quarter: 4 },
+    { year, quarter: 1 },
+    { year, quarter: 2 },
+  ];
+} else if ([7, 8, 9].includes(month)) {
+  quarterOptions = [
+    { year: year - 1, quarter: 4 },
+    { year, quarter: 1 },
+    { year, quarter: 2 },
+    { year, quarter: 3 },
+  ];
+} else if ([10, 11, 12].includes(month)) {
+  quarterOptions = [
+    { year, quarter: 1 },
+    { year, quarter: 2 },
+    { year, quarter: 3 },
+    { year, quarter: 4 },
+  ];
+}
+console.log("quarterOptions", quarterOptions);
 
 export const ApplicationModal = ({
   categoryOptions,
@@ -236,21 +275,6 @@ export const ApplicationModal = ({
             </Input.Group>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="registration_time"
-              label="企业报名时间"
-              rules={[{ required: true, message: "请选择报名时间" }]}
-            >
-              <DatePicker
-                style={{ width: "100%" }}
-                showTime
-                placeholder="请选择企业报名时间"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
             <Form.Item name="member_level" label="企业等级名称">
               <Select placeholder="请选择企业等级名称">
                 {levelOptions.map(({ id, level, name }) => (
@@ -261,6 +285,8 @@ export const ApplicationModal = ({
               </Select>
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="evaluation"
@@ -276,8 +302,6 @@ export const ApplicationModal = ({
               </Select>
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               noStyle
@@ -314,6 +338,76 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
         </Row>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.evaluation !== currentValues.evaluation
+          }
+        >
+          {({ getFieldValue }) => {
+            return getFieldValue("evaluation") === "1" ? (
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    name="quarter_valuation_1"
+                    label={`${quarterOptions[0].year}年第${quarterOptions[0].quarter}季度估值（亿元）`}
+                  >
+                    <Input
+                      placeholder={`请输入${quarterOptions[0].year}年第${quarterOptions[0].quarter}季度估值`}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name="quarter_valuation_2"
+                    label={`${quarterOptions[1].year}年第${quarterOptions[1].quarter}季度估值（亿元）`}
+                  >
+                    <Input
+                      placeholder={`请输入${quarterOptions[1].year}年第${quarterOptions[1].quarter}季度估值`}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+            ) : (
+              <></>
+            );
+          }}
+        </Form.Item>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.evaluation !== currentValues.evaluation
+          }
+        >
+          {({ getFieldValue }) => {
+            return getFieldValue("evaluation") === "1" ? (
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    name="quarter_valuation_3"
+                    label={`${quarterOptions[2].year}年第${quarterOptions[2].quarter}季度估值（亿元）`}
+                  >
+                    <Input
+                      placeholder={`请输入${quarterOptions[2].year}年第${quarterOptions[2].quarter}季度估值`}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name="quarter_valuation_4"
+                    label={`${quarterOptions[3].year}年第${quarterOptions[3].quarter}季度估值（亿元）`}
+                  >
+                    <Input
+                      placeholder={`请输入${quarterOptions[3].year}年第${quarterOptions[3].quarter}季度估值`}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+            ) : (
+              <></>
+            );
+          }}
+        </Form.Item>
         <Divider orientation="left">企业信息</Divider>
         <Row gutter={16}>
           <Col span={12}>
@@ -502,6 +596,21 @@ export const ApplicationModal = ({
                   <></>
                 );
               }}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="registration_time"
+              label="企业报名时间"
+              rules={[{ required: true, message: "请选择报名时间" }]}
+            >
+              <DatePicker
+                style={{ width: "100%" }}
+                showTime
+                placeholder="请选择企业报名时间"
+              />
             </Form.Item>
           </Col>
         </Row>
