@@ -250,7 +250,7 @@ export const ApplicationModal = ({
         { title: "员工人数", name: "staff_count", value: staff_count },
         { title: "党员人数", name: "gang_count", value: gang_count },
         { title: "用户数量", name: "user_count", value: user_count },
-        { title: "商户数量", name: "merchant_count", value: merchant_count },
+        { title: "商家数量", name: "merchant_count", value: merchant_count },
         {
           title: "协会联系人姓名",
           name: "contacter_name",
