@@ -49,6 +49,5 @@ export const NavigationBar = () => {
 const Wrap = styled.div`
   display: flex;
   align-items: center;
-  padding: 2.4rem;
-  background: #fff;
+  flex: 1;
 `;

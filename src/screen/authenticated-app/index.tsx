@@ -63,9 +63,9 @@ export const AuthenticatedApp = () => {
         <Layout>
           <Header>
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
+            <NavigationBar />
             <User />
           </Header>
-          <NavigationBar />
           <Content>
             <Routes>
               <Route path="users" element={<Users />} />
@@ -210,7 +210,10 @@ interface Collapsed {
 
 const Trigger = ({ collapsed, setCollapsed }: Collapsed) => {
   return (
-    <div onClick={() => setCollapsed(!collapsed)}>
+    <div
+      onClick={() => setCollapsed(!collapsed)}
+      style={{ marginTop: "0.3rem" }}
+    >
       {collapsed ? <Unfold /> : <Fold />}
     </div>
   );
@@ -265,7 +268,6 @@ const LogoImg = styled.img<{ size?: number }>`
 const Header = styled(Layout.Header)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding-left: 0;
   padding-right: 2.4rem;
   background: #fff;

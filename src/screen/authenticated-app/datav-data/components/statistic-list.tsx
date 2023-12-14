@@ -60,7 +60,7 @@ export const StatisticList = ({ error, ...restProps }: ListProps) => {
 const Container = styled.div`
   margin-right: 2.4rem;
   padding: 2.4rem;
-  padding-bottom: 3.8rem;
+  padding-bottom: 3.84rem;
   width: 50%;
   height: fit-content;
   background: #fff;
