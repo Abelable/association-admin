@@ -46,6 +46,8 @@ import {
   DashboardOutlined,
   VideoCameraOutlined,
   ReadOutlined,
+  StockOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -174,17 +176,26 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="lives" icon={<VideoCameraOutlined />}>
           <Link to={"lives"}>直播监控</Link>
         </Menu.Item>
-        <Menu.Item key="data-view" icon={<DashboardOutlined />}>
-          <div
-            onClick={() =>
-              window.open(
-                "https://datav.aliyuncs.com/share/e89ac1b2ce4441ccc543fb59de29c04e"
-              )
-            }
-          >
-            数据大屏
-          </div>
-        </Menu.Item>
+        <Menu.SubMenu
+          key={"data_view"}
+          icon={<DashboardOutlined />}
+          title={"数据大屏"}
+        >
+          <Menu.Item key="data_view_data" icon={<StockOutlined />}>
+            <Link to={"data_view/data"}>大屏数据</Link>
+          </Menu.Item>
+          <Menu.Item key="data_view_link" icon={<LinkOutlined />}>
+            <div
+              onClick={() =>
+                window.open(
+                  "https://datav.aliyuncs.com/share/e89ac1b2ce4441ccc543fb59de29c04e"
+                )
+              }
+            >
+              大屏预览
+            </div>
+          </Menu.Item>
+        </Menu.SubMenu>
       </Menu>
     </Layout.Sider>
   );
