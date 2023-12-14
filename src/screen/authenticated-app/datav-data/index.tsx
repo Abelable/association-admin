@@ -1,12 +1,16 @@
 import styled from "@emotion/styled";
 
-import { ValuationList } from "./components/valuation-list";
-import { useTatistics, useValuations } from "service/view";
+import { useStocks, useTatistics, useValuations } from "service/view";
 import { useEffect, useState } from "react";
-import { Valuation } from "types/view";
+
+import { ValuationList } from "./components/valuation-list";
 import { ValuationModal } from "./components/valuation-modal";
 import { StatisticList } from "./components/statistic-list";
 import { StatisticModal } from "./components/statistic-modal";
+import { StockList } from "./components/stock-list";
+import { StockModal } from "./components/stock-modal";
+
+import type { Valuation } from "types/view";
 
 interface QuarterOptions {
   year: string;
@@ -60,6 +64,12 @@ export const Datav = () => {
     isLoading: tatisticLoading,
   } = useTatistics();
 
+  const {
+    data: stock,
+    error: stockError,
+    isLoading: stockLoading,
+  } = useStocks();
+
   const [valuationList, setValuationList] = useState<Valuation[]>([]);
 
   useEffect(() => {
@@ -87,14 +97,23 @@ export const Datav = () => {
         loading={tatisticLoading}
         dataSource={tatistic?.list || []}
       />
-      <StatisticModal />
 
-      <ValuationList
-        error={valuationError}
-        loading={valuationLoading}
-        dataSource={valuationList}
-      />
+      <div style={{ width: "50%" }}>
+        <ValuationList
+          error={valuationError}
+          loading={valuationLoading}
+          dataSource={valuationList}
+        />
+        <StockList
+          error={stockError}
+          loading={stockLoading}
+          dataSource={stock?.list || []}
+        />
+      </div>
+
+      <StatisticModal />
       <ValuationModal valuations={valuationList} />
+      <StockModal />
     </Container>
   );
 };

@@ -66,7 +66,20 @@ export const useEditValuation = (queryKey: QueryKey) => {
 
 export const useStocks = () => {
   const client = useHttp();
-  return useQuery<Stock[]>(["stocks"], () => client("/api/admin/stock/list"));
+  return useQuery<{ list: Stock[] }>(["stocks"], () =>
+    client("/api/admin/stock/list")
+  );
+};
+
+export const useStock = (id: string) => {
+  const client = useHttp();
+  return useQuery<Stock>(
+    ["stock", { id }],
+    () => client("/api/admin/stock/detail", { data: { id } }),
+    {
+      enabled: !!id,
+    }
+  );
 };
 
 export const useEditStock = (queryKey: QueryKey) => {

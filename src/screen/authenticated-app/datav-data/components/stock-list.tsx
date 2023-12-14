@@ -1,47 +1,46 @@
 import styled from "@emotion/styled";
 import { Button, Table, TableProps } from "antd";
 import { ErrorBox, Row } from "components/lib";
-import { useTatisticModal } from "../util";
-import type { Tatistic } from "types/view";
+import { useStockModal } from "../util";
+import type { Stock } from "types/view";
 
-interface ListProps extends TableProps<Tatistic> {
+interface ListProps extends TableProps<Stock> {
   error: Error | unknown;
 }
 
-export const StatisticList = ({ error, ...restProps }: ListProps) => {
-  const { startEdit } = useTatisticModal();
+export const StockList = ({ error, ...restProps }: ListProps) => {
+  const { startEdit } = useStockModal();
 
   return (
     <Container>
       <Header between={true}>
-        <h3>数据统计</h3>
+        <h3>企业分类</h3>
       </Header>
       <ErrorBox error={error} />
       <Table
         rowKey={"name"}
         columns={[
           {
-            title: "名称",
-            dataIndex: "name",
-          },
-          {
-            title: "数据",
-            dataIndex: "num",
-          },
-          {
-            title: "数据趋势",
+            title: "企业分类",
             dataIndex: "type",
           },
           {
-            title: "数据比例",
-            dataIndex: "rate",
-            render: (value) => `${value}%`,
+            title: "省内企业数量",
+            dataIndex: "in_province",
+          },
+          {
+            title: "省外企业数量",
+            dataIndex: "out_province",
+          },
+          {
+            title: "国际企业数量",
+            dataIndex: "international",
           },
           {
             title: "操作",
-            render(value, tatistic) {
+            render(value, stock) {
               return (
-                <Button type="link" onClick={() => startEdit(tatistic.id)}>
+                <Button type="link" onClick={() => startEdit(stock.id)}>
                   编辑
                 </Button>
               );
@@ -58,10 +57,8 @@ export const StatisticList = ({ error, ...restProps }: ListProps) => {
 };
 
 const Container = styled.div`
-  margin-right: 2.4rem;
   padding: 2.4rem;
-  padding-bottom: 3.8rem;
-  width: 50%;
+  padding-bottom: 4rem;
   height: fit-content;
   background: #fff;
 `;
