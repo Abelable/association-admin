@@ -24,6 +24,7 @@ import { Financials } from "./financial-data";
 import { CustomSignups } from "./custom-signups";
 import { CustomSignupUsers } from "./custom-signup-users";
 import { Lives } from "./lives";
+import { Datav } from "./datav-data";
 
 import {
   MenuUnfoldOutlined,
@@ -91,6 +92,7 @@ export const AuthenticatedApp = () => {
                 path="custom_signups/enlist"
                 element={<CustomSignupUsers />}
               />
+              <Route path="view/data" element={<Datav />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"users"} replace={true} />}
@@ -177,14 +179,14 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Link to={"lives"}>直播监控</Link>
         </Menu.Item>
         <Menu.SubMenu
-          key={"data_view"}
+          key={"view"}
           icon={<DashboardOutlined />}
           title={"数据大屏"}
         >
-          <Menu.Item key="data_view_data" icon={<StockOutlined />}>
-            <Link to={"data_view/data"}>大屏数据</Link>
+          <Menu.Item key="data" icon={<StockOutlined />}>
+            <Link to={"view/data"}>大屏数据</Link>
           </Menu.Item>
-          <Menu.Item key="data_view_link" icon={<LinkOutlined />}>
+          <Menu.Item key="view_link" icon={<LinkOutlined />}>
             <div
               onClick={() =>
                 window.open(
