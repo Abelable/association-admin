@@ -78,21 +78,6 @@ export const Datav = () => {
         loading={valuationLoading}
         dataSource={valuationList}
       />
-      <ValuationList
-        error={valuationError}
-        loading={valuationLoading}
-        dataSource={valuationList}
-      />
-      {/* <MainWrap>
-        <Main style={{ overflow: "scroll" }}>
-          <ValuationList
-            error={valuationError}
-            loading={valuationLoading}
-            dataSource={valuationList}
-          />
-        </Main>
-        
-      </MainWrap> */}
     </Container>
   );
 };
@@ -102,15 +87,4 @@ const Container = styled.div`
   padding: 2.4rem;
   height: 100%;
   overflow: scroll;
-`;
-
-const MainWrap = styled.div`
-  /* padding: 2.4rem; */
-  /* height: calc(100% - 4.6rem); */
-  /* overflow: scroll; */
-`;
-
-const Main = styled.div`
-  padding: 2.4rem;
-  background: #fff;
 `;
