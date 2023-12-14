@@ -10,23 +10,27 @@ export const useValuations = () => {
   );
 };
 
-export const useAddValuation = () => {
+export const useAddValuation = (queryKey: QueryKey) => {
   const client = useHttp();
-  return useMutation((data: Partial<Valuation>) =>
-    client("/api/admin/valuation/save", {
-      data,
-      method: "POST",
-    })
+  return useMutation(
+    (data: Partial<Valuation>) =>
+      client("/api/admin/valuation/save", {
+        data,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
   );
 };
 
-export const useEditValuation = () => {
+export const useEditValuation = (queryKey: QueryKey) => {
   const client = useHttp();
-  return useMutation((data: Partial<Valuation>) =>
-    client("/api/admin/valuation/save", {
-      data,
-      method: "POST",
-    })
+  return useMutation(
+    (data: Partial<Valuation>) =>
+      client("/api/admin/valuation/save", {
+        data,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
   );
 };
 

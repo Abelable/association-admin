@@ -1,8 +1,8 @@
 export interface Valuation {
   id: string;
-  year: number;
-  name: number;
-  num: number;
+  year: string;
+  name: string;
+  num: string;
 }
 
 export interface Tatistic {
