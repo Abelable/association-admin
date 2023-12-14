@@ -101,6 +101,7 @@ export const Datav = () => {
 
 const Container = styled.div`
   position: relative;
+  display: flex;
   padding: 2.4rem;
   height: 100%;
   overflow: scroll;

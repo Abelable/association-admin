@@ -12,9 +12,9 @@ export const ValuationList = ({ error, ...restProps }: ListProps) => {
   const { startEdit } = useValuationModal();
 
   return (
-    <Container>
+    <Container style={{ width: "50%" }}>
       <Header between={true}>
-        <h3>浙江平台企业估值</h3>
+        <h3>企业估值</h3>
       </Header>
       <ErrorBox error={error} />
       <Table
@@ -52,6 +52,7 @@ export const ValuationList = ({ error, ...restProps }: ListProps) => {
 const Container = styled.div`
   margin-bottom: 2.4rem;
   padding: 2.4rem;
+  height: fit-content;
   background: #fff;
 `;
 

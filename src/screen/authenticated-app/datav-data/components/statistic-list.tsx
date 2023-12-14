@@ -12,7 +12,7 @@ export const StatisticList = ({ error, ...restProps }: ListProps) => {
   const { startEdit } = useTatisticModal();
 
   return (
-    <Container>
+    <Container style={{ width: "50%", marginRight: "2.4rem" }}>
       <Header between={true}>
         <h3>数据统计</h3>
       </Header>
@@ -58,8 +58,8 @@ export const StatisticList = ({ error, ...restProps }: ListProps) => {
 };
 
 const Container = styled.div`
-  margin-bottom: 2.4rem;
   padding: 2.4rem;
+  height: fit-content;
   background: #fff;
 `;
 
