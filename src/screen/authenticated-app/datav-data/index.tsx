@@ -4,6 +4,7 @@ import { ValuationList } from "./components/valuation-list";
 import { useValuations } from "service/view";
 import { useEffect, useState } from "react";
 import { Valuation } from "types/view";
+import { ValuationModal } from "./components/valuation-modal";
 
 interface QuarterOptions {
   year: string;
@@ -63,7 +64,7 @@ export const Datav = () => {
           valuationItem || {
             ...item,
             id: "",
-            num: "0",
+            num: "",
           }
         );
       });
@@ -78,6 +79,7 @@ export const Datav = () => {
         loading={valuationLoading}
         dataSource={valuationList}
       />
+      <ValuationModal valuations={valuationList} />
     </Container>
   );
 };

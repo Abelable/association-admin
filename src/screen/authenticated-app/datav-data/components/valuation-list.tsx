@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
-import { Button, Menu, Table, TableProps } from "antd";
+import { Button, Table, TableProps } from "antd";
 import { ErrorBox, Row } from "components/lib";
 import type { Valuation } from "types/view";
+import { useValuationModal } from "../util";
 
 interface ListProps extends TableProps<Valuation> {
   error: Error | unknown;
 }
 
 export const ValuationList = ({ error, ...restProps }: ListProps) => {
-  const edit = (id: string) => {};
+  const { startEdit } = useValuationModal();
 
   return (
     <Container>
@@ -32,7 +33,7 @@ export const ValuationList = ({ error, ...restProps }: ListProps) => {
             title: "操作",
             render(value, valuation) {
               return (
-                <Button type="link" onClick={() => edit(valuation?.id)}>
+                <Button type="link" onClick={() => startEdit(valuation.name)}>
                   编辑
                 </Button>
               );
