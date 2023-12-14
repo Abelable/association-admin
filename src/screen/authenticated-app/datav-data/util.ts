@@ -1,19 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
-import { useCallback, useMemo } from "react";
-
-export const useValuationsSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["page", "page_size"]);
-  return [
-    useMemo(
-      () => ({
-        page: Number(params.page) || 1,
-        page_size: Number(params.page_size) || 10,
-      }),
-      [params]
-    ),
-    setParams,
-  ] as const;
-};
+import { useCallback } from "react";
+import { useTatistic } from "service/view";
 
 export const useValuationsQueryKey = () => {
   return ["valuations"];
@@ -36,6 +23,41 @@ export const useValuationModal = () => {
   return {
     valuationModalOpen: !!editingValuationName,
     editingValuationName,
+    startEdit,
+    close,
+  };
+};
+
+export const useTatisticsQueryKey = () => {
+  return ["tatistics"];
+};
+
+export const useTatisticModal = () => {
+  const [{ editingTatisticId }, setEditingTatisticId] = useUrlQueryParams([
+    "editingTatisticId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+  const {
+    data: editingTatistic,
+    isLoading,
+    error,
+  } = useTatistic(editingTatisticId);
+
+  const startEdit = useCallback(
+    (id: string) => setEditingTatisticId({ editingTatisticId: id }),
+    [setEditingTatisticId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ editingTatisticId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    tatisticModalOpen: !!editingTatisticId,
+    editingTatisticId,
+    editingTatistic,
+    isLoading,
+    error,
     startEdit,
     close,
   };

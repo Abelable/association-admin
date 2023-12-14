@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 
 import { ValuationList } from "./components/valuation-list";
-import { useValuations } from "service/view";
+import { useTatistics, useValuations } from "service/view";
 import { useEffect, useState } from "react";
 import { Valuation } from "types/view";
 import { ValuationModal } from "./components/valuation-modal";
+import { StatisticList } from "./components/statistic-list";
+import { StatisticModal } from "./components/statistic-modal";
 
 interface QuarterOptions {
   year: string;
@@ -52,6 +54,12 @@ export const Datav = () => {
     isLoading: valuationLoading,
   } = useValuations();
 
+  const {
+    data: tatistic,
+    error: tatisticError,
+    isLoading: tatisticLoading,
+  } = useTatistics();
+
   const [valuationList, setValuationList] = useState<Valuation[]>([]);
 
   useEffect(() => {
@@ -74,6 +82,13 @@ export const Datav = () => {
 
   return (
     <Container>
+      <StatisticList
+        error={tatisticError}
+        loading={tatisticLoading}
+        dataSource={tatistic?.list || []}
+      />
+      <StatisticModal />
+
       <ValuationList
         error={valuationError}
         loading={valuationLoading}
