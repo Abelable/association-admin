@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Card } from "antd";
 import styled from "@emotion/styled";
 
 import { Valuation } from "./components/valuation";
