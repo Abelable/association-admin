@@ -130,7 +130,7 @@ export const TestModal = ({
             </Form.Item>
           </Col>
         </Row>
-        <Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               noStyle
@@ -150,6 +150,31 @@ export const TestModal = ({
             </Form.Item>
           </Col>
         </Row>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.category_id !== currentValues.category_id
+          }
+        >
+          {({ getFieldValue }) => {
+            return getFieldValue("category_id") === "5" ? (
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item label="投诉平台" name="platform">
+                    <Input placeholder="请输入投诉平台" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item label="投诉内容" name="complaint">
+                    <Input placeholder="请输入投诉内容" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            ) : (
+              <></>
+            );
+          }}
+        </Form.Item>
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
