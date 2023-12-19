@@ -15,6 +15,7 @@ export const Tests = () => {
     { id: "2", name: "监管动向" },
     { id: "3", name: "舆情总览" },
     { id: "4", name: "行业动态" },
+    { id: "5", name: "风险动态" },
   ];
 
   return (

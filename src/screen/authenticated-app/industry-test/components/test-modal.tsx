@@ -93,26 +93,6 @@ export const TestModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="category_id"
-              label="文章分类"
-              rules={[{ required: true, message: "请选择文章分类" }]}
-            >
-              <Select placeholder="请选择文章分类">
-                {categoryOptions.map(({ id, name }) => (
-                  <Select.Option key={id}>{name}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="文章排序" name="sort">
-              <Input placeholder="请输入文章排序" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
               name="is_show"
               label="是否展示"
               rules={[{ required: true, message: "请选择展示或隐藏" }]}
@@ -127,6 +107,46 @@ export const TestModal = ({
                   </Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item label="文章排序" name="sort">
+              <Input placeholder="请输入文章排序" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="category_id"
+              label="文章分类"
+              rules={[{ required: true, message: "请选择文章分类" }]}
+            >
+              <Select placeholder="请选择文章分类">
+                {categoryOptions.map(({ id, name }) => (
+                  <Select.Option key={id}>{name}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <Form.Item
+              noStyle
+              shouldUpdate={(prevValues, currentValues) =>
+                prevValues.category_id !== currentValues.category_id
+              }
+            >
+              {({ getFieldValue }) => {
+                return getFieldValue("category_id") === "4" ? (
+                  <Form.Item name="hots" label="文章热度">
+                    <Input type="number" placeholder="请输入文章热度" />
+                  </Form.Item>
+                ) : (
+                  <></>
+                );
+              }}
             </Form.Item>
           </Col>
         </Row>
