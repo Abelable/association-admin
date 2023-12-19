@@ -40,4 +40,7 @@ export interface TestForm {
   introduction: string;
   content: string;
   is_show: string;
+  hots?: number;
+  platform?: string;
+  complaint?: string;
 }
