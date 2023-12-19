@@ -32,7 +32,7 @@ export const StatisticModal = () => {
 
   return (
     <Modal
-      title={`编辑${editingTatistic?.name}`}
+      title={editingTatistic?.name}
       visible={tatisticModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}

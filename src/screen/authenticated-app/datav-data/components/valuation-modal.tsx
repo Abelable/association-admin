@@ -46,7 +46,7 @@ export const ValuationModal = ({ valuations }: { valuations: Valuation[] }) => {
 
   return (
     <Modal
-      title={`${valuation?.year}年第${valuation?.name}季度估值`}
+      title={`${valuation?.year}年第${valuation?.name}季度`}
       visible={valuationModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}

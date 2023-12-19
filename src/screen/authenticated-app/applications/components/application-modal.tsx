@@ -830,26 +830,26 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     if (originForm.quarter_valuation) {
       const quarterValuation = JSON.parse(originForm.quarter_valuation);
       quarterValuationFormData = {
-        quarter_valuation_1:
-          quarterValuation[0].year === quarterOptions[0].year &&
-          quarterValuation[0].quarter === quarterOptions[0].quarter
-            ? quarterValuation[0].value
-            : undefined,
-        quarter_valuation_2:
-          quarterValuation[1].year === quarterOptions[1].year &&
-          quarterValuation[1].quarter === quarterOptions[1].quarter
-            ? quarterValuation[1].value
-            : undefined,
-        quarter_valuation_3:
-          quarterValuation[2].year === quarterOptions[2].year &&
-          quarterValuation[2].quarter === quarterOptions[2].quarter
-            ? quarterValuation[2].value
-            : undefined,
-        quarter_valuation_4:
-          quarterValuation[3].year === quarterOptions[3].year &&
-          quarterValuation[3].quarter === quarterOptions[3].quarter
-            ? quarterValuation[3].value
-            : undefined,
+        quarter_valuation_1: quarterValuation.find(
+          (_item: any) =>
+            _item.year === quarterOptions[0].year &&
+            _item.quarter === quarterOptions[0].quarter
+        ).value,
+        quarter_valuation_2: quarterValuation.find(
+          (_item: any) =>
+            _item.year === quarterOptions[1].year &&
+            _item.quarter === quarterOptions[1].quarter
+        ).value,
+        quarter_valuation_3: quarterValuation.find(
+          (_item: any) =>
+            _item.year === quarterOptions[2].year &&
+            _item.quarter === quarterOptions[2].quarter
+        ).value,
+        quarter_valuation_4: quarterValuation.find(
+          (_item: any) =>
+            _item.year === quarterOptions[3].year &&
+            _item.quarter === quarterOptions[3].quarter
+        ).value,
       };
     }
 
