@@ -11,7 +11,13 @@ import {
   Image,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined, DownOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  DownOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
+import { FileUpload } from "./file-upload";
+
 import { ApplicationsItem } from "types/application";
 import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
@@ -64,13 +70,29 @@ export const List = ({
       page_size: pagination.pageSize,
     });
 
+  const downloadTemplate = () => {
+    const eleLink = document.createElement("a");
+    eleLink.style.display = "none";
+    eleLink.href =
+      "http://img-gov.oss-cn-hangzhou.aliyuncs.com/enter-apply.xls";
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    document.body.removeChild(eleLink);
+  };
+
   return (
     <Container>
       <Header between={true}>
         <h3>申请列表</h3>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
-        </Button>
+        <Row gap>
+          <Button onClick={downloadTemplate} icon={<DownloadOutlined />}>
+            下载模版
+          </Button>
+          <FileUpload />
+          <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
+            新增
+          </Button>
+        </Row>
       </Header>
       <ErrorBox error={error} />
       <Table

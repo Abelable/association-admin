@@ -1,4 +1,4 @@
-import { QueryKey, useMutation, useQuery } from "react-query";
+import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { useHttp, http } from "./http";
 import * as auth from "./auth";
 import dayjs from "dayjs";
@@ -152,5 +152,20 @@ export const useCreateCertificate = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useImportApplyData = (queryKey: QueryKey) => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ excel_file }: { excel_file: any }) =>
+      client("/api/admin/enter-apply/import", {
+        data: { excel_file },
+        method: "POST",
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+    }
   );
 };
