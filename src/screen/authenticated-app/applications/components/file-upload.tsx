@@ -15,7 +15,12 @@ export const FileUpload = () => {
   };
 
   return (
-    <Upload customRequest={upload} maxCount={1} showUploadList={false}>
+    <Upload
+      accept=".xls"
+      customRequest={upload}
+      maxCount={1}
+      showUploadList={false}
+    >
       <Button icon={isLoading ? <LoadingOutlined /> : <ImportOutlined />}>
         导入数据
       </Button>

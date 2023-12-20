@@ -6,6 +6,7 @@ import {
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
+import { cleanObject } from "utils";
 
 export const useLives = (params: Partial<LivesSearchParams>) => {
   const client = useHttp();
@@ -30,7 +31,7 @@ export const useAddLive = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<Live>) =>
       client("/api/admin/live-monitor/save", {
-        data: params,
+        data: cleanObject(params),
         method: "POST",
       }),
     useAddConfig(queryKey)
