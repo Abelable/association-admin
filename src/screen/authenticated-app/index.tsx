@@ -190,11 +190,22 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
             <div
               onClick={() =>
                 window.open(
+                  "https://datav.aliyuncs.com/share/e89ac1b2ce4441ccc543fb59de29c04e"
+                )
+              }
+            >
+              网商协会大屏
+            </div>
+          </Menu.Item>
+          <Menu.Item key="view_link_new" icon={<LinkOutlined />}>
+            <div
+              onClick={() =>
+                window.open(
                   "https://datav.aliyun.com/share/page/6bb6b6eda1923d61ed8ccf906e25a023"
                 )
               }
             >
-              大屏预览
+              数据可视化大屏
             </div>
           </Menu.Item>
         </Menu.SubMenu>
