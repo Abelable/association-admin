@@ -54,7 +54,7 @@ export const useDeleteLive = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client("/api/admin/live-monitor/del", {
+      client("/api/admin/live-monitor/delete", {
         data: { id },
         method: "POST",
       }),

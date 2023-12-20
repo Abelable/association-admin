@@ -176,7 +176,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <Link to={"custom_signups"}>活动报名</Link>
         </Menu.Item>
         <Menu.Item key="lives" icon={<VideoCameraOutlined />}>
-          <Link to={"lives"}>直播监控</Link>
+          <Link to={"lives"}>绿色直播</Link>
         </Menu.Item>
         <Menu.SubMenu
           key={"view"}
