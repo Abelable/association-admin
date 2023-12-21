@@ -94,9 +94,25 @@ const categoryOptions = [
       { text: "综合类", value: 43 },
     ],
   },
-  { text: "金融服务类平台", value: 5 },
-  { text: "信息资讯类平台", value: 6 },
-  { text: "其他类", value: 7 },
+  {
+    text: "金融服务类平台",
+    value: 5,
+    subOptions: [
+      { text: "消费金融", value: 51 },
+      { text: "证券投资", value: 52 },
+      { text: "综合类", value: 53 },
+    ],
+  },
+  {
+    text: "信息资讯类平台",
+    value: 6,
+    subOptions: [
+      { text: "内容生成", value: 61 },
+      { text: "视听资讯", value: 62 },
+      { text: "搜索引擎", value: 63 },
+      { text: "新闻门户", value: 64 },
+    ],
+  },
 ];
 
 let quarterOptions: QuarterOptions[] = [];
