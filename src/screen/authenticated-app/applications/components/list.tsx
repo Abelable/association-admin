@@ -111,6 +111,14 @@ export const List = ({
             width: "8rem",
           },
           {
+            title: "logo",
+            dataIndex: "logo",
+            render: (value) => (
+              <img style={{ width: "8rem" }} src={value} alt="" />
+            ),
+            width: "12rem",
+          },
+          {
             title: "公司",
             dataIndex: "company_name",
           },
@@ -185,11 +193,6 @@ export const List = ({
               </Dropdown>
             ),
             width: "18rem",
-          },
-          {
-            title: "姓名",
-            dataIndex: "contacter_name",
-            width: "12rem",
           },
           {
             title: "工作联系方式",

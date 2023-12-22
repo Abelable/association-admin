@@ -23,6 +23,7 @@ import {
   DatePicker,
 } from "antd";
 import { OssUpload } from "components/oss-upload";
+import { OssLogoUpload } from "components/oss-logo-upload";
 import { ErrorBox } from "components/lib";
 import { Map } from "components/map";
 import { useState, useEffect } from "react";
@@ -515,7 +516,7 @@ export const ApplicationModal = ({
               valuePropName="fileList"
               getValueFromEvent={normFile}
             >
-              <OssUpload maxCount={1} />
+              <OssLogoUpload maxCount={1} />
             </Form.Item>
           </Col>
           <Col span={12}>
