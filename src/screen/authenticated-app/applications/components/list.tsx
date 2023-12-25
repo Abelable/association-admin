@@ -74,7 +74,7 @@ export const List = ({
     const eleLink = document.createElement("a");
     eleLink.style.display = "none";
     eleLink.href =
-      "http://img-gov.oss-cn-hangzhou.aliyuncs.com/enter-apply.xls";
+      "https://img-gov.oss-cn-hangzhou.aliyuncs.com/enter-apply.xls";
     document.body.appendChild(eleLink);
     eleLink.click();
     document.body.removeChild(eleLink);
