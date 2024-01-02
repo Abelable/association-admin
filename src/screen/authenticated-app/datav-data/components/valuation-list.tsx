@@ -22,8 +22,7 @@ export const ValuationList = ({ error, ...restProps }: ListProps) => {
         columns={[
           {
             title: "季度",
-            render: (value, valuation) =>
-              `${valuation.year}年第${valuation.name}季度`,
+            dataIndex: "name",
           },
           {
             title: "估值（亿元）",

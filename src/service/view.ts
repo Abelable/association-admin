@@ -1,7 +1,7 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import type { Valuation, Tatistic, Stock } from "types/view";
 import { useHttp } from "./http";
-import { useAddConfig, useEditConfig } from "./use-optimistic-options";
+import { useEditConfig } from "./use-optimistic-options";
 
 export const useTatistics = () => {
   const client = useHttp();
@@ -37,18 +37,6 @@ export const useValuations = () => {
   const client = useHttp();
   return useQuery<{ list: Valuation[] }>(["valuations"], () =>
     client("/api/admin/valuation/list")
-  );
-};
-
-export const useAddValuation = (queryKey: QueryKey) => {
-  const client = useHttp();
-  return useMutation(
-    (data: Partial<Valuation>) =>
-      client("/api/admin/valuation/save", {
-        data,
-        method: "POST",
-      }),
-    useAddConfig(queryKey)
   );
 };
 

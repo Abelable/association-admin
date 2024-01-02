@@ -1,6 +1,5 @@
 export interface Valuation {
   id: string;
-  year: string;
   name: string;
   num: string;
 }

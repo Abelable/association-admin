@@ -1,7 +1,7 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddValuation, useEditValuation } from "service/view";
+import { useEditValuation } from "service/view";
 import { Valuation } from "types/view";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useValuationsQueryKey, useValuationModal } from "../util";
@@ -13,16 +13,14 @@ export const ValuationModal = ({ valuations }: { valuations: Valuation[] }) => {
   const valuation = valuations?.find(
     (item) => item.name === editingValuationName
   );
-  const useMutationValuation = valuation?.id
-    ? useEditValuation
-    : useAddValuation;
-  const { mutateAsync, isLoading, error } = useMutationValuation(
+  const { mutateAsync, isLoading, error } = useEditValuation(
     useValuationsQueryKey()
   );
 
   useDeepCompareEffect(() => {
     if (valuation) {
       form.setFieldsValue({
+        name: valuation.name,
         num: valuation.num,
       });
     }
@@ -31,9 +29,9 @@ export const ValuationModal = ({ valuations }: { valuations: Valuation[] }) => {
   const confirm = () => {
     form.validateFields().then(async () => {
       if (valuation) {
-        const { id, year, name } = valuation;
+        const { id, name } = valuation;
         const { num } = form.getFieldsValue();
-        await mutateAsync(id ? { id, year, name, num } : { year, name, num });
+        await mutateAsync(id ? { id, name, num } : { name, num });
         closeModal();
       }
     });
@@ -46,7 +44,7 @@ export const ValuationModal = ({ valuations }: { valuations: Valuation[] }) => {
 
   return (
     <Modal
-      title={`${valuation?.year}年第${valuation?.name}季度`}
+      title="企业估值"
       visible={valuationModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
@@ -54,6 +52,13 @@ export const ValuationModal = ({ valuations }: { valuations: Valuation[] }) => {
     >
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
+        <Form.Item
+          name="name"
+          label="季度"
+          rules={[{ required: true, message: "请输入季度" }]}
+        >
+          <Input placeholder="请输入季度" />
+        </Form.Item>
         <Form.Item
           name="num"
           label="估值（亿元）"
