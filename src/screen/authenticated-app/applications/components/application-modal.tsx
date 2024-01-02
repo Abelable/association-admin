@@ -844,7 +844,10 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
     }
 
     let quarterValuationFormData = {};
-    if (originForm.quarter_valuation) {
+    if (
+      originForm.quarter_valuation &&
+      typeof originForm.quarter_valuation === "string"
+    ) {
       const quarterValuation = JSON.parse(originForm.quarter_valuation);
       quarterValuationFormData = {
         quarter_valuation_1: quarterValuation.find(

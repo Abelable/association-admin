@@ -40,7 +40,9 @@ export const Datav = () => {
         <ValuationList
           error={valuationError}
           loading={valuationLoading}
-          dataSource={valuation?.list || []}
+          dataSource={
+            valuation?.list.sort((a, b) => Number(a.id) - Number(b.id)) || []
+          }
         />
         <StockList
           error={stockError}
@@ -50,7 +52,11 @@ export const Datav = () => {
       </div>
 
       <StatisticModal />
-      <ValuationModal valuations={valuation?.list || []} />
+      <ValuationModal
+        valuations={
+          valuation?.list.sort((a, b) => Number(a.id) - Number(b.id)) || []
+        }
+      />
       <StockModal />
     </Container>
   );
