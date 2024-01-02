@@ -29,9 +29,9 @@ export const ValuationModal = ({ valuations }: { valuations: Valuation[] }) => {
   const confirm = () => {
     form.validateFields().then(async () => {
       if (valuation) {
-        const { id, name } = valuation;
-        const { num } = form.getFieldsValue();
-        await mutateAsync(id ? { id, name, num } : { name, num });
+        const { id } = valuation;
+        const { name, num } = form.getFieldsValue();
+        await mutateAsync({ id, name, num });
         closeModal();
       }
     });
