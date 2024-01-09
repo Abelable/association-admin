@@ -873,11 +873,10 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
       };
     }
 
-    const companyType = `${
-      categoryOptions.find(
-        (item) => item.text === originForm.company_type.split(",")[0]
-      )?.value
-    }`;
+    const companyType = categoryOptions.find(
+      (item) => item.text === `${originForm.company_type.split(",")[0]}`
+    )?.value;
+
     editingApplicationForm = {
       ...rest,
       ...originForm,
