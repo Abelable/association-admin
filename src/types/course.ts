@@ -34,6 +34,7 @@ export interface CourseItem {
   duration: string;
   is_try: number;
   try_time: string;
+  views: number;
   password: string;
   introduction: string;
   sort: number;
@@ -62,4 +63,5 @@ export interface CourseForm {
   introduction: string;
   sort: number;
   tags: string;
+  views: number;
 }

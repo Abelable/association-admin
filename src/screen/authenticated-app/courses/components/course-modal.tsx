@@ -187,6 +187,14 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
               <Switch checked={isTry} onChange={setIsTry} />
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item label="观看人数" name="views">
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入观看人数"
+              />
+            </Form.Item>
+          </Col>
         </Row>
         {isTry ? (
           <Row gutter={16}>
