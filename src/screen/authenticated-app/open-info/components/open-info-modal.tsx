@@ -38,11 +38,11 @@ export const OpenInfoModal = () => {
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { head_img, ...restFieldsValue } = form.getFieldsValue();
+      const { cover, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingOpenInfoId || "",
         content,
-        head_img: head_img[0].url,
+        cover: cover[0].url,
         ...restFieldsValue,
       });
       closeModal();
@@ -79,39 +79,26 @@ export const OpenInfoModal = () => {
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Form.Item
+          name="cover"
+          label="文章封面"
+          rules={[{ required: true, message: "请上传文章封面" }]}
+          tooltip="图片大小不能超过10MB"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <OssUpload maxCount={1} />
+        </Form.Item>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="name"
-              label="人物名称"
-              rules={[{ required: true, message: "请输入人物名称" }]}
+              name="title"
+              label="文章标题"
+              rules={[{ required: true, message: "请输入文章标题" }]}
             >
-              <Input placeholder="请输入人物名称" />
+              <Input placeholder="请输入文章标题" />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="title" label="称号">
-              <Input placeholder="请输入称号" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="honor" label="曾获荣誉">
-              <Input placeholder="请输入曾获荣誉" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="field"
-              label="领域（介绍）"
-              rules={[{ required: true, message: "请输入领域（介绍）" }]}
-            >
-              <Input placeholder="请输入领域（介绍）" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               label="文章排序"
@@ -122,17 +109,7 @@ export const OpenInfoModal = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item
-          name="head_img"
-          label="人物头像"
-          rules={[{ required: true, message: "请上传人物头像" }]}
-          tooltip="图片大小不能超过10MB"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <OssUpload maxCount={1} />
-        </Form.Item>
-        <Form.Item label="文章内容" tooltip="排版自定义规则">
+        <Form.Item label="文章内容" required tooltip="排版自定义规则">
           <RichTextEditor content={content} setContent={setContent} />
         </Form.Item>
       </Form>
