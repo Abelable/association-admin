@@ -9,6 +9,7 @@ import { Button, Dropdown, Layout, Menu } from "antd";
 import { Users } from "./users";
 import { Banners } from "./banners";
 import { Wisdoms } from "./wisdoms";
+import { OpenInfo } from "./open-info";
 import { LegalCategories } from "./legal-categories/index";
 import { LegalSubCategories } from "./legal-sub-categories";
 import { Legals } from "./legals";
@@ -49,6 +50,7 @@ import {
   ReadOutlined,
   StockOutlined,
   LinkOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -79,6 +81,7 @@ export const AuthenticatedApp = () => {
               />
               <Route path="legal/legal_list" element={<Legals />} />
               <Route path="wisdoms" element={<Wisdoms />} />
+              <Route path="open_info" element={<OpenInfo />} />
               <Route path="credit_portrait" element={<Portraits />} />
               <Route path="member_service" element={<Services />} />
               <Route path="industry_test" element={<Tests />} />
@@ -150,6 +153,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.SubMenu>
         <Menu.Item key="wisdoms" icon={<BulbOutlined />}>
           <Link to={"wisdoms"}>网商智库</Link>
+        </Menu.Item>
+        <Menu.Item key="open_info" icon={<EyeOutlined />}>
+          <Link to={"open_info"}>公开信息</Link>
         </Menu.Item>
         <Menu.Item key="credit_portrait" icon={<PieChartOutlined />}>
           <Link to={"credit_portrait"}>会员信用</Link>
