@@ -15,6 +15,7 @@ import { LegalSubCategories } from "./legal-sub-categories";
 import { Legals } from "./legals";
 import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
+import { EnterpriseCategories } from "./enterprise-categories";
 import { Applications } from "./applications";
 import { Talents } from "./talents";
 import { Services } from "./member-services/index";
@@ -87,7 +88,14 @@ export const AuthenticatedApp = () => {
               <Route path="industry_test" element={<Tests />} />
               <Route path="secretary_trends" element={<Trends />} />
               <Route path="financial_data" element={<Financials />} />
-              <Route path="applications" element={<Applications />} />
+              <Route
+                path="application/application_categories"
+                element={<EnterpriseCategories />}
+              />
+              <Route
+                path="application/application_list"
+                element={<Applications />}
+              />
               <Route path="talents" element={<Talents />} />
               <Route path="lives" element={<Lives />} />
               <Route path="custom_signups" element={<CustomSignups />} />
@@ -172,9 +180,18 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="financial_data" icon={<AccountBookOutlined />}>
           <Link to={"financial_data"}>财务数据</Link>
         </Menu.Item>
-        <Menu.Item key="applications" icon={<AuditOutlined />}>
-          <Link to={"applications"}>会员管理</Link>
-        </Menu.Item>
+        <Menu.SubMenu
+          key={"application"}
+          icon={<AuditOutlined />}
+          title={"会员管理"}
+        >
+          <Menu.Item key="application_categories" icon={<PartitionOutlined />}>
+            <Link to={"application/application_categories"}>会员分类</Link>
+          </Menu.Item>
+          <Menu.Item key="application_list" icon={<BarsOutlined />}>
+            <Link to={"application/application_list"}>会员列表</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
         <Menu.Item key="talents" icon={<SolutionOutlined />}>
           <Link to={"talents"}>人才管理</Link>
         </Menu.Item>
