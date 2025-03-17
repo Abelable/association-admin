@@ -2,44 +2,44 @@ import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import {
-  useAddEnterpriseCategory,
-  useEditEnterpriseCategory,
-} from "service/enterprise-category";
+  useAddActivityCategory,
+  useEditActivityCategory,
+} from "service/activity-category";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import {
-  useEnterpriseCategoriesQueryKey,
-  useEnterpriseCategoryModal,
+  useActivityCategoriesQueryKey,
+  useActivityCategoryModal,
 } from "../util";
 import type { Category } from "types/category";
 
-export const EnterpriseCategoryModal = ({
+export const ActivityCategoryModal = ({
   categories,
 }: {
   categories: Category[];
 }) => {
   const [form] = useForm();
-  const { enterpriseCategoryModalOpen, editingEnterpriseCategoryId, close } =
-    useEnterpriseCategoryModal();
-  const enterpriseCategory =
-    categories?.find((item) => item.id === editingEnterpriseCategoryId) ||
+  const { activityCategoryModalOpen, editingActivityCategoryId, close } =
+    useActivityCategoryModal();
+  const activityCategory =
+    categories?.find((item) => item.id === editingActivityCategoryId) ||
     undefined;
-  const useMutationEnterpriseCategory = editingEnterpriseCategoryId
-    ? useEditEnterpriseCategory
-    : useAddEnterpriseCategory;
-  const { mutateAsync, isLoading, error } = useMutationEnterpriseCategory(
-    useEnterpriseCategoriesQueryKey()
+  const useMutationActivityCategory = editingActivityCategoryId
+    ? useEditActivityCategory
+    : useAddActivityCategory;
+  const { mutateAsync, isLoading, error } = useMutationActivityCategory(
+    useActivityCategoriesQueryKey()
   );
 
   useDeepCompareEffect(() => {
-    if (enterpriseCategory) {
-      form.setFieldsValue(enterpriseCategory);
+    if (activityCategory) {
+      form.setFieldsValue(activityCategory);
     }
-  }, [enterpriseCategory, form]);
+  }, [activityCategory, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
-        id: editingEnterpriseCategoryId || "",
+        id: editingActivityCategoryId || "",
         ...form.getFieldsValue(),
       });
       closeModal();
@@ -53,8 +53,8 @@ export const EnterpriseCategoryModal = ({
 
   return (
     <Modal
-      title={editingEnterpriseCategoryId ? "编辑会员分类" : "新增会员分类"}
-      visible={enterpriseCategoryModalOpen}
+      title={editingActivityCategoryId ? "编辑活动分类" : "新增活动分类"}
+      visible={activityCategoryModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}

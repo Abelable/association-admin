@@ -23,6 +23,7 @@ import { Tests } from "./industry-test";
 import { Trends } from "./secretary-trends";
 import { Portraits } from "./credit-portrait";
 import { Financials } from "./financial-data";
+import { ActivityCategories } from "./activity-categories";
 import { CustomSignups } from "./custom-signups";
 import { CustomSignupUsers } from "./custom-signup-users";
 import { Lives } from "./lives";
@@ -98,7 +99,14 @@ export const AuthenticatedApp = () => {
               />
               <Route path="talents" element={<Talents />} />
               <Route path="lives" element={<Lives />} />
-              <Route path="custom_signups" element={<CustomSignups />} />
+              <Route
+                path="custom_signup/custom_signup_categories"
+                element={<ActivityCategories />}
+              />
+              <Route
+                path="custom_signup/custom_signup_list"
+                element={<CustomSignups />}
+              />
               <Route
                 path="custom_signups/enlist"
                 element={<CustomSignupUsers />}
@@ -195,9 +203,21 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         <Menu.Item key="talents" icon={<SolutionOutlined />}>
           <Link to={"talents"}>人才管理</Link>
         </Menu.Item>
-        <Menu.Item key="custom_signups" icon={<StarOutlined />}>
-          <Link to={"custom_signups"}>活动报名</Link>
-        </Menu.Item>
+        <Menu.SubMenu
+          key={"custom_signup"}
+          icon={<StarOutlined />}
+          title={"活动报名"}
+        >
+          <Menu.Item
+            key="custom_signup_categories"
+            icon={<PartitionOutlined />}
+          >
+            <Link to={"custom_signup/custom_signup_categories"}>活动分类</Link>
+          </Menu.Item>
+          <Menu.Item key="custom_signup_list" icon={<BarsOutlined />}>
+            <Link to={"custom_signup/custom_signup_list"}>活动列表</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
         <Menu.Item key="lives" icon={<VideoCameraOutlined />}>
           <Link to={"lives"}>绿色直播</Link>
         </Menu.Item>
