@@ -90,6 +90,27 @@ export const CustomSignups = () => {
               width: "10rem",
             },
             {
+              title: "封面",
+              dataIndex: "cover",
+              render: (value) => (
+                <img style={{ width: "8.8rem" }} src={value} alt="" />
+              ),
+              width: "14rem",
+            },
+            {
+              title: "活动分类",
+              dataIndex: "category_id",
+              render: (value) => (
+                <span>
+                  {
+                    activityCategoryOptions.find((item) => +item.id === +value)
+                      ?.name
+                  }
+                </span>
+              ),
+              width: "20rem",
+            },
+            {
               title: "活动名称",
               dataIndex: "title",
             },
@@ -123,14 +144,14 @@ export const CustomSignups = () => {
                 <Dropdown
                   overlay={
                     <Menu>
+                      <Menu.Item
+                        onClick={() => startEdit(signup.id)}
+                        key={"edit"}
+                      >
+                        编辑活动
+                      </Menu.Item>
                       {signup.activity_status === 0 ? (
                         <>
-                          <Menu.Item
-                            onClick={() => startEdit(signup.id)}
-                            key={"edit"}
-                          >
-                            编辑
-                          </Menu.Item>
                           <Menu.Item
                             onClick={() =>
                               editCustomSignupStatus({

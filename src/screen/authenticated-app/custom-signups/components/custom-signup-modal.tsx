@@ -86,9 +86,10 @@ export const CustomSignupModal = ({
 
   useDeepCompareEffect(() => {
     if (fieldsValue) {
-      const { cover, ...rest } = fieldsValue;
+      const { cover, category_id, ...rest } = fieldsValue;
       form.setFieldsValue({
-        cover: [{ url: cover }],
+        cover: cover ? [{ url: cover }] : undefined,
+        category_id: +category_id === 0 ? undefined : +category_id,
         ...rest,
       });
     }
@@ -109,7 +110,7 @@ export const CustomSignupModal = ({
       const end_time = `${Math.floor(dateRange[1].valueOf() / 1000)}`;
       const customSignupParams: CustomSignup = {
         id: editingCustomSignupId || "",
-        cover: cover[0].url,
+        cover: cover && cover.length ? cover[0].url : "",
         start_time,
         end_time,
         remark,
@@ -153,16 +154,17 @@ export const CustomSignupModal = ({
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item
-                name="img"
+                name="cover"
                 label="活动封面"
                 tooltip="图片大小不能超过10MB"
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
-                rules={[{ required: true, message: "请上传活动封面" }]}
               >
                 <OssUpload maxCount={1} />
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={16}>
             <Col span={8}>
               <Form.Item
                 name="title"

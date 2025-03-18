@@ -13,7 +13,7 @@ export interface CustomSignupsSearchParams {
 
 export interface CustomSignup {
   id: string;
-  categoryId: number;
+  category_id: number;
   cover: string;
   title: string;
   registered_num: string;
