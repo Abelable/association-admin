@@ -17,6 +17,7 @@ import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
 import { EnterpriseCategories } from "./enterprise-categories";
 import { Applications } from "./applications";
+import { EnterpriseConsulting } from "./enterprise-consulting";
 import { Talents } from "./talents";
 import { Services } from "./member-services/index";
 import { Tests } from "./industry-test";
@@ -96,6 +97,10 @@ export const AuthenticatedApp = () => {
               <Route
                 path="application/application_list"
                 element={<Applications />}
+              />
+              <Route
+                path="application/enterprise_consulting"
+                element={<EnterpriseConsulting />}
               />
               <Route path="talents" element={<Talents />} />
               <Route path="lives" element={<Lives />} />
@@ -198,6 +203,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           </Menu.Item>
           <Menu.Item key="application_list" icon={<BarsOutlined />}>
             <Link to={"application/application_list"}>会员列表</Link>
+          </Menu.Item>
+          <Menu.Item key="enterprise_consulting" icon={<BarsOutlined />}>
+            <Link to={"application/enterprise_consulting"}>企业咨询</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="talents" icon={<SolutionOutlined />}>

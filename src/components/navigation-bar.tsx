@@ -22,6 +22,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/application": "会员管理",
   "/application/application_categories": "会员分类",
   "/application/application_list": "会员列表",
+  "/application/enterprise_consulting": "企业咨询",
   "/talents": "人才管理",
   "/custom_signup": "活动报名",
   "/custom_signup/custom_signup_categories": "活动分类",

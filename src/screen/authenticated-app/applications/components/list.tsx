@@ -11,15 +11,17 @@ import {
   Image,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
+import { FileUpload } from "./file-upload";
+import { SearchPanelProps } from "./search-panel";
+import { RejectApplicationModal } from "./reject-application-modal";
 import {
   PlusOutlined,
   DownOutlined,
   DownloadOutlined,
 } from "@ant-design/icons";
-import { FileUpload } from "./file-upload";
 
-import { ApplicationsItem } from "types/application";
-import { SearchPanelProps } from "./search-panel";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import dayjs from "dayjs";
 import {
   useDeleteApplication,
@@ -27,8 +29,8 @@ import {
   useEditApplicationLevel,
 } from "service/application";
 import { useApplicationsQueryKey, useApplicationModal } from "../util";
-import { useState } from "react";
-import { RejectApplicationModal } from "./reject-application-modal";
+
+import type { ApplicationsItem } from "types/application";
 
 type DealApplications = (ids: string[]) => void;
 type ExportApplications = DealApplications;
@@ -290,6 +292,7 @@ const More = ({
   setRejectingApplicationId: (id: string) => void;
   editCode: Function;
 }) => {
+  const navigate = useNavigate();
   const { mutate: deleteApplication } = useDeleteApplication(
     useApplicationsQueryKey()
   );
@@ -327,6 +330,11 @@ const More = ({
   const codeDelete = (id: string) => {
     editCode({ id, number: "", company_name: "", certificate_status: "-1" });
   };
+
+  const checkSubCategory = (enterprise_id: string, enterprise_name: string) =>
+    navigate(
+      `/application/enterprise_consulting?enterprise_id=${enterprise_id}&enterprise_name=${enterprise_name}`
+    );
 
   return (
     <Dropdown
@@ -402,6 +410,14 @@ const More = ({
               取消会员证
             </Menu.Item>
           ) : null}
+          <Menu.Item
+            onClick={() =>
+              checkSubCategory(application.id, application.company_name)
+            }
+            key={"check"}
+          >
+            查看企业咨询
+          </Menu.Item>
         </Menu>
       }
     >
