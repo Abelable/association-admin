@@ -55,3 +55,10 @@ export const useDeleteActivityCategory = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useActivityCategoryOptions = () => {
+  const client = useHttp();
+  return useQuery<Category[]>(["activity_category_options"], () =>
+    client("/api/admin/activity-category/options")
+  );
+};

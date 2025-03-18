@@ -8,25 +8,30 @@ import {
   Input,
   Modal,
   Row,
+  Select,
   Space,
 } from "antd";
-import { useCustomSignupModal, useCustomSignupsQueryKey } from "../util";
-import { useEffect, useState } from "react";
-import useDeepCompareEffect from "use-deep-compare-effect";
-import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
+import { RichTextEditor } from "components/rich-text-editor";
+import { OssUpload } from "components/oss-upload";
+import { FormBuilder } from "./form-builder";
+import { PreviewForm } from "./preview-form";
+
+import { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import moment from "moment";
+import { useForm } from "antd/lib/form/Form";
+import { useAddCustomSignup, useEditCustomSignup } from "service/custom-signup";
+import { useCustomSignupModal, useCustomSignupsQueryKey } from "../util";
+
+import type { Category } from "types/category";
 import type {
   CustomSignup,
   CustomSignupFieldsValue,
   CustomSignupsResult,
   FormItem,
 } from "types/custom-signup";
-import { useAddCustomSignup, useEditCustomSignup } from "service/custom-signup";
-import { useQueryClient } from "react-query";
-import { RichTextEditor } from "components/rich-text-editor";
-import { FormBuilder } from "./form-builder";
-import { PreviewForm } from "./preview-form";
-import moment from "moment";
 
 const defaultFormList: FormItem[] = [
   {
@@ -52,7 +57,16 @@ const defaultFormList: FormItem[] = [
   },
 ];
 
-export const CustomSignupModal = () => {
+const normFile = (e: any) => {
+  if (Array.isArray(e)) return e;
+  return e && e.fileList;
+};
+
+export const CustomSignupModal = ({
+  categoryList,
+}: {
+  categoryList: Category[];
+}) => {
   const [form] = useForm();
   const { customSignupModalOpen, editingCustomSignupId, close } =
     useCustomSignupModal();
@@ -70,18 +84,32 @@ export const CustomSignupModal = () => {
 
   const [previewFormModalVisible, setPreviewFormModalVisible] = useState(false);
 
-  const closeModal = () => {
-    form.resetFields();
-    setFormList(defaultFormList);
-    close();
-  };
+  useDeepCompareEffect(() => {
+    if (fieldsValue) {
+      const { cover, ...rest } = fieldsValue;
+      form.setFieldsValue({
+        cover: [{ url: cover }],
+        ...rest,
+      });
+    }
+  }, [fieldsValue, form]);
+
+  useDeepCompareEffect(() => {
+    enterFrom.length && setFormList([...enterFrom]);
+  }, [enterFrom]);
+
+  useEffect(() => {
+    formRemark && setRemark(formRemark);
+  }, [formRemark]);
+
   const submit = () => {
     form.validateFields().then(async () => {
-      const { dateRange, ...restParams } = form.getFieldsValue();
+      const { cover, dateRange, ...restParams } = form.getFieldsValue();
       const start_time = `${Math.floor(dateRange[0].valueOf() / 1000)}`;
       const end_time = `${Math.floor(dateRange[1].valueOf() / 1000)}`;
       const customSignupParams: CustomSignup = {
         id: editingCustomSignupId || "",
+        cover: cover[0].url,
         start_time,
         end_time,
         remark,
@@ -93,17 +121,11 @@ export const CustomSignupModal = () => {
     });
   };
 
-  useDeepCompareEffect(() => {
-    fieldsValue && form.setFieldsValue(fieldsValue);
-  }, [fieldsValue, form]);
-
-  useDeepCompareEffect(() => {
-    enterFrom.length && setFormList([...enterFrom]);
-  }, [enterFrom]);
-
-  useEffect(() => {
-    formRemark && setRemark(formRemark);
-  }, [formRemark]);
+  const closeModal = () => {
+    form.resetFields();
+    setFormList(defaultFormList);
+    close();
+  };
 
   return (
     <>
@@ -131,6 +153,18 @@ export const CustomSignupModal = () => {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item
+                name="img"
+                label="活动封面"
+                tooltip="图片大小不能超过10MB"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                rules={[{ required: true, message: "请上传活动封面" }]}
+              >
+                <OssUpload maxCount={1} />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
                 name="title"
                 label="标题"
                 rules={[{ required: true, message: "请输入标题" }]}
@@ -138,6 +172,19 @@ export const CustomSignupModal = () => {
                 <Input placeholder="请输入标题" />
               </Form.Item>
             </Col>
+            <Col span={8}>
+              <Form.Item name="category_id" label="活动分类">
+                <Select placeholder="请选择活动分类">
+                  {categoryList?.map(({ id, name }) => (
+                    <Select.Option key={id} value={id}>
+                      {name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
             <Col span={8}>
               <Form.Item
                 name="enter_num"

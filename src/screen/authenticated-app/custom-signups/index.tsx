@@ -26,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import copy from "copy-to-clipboard";
 import { CustomSignup } from "types/custom-signup";
+import { useActivityCategoryOptions } from "../../../service/activity-category";
 
 export const CustomSignups = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export const CustomSignups = () => {
   const { mutate: deleteCustomSignup } = useDeleteCustomSignup(
     useCustomSignupsQueryKey()
   );
+  const { data: activityCategoryOptions = [] } = useActivityCategoryOptions();
   const [linkUrl, setLinkUrl] = useState("");
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -201,7 +203,7 @@ export const CustomSignups = () => {
           }}
           onChange={setPagination}
         />
-        <CustomSignupModal />
+        <CustomSignupModal categoryList={activityCategoryOptions} />
         <Modal
           title="活动地址"
           visible={!!linkUrl}
