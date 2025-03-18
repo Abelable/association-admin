@@ -334,10 +334,17 @@ export const ApplicationModal = ({
 
   useDeepCompareEffect(() => {
     if (editingApplicationForm) {
-      const { banner: bannerString, ...rest } = editingApplicationForm || {};
-      const banner = JSON.parse(bannerString);
+      const {
+        banner: bannerString,
+        category_id,
+        ...rest
+      } = editingApplicationForm || {};
+      const banner = bannerString ? JSON.parse(bannerString) : [];
       form.setFieldsValue({
-        banner: banner ? banner.map((url: string) => ({ url })) : undefined,
+        banner: banner.length
+          ? banner.map((url: string) => ({ url }))
+          : undefined,
+        category_id: +category_id ? +category_id : undefined,
         ...rest,
       });
     }
