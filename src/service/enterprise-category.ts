@@ -55,3 +55,10 @@ export const useDeleteEnterpriseCategory = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useEnterpriseCategoryOptions = () => {
+  const client = useHttp();
+  return useQuery<Category[]>(["enterprise_category_options"], () =>
+    client("/api/admin/enterprise-category/options")
+  );
+};

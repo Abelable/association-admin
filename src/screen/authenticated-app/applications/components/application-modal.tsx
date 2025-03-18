@@ -29,7 +29,7 @@ import { Map } from "components/map";
 import { useState, useEffect } from "react";
 import options from "utils/region-options";
 
-import {
+import type {
   ApplicationsResult,
   LevelOption,
   ApplicationForm,
@@ -37,6 +37,7 @@ import {
   EvaluationOption,
   Region,
 } from "types/application";
+import type { Category } from "types/category";
 
 interface QuarterOptions {
   year: number;
@@ -153,9 +154,11 @@ if ([1, 2, 3].includes(month)) {
 export const ApplicationModal = ({
   levelOptions,
   evaluationOptions,
+  enterpriseCategoryOptions,
 }: {
   levelOptions: LevelOption[];
   evaluationOptions: EvaluationOption[];
+  enterpriseCategoryOptions: Category[];
 }) => {
   const [form] = useForm();
 
@@ -201,6 +204,7 @@ export const ApplicationModal = ({
   const submit = () => {
     form.validateFields().then(async () => {
       const {
+        banner,
         number,
         company_name,
         short_name,
@@ -312,6 +316,9 @@ export const ApplicationModal = ({
 
       const applicationItem: Partial<ApplicationsItem> = {
         id: editingApplicationId || undefined,
+        banner: banner
+          ? JSON.stringify(banner.map((item: any) => item.url))
+          : "",
         level_id: `${member_level}`,
         apply_content_json: JSON.stringify(applyContent),
         logo: logo && logo.length ? logo[0].url : "",
@@ -326,7 +333,14 @@ export const ApplicationModal = ({
   };
 
   useDeepCompareEffect(() => {
-    form.setFieldsValue(editingApplicationForm);
+    if (editingApplicationForm) {
+      const { banner: bannerString, ...rest } = editingApplicationForm || {};
+      const banner = JSON.parse(bannerString);
+      form.setFieldsValue({
+        banner: banner ? banner.map((url: string) => ({ url })) : undefined,
+        ...rest,
+      });
+    }
   }, [form, editingApplicationForm]);
 
   return (
@@ -348,6 +362,47 @@ export const ApplicationModal = ({
     >
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
+        <Divider orientation="left">小程序展示</Divider>
+        <Form.Item
+          name="banner"
+          label="企业介绍头图"
+          tooltip="图片大小不能超过10MB"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <OssUpload />
+        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="category_id" label="企业分类">
+              <Select placeholder="请选择企业分类">
+                {enterpriseCategoryOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="main_business" label="主营业务">
+              <Input placeholder="请输入主营业务" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="mp_app_id" label="企业小程序appid">
+              <Input placeholder="请输入企业小程序appid" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="address_detail" label="企业地址详情">
+              <Input placeholder="请输入企业地址详情" />
+            </Form.Item>
+          </Col>
+        </Row>
+
         <Divider orientation="left">企业管理</Divider>
         <Row gutter={16}>
           <Col span={12}>
@@ -854,22 +909,22 @@ const useEditingApplicationForm = (editingApplicationId: string) => {
           (_item: any) =>
             _item.year === quarterOptions[0].year &&
             _item.quarter === quarterOptions[0].quarter
-        ).value,
+        )?.value,
         quarter_valuation_2: quarterValuation.find(
           (_item: any) =>
             _item.year === quarterOptions[1].year &&
             _item.quarter === quarterOptions[1].quarter
-        ).value,
+        )?.value,
         quarter_valuation_3: quarterValuation.find(
           (_item: any) =>
             _item.year === quarterOptions[2].year &&
             _item.quarter === quarterOptions[2].quarter
-        ).value,
+        )?.value,
         quarter_valuation_4: quarterValuation.find(
           (_item: any) =>
             _item.year === quarterOptions[3].year &&
             _item.quarter === quarterOptions[3].quarter
-        ).value,
+        )?.value,
       };
     }
 

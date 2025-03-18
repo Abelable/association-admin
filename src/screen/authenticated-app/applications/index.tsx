@@ -15,6 +15,7 @@ import { SearchPanel } from "./components/search-panel";
 import { useApplicationsQueryKey, useApplicationsSearchParams } from "./util";
 import { codeBg, drawText } from "./canvas";
 import { useOssConfig2 } from "service/common";
+import { useEnterpriseCategoryOptions } from "service/enterprise-category";
 let codeId: string = "";
 let codeFile: any = null;
 export const Applications = () => {
@@ -55,6 +56,8 @@ export const Applications = () => {
   const { mutateAsync: createCertificate } = useCreateCertificate(
     useApplicationsQueryKey()
   );
+  const { data: enterpriseCategoryOptions = [] } =
+    useEnterpriseCategoryOptions();
 
   const { mutate: getOssConfig, data: dataOssConfig } = useOssConfig2();
   const exportApplications = (ids: string[]) => {
@@ -315,6 +318,7 @@ export const Applications = () => {
       <ApplicationModal
         levelOptions={levelOptions || []}
         evaluationOptions={evaluationOptions}
+        enterpriseCategoryOptions={enterpriseCategoryOptions}
       />
       <Drawer
         visible={!!selectedRowKeys.length}

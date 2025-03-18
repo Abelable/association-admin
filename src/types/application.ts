@@ -55,6 +55,11 @@ export interface ApplicationForm {
   evaluation: string;
   introduction: string;
   logo: string;
+  category_id: number;
+  banner: string;
+  main_business: string;
+  address_detail: string;
+  mp_app_id: string;
 }
 
 export interface ApplicationsItem {
@@ -80,6 +85,11 @@ export interface ApplicationsItem {
   url: string;
   number: string;
   certificate_status: string;
+  category_id: number;
+  banner: string;
+  main_business: string;
+  address_detail: string;
+  mp_app_id: string;
 }
 export interface ApplicationsResult {
   list: ApplicationsItem[];
