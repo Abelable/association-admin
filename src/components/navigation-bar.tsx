@@ -6,6 +6,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/users": "用户数据",
   "/banners": "头图管理",
   "/course": "网商课堂",
+  "/course/course_categories": "课堂分类",
   "/course/author": "作者管理",
   "/course/list": "课堂列表",
   "/legal": "政策指南",

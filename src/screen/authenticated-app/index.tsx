@@ -13,6 +13,7 @@ import { OpenInfo } from "./open-info";
 import { LegalCategories } from "./legal-categories/index";
 import { LegalSubCategories } from "./legal-sub-categories";
 import { Legals } from "./legals";
+import { CourseCategories } from "./course-categories";
 import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
 import { EnterpriseCategories } from "./enterprise-categories";
@@ -78,6 +79,10 @@ export const AuthenticatedApp = () => {
             <Routes>
               <Route path="users" element={<Users />} />
               <Route path="banners" element={<Banners />} />
+              <Route
+                path="course/course_categories"
+                element={<CourseCategories />}
+              />
               <Route path="course/author" element={<CourseAuthors />} />
               <Route path="course/list" element={<Courses />} />
               <Route path="legal/categories" element={<LegalCategories />} />
@@ -162,6 +167,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           icon={<PlayCircleOutlined />}
           title={"网商课堂"}
         >
+          <Menu.Item key="course_categories" icon={<PartitionOutlined />}>
+            <Link to={"course/course_categories"}>课堂分类</Link>
+          </Menu.Item>
           <Menu.Item key="author" icon={<UserOutlined />}>
             <Link to={"course/author"}>作者管理</Link>
           </Menu.Item>
