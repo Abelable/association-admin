@@ -21,8 +21,15 @@ import { useAddCourse, useEditCourse } from "service/course";
 import { RichTextEditor } from "components/rich-text-editor";
 import { useQueryClient } from "react-query";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import type { Category } from "types/category";
 
-export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
+export const CourseModal = ({
+  authorList,
+  courseCategoryOptions,
+}: {
+  authorList: CourseAuthor[];
+  courseCategoryOptions: Category[];
+}) => {
   const [form] = useForm();
 
   const { courseModalOpen, editingCourseId, close } = useCourseModal();
@@ -183,10 +190,17 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="是否试看">
-              <Switch checked={isTry} onChange={setIsTry} />
+            <Form.Item name="category_id" label="课堂分类">
+              <Select placeholder="请选择课堂分类">
+                {courseCategoryOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
+
           <Col span={12}>
             <Form.Item label="观看人数" name="views">
               <InputNumber
@@ -196,6 +210,14 @@ export const CourseModal = ({ authorList }: { authorList: CourseAuthor[] }) => {
             </Form.Item>
           </Col>
         </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item label="是否试看">
+              <Switch checked={isTry} onChange={setIsTry} />
+            </Form.Item>
+          </Col>
+        </Row>
+
         {isTry ? (
           <Row gutter={16}>
             <Col span={12}>

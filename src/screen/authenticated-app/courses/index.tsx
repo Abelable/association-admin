@@ -5,11 +5,13 @@ import { CourseModal } from "./components/course-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useCoursesSearchParams } from "./util";
+import { useCourseCategoryOptions } from "service/course-category";
 
 export const Courses = () => {
   const [params, setParams] = useCoursesSearchParams();
   const { data, isLoading, error } = useCourses(params);
   const { data: author } = useCourseAuthors({ page: 1, page_size: 30 });
+  const { data: courseCategoryOptions = [] } = useCourseCategoryOptions();
 
   return (
     <Container>
@@ -28,7 +30,10 @@ export const Courses = () => {
             total: toNumber(data?.total),
           }}
         />
-        <CourseModal authorList={author?.list || []} />
+        <CourseModal
+          authorList={author?.list || []}
+          courseCategoryOptions={courseCategoryOptions}
+        />
       </Main>
     </Container>
   );
