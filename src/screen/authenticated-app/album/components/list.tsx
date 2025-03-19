@@ -114,7 +114,7 @@ const More = ({ openInfo }: { openInfo: Album }) => {
 
   const confirmDeleteAlbum = (id: string) => {
     Modal.confirm({
-      title: "确定删除该公开信息吗？",
+      title: "确定删除该协会相册吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
