@@ -71,15 +71,25 @@ export const List = ({
             width: "20rem",
           },
           {
-            title: "修改时间",
-            render: (value, openInfo) => (
+            title: "创建时间",
+            dataIndex: "created_at",
+            render: (value) => (
               <span>
-                {dayjs(Number(openInfo.updated_at) * 1000).format(
-                  "YYYY-MM-DD HH:mm"
-                )}
+                {dayjs(Number(value) * 1000).format("YYYY-MM-DD HH:mm")}
               </span>
             ),
-            width: "16rem",
+            width: "12rem",
+            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
+          },
+          {
+            title: "修改时间",
+            dataIndex: "updated_at",
+            render: (value) => (
+              <span>
+                {dayjs(Number(value) * 1000).format("YYYY-MM-DD HH:mm")}
+              </span>
+            ),
+            width: "12rem",
             sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
           },
           {
