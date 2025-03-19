@@ -50,10 +50,11 @@ export const AlbumModal = ({
 
   useDeepCompareEffect(() => {
     if (editingAlbumForm) {
-      const { photo_list, ...restFieldsValue } = editingAlbumForm;
+      const { photo_list, city_id, ...restFieldsValue } = editingAlbumForm;
       const photoList = JSON.parse(photo_list);
       form.setFieldsValue({
         photo_list: photoList.map((url: string) => ({ url })),
+        city_id: +city_id,
         ...restFieldsValue,
       });
     }

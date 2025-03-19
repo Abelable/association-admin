@@ -66,7 +66,7 @@ export const List = ({
             title: "活动地点",
             dataIndex: "city_id",
             render: (value) => (
-              <>{cityOptions.find((item) => item.id === value)?.name}</>
+              <>{cityOptions.find((item) => item.id === +value)?.name}</>
             ),
             width: "20rem",
           },

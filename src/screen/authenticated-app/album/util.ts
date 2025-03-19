@@ -2,7 +2,12 @@ import { useCallback, useMemo } from "react";
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 
 export const useAlbumListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["title", "page", "page_size"]);
+  const [params, setParams] = useUrlQueryParams([
+    "title",
+    "city_id",
+    "page",
+    "page_size",
+  ]);
   return [
     useMemo(
       () => ({
