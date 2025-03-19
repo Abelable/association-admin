@@ -372,7 +372,7 @@ export const ApplicationModal = ({
         <Divider orientation="left">小程序展示</Divider>
         <Form.Item
           name="banner"
-          label="企业介绍头图"
+          label="企业轮播图"
           tooltip="图片大小不能超过10MB"
           valuePropName="fileList"
           getValueFromEvent={normFile}
