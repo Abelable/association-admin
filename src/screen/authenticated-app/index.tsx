@@ -28,6 +28,7 @@ import { ActivityCategories } from "./activity-categories";
 import { CustomSignups } from "./custom-signups";
 import { CustomSignupUsers } from "./custom-signup-users";
 import { Album } from "./album";
+import { Industry } from "./industry";
 import { Lives } from "./lives";
 import { Datav } from "./datav-data";
 
@@ -55,6 +56,7 @@ import {
   StockOutlined,
   LinkOutlined,
   EyeOutlined,
+  AreaChartOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -118,6 +120,7 @@ export const AuthenticatedApp = () => {
                 element={<CustomSignupUsers />}
               />
               <Route path="album" element={<Album />} />
+              <Route path="industry" element={<Industry />} />
               <Route path="view/data" element={<Datav />} />
               <Route
                 path={"*"}
@@ -227,6 +230,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         </Menu.SubMenu>
         <Menu.Item key="album" icon={<PictureOutlined />}>
           <Link to={"album"}>协会相册</Link>
+        </Menu.Item>
+        <Menu.Item key="industry" icon={<AreaChartOutlined />}>
+          <Link to={"industry"}>浙江产业带</Link>
         </Menu.Item>
         <Menu.Item key="lives" icon={<VideoCameraOutlined />}>
           <Link to={"lives"}>绿色直播</Link>
