@@ -82,15 +82,15 @@ export const IndustryModal = ({
                 ))}
               </Select>
             </Form.Item>
-            <Col span={12}>
-              <Form.Item
-                name="main"
-                label="核心产业带"
-                rules={[{ required: true, message: "请输入核心产业带" }]}
-              >
-                <Input placeholder="请输入核心产业带" />
-              </Form.Item>
-            </Col>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="main"
+              label="核心产业带"
+              rules={[{ required: true, message: "请输入核心产业带" }]}
+            >
+              <Input placeholder="请输入核心产业带" />
+            </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>

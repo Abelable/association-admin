@@ -67,17 +67,15 @@ export const List = ({
             render: (value) => (
               <>{cityOptions.find((item) => item.id === +value)?.name}</>
             ),
-            width: "20rem",
+            width: "12rem",
           },
           {
             title: "核心产业带",
             dataIndex: "main",
-            width: "20rem",
           },
           {
             title: "核心TOP行业",
             dataIndex: "top",
-            width: "20rem",
           },
           {
             title: "创建时间",
@@ -87,7 +85,7 @@ export const List = ({
                 {dayjs(Number(value) * 1000).format("YYYY-MM-DD HH:mm")}
               </span>
             ),
-            width: "12rem",
+            width: "18rem",
             sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
           },
           {
@@ -98,7 +96,7 @@ export const List = ({
                 {dayjs(Number(value) * 1000).format("YYYY-MM-DD HH:mm")}
               </span>
             ),
-            width: "12rem",
+            width: "18rem",
             sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
           },
           {
