@@ -28,6 +28,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/custom_signup/custom_signup_categories": "活动分类",
   "/custom_signup/custom_signup_list": "活动列表",
   "/custom_signups/enlist": "报名列表",
+  "/album": "协会相册",
   "/lives": "绿色直播",
   "/view": "数据大屏",
   "/view/data": "大屏数据",
