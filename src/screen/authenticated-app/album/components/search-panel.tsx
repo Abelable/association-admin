@@ -63,11 +63,11 @@ export const SearchPanel = ({
           />
         </Row>
         <Row>
-          <div>是否展示：</div>
+          <div>活动地点：</div>
           <Select
             style={{ width: "20rem" }}
             value={temporaryParams.city_id}
-            placeholder="请选择是否展示"
+            placeholder="请选择活动地点"
             allowClear={true}
             onSelect={setCityId}
             onClear={clearCityId}

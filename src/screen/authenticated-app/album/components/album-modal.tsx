@@ -90,11 +90,11 @@ export const AlbumModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              label="活动地区"
+              label="活动地点"
               name="city_id"
-              rules={[{ required: true, message: "请选择活动地区" }]}
+              rules={[{ required: true, message: "请选择活动地点" }]}
             >
-              <Select placeholder="请选择活动地区">
+              <Select placeholder="请选择活动地点">
                 {cityOptions?.map(({ id, name }) => (
                   <Select.Option key={id} value={id}>
                     {name}
