@@ -9,6 +9,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/course/course_categories": "课堂分类",
   "/course/author": "作者管理",
   "/course/list": "课堂列表",
+  "/course/apply_list": "课程申请",
   "/legal": "政策指南",
   "/legal/categories": "分类管理",
   "/legal/categories/sub_categories": "二级分类管理",

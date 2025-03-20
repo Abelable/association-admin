@@ -16,6 +16,7 @@ import { Legals } from "./legals";
 import { CourseCategories } from "./course-categories";
 import { CourseAuthors } from "./course-authors/index";
 import { Courses } from "./courses";
+import { CourseApply } from "./course-apply";
 import { EnterpriseCategories } from "./enterprise-categories";
 import { Applications } from "./applications";
 import { EnterpriseConsulting } from "./enterprise-consulting";
@@ -58,6 +59,7 @@ import {
   LinkOutlined,
   EyeOutlined,
   AreaChartOutlined,
+  FileTextOutlined,
 } from "@ant-design/icons";
 import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
@@ -85,6 +87,7 @@ export const AuthenticatedApp = () => {
               />
               <Route path="course/author" element={<CourseAuthors />} />
               <Route path="course/list" element={<Courses />} />
+              <Route path="course/apply_list" element={<CourseApply />} />
               <Route path="legal/categories" element={<LegalCategories />} />
               <Route
                 path="legal/categories/sub_categories"
@@ -175,6 +178,9 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           </Menu.Item>
           <Menu.Item key="list" icon={<BarsOutlined />}>
             <Link to={"course/list"}>课堂列表</Link>
+          </Menu.Item>
+          <Menu.Item key="apply_list" icon={<FileTextOutlined />}>
+            <Link to={"course/apply_list"}>课程申请</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu key={"legal"} icon={<ReadOutlined />} title={"政策指南"}>
