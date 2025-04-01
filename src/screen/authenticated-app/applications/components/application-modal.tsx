@@ -577,6 +577,7 @@ export const ApplicationModal = ({
               tooltip="图片大小不能超过10MB"
               valuePropName="fileList"
               getValueFromEvent={normFile}
+              rules={[{ required: true, message: "请上传企业logo" }]}
             >
               <OssLogoUpload maxCount={1} />
             </Form.Item>
@@ -588,6 +589,7 @@ export const ApplicationModal = ({
               tooltip="图片大小不能超过10MB"
               valuePropName="fileList"
               getValueFromEvent={normFile}
+              rules={[{ required: true, message: "请上传企业营业执照或副本" }]}
             >
               <OssUpload />
             </Form.Item>
@@ -615,20 +617,12 @@ export const ApplicationModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="website_url"
-              label="网站（app）名称"
-              rules={[{ required: true, message: "请输入网站(app)名称" }]}
-            >
+            <Form.Item name="website_url" label="网站（app）名称">
               <Input placeholder="请输入网站(app)名称" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="ICP"
-              label="信用代码"
-              rules={[{ required: true, message: "请输入信用代码" }]}
-            >
+            <Form.Item name="ICP" label="信用代码">
               <Input placeholder="请输入信用代码" />
             </Form.Item>
           </Col>
@@ -684,22 +678,14 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="user_count"
-              label="用户数量"
-              rules={[{ required: true, message: "请输入用户数量" }]}
-            >
+            <Form.Item name="user_count" label="用户数量">
               <Input placeholder="请输入用户数量" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="merchant_count"
-              label="商家数量"
-              rules={[{ required: true, message: "请输入商家数量" }]}
-            >
+            <Form.Item name="merchant_count" label="商家数量">
               <Input placeholder="请输入商家数量" />
             </Form.Item>
           </Col>
