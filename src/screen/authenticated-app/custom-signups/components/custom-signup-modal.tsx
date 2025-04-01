@@ -159,6 +159,7 @@ export const CustomSignupModal = ({
                 tooltip="图片大小不能超过10MB"
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
+                rules={[{ required: true, message: "请上传活动封面" }]}
               >
                 <OssUpload maxCount={1} />
               </Form.Item>
