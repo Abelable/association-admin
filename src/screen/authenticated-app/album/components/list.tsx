@@ -60,7 +60,6 @@ export const List = ({
           {
             title: "活动标题",
             dataIndex: "title",
-            width: "20rem",
           },
           {
             title: "活动地点",
@@ -68,29 +67,13 @@ export const List = ({
             render: (value) => (
               <>{cityOptions.find((item) => item.id === +value)?.name}</>
             ),
-            width: "20rem",
           },
           {
-            title: "创建时间",
-            dataIndex: "created_at",
+            title: "活动时间",
+            dataIndex: "date",
             render: (value) => (
-              <span>
-                {dayjs(Number(value) * 1000).format("YYYY-MM-DD HH:mm")}
-              </span>
+              <span>{dayjs(Number(value) * 1000).format("YYYY-MM-DD")}</span>
             ),
-            width: "12rem",
-            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
-          },
-          {
-            title: "修改时间",
-            dataIndex: "updated_at",
-            render: (value) => (
-              <span>
-                {dayjs(Number(value) * 1000).format("YYYY-MM-DD HH:mm")}
-              </span>
-            ),
-            width: "12rem",
-            sorter: (a, b) => Number(a.updated_at) - Number(b.updated_at),
           },
           {
             title: "操作",

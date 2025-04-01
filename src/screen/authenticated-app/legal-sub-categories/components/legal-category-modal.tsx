@@ -41,7 +41,7 @@ export const LegalCategoryModal = ({
     form.validateFields().then(async () => {
       const { image, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
-        pid: parentCategoryId,
+        pid: `${parentCategoryId}`,
         id: editingLegalCategoryId || "",
         image: image[0].url,
         ...restFieldsValue,

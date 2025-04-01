@@ -1,4 +1,14 @@
-import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import { OssUpload } from "components/oss-upload";
 import { ErrorBox } from "components/lib";
 
@@ -9,6 +19,7 @@ import { useAddAlbum, useEditAlbum } from "service/album";
 import { useAlbumModal, useAlbumListQueryKey } from "../util";
 
 import type { Album, AlbumListResult } from "types/album";
+import moment from "moment";
 
 export const AlbumModal = ({
   cityOptions,
@@ -38,10 +49,11 @@ export const AlbumModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { photo_list, ...restFieldsValue } = form.getFieldsValue();
+      const { photo_list, date, ...restFieldsValue } = form.getFieldsValue();
       await mutateAsync({
         id: editingAlbumId || "",
         photo_list: JSON.stringify(photo_list.map((item: any) => item.url)),
+        date: `${moment(date).unix()}`,
         ...restFieldsValue,
       });
       closeModal();
@@ -50,11 +62,13 @@ export const AlbumModal = ({
 
   useDeepCompareEffect(() => {
     if (editingAlbumForm) {
-      const { photo_list, city_id, ...restFieldsValue } = editingAlbumForm;
+      const { photo_list, city_id, date, ...restFieldsValue } =
+        editingAlbumForm;
       const photoList = JSON.parse(photo_list);
       form.setFieldsValue({
         photo_list: photoList.map((url: string) => ({ url })),
         city_id: +city_id,
+        date: moment(+date * 1000),
         ...restFieldsValue,
       });
     }
@@ -102,6 +116,20 @@ export const AlbumModal = ({
                   </Select.Option>
                 ))}
               </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="date"
+              label="活动时间"
+              rules={[{ required: true, message: "请选择活动时间" }]}
+            >
+              <DatePicker
+                style={{ width: "100%" }}
+                placeholder="请选择活动时间"
+              />
             </Form.Item>
           </Col>
         </Row>

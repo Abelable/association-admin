@@ -8,6 +8,7 @@ export interface AlbumListSearchParams {
 export interface AlbumItem {
   id: string;
   title: string;
+  date: string;
   city_id: string;
   photo_list: string;
   status: number;
@@ -26,5 +27,6 @@ export interface Album {
   id: string;
   title: string;
   city_id: string;
+  date: string;
   photo_list: string;
 }
