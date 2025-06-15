@@ -14,14 +14,14 @@ export const StockList = ({ error, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>企业分类</h3>
+        <h3>企业综合大类</h3>
       </Header>
       <ErrorBox error={error} />
       <Table
         rowKey={"name"}
         columns={[
           {
-            title: "企业分类",
+            title: "企业综合大类",
             dataIndex: "type",
           },
           {
