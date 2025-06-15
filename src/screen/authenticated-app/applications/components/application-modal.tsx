@@ -21,6 +21,7 @@ import {
   Space,
   Cascader,
   DatePicker,
+  InputNumber,
 } from "antd";
 import { OssUpload } from "components/oss-upload";
 import { OssLogoUpload } from "components/oss-logo-upload";
@@ -354,7 +355,7 @@ export const ApplicationModal = ({
 
   return (
     <Drawer
-      title={editingApplicationId ? "编辑会员信息" : "新增会员"}
+      title={editingApplicationId ? "会员信息" : "新增会员"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
@@ -740,7 +741,10 @@ export const ApplicationModal = ({
               label="上年度GMV（亿元）"
               rules={[{ required: true, message: "请输入上年度GMV" }]}
             >
-              <Input placeholder="请输入上年度GMV" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入上年度GMV"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -749,7 +753,10 @@ export const ApplicationModal = ({
               label="上年度营收（亿元）"
               rules={[{ required: true, message: "请输入上年度营收" }]}
             >
-              <Input placeholder="请输入上年度营收" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入上年度营收"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -760,7 +767,10 @@ export const ApplicationModal = ({
               label="上年度纳税额（亿元）"
               rules={[{ required: true, message: "请输入上年度纳税额" }]}
             >
-              <Input placeholder="请输入上年度纳税额" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入上年度纳税额"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -769,7 +779,10 @@ export const ApplicationModal = ({
               label="员工人数"
               rules={[{ required: true, message: "请输入员工人数" }]}
             >
-              <Input placeholder="请输入员工人数" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入员工人数"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -780,19 +793,28 @@ export const ApplicationModal = ({
               label="党员人数"
               rules={[{ required: true, message: "请输入党员人数" }]}
             >
-              <Input placeholder="请输入党员人数" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入党员人数"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item name="user_count" label="用户数量">
-              <Input placeholder="请输入用户数量" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入用户数量"
+              />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item name="merchant_count" label="商家数量">
-              <Input placeholder="请输入商家数量" />
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入商家数量"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
