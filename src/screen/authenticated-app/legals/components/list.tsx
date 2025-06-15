@@ -65,11 +65,7 @@ export const List = ({
           {
             title: "图片",
             render: (value, legal) => (
-              <img
-                style={{ width: "8.8rem", height: "6.2rem" }}
-                src={legal.image}
-                alt=""
-              />
+              <img style={{ width: "8.8rem" }} src={legal.image} alt="" />
             ),
             width: "14rem",
           },
