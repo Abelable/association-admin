@@ -414,11 +414,7 @@ export const ApplicationModal = ({
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="registration_time"
-              label="企业报名时间"
-              rules={[{ required: true, message: "请选择报名时间" }]}
-            >
+            <Form.Item name="registration_time" label="企业报名时间">
               <DatePicker
                 style={{ width: "100%" }}
                 showTime
@@ -427,11 +423,7 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="evaluation"
-              label="企业评价"
-              rules={[{ required: true, message: "请选择企业评价" }]}
-            >
+            <Form.Item name="evaluation" label="企业评价">
               <Select placeholder="请选择企业评价">
                 {evaluationOptions.map(({ name, value }) => (
                   <Select.Option key={value} value={value}>
@@ -599,24 +591,16 @@ export const ApplicationModal = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="企业所在经纬度" required>
+            <Form.Item label="企业所在经纬度">
               <Input.Group>
                 <Row gutter={8}>
                   <Col span={12}>
-                    <Form.Item
-                      style={{ marginBottom: 0 }}
-                      name="longitude"
-                      rules={[{ required: true, message: "请输入经度" }]}
-                    >
+                    <Form.Item style={{ marginBottom: 0 }} name="longitude">
                       <Input placeholder="请输入经度" />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item
-                      style={{ marginBottom: 0 }}
-                      name="latitude"
-                      rules={[{ required: true, message: "请输入纬度" }]}
-                    >
+                    <Form.Item style={{ marginBottom: 0 }} name="latitude">
                       <Input placeholder="请输入纬度" />
                     </Form.Item>
                   </Col>
